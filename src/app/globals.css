@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0A0A0A;
+  --foreground: #FDFDFD;
+  --onyx: #0A0A0A;
+  --signal-lime: #D7FF00;
+  --siren-red: #FF003C;
+  --spectral-white: #FDFDFD;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-onyx: var(--onyx);
+  --color-signal-lime: var(--signal-lime);
+  --color-siren-red: var(--siren-red);
+  --color-spectral-white: var(--spectral-white);
+
+  --radius-none: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Inter, system-ui, sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  /* Grain texture overlay principle */
+  position: relative;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  z-index: 9999;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
