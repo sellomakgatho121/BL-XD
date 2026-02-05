@@ -102,6 +102,6 @@ export default function GlitchText({ text, className = "", intensity = "medium",
             >
                 {displayText}
             </motion.span>
-        </motion.div>
+        </motion.span>
     );
 }
