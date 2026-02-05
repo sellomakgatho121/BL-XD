@@ -78,7 +78,7 @@ export default function GlitchText({ text, className = "", intensity = "medium",
     };
 
     return (
-        <motion.div
+        <motion.span
             className={`relative inline-block ${className}`}
             variants={shakeVariants}
             animate="glitch"
