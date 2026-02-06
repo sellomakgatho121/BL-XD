@@ -110,13 +110,6 @@ export default function NewsletterForm() {
                     </motion.form>
                 )}
             </AnimatePresence>
-
-            {status !== "success" && (
-                <div className="mt-3 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-spectral-white/40">
-                    <div className="h-1.5 w-1.5 bg-siren-red animate-pulse" />
-                    <span>Spots Remaining: Limited</span>
-                </div>
-            )}
         </div>
     );
 }
