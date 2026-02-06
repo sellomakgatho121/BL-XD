@@ -67,7 +67,7 @@ export default function ClientGuide() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowGuide(false);
-    }, 35000); // Show for 35 seconds total
+    }, 25000); // Show for 25 seconds total (reduced from 35)
     return () => clearTimeout(timer);
   }, []);
 
@@ -78,9 +78,9 @@ export default function ClientGuide() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 0.8, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
       className={`fixed ${currentTip.position} z-40 max-w-xs`}
       style={{
         perspective: 1000,
@@ -94,55 +94,44 @@ export default function ClientGuide() {
         }}
         className="relative"
       >
-        {/* Glow Effect */}
+        {/* Subtle Glow Effect */}
         <motion.div
-          className="absolute -inset-2 bg-signal-lime/20 blur-xl rounded-lg"
+          className="absolute -inset-1 bg-signal-lime/5 blur-sm rounded-lg"
           animate={{
-            opacity: [0.3, 0.8, 0.3],
-            scale: [1, 1.1, 1],
+            opacity: [0.1, 0.2, 0.1],
           }}
           transition={{
-            duration: 2,
+            duration: 3,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
 
         {/* Main Content */}
-        <div className="relative bg-onyx/90 backdrop-blur-md border border-signal-lime/30 rounded-lg p-4 shadow-2xl">
+        <div className="relative bg-onyx/80 backdrop-blur-sm border border-signal-lime/20 rounded-lg p-3 shadow-lg">
           {/* Close Button */}
           <button
             onClick={() => setShowGuide(false)}
-            className="absolute -top-2 -right-2 w-6 h-6 bg-siren-red rounded-full flex items-center justify-center text-white text-xs hover:bg-siren-red/80 transition-colors"
+            className="absolute -top-1 -right-1 w-5 h-5 bg-spectral-white/20 hover:bg-spectral-white/30 rounded-full flex items-center justify-center text-spectral-white/60 text-xs transition-colors"
           >
             ×
           </button>
 
           {/* Icon */}
-          <motion.div
-            animate={{
-              rotate: [0, 10, -10, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="flex items-center gap-2 mb-2"
-          >
-            <Icon className="text-signal-lime" size={16} />
-            <span className="text-xs font-mono text-signal-lime font-bold">
-              PRO-TIP #{activeTip + 1}
+          <div className="flex items-center gap-2 mb-2">
+            <Icon className="text-signal-lime/60" size={14} />
+            <span className="text-xs font-mono text-signal-lime/60 font-bold">
+              TIP #{activeTip + 1}
             </span>
-          </motion.div>
+          </div>
 
           {/* Title */}
-          <h3 className="text-sm font-bold text-spectral-white mb-2 font-mono">
+          <h3 className="text-sm font-bold text-spectral-white/90 mb-1 font-mono">
             {currentTip.title}
           </h3>
 
           {/* Description */}
-          <p className="text-xs text-spectral-white/70 leading-relaxed">
+          <p className="text-xs text-spectral-white/50 leading-relaxed">
             {currentTip.description}
           </p>
 
@@ -166,23 +155,23 @@ export default function ClientGuide() {
           </div>
         </div>
 
-        {/* Floating Sparkles */}
+        {/* Subtle Floating Sparkles */}
         {sparkleData.map((sparkle, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-signal-lime rounded-full"
+            className="absolute w-0.5 h-0.5 bg-signal-lime/30 rounded-full"
             initial={{
               opacity: 0,
               scale: 0,
             }}
             animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
+              opacity: [0, 0.3, 0],
+              scale: [0, 0.5, 0],
               x: [0, sparkle.animateX],
               y: [0, sparkle.animateY],
             }}
             transition={{
-              duration: 2,
+              duration: 3,
               repeat: Infinity,
               delay: sparkle.delay,
               ease: "easeInOut",
