@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 // EmailJS Configuration
 const EMAILJS_CONFIG = {
   serviceId: process.env.EMAILJS_SERVICE_ID || 'service_jljtpma',
-  templateId: process.env.EMAILJS_TEMPLATE_ID || 'template_newsletter',
+  templateId: process.env.EMAILJS_TEMPLATE_ID || 'template_prrf7h8',
   publicKey: process.env.EMAILJS_PUBLIC_KEY || '',
   privateKey: process.env.EMAILJS_PRIVATE_KEY || '', // Optional, for server-side
   adminEmail: process.env.ADMIN_EMAIL || 'sellomakgatho121@gmail.com',
