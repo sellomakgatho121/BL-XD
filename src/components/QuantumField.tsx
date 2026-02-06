@@ -192,7 +192,7 @@ export default function QuantumField() {
   const rotateY = useTransform(mouseXSpring, [-100, 100], [-15, 15]);
   
   // Create transform values for dynamic styles
-  const coreScale = useTransform([mouseX, mouseY], ([x, y]) => 1 + Math.abs(x + y) / 200);
+  const coreScale = useTransform([mouseX, mouseY], ([x, y]: number[]) => 1 + Math.abs((x ?? 0) + (y ?? 0)) / 200);
 
   // Generate particle data once
   const particleData = useMemo(() => generateParticleData(50), []);
