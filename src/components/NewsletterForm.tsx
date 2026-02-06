@@ -73,7 +73,7 @@ export default function NewsletterForm() {
                             </div>
                             <input
                                 type="email"
-                                placeholder="Your secret email address..."
+                                placeholder="Your email address..."
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 disabled={status === "loading"}
