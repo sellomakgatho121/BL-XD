@@ -58,6 +58,9 @@ if git push origin $CURRENT_BRANCH; then
     echo "✅ Auto-commit successful!"
     echo "🚀 Vercel deployment triggered automatically."
     echo "📊 Check deployment at: https://vercel.com/dashboard"
+    echo ""
+    echo "🔄 Alternative: Trigger via webhook:"
+    echo "   npm run deploy:webhook"
 else
     echo ""
     echo "❌ Push failed. Please check your Git authentication."

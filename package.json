@@ -11,6 +11,7 @@
     "setup:hooks": "bash scripts/setup-git-hooks.sh",
     "fix:git-authors": "bash scripts/fix-git-authors.sh",
     "deploy:retry": "bash scripts/retry-deployment.sh",
+    "deploy:webhook": "bash scripts/trigger-vercel-deploy.sh",
     "auto-commit": "bash scripts/auto-commit.sh",
     "deploy": "npm run auto-commit"
   },
