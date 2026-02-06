@@ -17,8 +17,6 @@ export default function GlitchText({ text, className = "", intensity = "medium",
     const [isHovering, setIsHovering] = useState(false);
 
     useEffect(() => {
-        let interval: NodeJS.Timeout;
-
         // Determine corruption frequency
         // If triggerOnHover is true: only corrupt when hovering (and do it fast 50ms)
         // If triggerOnHover is false: use standard background interval
@@ -59,7 +57,7 @@ export default function GlitchText({ text, className = "", intensity = "medium",
         }, speed);
 
         return () => clearInterval(corruptInterval);
-    }, [text, intensity, isHovering, triggerOnHover]);
+    }, [text, intensity, isHovering, triggerOnHover, displayText]);
 
     // Framer Motion variant for visual displacement (the "Shake")
     const shakeVariants = {

@@ -35,7 +35,7 @@ export default function AuthPage() {
         setError("Access denied. Invalid credentials.");
         setPassword("");
       }
-    } catch (err) {
+    } catch {
       setError("Authentication failed. Please try again.");
     } finally {
       setIsLoading(false);

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, Terminal, Zap, ShieldAlert, Sparkles, TrendingUp, ShoppingCart, Activity } from "lucide-react";
+import { motion } from "framer-motion";
+import { Terminal, Zap, ShieldAlert, Sparkles, TrendingUp, ShoppingCart, Activity } from "lucide-react";
 import { useState, useEffect } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import GlitchText from "@/components/GlitchText";

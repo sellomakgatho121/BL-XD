@@ -29,13 +29,18 @@ export default function CountdownTimer({ targetDate }: { targetDate: string }) {
             return timeLeft;
         };
 
-        setTimeLeft(calculateTimeLeft());
+        const initialTimer = setTimeout(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 0);
 
-        const timer = setInterval(() => {
+        const intervalTimer = setInterval(() => {
             setTimeLeft(calculateTimeLeft());
         }, 1000);
 
-        return () => clearInterval(timer);
+        return () => {
+            clearTimeout(initialTimer);
+            clearInterval(intervalTimer);
+        };
     }, [targetDate]);
 
     return (
