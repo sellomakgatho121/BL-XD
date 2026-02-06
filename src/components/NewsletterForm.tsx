@@ -14,12 +14,29 @@ export default function NewsletterForm() {
 
         setStatus("loading");
 
-        // Simulate network delay for "System Processing" effect
-        setTimeout(() => {
-            console.log("Captured lead:", email);
-            setStatus("success");
-            setEmail("");
-        }, 1500);
+        try {
+            const response = await fetch("/api/newsletter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setStatus("success");
+                setEmail("");
+            } else {
+                // Handle error - you could show an error message here
+                console.error("Newsletter error:", data.error);
+                setStatus("idle"); // Reset to allow retry
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            setStatus("idle"); // Reset to allow retry
+        }
     };
 
     return (
