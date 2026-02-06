@@ -190,6 +190,9 @@ export default function QuantumField() {
   
   const rotateX = useTransform(mouseYSpring, [-100, 100], [15, -15]);
   const rotateY = useTransform(mouseXSpring, [-100, 100], [-15, 15]);
+  
+  // Create transform values for dynamic styles
+  const coreScale = useTransform([mouseX, mouseY], ([x, y]) => 1 + Math.abs(x + y) / 200);
 
   // Generate particle data once
   const particleData = useMemo(() => generateParticleData(50), []);
@@ -272,8 +275,10 @@ export default function QuantumField() {
             <motion.div
               className="absolute w-2 h-2 bg-signal-lime rounded-full"
               style={{
-                left: `${50 + mouseX.get()}%`,
-                top: `${50 + mouseY.get()}%`,
+                left: '50%',
+                top: '50%',
+                x: mouseX,
+                y: mouseY,
                 filter: "blur(2px)",
               }}
               animate={{
@@ -294,26 +299,52 @@ export default function QuantumField() {
       <motion.div
         className="absolute inset-0"
         style={{
-          backgroundImage: `
-            radial-gradient(circle at ${50 + mouseX.get()}% ${50 + mouseY.get()}%, rgba(0, 255, 0, 0.2) 0%, transparent 30%),
-            radial-gradient(circle at 20% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
-            linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent),
-            linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent)
-          `,
-          backgroundSize: "50px 50px, 50px 50px, 50px 50px, 50px 50px",
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
         }}
-      />
+      >
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at 20% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+              linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent),
+              linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent)
+            `,
+            backgroundSize: "50px 50px, 50px 50px, 50px 50px, 50px 50px",
+          }}
+        />
+        {/* Dynamic mouse-following gradient */}
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              'radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 30%)',
+              'radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.2) 0%, transparent 30%)',
+              'radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 30%)',
+            ]
+          }}
+          style={{
+            opacity: 0.5,
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
 
       {/* Enhanced Central Core with mouse interaction */}
       <motion.div
         className="absolute top-1/2 left-1/2 w-32 h-32 -translate-x-1/2 -translate-y-1/2"
         animate={{
           rotate: 360,
-          scale: isMobile ? 0.8 : 1 + Math.abs(mouseX.get() + mouseY.get()) / 200,
+        }}
+        style={{
+          scale: isMobile ? 0.8 : coreScale,
         }}
         transition={{
           duration: 20,
