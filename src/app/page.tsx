@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Terminal, ShieldAlert } from "lucide-react";
+import { Terminal } from "lucide-react";
 import { useState, useEffect } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import GlitchText from "@/components/GlitchText";
@@ -11,6 +11,7 @@ import DistortionTransition from "@/components/DistortionTransition";
 import MysteryReveal from "@/components/MysteryReveal";
 import QuantumField from "@/components/QuantumField";
 import ClientGuide from "@/components/ClientGuide";
+import Logo from "@/components/Logo";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -34,10 +35,7 @@ export default function Home() {
         }} />
 
       <nav className="relative z-10 flex w-full items-center justify-between border-b border-spectral-white/10 p-8">
-        <div className="flex items-center gap-2">
-          <ShieldAlert className="text-signal-lime" />
-          <span className="text-xl font-bold tracking-tighter">BLACKLIGHT</span>
-        </div>
+        <Logo />
       </nav>
 
       <main className="relative z-10 flex flex-1 flex-col items-start justify-center px-8 lg:px-24">

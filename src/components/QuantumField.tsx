@@ -246,14 +246,14 @@ export default function QuantumField() {
             key={i}
             className="absolute w-1 h-1 bg-signal-lime rounded-full"
             initial={{
-              x: particle.initialX,
-              y: particle.initialY,
+              left: `${particle.initialX}%`,
+              top: `${particle.initialY}%`,
               opacity: 0,
               scale: 0,
             }}
             animate={{
-              x: particle.animateX,
-              y: particle.animateY,
+              left: particle.animateX.map((x) => `${x}%`),
+              top: particle.animateY.map((y) => `${y}%`),
               opacity: [0, 1, 0],
               scale: [0, 1, 0],
             }}

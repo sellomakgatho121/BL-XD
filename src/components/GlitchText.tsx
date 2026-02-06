@@ -15,28 +15,44 @@ const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
 export default function GlitchText({ text, className = "", intensity = "medium", triggerOnHover = false }: GlitchTextProps) {
     const [displayText, setDisplayText] = useState(text);
     const [isHovering, setIsHovering] = useState(false);
+    const [isCorrupting, setIsCorrupting] = useState(false);
 
     useEffect(() => {
+        // If triggerOnHover is true, only corrupt when hovering
+        if (triggerOnHover && !isHovering) {
+            // Smoothly revert to original text when not hovering
+            setTimeout(() => {
+                setDisplayText(text);
+                setIsCorrupting(false);
+            }, 0);
+            return;
+        }
+
         // Determine corruption frequency
-        // If triggerOnHover is true: only corrupt when hovering (and do it fast 50ms)
-        // If triggerOnHover is false: use standard background interval
         const speed = isHovering && triggerOnHover ? 50 : (intensity === "high" ? 1000 : intensity === "medium" ? 2500 : 5000);
-        const corruptionChance = isHovering && triggerOnHover ? 1.0 : 0.1; // 100% chance on hover
+        const corruptionChance = isHovering && triggerOnHover ? 1.0 : 0.1;
 
         const corruptInterval = setInterval(() => {
             // Logic for background glitch
             if (!isHovering && triggerOnHover) {
-                if (displayText !== text) setDisplayText(text); // Reset if not hovering
+                setTimeout(() => {
+                    setDisplayText(text);
+                    setIsCorrupting(false);
+                }, 0);
                 return;
             }
 
             if (Math.random() > corruptionChance) {
-                setDisplayText(text);
+                setTimeout(() => {
+                    setDisplayText(text);
+                    setIsCorrupting(false);
+                }, 0);
                 return;
             }
 
+            setIsCorrupting(true);
+
             const charsArray = text.split("");
-            // scramble more chars on hover
             const scrambleCount = isHovering && triggerOnHover ? 3 : 1;
 
             for (let i = 0; i < scrambleCount; i++) {
@@ -49,15 +65,18 @@ export default function GlitchText({ text, className = "", intensity = "medium",
 
             setDisplayText(charsArray.join(""));
 
-            // Reset quickly unless hovering
-            if (!isHovering) {
-                setTimeout(() => setDisplayText(text), 100);
+            // Smoothly reset to original text
+            if (!isHovering || !triggerOnHover) {
+                setTimeout(() => {
+                    setDisplayText(text);
+                    setIsCorrupting(false);
+                }, 150);
             }
 
         }, speed);
 
         return () => clearInterval(corruptInterval);
-    }, [text, intensity, isHovering, triggerOnHover, displayText]);
+    }, [text, intensity, isHovering, triggerOnHover]);
 
     // Framer Motion variant for visual displacement (the "Shake")
     const shakeVariants = {
@@ -68,7 +87,7 @@ export default function GlitchText({ text, className = "", intensity = "medium",
             skewX: [0, 5, -5, 0],
             transition: {
                 repeat: Infinity,
-                repeatType: "mirror" as const, // Fix: Use consistent string literal
+                repeatType: "mirror" as const,
                 duration: 0.2,
                 repeatDelay: isHovering && triggerOnHover ? 0 : (intensity === "high" ? 0.5 : intensity === "medium" ? 2 : 5)
             }
@@ -79,27 +98,31 @@ export default function GlitchText({ text, className = "", intensity = "medium",
         <motion.span
             className={`relative inline-block ${className}`}
             variants={shakeVariants}
-            animate="glitch"
+            animate={isCorrupting ? "glitch" : "idle"}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
             <span className="relative z-10">{displayText}</span>
 
-            {/* RGB Split Layers (Ghosting) */}
-            <motion.span
-                className="absolute top-0 left-0 -z-10 opacity-50 text-siren-red mix-blend-screen"
-                animate={{ x: [-2, 2, -1, 0], opacity: [0, 0.5, 0] }}
-                transition={{ repeat: Infinity, duration: 0.2, repeatDelay: 3 }}
-            >
-                {displayText}
-            </motion.span>
-            <motion.span
-                className="absolute top-0 left-0 -z-10 opacity-50 text-blue-500 mix-blend-screen"
-                animate={{ x: [2, -2, 1, 0], opacity: [0, 0.5, 0] }}
-                transition={{ repeat: Infinity, duration: 0.3, repeatDelay: 2.5 }}
-            >
-                {displayText}
-            </motion.span>
+            {/* RGB Split Layers (Ghosting) - only show when corrupting */}
+            {isCorrupting && (
+                <>
+                    <motion.span
+                        className="absolute top-0 left-0 -z-10 opacity-50 text-siren-red mix-blend-screen"
+                        animate={{ x: [-2, 2, -1, 0], opacity: [0, 0.5, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.2, repeatDelay: 3 }}
+                    >
+                        {displayText}
+                    </motion.span>
+                    <motion.span
+                        className="absolute top-0 left-0 -z-10 opacity-50 text-blue-500 mix-blend-screen"
+                        animate={{ x: [2, -2, 1, 0], opacity: [0, 0.5, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.3, repeatDelay: 2.5 }}
+                    >
+                        {displayText}
+                    </motion.span>
+                </>
+            )}
         </motion.span>
     );
 }
