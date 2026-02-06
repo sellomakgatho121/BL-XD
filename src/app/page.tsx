@@ -10,6 +10,7 @@ import SystemStatus from "@/components/SystemStatus";
 import DistortionTransition from "@/components/DistortionTransition";
 import MysteryReveal from "@/components/MysteryReveal";
 import QuantumField from "@/components/QuantumField";
+import ClientGuide from "@/components/ClientGuide";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -57,16 +58,16 @@ export default function Home() {
               className="mb-6 inline-flex items-center gap-2 border border-siren-red/50 bg-siren-red/10 px-3 py-1 font-mono text-xs text-siren-red shadow-[0_0_15px_rgba(255,0,60,0.4)]"
             >
               <Terminal size={14} className="animate-pulse" />
-              <GlitchText text="SYSTEM OVERRIDE DETECTED" intensity="high" triggerOnHover={true} />
+              <GlitchText text="BLACKLIGHT PROTOCOL ACTIVE" intensity="high" triggerOnHover={true} />
             </motion.div>
 
             <div className="relative">
               <motion.h1
                 className="text-6xl font-black leading-[0.9] tracking-tighter md:text-8xl lg:text-9xl mix-blend-difference"
               >
-                <GlitchText text="SYSTEM" intensity="medium" triggerOnHover={true} /> <br />
+                <GlitchText text="BLACKLIGHT" intensity="medium" triggerOnHover={true} /> <br />
                 <span className="text-signal-lime italic">
-                  <GlitchText text="INITIALIZING..." intensity="low" triggerOnHover={true} />
+                  <GlitchText text="MANIFESTING..." intensity="low" triggerOnHover={true} />
                 </span>
               </motion.h1>
               <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-siren-red to-blue-600 opacity-20 blur-xl animate-pulse" />
@@ -109,6 +110,19 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 2.0 }}
               className="pt-8"
             >
+              {/* Friendly Explanation */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 2.2 }}
+                className="mb-6 p-4 border border-signal-lime/20 bg-signal-lime/5 rounded-lg backdrop-blur-sm"
+              >
+                <p className="text-sm text-spectral-white/80 text-center font-mono">
+                  <span className="text-signal-lime font-bold">✨ Want front-row seats to the future?</span><br/>
+                  <span className="text-xs opacity-70">Drop your email below and we&apos;ll send you VIP access when we launch. No spam, just magic! 🚀</span>
+                </p>
+              </motion.div>
+              
               <NewsletterForm />
             </motion.div>
           </div>
@@ -124,6 +138,9 @@ export default function Home() {
       <div className="fixed bottom-0 left-0 right-0 z-50">
         <SystemStatus />
       </div>
+
+      {/* Client Guide Tooltip */}
+      <ClientGuide />
     </div>
   );
 }

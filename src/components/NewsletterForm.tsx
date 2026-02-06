@@ -37,9 +37,9 @@ export default function NewsletterForm() {
                         </div>
                         <div className="flex flex-col">
                             <span className="font-mono text-xs font-bold tracking-widest uppercase">
-                                Uplink Established
+                                You&apos;re on the List! 🎉
                             </span>
-                            <span className="text-sm">You will be notified of launch signals & delay protocols.</span>
+                            <span className="text-sm">We&apos;ll send you secret updates when the magic happens!</span>
                         </div>
                     </motion.div>
                 ) : (
@@ -56,7 +56,7 @@ export default function NewsletterForm() {
                             </div>
                             <input
                                 type="email"
-                                placeholder="ENTER ENCRYPTED KEY (EMAIL)"
+                                placeholder="Your secret email address..."
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 disabled={status === "loading"}
