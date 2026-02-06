@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
             subject: `🚀 New Blacklight Lead: ${email}`,
             html: `
               <div style="font-family: monospace; background: #0a0a0a; color: #00ff00; padding: 20px; border: 1px solid #00ff00;">
-                <h2 style="color: #00ff00; margin-bottom: 20px;">BLACKLIGHT PROTOCOL: NEW LEAD DETECTED</h2>
+                <h2 style="color: #00ff00; margin-bottom: 20px;">BLACKLIGHT SYSTEMS: NEW LEAD DETECTED</h2>
                 <div style="background: #111; padding: 15px; border-left: 3px solid #00ff00; margin: 10px 0;">
                   <p><strong>Email:</strong> ${email}</p>
                   <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
               subject: '✨ You\'re on the Blacklight VIP List!',
               html: `
                 <div style="font-family: monospace; background: #0a0a0a; color: #00ff00; padding: 20px; text-align: center;">
-                  <h1 style="color: #00ff00; margin-bottom: 20px;">BLACKLIGHT PROTOCOL ACTIVATED</h1>
+                  <h1 style="color: #00ff00; margin-bottom: 20px;">BLACKLIGHT SYSTEMS ACTIVATED</h1>
                   <div style="background: #111; padding: 20px; border: 1px solid #00ff00; margin: 20px 0;">
                     <p style="font-size: 18px; margin-bottom: 15px;">🎉 You're on the List!</p>
                     <p style="margin-bottom: 15px;">Thanks for joining the Blacklight Web Designs VIP list.</p>

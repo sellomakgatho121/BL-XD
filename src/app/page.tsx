@@ -58,7 +58,7 @@ export default function Home() {
               className="mb-6 inline-flex items-center gap-2 border border-siren-red/50 bg-siren-red/10 px-3 py-1 font-mono text-xs text-siren-red shadow-[0_0_15px_rgba(255,0,60,0.4)]"
             >
               <Terminal size={14} className="animate-pulse" />
-              <GlitchText text="BLACKLIGHT PROTOCOL ACTIVE" intensity="high" triggerOnHover={true} />
+              <GlitchText text="PREPARING AGENTIC SYSTEMS" intensity="high" triggerOnHover={true} />
             </motion.div>
 
             <div className="relative">

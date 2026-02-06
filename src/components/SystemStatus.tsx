@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, Radio, Server } from "lucide-react";
 
 const STATUS_ITEMS = [
-    { icon: Server, text: "SYSTEM: OPTIMAL", color: "text-signal-lime" },
+    { icon: Server, text: "AGENTS: PREPARING", color: "text-signal-lime" },
     { icon: Radio, text: "NETWORK: ENCRYPTED", color: "text-blue-400" },
     { icon: CheckCircle2, text: "CHANNEL: SECURE", color: "text-spectral-white" },
-    { icon: AlertTriangle, text: "PROTOCOL: SILENT", color: "text-siren-red" },
-    { icon: Server, text: "V4.0.0 COMPILING...", color: "text-signal-lime" },
+    { icon: AlertTriangle, text: "SYSTEM: BUILDING", color: "text-siren-red" },
+    { icon: Server, text: "FRAMEWORK: ASSEMBLING", color: "text-signal-lime" },
     { icon: Radio, text: "WAITLIST: PROCESSING", color: "text-blue-400" },
 ];
 
