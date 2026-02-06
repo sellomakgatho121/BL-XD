@@ -111,14 +111,14 @@ export async function POST(request: NextRequest) {
             body: JSON.stringify({
               from: EMAIL_SERVICE.resend.from,
               to: [email],
-              subject: '✨ You\'re on the Blacklight VIP List!',
+              subject: '✨ You\'re on the Blacklight Notification List!',
               html: `
                 <div style="font-family: monospace; background: #0a0a0a; color: #00ff00; padding: 20px; text-align: center;">
                   <h1 style="color: #00ff00; margin-bottom: 20px;">BLACKLIGHT SYSTEMS ACTIVATED</h1>
                   <div style="background: #111; padding: 20px; border: 1px solid #00ff00; margin: 20px 0;">
-                    <p style="font-size: 18px; margin-bottom: 15px;">🎉 You're on the List!</p>
-                    <p style="margin-bottom: 15px;">Thanks for joining the Blacklight Web Designs VIP list.</p>
-                    <p style="font-size: 14px; opacity: 0.8;">We'll send you exclusive updates when we launch.</p>
+                    <p style="font-size: 18px; margin-bottom: 15px;">🎉 You're Notified!</p>
+                    <p style="margin-bottom: 15px;">Thanks for joining the Blacklight Web Designs notification list.</p>
+                    <p style="font-size: 14px; opacity: 0.8;">We'll send you launch updates when we go live.</p>
                   </div>
                   <p style="margin-top: 30px; font-size: 12px; opacity: 0.6;">
                     This is an automated message. Please don't reply to this email.

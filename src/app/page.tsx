@@ -115,8 +115,8 @@ export default function Home() {
                 className="mb-6 p-4 border border-signal-lime/20 bg-signal-lime/5 rounded-lg backdrop-blur-sm"
               >
                 <p className="text-sm text-spectral-white/80 text-center font-mono">
-                  <span className="text-signal-lime font-bold">✨ Want access to next-gen web development?</span><br/>
-                  <span className="text-xs opacity-70">Drop your email below and we&apos;ll send you VIP access when we launch. No spam, just cutting-edge tech! 🚀</span>
+                  <span className="text-signal-lime font-bold">✨ Interested in next-gen web development?</span><br/>
+                  <span className="text-xs opacity-70">Drop your email below and we&apos;ll notify you when we launch. No spam, just cutting-edge tech! 🚀</span>
                 </p>
               </motion.div>
               

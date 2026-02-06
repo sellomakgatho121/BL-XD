@@ -19,8 +19,8 @@ const quirkyTips = [
   },
   {
     icon: Mail,
-    title: "Join the Inner Circle",
-    description: "Down below, there&apos;s a special access portal (newsletter form). Enter your email to get VIP access when we launch!",
+    title: "Get Notified First",
+    description: "Down below, there&apos;s a notification portal (newsletter form). Enter your email to get launch updates when we go live!",
     position: "bottom-4 right-4"
   },
   {
