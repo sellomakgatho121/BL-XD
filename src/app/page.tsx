@@ -38,14 +38,6 @@ export default function Home() {
           <ShieldAlert className="text-signal-lime" />
           <span className="text-xl font-bold tracking-tighter">BLACKLIGHT</span>
         </div>
-        <div className="hidden items-center gap-8 text-xs font-mono tracking-widest sm:flex">
-          <a href="#" className="hover:text-signal-lime transition-colors">STRATEGY</a>
-          <a href="#" className="hover:text-signal-lime transition-colors">PORTFOLIO</a>
-          <a href="#" className="hover:text-signal-lime transition-colors">INTEL</a>
-          <button className="bg-signal-lime px-4 py-2 text-onyx font-bold hover:bg-spectral-white transition-all transform hover:scale-105 active:scale-95">
-            INITIATE
-          </button>
-        </div>
       </nav>
 
       <main className="relative z-10 flex flex-1 flex-col items-start justify-center px-8 lg:px-24">
