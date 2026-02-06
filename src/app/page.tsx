@@ -65,10 +65,7 @@ export default function Home() {
               <motion.h1
                 className="text-6xl font-black leading-[0.9] tracking-tighter md:text-8xl lg:text-9xl mix-blend-difference"
               >
-                <GlitchText text="BLACKLIGHT" intensity="medium" triggerOnHover={true} /> <br />
-                <span className="text-signal-lime italic">
-                  <GlitchText text="DEPLOYING..." intensity="low" triggerOnHover={true} />
-                </span>
+                <GlitchText text="BLACKLIGHT WEB DESIGNS" intensity="medium" triggerOnHover={true} />
               </motion.h1>
               <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-siren-red to-blue-600 opacity-20 blur-xl animate-pulse" />
             </div>
