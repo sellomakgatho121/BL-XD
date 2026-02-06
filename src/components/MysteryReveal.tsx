@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
 
 const mysteryMessages = [
@@ -18,6 +18,59 @@ const mysteryMessages = [
     title: "EVOLUTION",
     hint: "Next-generation web experiences",
     glitch: "01000101 01110110 01101111 01101100 01110101 01110101 01110101 01101111 01101110 01110011"
+  }
+];
+
+const quirkyMessages = [
+  {
+    text: "Can't wait? Me too...",
+    joke: "Our devs are writing code so fast, their keyboards are smoking. Fire department is on standby.",
+    followUp: "How long would YOU wait for something amazing?"
+  },
+  {
+    text: "What's taking them so long?!",
+    joke: "Plot twist: The developer is currently stuck in a Stack Overflow rabbit hole from 2019.",
+    followUp: "Ever fallen into a Wikipedia hole at 3am? Same energy."
+  },
+  {
+    text: "Is it ready yet? How about now?",
+    joke: "We've got 99 problems and 404 of them are 'page not found' errors.",
+    followUp: "Patience is a virtue... that nobody has anymore, right?"
+  },
+  {
+    text: "Refresh again. I dare you.",
+    joke: "Fun fact: Every time you refresh, a developer somewhere loses 5 minutes of sleep.",
+    followUp: "How many times have you refreshed today? Be honest."
+  },
+  {
+    text: "The anticipation is killing me!",
+    joke: "Our lead developer just discovered CSS Grid and hasn't slept in 3 days. Worth it? Absolutely.",
+    followUp: "What's the last thing you got really excited about?"
+  },
+  {
+    text: "Soon™ - Every developer ever",
+    joke: "We're not late, we're just operating on 'developer time' where deadlines are suggestions.",
+    followUp: "Do YOU run early, on time, or fashionably late?"
+  },
+  {
+    text: "Building the future... slowly.",
+    joke: "Rome wasn't built in a day, but this website? We're trying. Give us two days.",
+    followUp: "What's something great that took longer than expected but was worth it?"
+  },
+  {
+    text: "Good things come to those who wait!",
+    joke: "Unless you're waiting for a JavaScript framework to load. Then it's just suffering.",
+    followUp: "What's the best thing you've ever waited for?"
+  },
+  {
+    text: "Pssst... want a sneak peek?",
+    joke: "Just kidding! Our NDA is tighter than our code reviews. And those are BRUTAL.",
+    followUp: "Are you patient or do you peek at birthday presents early?"
+  },
+  {
+    text: "ETA: When it's ready ¯\\_(ツ)_/¯",
+    joke: "Funny how 'almost done' in developer-speak means anywhere from 2 hours to 2 weeks.",
+    followUp: "Ever given an estimate that was hilariously wrong?"
   }
 ];
 
@@ -44,6 +97,8 @@ const generateFloatingParticles = (count: number) => {
 export default function MysteryReveal() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRevealing, setIsRevealing] = useState(false);
+  const [quirkyIndex, setQuirkyIndex] = useState(-1); // -1 means showing default button
+  const [showJoke, setShowJoke] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
@@ -76,7 +131,20 @@ export default function MysteryReveal() {
     mouseY.set(y);
   };
 
+  const handleButtonClick = () => {
+    // Cycle to next quirky message
+    const nextIndex = (quirkyIndex + 1) % quirkyMessages.length;
+    setQuirkyIndex(nextIndex);
+    setShowJoke(false);
+    
+    // Show joke after a brief delay for comedic timing
+    setTimeout(() => {
+      setShowJoke(true);
+    }, 800);
+  };
+
   const current = mysteryMessages[currentIndex];
+  const currentQuirky = quirkyIndex >= 0 ? quirkyMessages[quirkyIndex] : null;
 
   return (
     <motion.div 
@@ -227,6 +295,49 @@ export default function MysteryReveal() {
           ))}
         </div>
 
+        {/* Quirky Message Display */}
+        <AnimatePresence mode="wait">
+          {currentQuirky && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="mb-4 px-4"
+            >
+              <motion.p
+                className="text-lg md:text-xl text-siren-red font-mono tracking-wide"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                {currentQuirky.text}
+              </motion.p>
+              
+              {showJoke && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.4 }}
+                  className="mt-2"
+                >
+                  <p className="text-sm md:text-base text-signal-lime/80 italic">
+                    {currentQuirky.joke}
+                  </p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-xs text-spectral-white/50 mt-2 font-mono"
+                  >
+                    {currentQuirky.followUp}
+                  </motion.p>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -249,9 +360,12 @@ export default function MysteryReveal() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleButtonClick}
             className="relative px-8 py-3 border border-signal-lime/50 bg-onyx/50 backdrop-blur-sm font-mono text-sm text-signal-lime tracking-widest uppercase transition-all hover:bg-signal-lime/10"
           >
-            <span className="relative z-10">AWAITING LAUNCH</span>
+            <span className="relative z-10">
+              {currentQuirky ? "CLICK FOR MORE IMPATIENCE" : "AWAITING LAUNCH"}
+            </span>
           </motion.button>
         </motion.div>
 
