@@ -26,9 +26,5 @@
         }
       ]
     }
-  ],
-  "passwordProtection": {
-    "enabled": true,
-    "note": "Enable password protection in Vercel Dashboard → Settings → Password Protection, or use the middleware-based protection via environment variables"
-  }
+  ]
 }
