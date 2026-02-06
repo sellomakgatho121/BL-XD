@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
                   <div style="background: #111; padding: 20px; border: 1px solid #00ff00; margin: 20px 0;">
                     <p style="font-size: 18px; margin-bottom: 15px;">🎉 You're on the List!</p>
                     <p style="margin-bottom: 15px;">Thanks for joining the Blacklight Web Designs VIP list.</p>
-                    <p style="font-size: 14px; opacity: 0.8;">We'll send you secret updates when the magic happens.</p>
+                    <p style="font-size: 14px; opacity: 0.8;">We'll send you exclusive updates when we launch.</p>
                   </div>
                   <p style="margin-top: 30px; font-size: 12px; opacity: 0.6;">
                     This is an automated message. Please don't reply to this email.

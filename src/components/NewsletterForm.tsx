@@ -56,7 +56,7 @@ export default function NewsletterForm() {
                             <span className="font-mono text-xs font-bold tracking-widest uppercase">
                                 You&apos;re on the List! 🎉
                             </span>
-                            <span className="text-sm">We&apos;ll send you secret updates when the magic happens!</span>
+                            <span className="text-sm">We&apos;ll send you exclusive updates when we launch!</span>
                         </div>
                     </motion.div>
                 ) : (

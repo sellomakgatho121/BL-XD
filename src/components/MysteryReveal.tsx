@@ -5,19 +5,19 @@ import { useState, useEffect, useMemo } from "react";
 
 const mysteryMessages = [
   {
-    title: "CONSCIOUSNESS",
-    hint: "Digital experiences that think",
-    glitch: "01100110 01110101 01110100 01110101 01110010 01100101"
+    title: "INNOVATION",
+    hint: "Intelligent systems that evolve",
+    glitch: "01001001 01101110 01101110 01101111 01110110 01100001 01110100 01101001 01101111 01101110"
   },
   {
-    title: "RESONANCE", 
-    hint: "Where technology meets emotion",
-    glitch: "01110010 01100101 01110011 01101111 01101110 01100001 01101110 01100011 01100101"
+    title: "PRECISION", 
+    hint: "Where code meets creativity",
+    glitch: "01010000 01110010 01100101 01100011 01101001 01110011 01101001 01101111 01101110"
   },
   {
-    title: "TRANSCENDENCE",
-    hint: "Beyond the digital frontier",
-    glitch: "01110100 01110010 01100001 01101110 01110011 01100011 01100101 01101110 01100100 01100101 01101110 01100011 01100101"
+    title: "EVOLUTION",
+    hint: "Next-generation web experiences",
+    glitch: "01000101 01110110 01101111 01101100 01110101 01110101 01110101 01101111 01101110 01110011"
   }
 ];
 

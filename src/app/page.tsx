@@ -67,7 +67,7 @@ export default function Home() {
               >
                 <GlitchText text="BLACKLIGHT" intensity="medium" triggerOnHover={true} /> <br />
                 <span className="text-signal-lime italic">
-                  <GlitchText text="MANIFESTING..." intensity="low" triggerOnHover={true} />
+                  <GlitchText text="DEPLOYING..." intensity="low" triggerOnHover={true} />
                 </span>
               </motion.h1>
               <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-siren-red to-blue-600 opacity-20 blur-xl animate-pulse" />
@@ -76,9 +76,9 @@ export default function Home() {
             <motion.p
               className="max-w-xl text-lg leading-relaxed text-spectral-white/60 md:text-xl font-mono border-l-2 border-signal-lime pl-4"
             >
-              <GlitchText text="The digital frontier is evolving." intensity="low" triggerOnHover={true} />
+              <GlitchText text="The future of web development is evolving." intensity="low" triggerOnHover={true} />
               <br />
-              <span className="text-sm opacity-50">Something extraordinary is materializing in the void between code and consciousness.</span>
+              <span className="text-sm opacity-50">Something extraordinary is building at the intersection of code and intelligence.</span>
             </motion.p>
 
             {/* Quantum Field Visualization */}
@@ -118,8 +118,8 @@ export default function Home() {
                 className="mb-6 p-4 border border-signal-lime/20 bg-signal-lime/5 rounded-lg backdrop-blur-sm"
               >
                 <p className="text-sm text-spectral-white/80 text-center font-mono">
-                  <span className="text-signal-lime font-bold">✨ Want front-row seats to the future?</span><br/>
-                  <span className="text-xs opacity-70">Drop your email below and we&apos;ll send you VIP access when we launch. No spam, just magic! 🚀</span>
+                  <span className="text-signal-lime font-bold">✨ Want access to next-gen web development?</span><br/>
+                  <span className="text-xs opacity-70">Drop your email below and we&apos;ll send you VIP access when we launch. No spam, just cutting-edge tech! 🚀</span>
                 </p>
               </motion.div>
               

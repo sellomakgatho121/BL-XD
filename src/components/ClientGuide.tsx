@@ -7,26 +7,26 @@ import { HelpCircle, Sparkles, Mouse, Mail } from "lucide-react";
 const quirkyTips = [
   {
     icon: Mouse,
-    title: "Wiggle Your Magic Wand",
-    description: "Move your mouse around the glowing green field above. See how it responds? That's you controlling the digital energy!",
+    title: "Control Your Interface",
+    description: "Move your mouse around the quantum field above. See how it responds? That&apos;s you controlling the digital energy!",
     position: "top-4 right-4"
   },
   {
     icon: Sparkles,
-    title: "Watch the Magic Words",
-    description: "Those glitchy messages that change? They're hinting at something amazing coming soon. Hover over them for extra sparkles!",
+    title: "Watch the System Messages",
+    description: "Those dynamic messages that change? They&apos;re hinting at something amazing coming soon. Hover over them for extra effects!",
     position: "top-4 left-4"
   },
   {
     icon: Mail,
-    title: "Join the Secret Club",
-    description: "Down below, there's a special portal (newsletter form). Enter your email to get VIP access when we launch!",
+    title: "Join the Inner Circle",
+    description: "Down below, there&apos;s a special access portal (newsletter form). Enter your email to get VIP access when we launch!",
     position: "bottom-4 right-4"
   },
   {
     icon: HelpCircle,
-    title: "Countdown to Awesome",
-    description: "The numbers ticking down? That's when the magic happens. Mark your calendar for the big reveal!",
+    title: "Countdown to Launch",
+    description: "The numbers ticking down? That&apos;s when the system goes live. Mark your calendar for the big reveal!",
     position: "bottom-4 left-4"
   }
 ];
