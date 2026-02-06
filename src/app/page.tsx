@@ -1,12 +1,190 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Terminal, Zap, ShieldAlert } from "lucide-react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ArrowRight, Terminal, Zap, ShieldAlert, Sparkles, TrendingUp, ShoppingCart, Activity } from "lucide-react";
+import { useState, useEffect } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import GlitchText from "@/components/GlitchText";
 import CountdownTimer from "@/components/CountdownTimer";
 import SystemStatus from "@/components/SystemStatus";
 import DistortionTransition from "@/components/DistortionTransition";
+
+// Animated Services Component
+function ServicesReveal() {
+  const [currentService, setCurrentService] = useState(0);
+  const services = [
+    {
+      name: "SPARK",
+      tagline: "Entrepreneur Landing",
+      description: "High-impact single-page experiences. GPU-accelerated animations, 100/100 Lighthouse performance.",
+      price: "R3,500",
+      colorClass: "text-signal-lime",
+      borderClass: "border-signal-lime",
+      bgClass: "bg-signal-lime/10",
+      icon: Sparkles
+    },
+    {
+      name: "GROWTH",
+      tagline: "Small Business Site",
+      description: "Professional 3-5 page presence. Custom design systems, SEO foundation, Lighthouse 90+.",
+      price: "R8,500",
+      colorClass: "text-siren-red",
+      borderClass: "border-siren-red",
+      bgClass: "bg-siren-red/10",
+      icon: TrendingUp
+    },
+    {
+      name: "SHOP",
+      tagline: "Micro E-Commerce",
+      description: "Fast, secure online stores. Seamless checkout, Core Web Vitals optimized (LCP < 1.2s).",
+      price: "R18,500",
+      colorClass: "text-blue-400",
+      borderClass: "border-blue-400",
+      bgClass: "bg-blue-600/10",
+      icon: ShoppingCart
+    },
+    {
+      name: "PULSE",
+      tagline: "Diagnostic Check",
+      description: "Expert evaluation + 3 quick-win improvements. Performance report & radical redesign prototype.",
+      price: "R1,500",
+      colorClass: "text-purple-400",
+      borderClass: "border-purple-400",
+      bgClass: "bg-purple-600/10",
+      icon: Activity
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentService((prev) => (prev + 1) % services.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [services.length]);
+
+  const Icon = services[currentService].icon;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.9, duration: 0.6 }}
+      className="relative mt-12 mb-8"
+    >
+      {/* Floating Service Badges */}
+      <div className="absolute -top-8 -right-8 hidden lg:block">
+        {services.map((service, idx) => {
+          const Icon = service.icon;
+          const isActive = idx === currentService;
+          return (
+            <motion.div
+              key={service.name}
+              initial={{ opacity: 0, scale: 0, rotate: -45 }}
+              animate={{
+                opacity: isActive ? 1 : 0.3,
+                scale: isActive ? 1 : 0.8,
+                rotate: isActive ? 0 : -45,
+                x: isActive ? 0 : Math.sin(idx) * 20,
+                y: isActive ? 0 : Math.cos(idx) * 20,
+              }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="absolute"
+              style={{
+                left: `${idx * 60}px`,
+                top: `${idx * 30}px`,
+              }}
+            >
+              <div className={`p-2 border ${service.borderClass}/30 ${service.bgClass} backdrop-blur-sm`}>
+                <Icon className={service.colorClass} size={16} />
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Main Service Display */}
+      <div className="relative overflow-hidden">
+        <motion.div
+          key={currentService}
+          initial={{ opacity: 0, x: 50, filter: "blur(10px)" }}
+          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, x: -50, filter: "blur(10px)" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="relative"
+        >
+          <div className={`border-l-4 ${services[currentService].borderClass} pl-6 py-4 bg-onyx/30 backdrop-blur-sm`}>
+            <div className="flex items-start gap-4 mb-2">
+              <Icon className={services[currentService].colorClass} size={24} />
+              <div className="flex-1">
+                <div className="flex items-baseline gap-3 mb-1">
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tighter font-mono">
+                    <GlitchText text={services[currentService].name} intensity="medium" triggerOnHover={true} />
+                  </h3>
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3, type: "spring" }}
+                    className={`text-sm font-mono ${services[currentService].colorClass} font-bold`}
+                  >
+                    {services[currentService].price}
+                  </motion.span>
+                </div>
+                <p className="text-xs font-mono text-spectral-white/40 uppercase tracking-widest mb-3">
+                  {services[currentService].tagline}
+                </p>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-sm md:text-base text-spectral-white/70 leading-relaxed font-mono"
+                >
+                  {services[currentService].description}
+                </motion.p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Service Indicators */}
+        <div className="flex gap-2 mt-4 justify-center">
+          {services.map((service, idx) => {
+            const isActive = idx === currentService;
+            const activeColorMap: Record<string, string> = {
+              "text-signal-lime": "bg-signal-lime",
+              "text-siren-red": "bg-siren-red",
+              "text-blue-400": "bg-blue-400",
+              "text-purple-400": "bg-purple-400"
+            };
+            return (
+              <motion.button
+                key={idx}
+                onClick={() => setCurrentService(idx)}
+                className={`h-1.5 rounded-full transition-all ${
+                  isActive ? `${activeColorMap[service.colorClass]} w-8` : "bg-spectral-white/20 w-1.5"
+                }`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Maintenance Plan - Subtle Integration */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1 }}
+        className="mt-6 text-center"
+      >
+        <p className="text-[10px] font-mono text-spectral-white/30 tracking-widest uppercase">
+          <Zap className="inline mr-1" size={10} />
+          Maintenance: R750/month • Hosting • Security • Support
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Home() {
   return (
@@ -66,11 +244,14 @@ export default function Home() {
               <span className="text-sm opacity-50">Access is restricted to authorized personnel and waitlisted clients.</span>
             </motion.p>
 
+            {/* Animated Services Integration */}
+            <ServicesReveal />
+
             {/* Countdown Timer */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 1.4 }}
               className="py-6"
             >
               <CountdownTimer targetDate="2026-04-01T00:00:00" />
@@ -79,8 +260,8 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              className="pt-4"
+              transition={{ duration: 0.8, delay: 2.0 }}
+              className="pt-8"
             >
               <NewsletterForm />
             </motion.div>

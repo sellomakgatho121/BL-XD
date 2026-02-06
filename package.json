@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "setup:git": "bash scripts/setup-git-config.sh",
+    "fix:git-authors": "bash scripts/fix-git-authors.sh"
   },
   "dependencies": {
     "framer-motion": "^12.31.1",
