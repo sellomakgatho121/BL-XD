@@ -4,3 +4,4 @@
 {"email":"test@example.com","timestamp":"2026-02-07T01:04:29.710Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
 {"email":"test123@example.com","timestamp":"2026-02-07T01:15:11.967Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
 {"email":"test2@example.com","timestamp":"2026-02-07T01:15:47.839Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"testlog@example.com","timestamp":"2026-02-07T02:20:28.123Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}

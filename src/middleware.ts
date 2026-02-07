@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { updateSession } from '@/lib/supabase/middleware';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  // First check Supabase auth for portal/admin routes
+  if (request.nextUrl.pathname.startsWith('/portal') || request.nextUrl.pathname.startsWith('/admin')) {
+    return await updateSession(request);
+  }
+
   // Check if password protection is enabled
   const isPasswordProtected = process.env.NEXT_PUBLIC_PASSWORD_PROTECTED === 'true';
   const sitePassword = process.env.SITE_PASSWORD || 'blacklight2026';
@@ -36,14 +42,8 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (public folder)
-     */
+    '/portal/:path*',
+    '/admin/:path*',
     '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };

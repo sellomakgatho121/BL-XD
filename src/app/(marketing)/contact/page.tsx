@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Send, Mail, Phone, MapPin, Clock, ArrowRight, CheckCircle } from "lucide-react";
+import { Send, Mail, Phone, MapPin, Clock, ArrowRight, CheckCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import GrainOverlay from "@/components/blacklight/grain-overlay";
 import Scanlines from "@/components/blacklight/scanlines";
@@ -33,6 +33,8 @@ const businessTypes = [
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,10 +44,57 @@ export default function ContactPage() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setSubmitted(true);
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          business_name: formData.business,
+          business_type: formData.type,
+          budget_range: formData.budget,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
+          >
+            <AlertCircle className="w-4 h-4" />
+            Failed to submit form
+          </motion.div>
+        ));
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setError(
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
+        >
+          <AlertCircle className="w-4 h-4" />
+          An unexpected error occurred. Please try again.
+        </motion.div>
+      );
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -253,14 +302,32 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {error}
+                    </motion.div>
+                  )}
+
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 font-mono uppercase tracking-wider rounded-none group"
+                    disabled={isLoading}
+                    className="w-full bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 font-mono uppercase tracking-wider rounded-none group disabled:opacity-50"
                   >
-                    <Send className="w-4 h-4 mr-2" />
-                    Send Inquiry
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    {isLoading ? (
+                      "SENDING..."
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" />
+                        Send Inquiry
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </Button>
 
                   <p className="text-xs text-[var(--spectral-muted)] text-center">

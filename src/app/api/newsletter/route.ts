@@ -68,7 +68,15 @@ export async function POST(request: NextRequest) {
 
     // Try EmailJS first
     try {
+      console.log('EmailJS Config:', {
+        serviceId: EMAILJS_CONFIG.serviceId,
+        templateId: EMAILJS_CONFIG.templateId,
+        hasPublicKey: !!EMAILJS_CONFIG.publicKey,
+        hasPrivateKey: !!EMAILJS_CONFIG.privateKey,
+      });
+
       // Send notification to admin
+      console.log('Sending admin notification to:', EMAILJS_CONFIG.adminEmail);
       await sendEmailJS({
         to_email: EMAILJS_CONFIG.adminEmail,
         subject: '🚀 New Blacklight Lead Subscribed',
@@ -86,8 +94,10 @@ export async function POST(request: NextRequest) {
           </div>
         `,
       });
+      console.log('Admin notification sent successfully');
 
       // Send confirmation to subscriber
+      console.log('Sending subscriber confirmation to:', email);
       await sendEmailJS({
         to_email: email,
         subject: "You're on the Blacklight Notification List!",
@@ -105,11 +115,12 @@ export async function POST(request: NextRequest) {
           </div>
         `,
       });
+      console.log('Subscriber confirmation sent successfully');
 
       emailSent = true;
     } catch (error) {
       lastError = error;
-      console.error('EmailJS failed:', error);
+      console.error('EmailJS failed with error:', error);
     }
 
     // Fallback: Log to file if EmailJS fails
