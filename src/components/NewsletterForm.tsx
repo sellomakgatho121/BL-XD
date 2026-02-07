@@ -7,9 +7,9 @@ import emailjs from "@emailjs/browser";
 
 // EmailJS Configuration
 const EMAILJS_CONFIG = {
-  serviceId: "service_jljtpma",
+  serviceId: "service_svwgduq",
   templateId: "template_prrf7h8",
-  publicKey: "cLfp02gQcTFekRUf-",
+  publicKey: "wpt3N53ze2mSeexh9",
 };
 
 export default function NewsletterForm() {
