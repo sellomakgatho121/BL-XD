@@ -100,8 +100,9 @@ export async function POST(request: NextRequest) {
     // Send subscriber confirmation
     try {
       console.log('Sending subscriber confirmation to:', email);
-      // For testing with Resend dev domain, send to admin email
-      const testEmail = email === 'test@example.com' ? EMAIL_CONFIG.adminEmail : email;
+      // For development with Resend dev domain, send to admin email
+      // In production, this will send to the actual user email
+      const testEmail = process.env.NODE_ENV === 'development' ? EMAIL_CONFIG.adminEmail : email;
       
       await sendEmail({
         to_email: testEmail,

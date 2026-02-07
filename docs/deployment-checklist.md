@@ -15,10 +15,34 @@
 Add these to your Vercel Environment Variables:
 
 ```bash
+# Production Environment Variables
+NODE_ENV=production
 RESEND_API_KEY=re_HY9VftLz_8e3j2HD8nx3GZYrPhBafbX3m
 ADMIN_EMAIL=sellomakgatho121@gmail.com
-FROM_EMAIL=onboarding@resend.dev
+FROM_EMAIL=onboarding@resend.dev  # Testing domain (temporary)
+
+# For Production (after domain verification):
+# FROM_EMAIL=noreply@blacklightwebdesigns.com
 ```
+
+### 🚀 Quick Vercel Setup
+
+**Immediate Deployment Steps:**
+
+1. **Go to Vercel Dashboard**: [vercel.com/dashboard](https://vercel.com/dashboard)
+2. **Select your BL-XD project**
+3. **Add Environment Variables**:
+   - `NODE_ENV=production`
+   - `RESEND_API_KEY=re_HY9VftLz_8e3j2HD8nx3GZYrPhBafbX3m`
+   - `ADMIN_EMAIL=sellomakgatho121@gmail.com`
+   - `FROM_EMAIL=onboarding@resend.dev`
+4. **Deploy**: Click **Redeploy** or push new commit
+5. **Test**: Visit your deployed site and test newsletter form
+
+**After Deployment:**
+- ✅ Admin emails will work immediately
+- ✅ Subscriber emails will work (sent to your email for testing)
+- 🔄 Later: Verify domain to send to actual users
 
 ### 📋 Pre-Deployment Checklist
 
