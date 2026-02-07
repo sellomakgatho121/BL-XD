@@ -9,6 +9,7 @@ import GlitchText from "@/components/GlitchText";
 import QuantumField from "@/components/blacklight/quantum-field";
 import ServiceCard from "@/components/blacklight/service-card";
 import MetricCard from "@/components/blacklight/metric-card";
+import Navigation from "@/components/marketing/navigation";
 import { Button } from "@/components/ui/button";
 
 const services = [

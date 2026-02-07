@@ -3,14 +3,6 @@
 import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Loader2, Lock } from "lucide-react";
-import emailjs from "@emailjs/browser";
-
-// EmailJS Configuration
-const EMAILJS_CONFIG = {
-  serviceId: "service_svwgduq",
-  templateId: "template_prrf7h8",
-  publicKey: "wpt3N53ze2mSeexh9",
-};
 
 export default function NewsletterForm() {
     const [email, setEmail] = useState("");
@@ -25,25 +17,22 @@ export default function NewsletterForm() {
         setErrorMessage("");
 
         try {
-            // Send email using EmailJS browser SDK
-            const templateParams = {
-                user_email: email,
-                to_email: "sellomakgatho121@gmail.com",
-                from_name: "Blacklight Web Designs",
-                message: `New newsletter subscription from: ${email}`,
-            };
+            const response = await fetch("/api/newsletter", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            });
 
-            await emailjs.send(
-                EMAILJS_CONFIG.serviceId,
-                EMAILJS_CONFIG.templateId,
-                templateParams,
-                EMAILJS_CONFIG.publicKey
-            );
+            const data = await response.json();
 
-            setStatus("success");
-            setEmail("");
+            if (data.success) {
+                setStatus("success");
+                setEmail("");
+            } else {
+                throw new Error(data.error || "Subscription failed");
+            }
         } catch (error) {
-            console.error("EmailJS error:", error);
+            console.error("Newsletter error:", error);
             setStatus("error");
             setErrorMessage("Failed to subscribe. Please try again.");
         }
