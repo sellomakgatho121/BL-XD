@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { HelpCircle, Sparkles, Mouse, Mail } from "lucide-react";
 
 const quirkyTips = [
@@ -44,17 +44,18 @@ const generateSparkleData = (count: number) => {
 export default function ClientGuide() {
   const [activeTip, setActiveTip] = useState(0);
   const [showGuide, setShowGuide] = useState(true);
+  // Mouse tracking with lower spring stiffness for performance
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  const mouseXSpring = useSpring(mouseX);
-  const mouseYSpring = useSpring(mouseY);
+  const mouseXSpring = useSpring(mouseX, { stiffness: 100, damping: 30 });
+  const mouseYSpring = useSpring(mouseY, { stiffness: 100, damping: 30 });
   
-  const rotateX = useTransform(mouseYSpring, [-100, 100], [5, -5]);
-  const rotateY = useTransform(mouseXSpring, [-100, 100], [-5, 5]);
+  const rotateX = useTransform(mouseYSpring, [-100, 100], [3, -3]);
+  const rotateY = useTransform(mouseXSpring, [-100, 100], [-3, 3]);
 
-  // Generate sparkle data once
-  const sparkleData = useMemo(() => generateSparkleData(3), []);
+  // Generate sparkle data once - reduced count
+  const sparkleData = useMemo(() => generateSparkleData(2), []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -63,13 +64,21 @@ export default function ClientGuide() {
     return () => clearInterval(interval);
   }, []);
 
-  // Hide guide after user has seen all tips
+  // Hide guide after user has seen all tips - shorter duration
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowGuide(false);
-    }, 25000); // Show for 25 seconds total (reduced from 35)
+    }, 20000); // Show for 20 seconds total
     return () => clearTimeout(timer);
   }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 100;
+    const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 100;
+    mouseX.set(x);
+    mouseY.set(y);
+  }, [mouseX, mouseY]);
 
   if (!showGuide) return null;
 
@@ -81,6 +90,7 @@ export default function ClientGuide() {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 0.8, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
+      onMouseMove={handleMouseMove}
       className={`fixed ${currentTip.position} z-40 max-w-xs`}
       style={{
         perspective: 1000,

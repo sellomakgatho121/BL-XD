@@ -3,39 +3,49 @@
 import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Loader2, Lock } from "lucide-react";
+import emailjs from "@emailjs/browser";
+
+// EmailJS Configuration
+const EMAILJS_CONFIG = {
+  serviceId: "service_jljtpma",
+  templateId: "template_prrf7h8",
+  publicKey: "cLfp02gQcTFekRUf-",
+};
 
 export default function NewsletterForm() {
     const [email, setEmail] = useState("");
-    const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (!email) return;
 
         setStatus("loading");
+        setErrorMessage("");
 
         try {
-            const response = await fetch("/api/newsletter", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email }),
-            });
+            // Send email using EmailJS browser SDK
+            const templateParams = {
+                user_email: email,
+                to_email: "sellomakgatho121@gmail.com",
+                from_name: "Blacklight Web Designs",
+                message: `New newsletter subscription from: ${email}`,
+            };
 
-            const data = await response.json();
+            await emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                templateParams,
+                EMAILJS_CONFIG.publicKey
+            );
 
-            if (data.success) {
-                setStatus("success");
-                setEmail("");
-            } else {
-                // Handle error - you could show an error message here
-                console.error("Newsletter error:", data.error);
-                setStatus("idle"); // Reset to allow retry
-            }
+            setStatus("success");
+            setEmail("");
         } catch (error) {
-            console.error("Network error:", error);
-            setStatus("idle"); // Reset to allow retry
+            console.error("EmailJS error:", error);
+            setStatus("error");
+            setErrorMessage("Failed to subscribe. Please try again.");
         }
     };
 
@@ -110,6 +120,16 @@ export default function NewsletterForm() {
                     </motion.form>
                 )}
             </AnimatePresence>
+            
+            {status === "error" && (
+                <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-2 text-sm text-siren-red font-mono"
+                >
+                    {errorMessage}
+                </motion.p>
+            )}
         </div>
     );
 }

@@ -2,16 +2,25 @@
 
 import { motion } from "framer-motion";
 import { Terminal } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import GlitchText from "@/components/GlitchText";
 import CountdownTimer from "@/components/CountdownTimer";
 import SystemStatus from "@/components/SystemStatus";
 import DistortionTransition from "@/components/DistortionTransition";
-import MysteryReveal from "@/components/MysteryReveal";
-import QuantumField from "@/components/QuantumField";
-import ClientGuide from "@/components/ClientGuide";
 import Logo from "@/components/Logo";
+
+// Lazy load heavy components for better initial load performance
+const MysteryReveal = lazy(() => import("@/components/MysteryReveal"));
+const QuantumField = lazy(() => import("@/components/QuantumField"));
+const ClientGuide = lazy(() => import("@/components/ClientGuide"));
+
+// Loading fallback for lazy components
+const ComponentFallback = () => (
+  <div className="w-full h-32 flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-signal-lime/30 border-t-signal-lime rounded-full animate-spin" />
+  </div>
+);
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -68,18 +77,22 @@ export default function Home() {
               <span className="text-sm opacity-50">Something extraordinary is building at the intersection of code and intelligence.</span>
             </motion.p>
 
-            {/* Quantum Field Visualization */}
+            {/* Quantum Field Visualization - lazy loaded */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
               className="my-12"
             >
-              <QuantumField />
+              <Suspense fallback={<ComponentFallback />}>
+                <QuantumField />
+              </Suspense>
             </motion.div>
 
-            {/* Animated Services Integration */}
-            <MysteryReveal />
+            {/* Animated Services Integration - lazy loaded */}
+            <Suspense fallback={null}>
+              <MysteryReveal />
+            </Suspense>
 
             {/* Countdown Timer */}
             <motion.div
@@ -126,8 +139,10 @@ export default function Home() {
         <SystemStatus />
       </div>
 
-      {/* Client Guide Tooltip */}
-      <ClientGuide />
+      {/* Client Guide Tooltip - lazy loaded */}
+      <Suspense fallback={null}>
+        <ClientGuide />
+      </Suspense>
     </div>
   );
 }

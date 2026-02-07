@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, useMemo, useState, useEffect, useCallback } from "react";
 
 // Generate random values once during component mount
@@ -31,6 +31,34 @@ const generateParticleData = (count: number) => {
   return particles;
 };
 
+// Optimized RAF game loop using refs
+const useGameLoop = (callback: () => void, isActive: boolean, intervalMs: number = 50) => {
+  const callbackRef = useRef(callback);
+  const rafRef = useRef<number | undefined>(undefined);
+  const lastTimeRef = useRef(0);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const loop = (timestamp: number) => {
+      if (timestamp - lastTimeRef.current >= intervalMs) {
+        lastTimeRef.current = timestamp;
+        callbackRef.current();
+      }
+      rafRef.current = requestAnimationFrame(loop);
+    };
+
+    rafRef.current = requestAnimationFrame(loop);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [isActive, intervalMs]);
+};
+
 // Mobile endless runner game component
 const MobileRunnerGame = ({ isActive }: { isActive: boolean }) => {
   const [playerY, setPlayerY] = useState(50);
@@ -39,45 +67,34 @@ const MobileRunnerGame = ({ isActive }: { isActive: boolean }) => {
   const [gameOver, setGameOver] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
 
-  useEffect(() => {
-    if (!isActive || gameOver) return;
+  useGameLoop(() => {
+    setObstacles(prev => {
+      const updated = prev.map(obs => ({ ...obs, x: obs.x - 2 }));
+      const filtered = updated.filter(obs => obs.x > -10);
+      
+      // Add new obstacle
+      if (filtered.length < 3 && Math.random() < 0.02) {
+        filtered.push({
+          id: Date.now(),
+          x: 100,
+          y: Math.random() < 0.5 ? 70 : 30
+        });
+      }
+      
+      return filtered;
+    });
 
-    const gameLoop = setInterval(() => {
-      setObstacles(prev => {
-        const updated = prev.map(obs => ({ ...obs, x: obs.x - 2 }));
-        const filtered = updated.filter(obs => obs.x > -10);
-        
-        // Add new obstacle
-        if (filtered.length < 3 && Math.random() < 0.02) {
-          filtered.push({
-            id: Date.now(),
-            x: 100,
-            y: Math.random() < 0.5 ? 70 : 30
-          });
-        }
-        
-        return filtered;
-      });
+    setScore(prev => prev + 1);
+  }, isActive && !gameOver, 50);
 
-      setScore(prev => prev + 1);
-    }, 50);
-
-    return () => clearInterval(gameLoop);
-  }, [isActive, gameOver]);
-
-  useEffect(() => {
-    if (!isActive || gameOver) return;
-
-    const collisionCheck = setInterval(() => {
-      obstacles.forEach(obs => {
-        if (obs.x > 15 && obs.x < 25 && Math.abs(obs.y - playerY) < 15) {
-          setGameOver(true);
-        }
-      });
-    }, 50);
-
-    return () => clearInterval(collisionCheck);
-  }, [obstacles, playerY, isActive, gameOver]);
+  // Collision detection - throttled
+  useGameLoop(() => {
+    obstacles.forEach(obs => {
+      if (obs.x > 15 && obs.x < 25 && Math.abs(obs.y - playerY) < 15) {
+        setGameOver(true);
+      }
+    });
+  }, isActive && !gameOver, 100);
 
   const handleJump = useCallback(() => {
     if (!isJumping && !gameOver) {
@@ -124,7 +141,6 @@ const MobileRunnerGame = ({ isActive }: { isActive: boolean }) => {
             style={{ 
               left: '20%', 
               bottom: `${playerY}%`,
-              filter: "blur(0.5px)"
             }}
             animate={{ y: isJumping ? -20 : 0 }}
             transition={{ duration: 0.3 }}
@@ -138,7 +154,6 @@ const MobileRunnerGame = ({ isActive }: { isActive: boolean }) => {
               style={{ 
                 left: `${obs.x}%`, 
                 bottom: `${obs.y}%`,
-                filter: "blur(0.5px)"
               }}
             />
           ))}
@@ -178,24 +193,50 @@ const MobileRunnerGame = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
+export function useReducedMotion(): boolean {
+  // Initialize with the current match state to avoid setState in effect
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMatch = () => {
+      setPrefersReducedMotion(mediaQuery.matches);
+    };
+    mediaQuery.addEventListener("change", handleMatch);
+    return () => mediaQuery.removeEventListener("change", handleMatch);
+  }, []);
+
+  return prefersReducedMotion;
+};
+
 export default function QuantumField() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isMobile, setIsMobile] = useState(false);
   const [gameActive, setGameActive] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   
-  const mouseXSpring = useSpring(mouseX);
-  const mouseYSpring = useSpring(mouseY);
+  // Lower stiffness for better performance
+  const mouseXSpring = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const mouseYSpring = useSpring(mouseY, { stiffness: 50, damping: 20 });
   
   const rotateX = useTransform(mouseYSpring, [-100, 100], [15, -15]);
   const rotateY = useTransform(mouseXSpring, [-100, 100], [-15, 15]);
   
   // Create transform values for dynamic styles
   const coreScale = useTransform([mouseX, mouseY], ([x, y]: number[]) => 1 + Math.abs((x ?? 0) + (y ?? 0)) / 200);
+  
+  // Mouse-following particle transforms - MUST be at top level (hooks rule)
+  const particleX = useTransform(mouseX, (v) => v * 3);
+  const particleY = useTransform(mouseY, (v) => v * 3);
 
-  // Generate particle data once
-  const particleData = useMemo(() => generateParticleData(50), []);
+  // Generate particle data once - reduce count on mobile
+  const particleCount = useMemo(() => isMobile ? 15 : 30, [isMobile]);
+  const particleData = useMemo(() => generateParticleData(particleCount), [particleCount]);
   const streamDelays = useMemo(() => generateRandomValues(5, 0, 0.8), []);
 
   // Detect mobile
@@ -208,21 +249,25 @@ export default function QuantumField() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Enhanced mouse interaction for PC
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current || isMobile) return;
+  // Enhanced mouse interaction for PC - throttled
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!containerRef.current || isMobile || !isHovering) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 100;
     const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 100;
     mouseX.set(x);
     mouseY.set(y);
-  };
+  }, [isMobile, isHovering, mouseX, mouseY]);
 
-  const handleMouseLeave = () => {
-    if (isMobile) return;
+  const handleMouseEnter = useCallback(() => {
+    setIsHovering(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
     mouseX.set(0);
     mouseY.set(0);
-  };
+  }, [mouseX, mouseY]);
 
   // Mobile touch handling
   const handleTouchStart = () => {
@@ -236,6 +281,7 @@ export default function QuantumField() {
       ref={containerRef}
       className="relative w-full h-96 overflow-hidden cursor-pointer"
       onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
     >
@@ -263,39 +309,32 @@ export default function QuantumField() {
               delay: particle.delay,
               ease: "easeInOut",
             }}
-            style={{
-              filter: "blur(0.5px)",
-            }}
           />
         ))}
         
         {/* Mouse-following particles for PC */}
         {!isMobile && (
-          <AnimatePresence>
-            <motion.div
-              className="absolute w-2 h-2 bg-signal-lime rounded-full"
-              style={{
-                left: '50%',
-                top: '50%',
-                x: mouseX,
-                y: mouseY,
-                filter: "blur(2px)",
-              }}
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          </AnimatePresence>
+          <motion.div
+            className="absolute w-2 h-2 bg-signal-lime rounded-full"
+            style={{
+              left: '50%',
+              top: '50%',
+              x: particleX,
+              y: particleY,
+            }}
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.5, 1, 0.5],
+            }}
+            transition={{
+              scale: { duration: 1, repeat: Infinity, ease: "easeInOut" },
+              opacity: { duration: 1, repeat: Infinity, ease: "easeInOut" },
+            }}
+          />
         )}
       </div>
-
-      {/* Enhanced Energy Grid with mouse interaction */}
+        
+        {/* Enhanced Energy Grid with mouse interaction */}
       <motion.div
         className="absolute inset-0"
         style={{
@@ -337,7 +376,7 @@ export default function QuantumField() {
         />
       </motion.div>
 
-      {/* Enhanced Central Core with mouse interaction */}
+      {/* Enhanced Central Core with mouse interaction - simplified animation */}
       <motion.div
         className="absolute top-1/2 left-1/2 w-32 h-32 -translate-x-1/2 -translate-y-1/2"
         animate={{
@@ -345,6 +384,7 @@ export default function QuantumField() {
         }}
         style={{
           scale: isMobile ? 0.8 : coreScale,
+          willChange: "transform",
         }}
         transition={{
           duration: 20,
@@ -396,7 +436,7 @@ export default function QuantumField() {
               delay: 1,
             }}
             style={{
-              filter: "blur(8px)",
+              willChange: "transform",
             }}
           />
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 const mysteryMessages = [
   {
@@ -99,18 +99,19 @@ export default function MysteryReveal() {
   const [isRevealing, setIsRevealing] = useState(false);
   const [quirkyIndex, setQuirkyIndex] = useState(-1); // -1 means showing default button
   const [showJoke, setShowJoke] = useState(false);
+  // Generate random data once - reduced counts for performance
+  const binaryRain = useMemo(() => generateBinaryRain(12), []);
+  const floatingParticles = useMemo(() => generateFloatingParticles(5), []);
+
+  // Mouse tracking with lower spring stiffness for performance
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  const mouseXSpring = useSpring(mouseX);
-  const mouseYSpring = useSpring(mouseY);
+  const mouseXSpring = useSpring(mouseX, { stiffness: 100, damping: 30 });
+  const mouseYSpring = useSpring(mouseY, { stiffness: 100, damping: 30 });
   
-  const backgroundX = useTransform(mouseXSpring, [-100, 100], [0, 50]);
-  const backgroundY = useTransform(mouseYSpring, [-100, 100], [0, 50]);
-
-  // Generate random data once
-  const binaryRain = useMemo(() => generateBinaryRain(20), []);
-  const floatingParticles = useMemo(() => generateFloatingParticles(8), []);
+  const backgroundX = useTransform(mouseXSpring, [-100, 100], [0, 30]);
+  const backgroundY = useTransform(mouseYSpring, [-100, 100], [0, 30]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -123,13 +124,13 @@ export default function MysteryReveal() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 100;
     const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 100;
     mouseX.set(x);
     mouseY.set(y);
-  };
+  }, [mouseX, mouseY]);
 
   const handleButtonClick = () => {
     // Cycle to next quirky message
@@ -206,33 +207,22 @@ export default function MysteryReveal() {
           ))}
         </div>
 
-        {/* Title */}
+        {/* Title - simplified animation without character-by-character reveals */}
         <motion.h2
           key={current.title}
-          initial={{ opacity: 0, scale: 0.8, rotateX: 90 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ 
             opacity: isRevealing ? 0 : 1, 
-            scale: isRevealing ? 0.8 : 1,
-            rotateX: isRevealing ? 90 : 0,
+            scale: isRevealing ? 0.9 : 1,
           }}
           transition={{ 
-            duration: 0.8, 
-            ease: [0.16, 1, 0.3, 1] 
+            duration: 0.5, 
+            ease: "easeOut"
           }}
           className="text-4xl md:text-6xl font-black tracking-tighter font-mono mb-4"
         >
-          <span className="inline-block">
-            {current.title.split("").map((char, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className="inline-block text-signal-lime"
-              >
-                {char}
-              </motion.span>
-            ))}
+          <span className="inline-block text-signal-lime">
+            {current.title}
           </span>
         </motion.h2>
 
