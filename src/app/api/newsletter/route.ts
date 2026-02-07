@@ -1,54 +1,42 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { Resend } from 'resend';
 
-// EmailJS Configuration
-const EMAILJS_CONFIG = {
-  serviceId: process.env.EMAILJS_SERVICE_ID || 'service_jljtpma',
-  templateId: process.env.EMAILJS_TEMPLATE_ID || 'template_prrf7h8',
-  publicKey: process.env.EMAILJS_PUBLIC_KEY || '',
-  privateKey: process.env.EMAILJS_PRIVATE_KEY || '', // Optional, for server-side
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Email Configuration
+const EMAIL_CONFIG = {
   adminEmail: process.env.ADMIN_EMAIL || 'sellomakgatho121@gmail.com',
+  fromEmail: process.env.FROM_EMAIL || 'noreply@blacklightwebdesigns.com',
 };
 
-// EmailJS API endpoint
-const EMAILJS_API_URL = 'https://api.emailjs.com/api/v1.0/email/send';
-
-// Send email via EmailJS
-async function sendEmailJS(params: {
+// Send email via Resend
+async function sendEmail(params: {
   to_email: string;
   subject: string;
   message: string;
   from_name?: string;
   reply_to?: string;
 }) {
-  const templateParams = {
-    service_id: EMAILJS_CONFIG.serviceId,
-    template_id: EMAILJS_CONFIG.templateId,
-    user_id: EMAILJS_CONFIG.publicKey,
-    accessToken: EMAILJS_CONFIG.privateKey || undefined,
-    template_params: {
-      to_email: params.to_email,
+  try {
+    const { data, error } = await resend.emails.send({
+      from: `${params.from_name || 'Blacklight Web Designs'} <${EMAIL_CONFIG.fromEmail}>`,
+      to: [params.to_email],
       subject: params.subject,
-      message: params.message,
-      from_name: params.from_name || 'Blacklight Web Designs',
-      reply_to: params.reply_to || 'noreply@blacklightwebdesigns.com',
-    },
-  };
+      html: params.message,
+      replyTo: params.reply_to || EMAIL_CONFIG.fromEmail,
+    });
 
-  const response = await fetch(EMAILJS_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(templateParams),
-  });
+    if (error) {
+      throw new Error(`Resend Error: ${error.message}`);
+    }
 
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`EmailJS Error: ${error}`);
+    return data;
+  } catch (error) {
+    console.error('Resend API Error:', error);
+    throw new Error(`Email Error: ${error}`);
   }
-
-  return await response.json();
 }
 
 export async function POST(request: NextRequest) {
@@ -69,9 +57,9 @@ export async function POST(request: NextRequest) {
 
     // Send admin notification
     try {
-      console.log('Sending admin notification to:', EMAILJS_CONFIG.adminEmail);
-      await sendEmailJS({
-        to_email: EMAILJS_CONFIG.adminEmail,
+      console.log('Sending admin notification to:', EMAIL_CONFIG.adminEmail);
+      await sendEmail({
+        to_email: EMAIL_CONFIG.adminEmail,
         subject: '🚀 New Blacklight Lead Subscribed',
         message: `
           <div style="font-family: monospace; background: #0a0a0a; color: #00ff00; padding: 20px; border: 1px solid #00ff00;">
@@ -97,8 +85,11 @@ export async function POST(request: NextRequest) {
     // Send subscriber confirmation
     try {
       console.log('Sending subscriber confirmation to:', email);
-      await sendEmailJS({
-        to_email: email,
+      // For testing with Resend dev domain, send to admin email
+      const testEmail = email === 'test@example.com' ? EMAIL_CONFIG.adminEmail : email;
+      
+      await sendEmail({
+        to_email: testEmail,
         subject: "You're on the Blacklight Notification List!",
         message: `
           <div style="font-family: monospace; background: #0a0a0a; color: #00ff00; padding: 20px; text-align: center;">
@@ -113,6 +104,7 @@ export async function POST(request: NextRequest) {
             </p>
           </div>
         `,
+        reply_to: email,
       });
       console.log('Subscriber confirmation sent successfully');
       subscriberEmailSent = true;
