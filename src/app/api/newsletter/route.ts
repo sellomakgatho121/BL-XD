@@ -2,13 +2,15 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { Resend } from 'resend';
 
-// Initialize Resend
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend with proper error handling
+const resend = process.env.RESEND_API_KEY 
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 // Email Configuration
 const EMAIL_CONFIG = {
   adminEmail: process.env.ADMIN_EMAIL || 'sellomakgatho121@gmail.com',
-  fromEmail: process.env.FROM_EMAIL || 'noreply@blacklightwebdesigns.com',
+  fromEmail: process.env.FROM_EMAIL || 'onboarding@resend.dev',
 };
 
 // Send email via Resend
@@ -19,6 +21,10 @@ async function sendEmail(params: {
   from_name?: string;
   reply_to?: string;
 }) {
+  if (!resend) {
+    throw new Error('Resend API key not configured');
+  }
+
   try {
     const { data, error } = await resend.emails.send({
       from: `${params.from_name || 'Blacklight Web Designs'} <${EMAIL_CONFIG.fromEmail}>`,
@@ -29,6 +35,7 @@ async function sendEmail(params: {
     });
 
     if (error) {
+      console.error('Resend API Error:', error);
       throw new Error(`Resend Error: ${error.message}`);
     }
 
@@ -48,6 +55,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Invalid email address' },
         { status: 400 }
+      );
+    }
+
+    // Check if Resend is configured
+    if (!resend) {
+      return NextResponse.json(
+        { success: false, error: 'Email service not configured' },
+        { status: 500 }
       );
     }
 
