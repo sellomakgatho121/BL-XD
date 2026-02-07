@@ -63,19 +63,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let emailSent = false;
+    let adminEmailSent = false;
+    let subscriberEmailSent = false;
     let lastError = null;
 
-    // Try EmailJS first
+    // Send admin notification
     try {
-      console.log('EmailJS Config:', {
-        serviceId: EMAILJS_CONFIG.serviceId,
-        templateId: EMAILJS_CONFIG.templateId,
-        hasPublicKey: !!EMAILJS_CONFIG.publicKey,
-        hasPrivateKey: !!EMAILJS_CONFIG.privateKey,
-      });
-
-      // Send notification to admin
       console.log('Sending admin notification to:', EMAILJS_CONFIG.adminEmail);
       await sendEmailJS({
         to_email: EMAILJS_CONFIG.adminEmail,
@@ -95,8 +88,14 @@ export async function POST(request: NextRequest) {
         `,
       });
       console.log('Admin notification sent successfully');
+      adminEmailSent = true;
+    } catch (error) {
+      console.error('Admin email failed:', error);
+      lastError = error;
+    }
 
-      // Send confirmation to subscriber
+    // Send subscriber confirmation
+    try {
       console.log('Sending subscriber confirmation to:', email);
       await sendEmailJS({
         to_email: email,
@@ -116,12 +115,13 @@ export async function POST(request: NextRequest) {
         `,
       });
       console.log('Subscriber confirmation sent successfully');
-
-      emailSent = true;
+      subscriberEmailSent = true;
     } catch (error) {
+      console.error('Subscriber email failed:', error);
       lastError = error;
-      console.error('EmailJS failed with error:', error);
     }
+
+    const emailSent = adminEmailSent || subscriberEmailSent;
 
     // Fallback: Log to file if EmailJS fails
     if (!emailSent) {
@@ -148,6 +148,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: 'Successfully subscribed to newsletter',
+        adminEmailSent,
+        subscriberEmailSent,
       });
     } else {
       return NextResponse.json(
