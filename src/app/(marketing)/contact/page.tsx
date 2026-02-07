@@ -66,31 +66,12 @@ export default function ContactPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
-          >
-            <AlertCircle className="w-4 h-4" />
-            Failed to submit form
-          </motion.div>
-        ));
+        setError(data.error || "Failed to submit form");
         return;
       }
 
       setSubmitted(true);
     } catch {
-      setError(
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
-        >
-          <AlertCircle className="w-4 h-4" />
-          An unexpected error occurred. Please try again.
-        </motion.div>
-      );
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);

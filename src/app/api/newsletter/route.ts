@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       lastError = error;
     }
 
-    const emailSent = adminEmailSent || subscriberEmailSent;
+    let emailSent = adminEmailSent || subscriberEmailSent;
 
     // Fallback: Log to file if EmailJS fails
     if (!emailSent) {

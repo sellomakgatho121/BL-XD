@@ -26,6 +26,7 @@ export async function GET(
 
     const isAdmin = profile?.role === 'admin' || profile?.role === 'superadmin';
 
+    // Build query based on role
     let query = supabase
       .from('projects')
       .select(`
@@ -35,14 +36,13 @@ export async function GET(
         files:project_files(*),
         messages:messages(*)
       `)
-      .eq('id', id)
-      .single();
+      .eq('id', id);
 
     if (!isAdmin) {
       query = query.eq('client_id', user.id);
     }
 
-    const { data: project, error } = await query;
+    const { data: project, error } = await query.single();
 
     if (error || !project) {
       return NextResponse.json(
