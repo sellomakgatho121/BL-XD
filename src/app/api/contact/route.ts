@@ -1,5 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { sendEmail, emailTemplates } from '@/lib/email';
+import { analyzeLead } from '@/lib/ai/lead-scoring';
 
 export async function POST(request: Request) {
   try {
@@ -46,8 +48,76 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: Send notification email to admin
-    // This would integrate with your email service (Resend, SendGrid, etc.)
+    // AI Lead Scoring
+    try {
+      // Don't block the response significantly, but ensure execution
+      const aiPromise = async () => {
+        const scoreResult = await analyzeLead({
+          name: body.name,
+          email: body.email,
+          business_name: body.business_name,
+          business_type: body.business_type,
+          budget_range: body.budget_range,
+          message: body.message,
+        });
+
+        await supabase.from('lead_scores').insert({
+          submission_id: submission.id,
+          score: scoreResult.score,
+          category: scoreResult.category,
+          analysis: scoreResult.analysis,
+        });
+      };
+      
+      // In Vercel serverless, this might be killed if not awaited. 
+      // We await it for reliability in this MVP phase.
+      await aiPromise();
+    } catch (aiError) {
+      console.error('AI Analysis failed:', aiError);
+    }
+
+    // Send email notification
+    try {
+      await sendEmail({
+        to: process.env.ADMIN_EMAIL || 'admin@blacklightwebdesigns.co.za',
+        ...emailTemplates.contactSubmission({
+          name: body.name,
+          email: body.email,
+          businessName: body.business_name,
+          businessType: body.business_type,
+          budget: body.budget_range,
+          message: body.message,
+        }),
+      });
+    } catch (emailError) {
+      console.error('Failed to send email:', emailError);
+      // Don't fail the request if email fails
+    }
+
+    // Create notification for admins
+    try {
+      const { data: adminProfile } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('role', 'admin')
+        .limit(1)
+        .single();
+
+      if (adminProfile) {
+        await supabase
+          .from('notifications')
+          .insert({
+            user_id: adminProfile.id,
+            type: 'lead',
+            title: 'New Lead',
+            message: `New contact form submission from ${body.name}`,
+            data: { name: body.name, email: body.email, business_name: body.business_name },
+            read: false,
+          });
+      }
+    } catch (notificationError) {
+      console.error('Failed to create notification:', notificationError);
+    }
 
     return NextResponse.json(
       { 

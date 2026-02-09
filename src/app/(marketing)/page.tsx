@@ -11,6 +11,9 @@ import ServiceCard from "@/components/blacklight/service-card";
 import MetricCard from "@/components/blacklight/metric-card";
 import Navigation from "@/components/marketing/navigation";
 import { Button } from "@/components/ui/button";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata.home();
 
 const services = [
   {

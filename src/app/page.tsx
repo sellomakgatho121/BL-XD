@@ -13,6 +13,7 @@ import Logo from "@/components/Logo";
 // Lazy load heavy components for better initial load performance
 const MysteryReveal = lazy(() => import("@/components/MysteryReveal"));
 const QuantumField = lazy(() => import("@/components/QuantumField"));
+const ShowcaseGallery = lazy(() => import("@/components/ShowcaseGallery"));
 const ClientGuide = lazy(() => import("@/components/ClientGuide"));
 
 // Loading fallback for lazy components
@@ -77,7 +78,6 @@ export default function Home() {
               <span className="text-sm opacity-50">Something extraordinary is building at the intersection of code and intelligence.</span>
             </motion.p>
 
-            {/* Quantum Field Visualization - lazy loaded */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -88,6 +88,10 @@ export default function Home() {
                 <QuantumField />
               </Suspense>
             </motion.div>
+
+            <Suspense fallback={<ComponentFallback />}>
+              <ShowcaseGallery />
+            </Suspense>
 
             {/* Animated Services Integration - lazy loaded */}
             <Suspense fallback={null}>

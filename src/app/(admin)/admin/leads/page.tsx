@@ -36,6 +36,7 @@ interface Lead {
   assigned_to_profile: { full_name: string; email: string } | null;
   created_at: string;
   notes: string | null;
+  lead_scores: { score: number; category: string; analysis: any }[];
 }
 
 const statusConfig = {
@@ -59,7 +60,8 @@ export default function LeadsPage() {
         .from("contact_submissions")
         .select(`
           *,
-          assigned_to_profile:profiles!assigned_to(full_name, email)
+          assigned_to_profile:profiles!assigned_to(full_name, email),
+          lead_scores(score, category, analysis)
         `)
         .order("created_at", { ascending: false });
 
@@ -220,6 +222,28 @@ export default function LeadsPage() {
                       {new Date(lead.created_at).toLocaleDateString()}
                     </div>
                   </div>
+                  {lead.lead_scores?.[0] && (
+                    <div className="mt-3 pt-3 border-t border-[var(--border)]">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-[var(--spectral-muted)] uppercase tracking-wider">AI Score</span>
+                        <span className={`text-xs font-bold font-mono ${
+                          lead.lead_scores[0].score >= 80 ? 'text-[var(--signal-lime)]' : 
+                          lead.lead_scores[0].score >= 50 ? 'text-[var(--electric-purple)]' : 'text-[var(--spectral-dim)]'
+                        }`}>
+                          {lead.lead_scores[0].score}/100
+                        </span>
+                      </div>
+                      <div className="w-full bg-[var(--onyx)] h-1 mt-1">
+                        <div 
+                          className={`h-full ${
+                            lead.lead_scores[0].score >= 80 ? 'bg-[var(--signal-lime)]' : 
+                            lead.lead_scores[0].score >= 50 ? 'bg-[var(--electric-purple)]' : 'bg-[var(--spectral-dim)]'
+                          }`}
+                          style={{ width: `${lead.lead_scores[0].score}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               );
             })
@@ -269,6 +293,40 @@ export default function LeadsPage() {
                 <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Message</h3>
                 <p className="text-sm text-[var(--spectral-dim)] whitespace-pre-wrap">{selectedLead.message}</p>
               </div>
+
+              {selectedLead.lead_scores?.[0] && (
+                <div className="border-t border-[var(--border)] pt-4">
+                  <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2 flex items-center gap-2">
+                    AI Insight 
+                    <span className={`text-xs px-2 py-0.5 border ${
+                      selectedLead.lead_scores[0].category === 'hot' ? 'border-[var(--signal-lime)] text-[var(--signal-lime)]' : 
+                      'border-[var(--spectral-dim)] text-[var(--spectral-dim)]'
+                    }`}>
+                      {selectedLead.lead_scores[0].category.toUpperCase()}
+                    </span>
+                  </h3>
+                  <div className="bg-[var(--onyx)] p-4 text-sm space-y-3 border border-[var(--border)]">
+                    <div>
+                      <span className="text-[var(--spectral-muted)] block text-xs uppercase mb-1">Intent</span>
+                      <span className="text-[var(--spectral-white)]">{selectedLead.lead_scores[0].analysis.intent}</span>
+                    </div>
+                    <div>
+                      <span className="text-[var(--spectral-muted)] block text-xs uppercase mb-1">Suggested Action</span>
+                      <span className="text-[var(--signal-lime)]">{selectedLead.lead_scores[0].analysis.suggested_action}</span>
+                    </div>
+                    <div>
+                      <span className="text-[var(--spectral-muted)] block text-xs uppercase mb-1">Key Factors</span>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedLead.lead_scores[0].analysis.factors?.map((factor: string, i: number) => (
+                          <span key={i} className="text-xs bg-[var(--card)] border border-[var(--border)] px-2 py-1 text-[var(--spectral-dim)]">
+                            {factor}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="border-t border-[var(--border)] pt-4 space-y-3">
                 <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)]">Update Status</h3>

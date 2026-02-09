@@ -60,134 +60,245 @@ const useGameLoop = (callback: () => void, isActive: boolean, intervalMs: number
 };
 
 // Mobile endless runner game component
-const MobileRunnerGame = ({ isActive }: { isActive: boolean }) => {
-  const [playerY, setPlayerY] = useState(50);
-  const [obstacles, setObstacles] = useState<Array<{ id: number; x: number; y: number }>>([]);
+const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
+  const [gameState, setGameState] = useState<'start' | 'playing' | 'gameover'>('start');
   const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [isJumping, setIsJumping] = useState(false);
+  const [highScore, setHighScore] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Game refs for high-performance updates
+  const playerRef = useRef({ y: 50, velocity: 0, isJumping: false });
+  const obstaclesRef = useRef<Array<{ id: number; x: number; width: number; height: number; type: 'wall' | 'gap' }>>([]);
+  const requestRef = useRef<number | undefined>(undefined);
+  const lastTimeRef = useRef<number>(0);
+  const scoreRef = useRef(0);
+  const gameStateRef = useRef<'start' | 'playing' | 'gameover'>('start');
 
-  useGameLoop(() => {
-    setObstacles(prev => {
-      const updated = prev.map(obs => ({ ...obs, x: obs.x - 2 }));
-      const filtered = updated.filter(obs => obs.x > -10);
-      
-      // Add new obstacle
-      if (filtered.length < 3 && Math.random() < 0.02) {
-        filtered.push({
-          id: Date.now(),
-          x: 100,
-          y: Math.random() < 0.5 ? 70 : 30
-        });
-      }
-      
-      return filtered;
-    });
+  useEffect(() => {
+    setIsMobile('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
 
-    setScore(prev => prev + 1);
-  }, isActive && !gameOver, 50);
+  // Constants
+  const GRAVITY = 0.6;
+  const JUMP_FORCE = -10;
+  const SPEED = 0.5; // Base speed multiplier
+  const SPAWN_RATE = 1500; // ms
 
-  // Collision detection - throttled
-  useGameLoop(() => {
-    obstacles.forEach(obs => {
-      if (obs.x > 15 && obs.x < 25 && Math.abs(obs.y - playerY) < 15) {
-        setGameOver(true);
-      }
-    });
-  }, isActive && !gameOver, 100);
+  // Render state (for React updates)
+  const [renderTrigger, setRenderTrigger] = useState(0);
 
-  const handleJump = useCallback(() => {
-    if (!isJumping && !gameOver) {
-      setIsJumping(true);
-      setPlayerY(30);
-      setTimeout(() => {
-        setPlayerY(70);
-        setIsJumping(false);
-      }, 500);
-    }
-  }, [isJumping, gameOver]);
-
-  const handleRestart = () => {
-    setGameOver(false);
+  const startGame = () => {
+    setGameState('playing');
+    gameStateRef.current = 'playing';
     setScore(0);
-    setObstacles([]);
-    setPlayerY(70);
-    setIsJumping(false);
+    scoreRef.current = 0;
+    playerRef.current = { y: 50, velocity: 0, isJumping: false };
+    obstaclesRef.current = [];
+    lastTimeRef.current = performance.now();
+    
+    // Initial obstacle
+    spawnObstacle();
+    
+    requestRef.current = requestAnimationFrame(gameLoop);
   };
 
-  // Global touch handler for jumping
+  const spawnObstacle = () => {
+    const type = Math.random() > 0.5 ? 'wall' : 'gap';
+    obstaclesRef.current.push({
+      id: Date.now(),
+      x: 100,
+      width: 10,
+      height: type === 'wall' ? 30 : 40,
+      type
+    });
+  };
+
+  const gameLoop = (time: number) => {
+    if (gameStateRef.current !== 'playing') return;
+
+    const deltaTime = time - lastTimeRef.current;
+    lastTimeRef.current = time;
+
+    // Physics Update
+    const player = playerRef.current;
+    
+    // Gravity
+    player.velocity += GRAVITY;
+    player.y += player.velocity * (deltaTime / 16);
+
+    // Floor/Ceiling collision
+    if (player.y > 85) { // Floor
+      player.y = 85;
+      player.velocity = 0;
+      player.isJumping = false;
+    } else if (player.y < 5) { // Ceiling
+      player.y = 5;
+      player.velocity = 0;
+    }
+
+    // Move obstacles
+    obstaclesRef.current.forEach(obs => {
+      obs.x -= SPEED * (deltaTime / 16);
+    });
+
+    if (obstaclesRef.current.length > 0 && obstaclesRef.current[0].x < -20) {
+      obstaclesRef.current.shift();
+      scoreRef.current += 1;
+      setScore(scoreRef.current);
+    }
+
+    const lastObstacle = obstaclesRef.current[obstaclesRef.current.length - 1];
+    if (!lastObstacle || (100 - lastObstacle.x > 40 + Math.random() * 20)) {
+       if (Math.random() < 0.05) spawnObstacle();
+    }
+
+    // Collision Detection
+    const playerRect = { x: 20, y: player.y, w: 5, h: 5 };
+    
+    for (const obs of obstaclesRef.current) {
+      if (obs.x < playerRect.x + playerRect.w && obs.x + obs.width > playerRect.x) {
+        const obsTop = 100 - obs.height;
+        if (playerRect.y + playerRect.h > obsTop) {
+          gameOver();
+          return; 
+        }
+      }
+    }
+
+    // Trigger render
+    setRenderTrigger(prev => prev + 1);
+    
+    if (gameStateRef.current === 'playing') {
+      requestRef.current = requestAnimationFrame(gameLoop);
+    }
+  };
+
+  const gameOver = () => {
+    setGameState('gameover');
+    gameStateRef.current = 'gameover';
+    if (scoreRef.current > highScore) {
+      setHighScore(scoreRef.current);
+    }
+    if (requestRef.current) cancelAnimationFrame(requestRef.current);
+  };
+
+  const jump = useCallback(() => {
+    if (gameStateRef.current === 'playing' && !playerRef.current.isJumping) {
+      playerRef.current.velocity = JUMP_FORCE;
+      playerRef.current.isJumping = true;
+    } else if (gameStateRef.current !== 'playing') {
+      startGame();
+    }
+  }, []);
+
+  // Keyboard handler for PC
   useEffect(() => {
-    const handleTouchJump = (e: TouchEvent) => {
-      e.preventDefault();
-      handleJump();
+    if (!isActive) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' || e.code === 'ArrowUp') {
+        e.preventDefault();
+        jump();
+      }
     };
 
-    if (isActive) {
-      window.addEventListener('touchstart', handleTouchJump, { passive: false });
-      return () => window.removeEventListener('touchstart', handleTouchJump);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isActive, jump]);
+
+  // Touch handler attached to window for global tap
+  useEffect(() => {
+    if (!isActive) return;
+    
+    const handleTouch = (e: TouchEvent) => {
+      e.preventDefault(); // Prevent scroll
+      jump();
+    };
+    
+    // Also handle click for PC/Mouse users who want to click to jump
+    const handleClick = (e: MouseEvent) => {
+        // Prevent clicking buttons from jumping if we had buttons overlaid
+        // But here we want click to jump anywhere
+        e.preventDefault();
+        jump();
     }
-  }, [isActive, handleJump]);
+    
+    window.addEventListener('touchstart', handleTouch, { passive: false });
+    window.addEventListener('click', handleClick);
+    
+    return () => {
+        window.removeEventListener('touchstart', handleTouch);
+        window.removeEventListener('click', handleClick);
+    };
+  }, [isActive, jump]);
 
   if (!isActive) return null;
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="relative w-full h-full max-w-sm max-h-xs">
-        {/* Game Area */}
-        <div className="absolute inset-4 bg-onyx/50 border border-signal-lime/30 rounded-lg overflow-hidden">
-          {/* Player */}
-          <motion.div
-            className="absolute w-4 h-4 bg-signal-lime rounded-full"
-            style={{ 
-              left: '20%', 
-              bottom: `${playerY}%`,
-            }}
-            animate={{ y: isJumping ? -20 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div className="relative w-full h-full max-w-md overflow-hidden bg-onyx border border-signal-lime/20">
+        
+        {/* Game World */}
+        <div className="absolute inset-0">
+          {/* Ground */}
+          <div className="absolute bottom-0 w-full h-[15%] bg-white/5 border-t border-signal-lime/50" />
           
+          {/* Player */}
+          <div 
+            className="absolute left-[20%] w-6 h-6 bg-signal-lime rounded shadow-[0_0_15px_rgba(0,255,65,0.6)]"
+            style={{ 
+              top: `${playerRef.current.y}%`,
+              transform: 'translateY(-100%)'
+            }}
+          />
+
           {/* Obstacles */}
-          {obstacles.map(obs => (
+          {obstaclesRef.current.map(obs => (
             <div
               key={obs.id}
-              className="absolute w-3 h-6 bg-siren-red/80"
-              style={{ 
-                left: `${obs.x}%`, 
-                bottom: `${obs.y}%`,
+              className="absolute bottom-0 bg-siren-red/80 border border-siren-red shadow-[0_0_10px_rgba(255,0,60,0.4)]"
+              style={{
+                left: `${obs.x}%`,
+                width: `${obs.width}%`,
+                height: `${obs.height}%`
               }}
             />
           ))}
-          
-          {/* Score */}
-          <div className="absolute top-2 left-2 text-xs font-mono text-signal-lime">
-            {Math.floor(score / 10)}
-          </div>
-          
-          {/* Game Over */}
-          {gameOver && (
-            <div className="absolute inset-0 bg-onyx/80 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-sm font-mono text-siren-red mb-2">GAME OVER</div>
-                <div className="text-xs font-mono text-spectral-white mb-2">
-                  Score: {Math.floor(score / 10)}
-                </div>
-                <button
-                  onClick={handleRestart}
-                  className="px-3 py-1 text-xs font-mono bg-signal-lime text-onyx rounded hover:bg-signal-lime/80 transition-colors"
-                >
-                  RESTART
-                </button>
-              </div>
+        </div>
+
+        {/* UI Overlay */}
+        <div className="absolute top-4 left-0 right-0 flex justify-between px-6 font-mono text-sm pointer-events-none">
+          <div className="text-signal-lime">SCORE: {score}</div>
+          <div className="text-white/60">HI: {highScore}</div>
+        </div>
+
+        {/* Game States */}
+        {gameState === 'start' && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 text-center p-6 cursor-pointer" onClick={(e) => { e.stopPropagation(); startGame(); }}>
+            <h3 className="text-2xl font-black text-white mb-2 tracking-tighter">QUANTUM RUNNER</h3>
+            <p className="text-sm text-signal-lime font-mono mb-6 animate-pulse">
+                {isMobile ? "TAP TO START" : "PRESS SPACE / CLICK TO START"}
+            </p>
+            <div className="text-xs text-white/40 max-w-[200px]">
+              Avoid the red glitch barriers.
+              <br/>
+              Survive the simulation.
             </div>
-          )}
-        </div>
-        
-        {/* Instructions */}
-        <div className="absolute bottom-0 left-0 right-0 text-center">
-          <div className="text-xs font-mono text-spectral-white/60">
-            Tap to Jump • Avoid Red Obstacles
           </div>
-        </div>
+        )}
+
+        {gameState === 'gameover' && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-siren-red/20 backdrop-blur-sm text-center p-6">
+            <h3 className="text-3xl font-black text-siren-red mb-2 glitch-text">SYSTEM FAILURE</h3>
+            <div className="text-4xl font-mono text-white mb-6">{score}</div>
+            <button 
+              onClick={(e) => { e.stopPropagation(); startGame(); }}
+              className="px-6 py-3 bg-signal-lime text-black font-bold font-mono uppercase tracking-widest hover:scale-105 transition-transform"
+            >
+              Reboot System
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -233,6 +344,12 @@ export default function QuantumField() {
   // Mouse-following particle transforms - MUST be at top level (hooks rule)
   const particleX = useTransform(mouseX, (v) => v * 3);
   const particleY = useTransform(mouseY, (v) => v * 3);
+
+  const startGameManual = () => {
+    // For PC: Toggle game active if it's not active
+    // For Mobile: Same
+    setGameActive(true);
+  };
 
   // Generate particle data once - reduce count on mobile
   const particleCount = useMemo(() => isMobile ? 15 : 30, [isMobile]);
@@ -284,6 +401,7 @@ export default function QuantumField() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
+      onClick={startGameManual}
     >
       {/* Enhanced Quantum Particles with mouse interaction */}
       <div className="absolute inset-0">
@@ -479,12 +597,12 @@ export default function QuantumField() {
         />
       ))}
 
-      {/* Mobile Game */}
-      <MobileRunnerGame isActive={isMobile && gameActive} />
+      {/* Game */}
+      <QuantumRunnerGame isActive={gameActive} />
       
       {/* Mobile/PC indicator */}
-      <div className="absolute top-2 right-2 text-xs font-mono text-spectral-white/40">
-        {isMobile ? "📱 TOUCH TO PLAY" : "🖱️ MOVE MOUSE"}
+      <div className="absolute top-2 right-2 text-xs font-mono text-spectral-white/40 pointer-events-none">
+        {gameActive ? (isMobile ? "TAP TO JUMP" : "SPACE TO JUMP") : (isMobile ? "TOUCH TO PLAY" : "CLICK TO PLAY")}
       </div>
     </div>
   );

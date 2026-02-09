@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { supabase, type Profile, type UserRole } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { NotificationCenter } from "@/components/ui/notification-center";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin/admin/dashboard" },
@@ -125,22 +127,21 @@ export default function AdminLayout({
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[var(--border)]">
-          <div className="flex items-center gap-3 px-4 py-3 mb-4">
-            <div className="w-8 h-8 bg-[var(--border)] flex items-center justify-center">
-              <Shield className="w-4 h-4 text-[var(--signal-lime)]" />
+          <div className="flex items-center gap-4">
+            <NotificationCenter userId={profile?.id || ""} />
+            <div className="text-right">
+              <p className="text-sm font-medium">{profile?.full_name}</p>
+              <p className="text-xs text-[var(--spectral-muted)]">{profile?.role}</p>
             </div>
-            <div>
-              <p className="text-sm font-medium">{profile?.full_name || "Admin"}</p>
-              <p className="text-xs text-[var(--spectral-muted)] font-mono uppercase">{profile?.role}</p>
-            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSignOut}
+              className="border-[var(--border)] rounded-none"
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
           </div>
-          <button
-            onClick={handleSignOut}
-            className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--siren-red)] hover:bg-[var(--siren-red)]/10 transition-colors w-full"
-          >
-            <LogOut className="w-4 h-4" />
-            Sign Out
-          </button>
         </div>
       </aside>
 

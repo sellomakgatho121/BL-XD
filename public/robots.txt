@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Block common bot paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /.well-known/
+Disallow: /sitemap.xml
+Disallow: /robots.txt
+
+# Allow specific API endpoints for indexing
+Allow: /api/contact
+Allow: /api/newsletter
+
+# Sitemap location
+Sitemap: https://blacklightwebdesigns.co.za/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
