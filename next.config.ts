@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
 
   reactStrictMode: true,
 
+  // Temporarily disable Turbopack due to build issues
   // turbopack: {
   //   resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
   // },
