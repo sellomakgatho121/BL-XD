@@ -12,12 +12,12 @@ const nextConfig: NextConfig = {
 
   reactStrictMode: true,
 
-  turbopack: {
-    resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
-  },
+  // turbopack: {
+  //   resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+  // },
 
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion', '@supabase/supabase-js'],
+    // optimizePackageImports: ['lucide-react', 'framer-motion', '@supabase/supabase-js'],
     optimisticClientCache: true,
   },
 

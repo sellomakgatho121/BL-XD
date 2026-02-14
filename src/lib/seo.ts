@@ -45,7 +45,7 @@ export function generateMetadata({
     
     // Open Graph
     openGraph: {
-      type: type as any,
+      type: type as 'website' | 'article',
       locale,
       url: fullUrl,
       title: title || 'Blacklight Web Designs',

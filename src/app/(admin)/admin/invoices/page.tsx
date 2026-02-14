@@ -50,7 +50,7 @@ export default function AdminInvoicesPage() {
       .eq('id', id);
 
     if (!error) {
-      setInvoices(invoices.map(inv => inv.id === id ? { ...inv, status: status as any } : inv));
+      setInvoices(invoices.map(inv => inv.id === id ? { ...inv, status: status as Invoice['status'] } : inv));
     }
   };
 

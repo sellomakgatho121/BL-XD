@@ -15,7 +15,9 @@ export default function Page() {
   useEffect(() => {
     if (isDev) {
       const stored = localStorage.getItem("dev_site_mode") as "main" | "coming-soon";
-      if (stored) setDevMode(stored);
+      if (stored) {
+        setDevMode(stored);
+      }
       setMounted(true);
     }
   }, [isDev]);

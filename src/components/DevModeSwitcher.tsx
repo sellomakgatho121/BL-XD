@@ -9,7 +9,9 @@ export default function DevModeSwitcher() {
   useEffect(() => {
     // Check local storage or cookie for preference
     const storedMode = localStorage.getItem("dev_site_mode") as "main" | "coming-soon";
-    if (storedMode) setMode(storedMode);
+    if (storedMode) {
+      setMode(storedMode);
+    }
   }, []);
 
   const toggleMode = () => {

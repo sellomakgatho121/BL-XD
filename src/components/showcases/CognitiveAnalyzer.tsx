@@ -4,6 +4,30 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Brain, Zap, Activity } from "lucide-react";
 
+interface MetricBarProps {
+  label: string;
+  value: number;
+  color: string;
+  icon: React.ComponentType<{ size?: number }>;
+}
+
+const MetricBar = ({ label, value, color, icon: Icon }: MetricBarProps) => (
+  <div className="flex flex-col gap-1 w-full">
+    <div className="flex justify-between text-[10px] uppercase font-mono tracking-wider text-spectral-white/60">
+      <span className="flex items-center gap-1"><Icon size={10} /> {label}</span>
+      <span>{Math.round(value)}%</span>
+    </div>
+    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+      <motion.div 
+        className={`h-full ${color}`}
+        initial={{ width: 0 }}
+        animate={{ width: `${value}%` }}
+        transition={{ type: "spring", stiffness: 100 }}
+      />
+    </div>
+  </div>
+);
+
 export default function CognitiveAnalyzer() {
   const [text, setText] = useState("");
   const [metrics, setMetrics] = useState({ sentiment: 50, complexity: 0, urgency: 0 });
@@ -20,29 +44,14 @@ export default function CognitiveAnalyzer() {
     const positiveWords = ["good", "great", "excellent", "amazing", "love", "best", "perfect"].filter(w => text.toLowerCase().includes(w)).length;
     const negativeWords = ["bad", "terrible", "worst", "hate", "slow", "broken", "error"].filter(w => text.toLowerCase().includes(w)).length;
 
-    setMetrics({
+    const newMetrics = {
       sentiment: Math.min(100, Math.max(0, 50 + (positiveWords * 10) - (negativeWords * 10))),
       complexity: Math.min(100, (complexWords / (words.length || 1)) * 300),
       urgency: urgencyWords ? 90 : Math.min(100, (text.match(/!/g) || []).length * 20),
-    });
+    };
+    
+    setMetrics(newMetrics);
   }, [text]);
-
-  const MetricBar = ({ label, value, color, icon: Icon }: any) => (
-    <div className="flex flex-col gap-1 w-full">
-      <div className="flex justify-between text-[10px] uppercase font-mono tracking-wider text-spectral-white/60">
-        <span className="flex items-center gap-1"><Icon size={10} /> {label}</span>
-        <span>{Math.round(value)}%</span>
-      </div>
-      <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-        <motion.div 
-          className={`h-full ${color}`}
-          initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
-          transition={{ type: "spring", stiffness: 100 }}
-        />
-      </div>
-    </div>
-  );
 
   return (
     <div className="relative h-96 w-full max-w-sm rounded-xl bg-onyx/40 border border-white/10 overflow-hidden flex flex-col backdrop-blur-sm">

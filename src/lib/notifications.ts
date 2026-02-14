@@ -11,7 +11,7 @@ interface Notification {
   message: string;
   read: boolean;
   created_at: string;
-  data?: any;
+  data?: Record<string, unknown>;
 }
 
 export function useNotifications(userId: string) {
@@ -43,39 +43,27 @@ export function useNotifications(userId: string) {
       .on(
         "postgres_changes",
         {
-          event: "INSERT",
+          event: "*",
           schema: "public",
           table: "notifications",
           filter: `user_id=eq.${userId}`,
         },
         (payload) => {
-          setNotifications((prev) => [payload.new as Notification, ...prev]);
-        }
-      )
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "notifications",
-          filter: `user_id=eq.${userId}`,
-        },
-        (payload) => {
-          setNotifications((prev) =>
-            prev.map((n) =>
-              n.id === payload.new.id ? (payload.new as Notification) : n
-            )
-          );
+          if (payload.eventType === "INSERT") {
+            setNotifications((prev) => [...prev, payload.new as Notification]);
+          } else if (payload.eventType === "UPDATE") {
+            setNotifications((prev) =>
+              prev.map((n) =>
+                n.id === payload.new.id ? (payload.new as Notification) : n
+              )
+            );
+          }
         }
       )
       .subscribe();
 
-    setChannel(notificationsChannel);
-
     return () => {
-      if (channel) {
-        supabase.removeChannel(channel);
-      }
+      supabase.removeChannel(notificationsChannel);
     };
   }, [userId]);
 
@@ -108,7 +96,7 @@ export async function createNotification(
   type: Notification["type"],
   title: string,
   message: string,
-  data?: any
+  data?: Record<string, unknown>
 ) {
   const { data: notification, error } = await supabase
     .from("notifications")

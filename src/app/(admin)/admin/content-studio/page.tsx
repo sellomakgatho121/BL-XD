@@ -40,11 +40,31 @@ export default function ContentStudioPage() {
   ]);
   const [calendarView, setCalendarView] = useState(false);
 
-  const handleContentGenerated = (content: any) => {
+  interface BlogPostData {
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  metaTitle: string;
+  metaDescription: string;
+  tags: string[];
+  readTime: number;
+  category: string;
+}
+
+interface SocialPostData {
+  platform: 'twitter' | 'linkedin' | 'instagram' | 'facebook';
+  mainText: string;
+  caption: string;
+  hashtags: string[];
+  emoji: boolean;
+}
+
+const handleContentGenerated = (content: BlogPostData | SocialPostData) => {
     console.log('Content generated:', content);
   };
 
-  const handleSaveDraft = (content: any) => {
+  const handleSaveDraft = (content: BlogPostData | SocialPostData) => {
     console.log('Draft saved:', content);
   };
 

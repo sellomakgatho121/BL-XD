@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { AudioWaveform, Share2, Mail, Twitter, Linkedin, Instagram } from "lucide-react";
 
@@ -20,16 +20,16 @@ export default function SocialSequencer() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Initialize with a cool pattern
+  const initialPattern = useMemo(() => [
+    [true, false, false, true, false, false, true, false],
+    [false, true, false, false, false, true, false, false],
+    [false, false, true, false, true, false, false, true],
+    [true, false, false, false, false, false, false, true],
+  ], []);
+
   useEffect(() => {
-    const pattern = [
-      [true, false, false, true, false, false, true, false],
-      [false, true, false, false, false, true, false, false],
-      [false, false, true, false, true, false, false, true],
-      [true, false, false, false, false, false, false, true],
-    ];
-    setSequence(pattern);
-  }, []);
+    setSequence(initialPattern);
+  }, [initialPattern]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

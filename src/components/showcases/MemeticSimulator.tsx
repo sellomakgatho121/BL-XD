@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Play, RotateCcw, Flame, Shield } from "lucide-react";
 
@@ -82,11 +82,15 @@ export default function MemeticSimulator() {
     };
   }, [isRunning, stepSimulation]);
 
-  useEffect(() => {
-    const seed = Array(CELL_COUNT).fill("susceptible");
-    seed[Math.floor(CELL_COUNT / 2) + GRID_SIZE / 2] = "infected";
-    setGrid(seed);
+  const seed = useMemo(() => {
+    const initialGrid = Array(CELL_COUNT).fill("susceptible");
+    initialGrid[Math.floor(CELL_COUNT / 2) + GRID_SIZE / 2] = "infected";
+    return initialGrid;
   }, []);
+
+  useEffect(() => {
+    setGrid(seed);
+  }, [seed]);
 
   return (
     <div className="relative h-96 w-full max-w-sm rounded-xl bg-onyx/40 border border-white/10 overflow-hidden flex flex-col backdrop-blur-sm group">
