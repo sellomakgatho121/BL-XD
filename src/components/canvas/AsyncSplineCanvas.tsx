@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Application } from "@splinetool/runtime";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -25,51 +25,86 @@ interface AsyncSplineCanvasProps {
 /**
  * AsyncSplineCanvas
  * Loads Spline 3D scenes asynchronously using the raw @splinetool/runtime core engine.
- * This completely bypasses Next 15 ESM resolution errors found in the react wrapper.
+ * Performance: Uses IntersectionObserver to defer WebGL init until canvas is near-viewport.
+ * Uses requestIdleCallback to yield to critical render work.
  */
 export function AsyncSplineCanvas({ scene, className = "" }: AsyncSplineCanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const appRef = useRef<Application | null>(null);
     const [loading, setLoading] = useState(true);
+    const [inView, setInView] = useState(false);
 
+    // IntersectionObserver: only init Spline when within 200px of viewport
     useEffect(() => {
-        let app: Application | null = null;
+        const el = containerRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: "200px" }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    // Initialize Spline only after inView triggers
+    useEffect(() => {
+        if (!inView || !canvasRef.current) return;
+
         let isActive = true;
 
-        if (canvasRef.current) {
-            // Initialize the core 3D engine
-            app = new Application(canvasRef.current);
+        const initSpline = () => {
+            if (!canvasRef.current || !isActive) return;
+
+            const app = new Application(canvasRef.current);
+            appRef.current = app;
+
             app.load(scene)
                 .then(() => {
-                    if (isActive) {
-                        setLoading(false);
-                    }
+                    if (isActive) setLoading(false);
                 })
                 .catch((error) => {
                     console.error("Failed to load Spline scene:", error);
-                    if (isActive) {
-                        setLoading(false);
-                    }
+                    if (isActive) setLoading(false);
                 });
-        }
-
-        return () => {
-            isActive = false;
-            if (app) app.dispose();
         };
-    }, [scene]);
+
+        // Yield to critical render work via requestIdleCallback
+        if ("requestIdleCallback" in window) {
+            const id = requestIdleCallback(initSpline, { timeout: 3000 });
+            return () => {
+                isActive = false;
+                cancelIdleCallback(id);
+                if (appRef.current) appRef.current.dispose();
+            };
+        } else {
+            // Fallback for Safari
+            const timer = setTimeout(initSpline, 100);
+            return () => {
+                isActive = false;
+                clearTimeout(timer);
+                if (appRef.current) appRef.current.dispose();
+            };
+        }
+    }, [inView, scene]);
 
     return (
-        <div className={`relative w-full h-full ${className} gpu-accelerated`}>
+        <div ref={containerRef} className={`relative w-full h-full ${className} gpu-accelerated`}>
             <AnimatePresence>
                 {loading && <SplineFallback />}
             </AnimatePresence>
 
-            {/* We apply pointer-events-auto so the canvas can capture interactions */}
             <div className="absolute inset-0 z-0 pointer-events-auto">
                 <canvas ref={canvasRef} className="w-full h-full outline-none" style={{ display: "block" }} />
             </div>
 
-            {/* A subtle overlay to integrate the 3D canvas with our harsh contrast environment */}
             <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
         </div>
     );

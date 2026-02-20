@@ -8,13 +8,13 @@
   /* Midnight Spectrum - Radical 3D Architecture */
   --background: #000000;
   --foreground: #FDFDFD;
-  
+
   /* Primary Brutalist Accents (No Purple) */
   --primary: #D7FF00;
   --primary-foreground: #000000;
   --destructive: #FF003C;
   --destructive-foreground: #FDFDFD;
-  
+
   /* Layering Onyx */
   --card: #0A0A0A;
   --card-foreground: #FDFDFD;
@@ -54,7 +54,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+
   --radius-sm: 0px;
   --radius-md: 0px;
   --radius-lg: 0px;
@@ -81,13 +81,29 @@ body {
 /* GPU acceleration hints for 3D elements */
 .gpu-accelerated {
   transform: translateZ(0);
-  will-change: transform;
+  will-change: auto;
   backface-visibility: hidden;
+}
+
+/* CRT Overlay — static styles to avoid inline React objects */
+.crt-scanlines {
+  background:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
+  opacity: 0.1;
+}
+
+.crt-vignette {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 100%);
 }
 
 /* Reduce motion override */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -104,6 +120,7 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

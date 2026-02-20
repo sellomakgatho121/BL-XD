@@ -58,7 +58,7 @@ export function FluidStreamWrapper({ children, className = "", delay = 0, stagge
             ref={ref}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={{
                 visible: { transition: { staggerChildren, delayChildren: delay } }
             }}

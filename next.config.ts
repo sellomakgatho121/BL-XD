@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
   // },
 
   experimental: {
-    // optimizePackageImports: ['lucide-react', 'framer-motion', '@supabase/supabase-js'],
+    optimizePackageImports: ['framer-motion', 'lucide-react', '@splinetool/runtime'],
     optimisticClientCache: true,
   },
 
