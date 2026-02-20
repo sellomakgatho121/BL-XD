@@ -101,17 +101,7 @@ def run_linter(linter: dict, cwd: Path) -> dict:
         
         result["output"] = proc.stdout[:2000] if proc.stdout else ""
         result["error"] = proc.stderr[:500] if proc.stderr else ""
-        
-        # For ESLint, treat warnings as passing (only fail on errors)
-        if linter["name"] == "eslint" and proc.returncode == 1:
-            output_text = (proc.stdout + proc.stderr).lower()
-            if "error" not in output_text or output_text.count("error") <= 2:  # Allow some formatting errors
-                result["passed"] = True
-                result["output"] = result["output"] + "\n[INFO] Warnings only - treating as passed"
-            else:
-                result["passed"] = False
-        else:
-            result["passed"] = proc.returncode == 0
+        result["passed"] = proc.returncode == 0
         
     except FileNotFoundError:
         result["error"] = f"Command not found: {linter['cmd'][0]}"

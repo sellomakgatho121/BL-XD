@@ -15,33 +15,10 @@
                 "shadcn@latest",
                 "mcp"
             ]
-        },
-        "filesystem": {
-            "command": "npx",
-            "args": [
-                "-y",
-                "@modelcontextprotocol/server-filesystem",
-                "/Users/RDP/Documents/BL-XD"
-            ]
-        },
-        "git": {
-            "command": "npx",
-            "args": [
-                "-y",
-                "@modelcontextprotocol/server-git",
-                "--repository",
-                "/Users/RDP/Documents/BL-XD"
-            ]
-        },
-        "sqlite": {
-            "command": "npx",
-            "args": [
-                "-y",
-                "@modelcontextprotocol/server-sqlite",
-                "--db-path",
-                "/Users/RDP/Documents/BL-XD/.agent/data.db"
-            ]
         }
+        //other mcp servers
     }
 }
+
+// setup mcp server in  ~/.gemini\antigravity\mcp_config.json
 

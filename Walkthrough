@@ -1,0 +1,32 @@
+# Radical 3D Architecture Walkthrough
+
+### Overview
+We have completely overhauled the BL-XD main site architecture to discard "Safe Harbor" generic aesthetics. The site now utilizes a High-Tension Cinematic baseline (Option A + B + C) driven by immersive 3D, extreme contrast, brutalist typography, and physics-based interactions.
+
+## Architectural Changes Made
+
+### 1. Technology Engine (`The Engine`)
+- Installed `@splinetool/react-spline` and Three.js ecosystem for rendering ultra-premium WebGL interactive elements.
+- Implemented `AnimationProvider` wrapping the entire application to establish a global Framer Motion physics engine. Every interaction now defaults to a snappy `spring` with `stiffness: 150`, making the UI feel tight and reactive.
+
+### 2. Radical Geometry & Styles
+- Stripped all safe `oklch` SaaS palettes and rounded corners from `globals.css`.
+- Forced `0px` border radii globally. 
+- Implemented the Onyx/Lime/Red palette (Zero purple/blue clichés).
+
+### 3. Mixed Topology Components
+- **`HeroBrutalist3D`**: Replaced standard split-screen heroes with extreme typographic brutalism layered over an asynchronous `Spline` 3D Canvas.
+- **`AsymmetricNav`**: Discarded horizontal top-bars in favor of a Z-axis floating, right-weighted vertical stack. 
+- **`ContinuousFlowSection`**: Eliminated grid-boxed content. Replaced with `FluidStreamWrapper`, creating a cinematic, parallax-driven continuous scroll where elements stagger into view along the Z and Y axes.
+
+## Audit & Visual Verification
+- **Browser Subagent Check**: ✅ Successfully verified the Onyx/Lime Brutalism specifications in the browser.
+- **Micro-Interactions**: ✅ Verified Framer Motion staggered reveals in the `ContinuousFlowSection` triggers smoothly on scroll.
+- **3D Resilience**: ✅ Bypassed Next 15 module resolution errors by directly utilizing the `@splinetool/runtime` engine in the custom `AsyncSplineCanvas` wrapper. Added `.catch()` boundaries to prevent page crash if a `.splinecode` URL is forbidden.
+- **Purple Ban Check**: ✅ Passed. No violet, purple, or generic cyan used.
+- **Topology Check**: ✅ Passed. Zero bento grids, zero 50/50 hero splits.
+
+![Visual Verification Recording](file:///C:/Users/RDP/.gemini/antigravity/brain/370e0085-8e2c-4c2d-b1b5-89b84f5aaacb/bl_xd_3d_verification_v4_1771573615128.webp)
+
+> [!TIP]
+> To replace the placeholder 3D asset in the massive typography Hero, simply overwrite the `scene` URL in `HeroBrutalist3D.tsx` with your own custom Spline export link from the Spline Editor.

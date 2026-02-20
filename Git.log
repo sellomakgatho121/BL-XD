@@ -1,0 +1,1067 @@
+2026-02-20 06:50:25.835 [info] [main] Log level: Info
+2026-02-20 06:50:25.835 [info] [main] Validating found git in: "C:\Program Files\Git\cmd\git.exe"
+2026-02-20 06:50:25.835 [info] [main] Using git "2.53.0.windows.1" from "C:\Program Files\Git\cmd\git.exe"
+2026-02-20 06:50:25.835 [info] [Model][doInitialScan] Initial repository scan started
+2026-02-20 06:50:25.835 [info] [Model][doInitialScan] Initial repository scan completed - repositories (0), closed repositories (0), parent repositories (0), unsafe repositories (0)
+2026-02-20 06:52:53.954 [info] > git clone https://github.com/sellomakgatho121/BL-XD.git c:\Users\RDP\Documents\BL-XD --progress [5315ms]
+2026-02-20 06:52:53.954 [info] Cloning into 'c:\Users\RDP\Documents\BL-XD'...
+fatal: Cannot prompt because user interactivity has been disabled.
+remote: Enumerating objects: 965, done.        
+remote: Counting objects:   0% (1/965)        
+remote: Counting objects:   1% (10/965)        
+remote: Counting objects:   2% (20/965)        
+remote: Counting objects:   3% (29/965)        
+remote: Counting objects:   4% (39/965)        
+remote: Counting objects:   5% (49/965)        
+remote: Counting objects:   6% (58/965)        
+remote: Counting objects:   7% (68/965)        
+remote: Counting objects:   8% (78/965)        
+remote: Counting objects:   9% (87/965)        
+remote: Counting objects:  10% (97/965)        
+remote: Counting objects:  11% (107/965)        
+remote: Counting objects:  12% (116/965)        
+remote: Counting objects:  13% (126/965)        
+remote: Counting objects:  14% (136/965)        
+remote: Counting objects:  15% (145/965)        
+remote: Counting objects:  16% (155/965)        
+remote: Counting objects:  17% (165/965)        
+remote: Counting objects:  18% (174/965)        
+remote: Counting objects:  19% (184/965)        
+remote: Counting objects:  20% (193/965)        
+remote: Counting objects:  21% (203/965)        
+remote: Counting objects:  22% (213/965)        
+remote: Counting objects:  23% (222/965)        
+remote: Counting objects:  24% (232/965)        
+remote: Counting objects:  25% (242/965)        
+remote: Counting objects:  26% (251/965)        
+remote: Counting objects:  27% (261/965)        
+remote: Counting objects:  28% (271/965)        
+remote: Counting objects:  29% (280/965)        
+remote: Counting objects:  30% (290/965)        
+remote: Counting objects:  31% (300/965)        
+remote: Counting objects:  32% (309/965)        
+remote: Counting objects:  33% (319/965)        
+remote: Counting objects:  34% (329/965)        
+remote: Counting objects:  35% (338/965)        
+remote: Counting objects:  36% (348/965)        
+remote: Counting objects:  37% (358/965)        
+remote: Counting objects:  38% (367/965)        
+remote: Counting objects:  39% (377/965)        
+remote: Counting objects:  40% (386/965)        
+remote: Counting objects:  41% (396/965)        
+remote: Counting objects:  42% (406/965)        
+remote: Counting objects:  43% (415/965)        
+remote: Counting objects:  44% (425/965)        
+remote: Counting objects:  45% (435/965)        
+remote: Counting objects:  46% (444/965)        
+remote: Counting objects:  47% (454/965)        
+remote: Counting objects:  48% (464/965)        
+remote: Counting objects:  49% (473/965)        
+remote: Counting objects:  50% (483/965)        
+remote: Counting objects:  51% (493/965)        
+remote: Counting objects:  52% (502/965)        
+remote: Counting objects:  53% (512/965)        
+remote: Counting objects:  54% (522/965)        
+remote: Counting objects:  55% (531/965)        
+remote: Counting objects:  56% (541/965)        
+remote: Counting objects:  57% (551/965)        
+remote: Counting objects:  58% (560/965)        
+remote: Counting objects:  59% (570/965)        
+remote: Counting objects:  60% (579/965)        
+remote: Counting objects:  61% (589/965)        
+remote: Counting objects:  62% (599/965)        
+remote: Counting objects:  63% (608/965)        
+remote: Counting objects:  64% (618/965)        
+remote: Counting objects:  65% (628/965)        
+remote: Counting objects:  66% (637/965)        
+remote: Counting objects:  67% (647/965)        
+remote: Counting objects:  68% (657/965)        
+remote: Counting objects:  69% (666/965)        
+remote: Counting objects:  70% (676/965)        
+remote: Counting objects:  71% (686/965)        
+remote: Counting objects:  72% (695/965)        
+remote: Counting objects:  73% (705/965)        
+remote: Counting objects:  74% (715/965)        
+remote: Counting objects:  75% (724/965)        
+remote: Counting objects:  76% (734/965)        
+remote: Counting objects:  77% (744/965)        
+remote: Counting objects:  78% (753/965)        
+remote: Counting objects:  79% (763/965)        
+remote: Counting objects:  80% (772/965)        
+remote: Counting objects:  81% (782/965)        
+remote: Counting objects:  82% (792/965)        
+remote: Counting objects:  83% (801/965)        
+remote: Counting objects:  84% (811/965)        
+remote: Counting objects:  85% (821/965)        
+remote: Counting objects:  86% (830/965)        
+remote: Counting objects:  87% (840/965)        
+remote: Counting objects:  88% (850/965)        
+remote: Counting objects:  89% (859/965)        
+remote: Counting objects:  90% (869/965)        
+remote: Counting objects:  91% (879/965)        
+remote: Counting objects:  92% (888/965)        
+remote: Counting objects:  93% (898/965)        
+remote: Counting objects:  94% (908/965)        
+remote: Counting objects:  95% (917/965)        
+remote: Counting objects:  96% (927/965)        
+remote: Counting objects:  97% (937/965)        
+remote: Counting objects:  98% (946/965)        
+remote: Counting objects:  99% (956/965)        
+remote: Counting objects: 100% (965/965)        
+remote: Counting objects: 100% (965/965), done.        
+remote: Compressing objects:   0% (1/678)        
+remote: Compressing objects:   1% (7/678)        
+remote: Compressing objects:   2% (14/678)        
+remote: Compressing objects:   3% (21/678)        
+remote: Compressing objects:   4% (28/678)        
+remote: Compressing objects:   5% (34/678)        
+remote: Compressing objects:   6% (41/678)        
+remote: Compressing objects:   7% (48/678)        
+remote: Compressing objects:   8% (55/678)        
+remote: Compressing objects:   9% (62/678)        
+remote: Compressing objects:  10% (68/678)        
+remote: Compressing objects:  11% (75/678)        
+remote: Compressing objects:  12% (82/678)        
+remote: Compressing objects:  13% (89/678)        
+remote: Compressing objects:  14% (95/678)        
+remote: Compressing objects:  15% (102/678)        
+remote: Compressing objects:  16% (109/678)        
+remote: Compressing objects:  17% (116/678)        
+remote: Compressing objects:  18% (123/678)        
+remote: Compressing objects:  19% (129/678)        
+remote: Compressing objects:  20% (136/678)        
+remote: Compressing objects:  21% (143/678)        
+remote: Compressing objects:  22% (150/678)        
+remote: Compressing objects:  23% (156/678)        
+remote: Compressing objects:  24% (163/678)        
+remote: Compressing objects:  25% (170/678)        
+remote: Compressing objects:  26% (177/678)        
+remote: Compressing objects:  27% (184/678)        
+remote: Compressing objects:  28% (190/678)        
+remote: Compressing objects:  29% (197/678)        
+remote: Compressing objects:  30% (204/678)        
+remote: Compressing objects:  31% (211/678)        
+remote: Compressing objects:  32% (217/678)        
+remote: Compressing objects:  33% (224/678)        
+remote: Compressing objects:  34% (231/678)        
+remote: Compressing objects:  35% (238/678)        
+remote: Compressing objects:  36% (245/678)        
+remote: Compressing objects:  37% (251/678)        
+remote: Compressing objects:  38% (258/678)        
+remote: Compressing objects:  39% (265/678)        
+remote: Compressing objects:  40% (272/678)        
+remote: Compressing objects:  41% (278/678)        
+remote: Compressing objects:  42% (285/678)        
+remote: Compressing objects:  43% (292/678)        
+remote: Compressing objects:  44% (299/678)        
+remote: Compressing objects:  45% (306/678)        
+remote: Compressing objects:  46% (312/678)        
+remote: Compressing objects:  47% (319/678)        
+remote: Compressing objects:  48% (326/678)        
+remote: Compressing objects:  49% (333/678)        
+remote: Compressing objects:  50% (339/678)        
+remote: Compressing objects:  51% (346/678)        
+remote: Compressing objects:  52% (353/678)        
+remote: Compressing objects:  53% (360/678)        
+remote: Compressing objects:  54% (367/678)        
+remote: Compressing objects:  55% (373/678)        
+remote: Compressing objects:  56% (380/678)        
+remote: Compressing objects:  57% (387/678)        
+remote: Compressing objects:  58% (394/678)        
+remote: Compressing objects:  59% (401/678)        
+remote: Compressing objects:  60% (407/678)        
+remote: Compressing objects:  61% (414/678)        
+remote: Compressing objects:  62% (421/678)        
+remote: Compressing objects:  63% (428/678)        
+remote: Compressing objects:  64% (434/678)        
+remote: Compressing objects:  65% (441/678)        
+remote: Compressing objects:  66% (448/678)        
+remote: Compressing objects:  67% (455/678)        
+remote: Compressing objects:  68% (462/678)        
+remote: Compressing objects:  69% (468/678)        
+remote: Compressing objects:  70% (475/678)        
+remote: Compressing objects:  71% (482/678)        
+remote: Compressing objects:  72% (489/678)        
+remote: Compressing objects:  73% (495/678)        
+remote: Compressing objects:  74% (502/678)        
+remote: Compressing objects:  75% (509/678)        
+remote: Compressing objects:  76% (516/678)        
+remote: Compressing objects:  77% (523/678)        
+remote: Compressing objects:  78% (529/678)        
+remote: Compressing objects:  79% (536/678)        
+remote: Compressing objects:  80% (543/678)        
+remote: Compressing objects:  81% (550/678)        
+remote: Compressing objects:  82% (556/678)        
+remote: Compressing objects:  83% (563/678)        
+remote: Compressing objects:  84% (570/678)        
+remote: Compressing objects:  85% (577/678)        
+remote: Compressing objects:  86% (584/678)        
+remote: Compressing objects:  87% (590/678)        
+remote: Compressing objects:  88% (597/678)        
+remote: Compressing objects:  89% (604/678)        
+remote: Compressing objects:  90% (611/678)        
+remote: Compressing objects:  91% (617/678)        
+remote: Compressing objects:  92% (624/678)        
+remote: Compressing objects:  93% (631/678)        
+remote: Compressing objects:  94% (638/678)        
+remote: Compressing objects:  95% (645/678)        
+remote: Compressing objects:  96% (651/678)        
+remote: Compressing objects:  97% (658/678)        
+remote: Compressing objects:  98% (665/678)        
+remote: Compressing objects:  99% (672/678)        
+remote: Compressing objects: 100% (678/678)        
+remote: Compressing objects: 100% (678/678), done.        
+Receiving objects:   0% (1/965)
+Receiving objects:   1% (10/965)
+Receiving objects:   2% (20/965)
+Receiving objects:   3% (29/965)
+Receiving objects:   4% (39/965)
+Receiving objects:   5% (49/965)
+Receiving objects:   6% (58/965)
+Receiving objects:   7% (68/965)
+Receiving objects:   8% (78/965)
+Receiving objects:   9% (87/965)
+Receiving objects:  10% (97/965)
+Receiving objects:  11% (107/965)
+Receiving objects:  12% (116/965)
+Receiving objects:  13% (126/965)
+Receiving objects:  14% (136/965)
+Receiving objects:  15% (145/965)
+Receiving objects:  16% (155/965)
+Receiving objects:  17% (165/965)
+Receiving objects:  18% (174/965)
+Receiving objects:  19% (184/965)
+Receiving objects:  20% (193/965)
+Receiving objects:  21% (203/965)
+Receiving objects:  22% (213/965)
+Receiving objects:  23% (222/965)
+Receiving objects:  24% (232/965)
+Receiving objects:  25% (242/965)
+Receiving objects:  26% (251/965)
+Receiving objects:  27% (261/965)
+Receiving objects:  28% (271/965)
+Receiving objects:  29% (280/965)
+Receiving objects:  30% (290/965)
+Receiving objects:  31% (300/965)
+Receiving objects:  32% (309/965)
+Receiving objects:  33% (319/965)
+Receiving objects:  34% (329/965)
+Receiving objects:  35% (338/965)
+Receiving objects:  36% (348/965)
+Receiving objects:  37% (358/965)
+Receiving objects:  38% (367/965)
+Receiving objects:  39% (377/965)
+Receiving objects:  40% (386/965)
+Receiving objects:  41% (396/965)
+Receiving objects:  42% (406/965)
+Receiving objects:  43% (415/965)
+Receiving objects:  44% (425/965)
+Receiving objects:  45% (435/965)
+Receiving objects:  46% (444/965)
+Receiving objects:  47% (454/965)
+Receiving objects:  48% (464/965)
+Receiving objects:  49% (473/965)
+Receiving objects:  50% (483/965)
+Receiving objects:  51% (493/965)
+Receiving objects:  52% (502/965)
+Receiving objects:  53% (512/965)
+Receiving objects:  54% (522/965)
+Receiving objects:  55% (531/965)
+Receiving objects:  56% (541/965)
+Receiving objects:  57% (551/965)
+Receiving objects:  58% (560/965)
+Receiving objects:  59% (570/965)
+Receiving objects:  60% (579/965)
+Receiving objects:  61% (589/965)
+Receiving objects:  62% (599/965)
+Receiving objects:  63% (608/965)
+Receiving objects:  64% (618/965)
+Receiving objects:  65% (628/965)
+Receiving objects:  66% (637/965)
+Receiving objects:  67% (647/965)
+Receiving objects:  68% (657/965)
+Receiving objects:  69% (666/965)
+Receiving objects:  70% (676/965)
+Receiving objects:  71% (686/965)
+Receiving objects:  72% (695/965)
+Receiving objects:  73% (705/965)
+Receiving objects:  74% (715/965)
+Receiving objects:  75% (724/965)
+Receiving objects:  76% (734/965)
+Receiving objects:  77% (744/965)
+Receiving objects:  78% (753/965)
+Receiving objects:  79% (763/965)
+Receiving objects:  80% (772/965)
+Receiving objects:  81% (782/965)
+Receiving objects:  82% (792/965)
+Receiving objects:  83% (801/965)
+Receiving objects:  84% (811/965)
+Receiving objects:  85% (821/965)
+Receiving objects:  86% (830/965)
+Receiving objects:  87% (840/965)
+Receiving objects:  88% (850/965)
+Receiving objects:  89% (859/965)
+Receiving objects:  90% (869/965)
+Receiving objects:  91% (879/965)
+Receiving objects:  92% (888/965)
+Receiving objects:  93% (898/965)
+Receiving objects:  94% (908/965)
+Receiving objects:  95% (917/965)
+Receiving objects:  96% (927/965)
+Receiving objects:  97% (937/965)
+Receiving objects:  98% (946/965)
+Receiving objects:  99% (956/965)
+remote: Total 965 (delta 292), reused 812 (delta 158), pack-reused 0 (from 0)        
+Receiving objects: 100% (965/965)
+Receiving objects: 100% (965/965), 1.48 MiB | 12.83 MiB/s, done.
+Resolving deltas:   0% (0/292)
+Resolving deltas:   1% (3/292)
+Resolving deltas:   2% (6/292)
+Resolving deltas:   3% (9/292)
+Resolving deltas:   4% (12/292)
+Resolving deltas:   5% (15/292)
+Resolving deltas:   6% (18/292)
+Resolving deltas:   7% (21/292)
+Resolving deltas:   8% (24/292)
+Resolving deltas:   9% (27/292)
+Resolving deltas:  10% (30/292)
+Resolving deltas:  11% (33/292)
+Resolving deltas:  12% (36/292)
+Resolving deltas:  13% (38/292)
+Resolving deltas:  14% (41/292)
+Resolving deltas:  15% (44/292)
+Resolving deltas:  16% (47/292)
+Resolving deltas:  17% (50/292)
+Resolving deltas:  18% (53/292)
+Resolving deltas:  19% (56/292)
+Resolving deltas:  20% (60/292)
+Resolving deltas:  21% (62/292)
+Resolving deltas:  22% (65/292)
+Resolving deltas:  23% (68/292)
+Resolving deltas:  24% (71/292)
+Resolving deltas:  25% (73/292)
+Resolving deltas:  26% (76/292)
+Resolving deltas:  27% (79/292)
+Resolving deltas:  28% (84/292)
+Resolving deltas:  29% (85/292)
+Resolving deltas:  30% (88/292)
+Resolving deltas:  31% (91/292)
+Resolving deltas:  32% (94/292)
+Resolving deltas:  33% (97/292)
+Resolving deltas:  34% (100/292)
+Resolving deltas:  35% (103/292)
+Resolving deltas:  36% (106/292)
+Resolving deltas:  37% (109/292)
+Resolving deltas:  38% (111/292)
+Resolving deltas:  39% (115/292)
+Resolving deltas:  40% (117/292)
+Resolving deltas:  41% (120/292)
+Resolving deltas:  42% (123/292)
+Resolving deltas:  43% (126/292)
+Resolving deltas:  44% (129/292)
+Resolving deltas:  45% (132/292)
+Resolving deltas:  46% (135/292)
+Resolving deltas:  47% (138/292)
+Resolving deltas:  48% (141/292)
+Resolving deltas:  49% (144/292)
+Resolving deltas:  50% (146/292)
+Resolving deltas:  51% (149/292)
+Resolving deltas:  52% (152/292)
+Resolving deltas:  53% (155/292)
+Resolving deltas:  54% (158/292)
+Resolving deltas:  55% (161/292)
+Resolving deltas:  56% (164/292)
+Resolving deltas:  57% (167/292)
+Resolving deltas:  58% (170/292)
+Resolving deltas:  59% (173/292)
+Resolving deltas:  60% (176/292)
+Resolving deltas:  61% (179/292)
+Resolving deltas:  62% (182/292)
+Resolving deltas:  63% (184/292)
+Resolving deltas:  64% (187/292)
+Resolving deltas:  65% (190/292)
+Resolving deltas:  66% (193/292)
+Resolving deltas:  67% (196/292)
+Resolving deltas:  68% (199/292)
+Resolving deltas:  69% (202/292)
+Resolving deltas:  70% (205/292)
+Resolving deltas:  71% (208/292)
+Resolving deltas:  72% (211/292)
+Resolving deltas:  73% (214/292)
+Resolving deltas:  74% (217/292)
+Resolving deltas:  75% (219/292)
+Resolving deltas:  76% (222/292)
+Resolving deltas:  77% (225/292)
+Resolving deltas:  78% (228/292)
+Resolving deltas:  79% (231/292)
+Resolving deltas:  80% (234/292)
+Resolving deltas:  81% (237/292)
+Resolving deltas:  82% (240/292)
+Resolving deltas:  83% (243/292)
+Resolving deltas:  84% (246/292)
+Resolving deltas:  85% (249/292)
+Resolving deltas:  86% (252/292)
+Resolving deltas:  87% (255/292)
+Resolving deltas:  88% (257/292)
+Resolving deltas:  89% (260/292)
+Resolving deltas:  90% (263/292)
+Resolving deltas:  91% (266/292)
+Resolving deltas:  92% (269/292)
+Resolving deltas:  93% (272/292)
+Resolving deltas:  94% (275/292)
+Resolving deltas:  95% (278/292)
+Resolving deltas:  96% (282/292)
+Resolving deltas:  97% (284/292)
+Resolving deltas:  98% (287/292)
+Resolving deltas:  99% (291/292)
+Resolving deltas: 100% (292/292)
+Resolving deltas: 100% (292/292), done.
+2026-02-20 06:53:02.546 [info] [main] Log level: Info
+2026-02-20 06:53:02.547 [info] [main] Validating found git in: "C:\Program Files\Git\cmd\git.exe"
+2026-02-20 06:53:02.620 [info] [main] Using git "2.53.0.windows.1" from "C:\Program Files\Git\cmd\git.exe"
+2026-02-20 06:53:02.621 [info] [Model][doInitialScan] Initial repository scan started
+2026-02-20 06:53:03.149 [info] > git rev-parse --show-toplevel [513ms]
+2026-02-20 06:53:03.458 [info] > git rev-parse --git-dir --git-common-dir --show-superproject-working-tree [198ms]
+2026-02-20 06:53:03.477 [info] [Model][openRepository] Opened repository (path): c:\Users\RDP\Documents\BL-XD
+2026-02-20 06:53:03.477 [info] [Model][openRepository] Opened repository (real path): c:\Users\RDP\Documents\BL-XD
+2026-02-20 06:53:03.477 [info] [Model][openRepository] Opened repository (kind): repository
+2026-02-20 06:53:03.619 [info] > git config --get commit.template [120ms]
+2026-02-20 06:53:03.619 [info] > git rev-parse --show-toplevel [115ms]
+2026-02-20 06:53:03.837 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [223ms]
+2026-02-20 06:53:03.848 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 06:53:03.875 [info] > git rev-parse --show-toplevel [225ms]
+2026-02-20 06:53:03.978 [info] > git rev-parse --show-toplevel [94ms]
+2026-02-20 06:53:03.987 [info] > git rev-parse refs/remotes/origin/main [138ms]
+2026-02-20 06:53:04.294 [info] > git check-ignore -v -z --stdin [234ms]
+2026-02-20 06:53:04.296 [info] > git rev-parse --show-toplevel [310ms]
+2026-02-20 06:53:04.296 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [291ms]
+2026-02-20 06:53:04.381 [info] > git status -z -uall [386ms]
+2026-02-20 06:53:04.644 [info] > git rev-parse --show-toplevel [338ms]
+2026-02-20 06:53:04.676 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [255ms]
+2026-02-20 06:53:04.699 [info] > git config --get commit.template [264ms]
+2026-02-20 06:53:04.922 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [224ms]
+2026-02-20 06:53:04.922 [info] > git rev-parse --show-toplevel [248ms]
+2026-02-20 06:53:04.922 [info] > git config --get --local branch.main.vscode-merge-base [234ms]
+2026-02-20 06:53:04.941 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 06:53:05.132 [info] > git rev-parse refs/remotes/origin/main [191ms]
+2026-02-20 06:53:05.148 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/origin/main refs/remotes/origin/main [216ms]
+2026-02-20 06:53:05.159 [info] > git rev-parse --show-toplevel [212ms]
+2026-02-20 06:53:05.161 [info] [Model][doInitialScan] Initial repository scan completed - repositories (1), closed repositories (0), parent repositories (0), unsafe repositories (0)
+2026-02-20 06:53:05.269 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [122ms]
+2026-02-20 06:53:05.279 [info] > git merge-base refs/heads/main refs/remotes/origin/main [121ms]
+2026-02-20 06:53:05.349 [info] > git status -z -uall [210ms]
+2026-02-20 06:53:05.387 [info] > git diff --name-status -z --diff-filter=ADMR --find-renames=50% ab30a8fdb3a3c2393c68fbebaa995cb75812fef3...refs/remotes/origin/main -- [99ms]
+2026-02-20 06:53:06.610 [info] > git merge-base refs/heads/main refs/remotes/origin/main [1247ms]
+2026-02-20 06:53:06.896 [info] > git diff --name-status -z --diff-filter=ADMR --find-renames=50% ab30a8fdb3a3c2393c68fbebaa995cb75812fef3...refs/remotes/origin/main -- [277ms]
+2026-02-20 06:58:49.007 [info] > git config --get commit.template [72ms]
+2026-02-20 06:58:49.013 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [70ms]
+2026-02-20 06:58:49.018 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 06:58:49.095 [info] > git rev-parse refs/remotes/origin/main [76ms]
+2026-02-20 06:58:49.363 [info] > git status -z -uall [260ms]
+2026-02-20 06:58:49.370 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [258ms]
+2026-02-20 07:13:03.439 [info] > git config --get commit.template [95ms]
+2026-02-20 07:13:03.449 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [96ms]
+2026-02-20 07:13:03.455 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:13:03.516 [info] > git rev-parse refs/remotes/origin/main [61ms]
+2026-02-20 07:13:03.617 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [88ms]
+2026-02-20 07:13:03.627 [info] > git status -z -uall [105ms]
+2026-02-20 07:32:01.186 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [117ms]
+2026-02-20 07:32:01.187 [info] > git config --get commit.template [125ms]
+2026-02-20 07:32:01.196 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:01.337 [info] > git rev-parse refs/remotes/origin/main [142ms]
+2026-02-20 07:32:01.481 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [125ms]
+2026-02-20 07:32:01.510 [info] > git status -z -uall [165ms]
+2026-02-20 07:32:14.599 [info] > git config --get commit.template [209ms]
+2026-02-20 07:32:14.600 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [198ms]
+2026-02-20 07:32:14.608 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:14.882 [info] > git rev-parse refs/remotes/origin/main [275ms]
+2026-02-20 07:32:15.291 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [384ms]
+2026-02-20 07:32:15.317 [info] > git status -z -uall [422ms]
+2026-02-20 07:32:20.688 [info] > git config --get commit.template [318ms]
+2026-02-20 07:32:20.752 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [374ms]
+2026-02-20 07:32:20.760 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:21.090 [info] > git rev-parse refs/remotes/origin/main [331ms]
+2026-02-20 07:32:21.294 [info] > git status -z -uall [197ms]
+2026-02-20 07:32:21.316 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [210ms]
+2026-02-20 07:32:26.665 [info] > git config --get commit.template [325ms]
+2026-02-20 07:32:26.701 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [353ms]
+2026-02-20 07:32:26.715 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:26.853 [info] > git rev-parse refs/remotes/origin/main [138ms]
+2026-02-20 07:32:26.994 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [116ms]
+2026-02-20 07:32:27.010 [info] > git status -z -uall [145ms]
+2026-02-20 07:32:32.327 [info] > git config --get commit.template [285ms]
+2026-02-20 07:32:32.353 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [186ms]
+2026-02-20 07:32:32.362 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:32.465 [info] > git rev-parse refs/remotes/origin/main [103ms]
+2026-02-20 07:32:32.659 [info] > git status -z -uall [186ms]
+2026-02-20 07:32:32.661 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [181ms]
+2026-02-20 07:32:37.849 [info] > git config --get commit.template [162ms]
+2026-02-20 07:32:37.853 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [159ms]
+2026-02-20 07:32:37.866 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:37.967 [info] > git rev-parse refs/remotes/origin/main [101ms]
+2026-02-20 07:32:38.159 [info] > git status -z -uall [184ms]
+2026-02-20 07:32:38.167 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [184ms]
+2026-02-20 07:32:43.324 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [123ms]
+2026-02-20 07:32:43.336 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:43.342 [info] > git config --get commit.template [148ms]
+2026-02-20 07:32:43.442 [info] > git rev-parse refs/remotes/origin/main [106ms]
+2026-02-20 07:32:43.601 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [141ms]
+2026-02-20 07:32:43.666 [info] > git status -z -uall [216ms]
+2026-02-20 07:32:48.902 [info] > git config --get commit.template [213ms]
+2026-02-20 07:32:48.902 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [206ms]
+2026-02-20 07:32:48.909 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:49.068 [info] > git rev-parse refs/remotes/origin/main [159ms]
+2026-02-20 07:32:49.308 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [224ms]
+2026-02-20 07:32:49.316 [info] > git status -z -uall [240ms]
+2026-02-20 07:32:54.484 [info] > git config --get commit.template [147ms]
+2026-02-20 07:32:54.507 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [158ms]
+2026-02-20 07:32:54.521 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:32:54.631 [info] > git rev-parse refs/remotes/origin/main [110ms]
+2026-02-20 07:32:54.789 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [140ms]
+2026-02-20 07:32:54.805 [info] > git status -z -uall [167ms]
+2026-02-20 07:32:59.944 [info] > git config --get commit.template [120ms]
+2026-02-20 07:32:59.972 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [140ms]
+2026-02-20 07:32:59.980 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:00.132 [info] > git rev-parse refs/remotes/origin/main [152ms]
+2026-02-20 07:33:00.370 [info] > git status -z -uall [225ms]
+2026-02-20 07:33:00.439 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [280ms]
+2026-02-20 07:33:05.602 [info] > git config --get commit.template [139ms]
+2026-02-20 07:33:05.604 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [129ms]
+2026-02-20 07:33:05.617 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:05.689 [info] > git rev-parse refs/remotes/origin/main [72ms]
+2026-02-20 07:33:05.808 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [106ms]
+2026-02-20 07:33:05.815 [info] > git status -z -uall [118ms]
+2026-02-20 07:33:10.912 [info] > git config --get commit.template [79ms]
+2026-02-20 07:33:10.914 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [74ms]
+2026-02-20 07:33:10.920 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:11.005 [info] > git rev-parse refs/remotes/origin/main [86ms]
+2026-02-20 07:33:11.150 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [124ms]
+2026-02-20 07:33:11.153 [info] > git status -z -uall [140ms]
+2026-02-20 07:33:27.493 [info] > git config --get commit.template [112ms]
+2026-02-20 07:33:27.497 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [106ms]
+2026-02-20 07:33:27.505 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:27.585 [info] > git rev-parse refs/remotes/origin/main [81ms]
+2026-02-20 07:33:27.699 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [98ms]
+2026-02-20 07:33:27.727 [info] > git status -z -uall [133ms]
+2026-02-20 07:33:30.088 [info] > git check-ignore -v -z --stdin [520ms]
+2026-02-20 07:33:32.872 [info] > git config --get commit.template [125ms]
+2026-02-20 07:33:32.909 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [155ms]
+2026-02-20 07:33:32.916 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:33.088 [info] > git rev-parse refs/remotes/origin/main [172ms]
+2026-02-20 07:33:33.324 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [203ms]
+2026-02-20 07:33:33.328 [info] > git status -z -uall [232ms]
+2026-02-20 07:33:38.431 [info] > git config --get commit.template [81ms]
+2026-02-20 07:33:38.437 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [81ms]
+2026-02-20 07:33:38.444 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:38.509 [info] > git rev-parse refs/remotes/origin/main [65ms]
+2026-02-20 07:33:38.699 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [174ms]
+2026-02-20 07:33:38.709 [info] > git status -z -uall [195ms]
+2026-02-20 07:33:43.805 [info] > git config --get commit.template [78ms]
+2026-02-20 07:33:43.814 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [81ms]
+2026-02-20 07:33:43.819 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:43.892 [info] > git rev-parse refs/remotes/origin/main [72ms]
+2026-02-20 07:33:43.978 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [72ms]
+2026-02-20 07:33:43.984 [info] > git status -z -uall [85ms]
+2026-02-20 07:33:49.088 [info] > git config --get commit.template [85ms]
+2026-02-20 07:33:49.091 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [80ms]
+2026-02-20 07:33:49.097 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:33:49.164 [info] > git rev-parse refs/remotes/origin/main [67ms]
+2026-02-20 07:33:49.259 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [78ms]
+2026-02-20 07:33:49.265 [info] > git status -z -uall [94ms]
+2026-02-20 07:34:41.946 [info] > git check-ignore -v -z --stdin [97ms]
+2026-02-20 07:34:43.732 [info] > git check-ignore -v -z --stdin [97ms]
+2026-02-20 07:34:54.324 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [260ms]
+2026-02-20 07:34:54.333 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:34:54.334 [info] > git config --get commit.template [293ms]
+2026-02-20 07:34:54.430 [info] > git rev-parse refs/remotes/origin/main [97ms]
+2026-02-20 07:34:54.628 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [181ms]
+2026-02-20 07:34:54.663 [info] > git status -z -uall [226ms]
+2026-02-20 07:35:21.004 [info] > git check-ignore -v -z --stdin [82ms]
+2026-02-20 07:35:21.639 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [105ms]
+2026-02-20 07:35:21.653 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:35:21.655 [info] > git config --get commit.template [151ms]
+2026-02-20 07:35:21.733 [info] > git rev-parse refs/remotes/origin/main [80ms]
+2026-02-20 07:35:21.868 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [114ms]
+2026-02-20 07:35:21.882 [info] > git status -z -uall [135ms]
+2026-02-20 07:35:23.011 [info] > git check-ignore -v -z --stdin [90ms]
+2026-02-20 07:35:26.970 [info] > git config --get commit.template [71ms]
+2026-02-20 07:35:26.974 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [68ms]
+2026-02-20 07:35:26.981 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:35:27.071 [info] > git rev-parse refs/remotes/origin/main [89ms]
+2026-02-20 07:35:27.184 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [94ms]
+2026-02-20 07:35:27.192 [info] > git status -z -uall [113ms]
+2026-02-20 07:36:10.667 [info] > git check-ignore -v -z --stdin [150ms]
+2026-02-20 07:36:11.286 [info] > git config --get commit.template [109ms]
+2026-02-20 07:36:11.289 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [102ms]
+2026-02-20 07:36:11.296 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:36:11.373 [info] > git rev-parse refs/remotes/origin/main [77ms]
+2026-02-20 07:36:11.482 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [95ms]
+2026-02-20 07:36:11.530 [info] > git status -z -uall [151ms]
+2026-02-20 07:36:12.731 [info] > git check-ignore -v -z --stdin [79ms]
+2026-02-20 07:36:16.642 [info] > git config --get commit.template [95ms]
+2026-02-20 07:36:16.651 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [94ms]
+2026-02-20 07:36:16.659 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:36:16.748 [info] > git rev-parse refs/remotes/origin/main [90ms]
+2026-02-20 07:36:16.853 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [92ms]
+2026-02-20 07:36:16.876 [info] > git status -z -uall [121ms]
+2026-02-20 07:36:28.823 [info] > git check-ignore -v -z --stdin [100ms]
+2026-02-20 07:36:29.506 [info] > git config --get commit.template [125ms]
+2026-02-20 07:36:29.526 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [135ms]
+2026-02-20 07:36:29.533 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:36:29.627 [info] > git rev-parse refs/remotes/origin/main [94ms]
+2026-02-20 07:36:29.781 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [140ms]
+2026-02-20 07:36:29.786 [info] > git status -z -uall [152ms]
+2026-02-20 07:37:02.808 [info] > git check-ignore -v -z --stdin [179ms]
+2026-02-20 07:37:03.370 [info] > git config --get commit.template [190ms]
+2026-02-20 07:37:03.370 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [178ms]
+2026-02-20 07:37:03.377 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:37:03.469 [info] > git rev-parse refs/remotes/origin/main [93ms]
+2026-02-20 07:37:03.605 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [121ms]
+2026-02-20 07:37:03.628 [info] > git status -z -uall [152ms]
+2026-02-20 07:39:49.443 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [175ms]
+2026-02-20 07:39:49.451 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:39:49.482 [info] > git config --get commit.template [224ms]
+2026-02-20 07:39:49.576 [info] > git rev-parse refs/remotes/origin/main [126ms]
+2026-02-20 07:39:49.760 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [164ms]
+2026-02-20 07:39:49.787 [info] > git status -z -uall [201ms]
+2026-02-20 07:39:54.954 [info] > git config --get commit.template [144ms]
+2026-02-20 07:39:54.970 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [116ms]
+2026-02-20 07:39:54.977 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:39:55.071 [info] > git rev-parse refs/remotes/origin/main [94ms]
+2026-02-20 07:39:55.262 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [173ms]
+2026-02-20 07:39:55.348 [info] > git status -z -uall [270ms]
+2026-02-20 07:40:26.359 [info] > git config --get commit.template [142ms]
+2026-02-20 07:40:26.379 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [148ms]
+2026-02-20 07:40:26.384 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:40:26.475 [info] > git rev-parse refs/remotes/origin/main [91ms]
+2026-02-20 07:40:26.601 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [115ms]
+2026-02-20 07:40:26.632 [info] > git status -z -uall [151ms]
+2026-02-20 07:40:57.074 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [103ms]
+2026-02-20 07:40:57.082 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:40:57.090 [info] > git config --get commit.template [130ms]
+2026-02-20 07:40:57.172 [info] > git rev-parse refs/remotes/origin/main [90ms]
+2026-02-20 07:40:57.314 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [123ms]
+2026-02-20 07:40:57.326 [info] > git status -z -uall [142ms]
+2026-02-20 07:41:12.795 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [122ms]
+2026-02-20 07:41:12.804 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:41:12.805 [info] > git config --get commit.template [144ms]
+2026-02-20 07:41:12.885 [info] > git rev-parse refs/remotes/origin/main [80ms]
+2026-02-20 07:41:12.996 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [93ms]
+2026-02-20 07:41:13.003 [info] > git status -z -uall [111ms]
+2026-02-20 07:41:21.604 [info] > git config --get commit.template [85ms]
+2026-02-20 07:41:21.628 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [97ms]
+2026-02-20 07:41:21.635 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:41:21.730 [info] > git rev-parse refs/remotes/origin/main [94ms]
+2026-02-20 07:41:21.849 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [102ms]
+2026-02-20 07:41:21.857 [info] > git status -z -uall [120ms]
+2026-02-20 07:41:27.004 [info] > git config --get commit.template [126ms]
+2026-02-20 07:41:27.009 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [125ms]
+2026-02-20 07:41:27.016 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:41:27.151 [info] > git rev-parse refs/remotes/origin/main [134ms]
+2026-02-20 07:41:27.457 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [291ms]
+2026-02-20 07:41:27.482 [info] > git status -z -uall [323ms]
+2026-02-20 07:41:32.579 [info] > git config --get commit.template [76ms]
+2026-02-20 07:41:32.587 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [78ms]
+2026-02-20 07:41:32.594 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:41:32.650 [info] > git rev-parse refs/remotes/origin/main [56ms]
+2026-02-20 07:41:32.727 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [66ms]
+2026-02-20 07:41:32.738 [info] > git status -z -uall [83ms]
+2026-02-20 07:41:37.826 [info] > git config --get commit.template [71ms]
+2026-02-20 07:41:37.832 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [70ms]
+2026-02-20 07:41:37.840 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:41:37.901 [info] > git rev-parse refs/remotes/origin/main [62ms]
+2026-02-20 07:41:37.983 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [68ms]
+2026-02-20 07:41:37.994 [info] > git status -z -uall [87ms]
+2026-02-20 07:42:36.809 [info] > git config --get commit.template [135ms]
+2026-02-20 07:42:36.817 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [136ms]
+2026-02-20 07:42:36.824 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:42:36.895 [info] > git rev-parse refs/remotes/origin/main [70ms]
+2026-02-20 07:42:36.988 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [76ms]
+2026-02-20 07:42:37.005 [info] > git status -z -uall [99ms]
+2026-02-20 07:42:42.172 [info] > git config --get commit.template [144ms]
+2026-02-20 07:42:42.185 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [150ms]
+2026-02-20 07:42:42.192 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:42:42.397 [info] > git rev-parse refs/remotes/origin/main [206ms]
+2026-02-20 07:42:42.503 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [85ms]
+2026-02-20 07:42:42.545 [info] > git status -z -uall [136ms]
+2026-02-20 07:42:47.634 [info] > git config --get commit.template [71ms]
+2026-02-20 07:42:47.641 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [70ms]
+2026-02-20 07:42:47.648 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:42:47.703 [info] > git rev-parse refs/remotes/origin/main [55ms]
+2026-02-20 07:42:47.790 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [72ms]
+2026-02-20 07:42:47.804 [info] > git status -z -uall [95ms]
+2026-02-20 07:43:46.981 [info] > git config --get commit.template [100ms]
+2026-02-20 07:43:46.989 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [97ms]
+2026-02-20 07:43:46.998 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:43:47.072 [info] > git rev-parse refs/remotes/origin/main [74ms]
+2026-02-20 07:43:47.159 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [73ms]
+2026-02-20 07:43:47.170 [info] > git status -z -uall [91ms]
+2026-02-20 07:44:10.106 [info] > git config --get commit.template [173ms]
+2026-02-20 07:44:10.106 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [166ms]
+2026-02-20 07:44:10.117 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:44:10.217 [info] > git rev-parse refs/remotes/origin/main [101ms]
+2026-02-20 07:44:10.417 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [184ms]
+2026-02-20 07:44:10.468 [info] > git status -z -uall [242ms]
+2026-02-20 07:44:15.622 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [112ms]
+2026-02-20 07:44:15.630 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:44:15.630 [info] > git config --get commit.template [144ms]
+2026-02-20 07:44:15.854 [info] > git rev-parse refs/remotes/origin/main [225ms]
+2026-02-20 07:44:16.163 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [292ms]
+2026-02-20 07:44:16.184 [info] > git status -z -uall [323ms]
+2026-02-20 07:44:21.292 [info] > git config --get commit.template [90ms]
+2026-02-20 07:44:21.296 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [87ms]
+2026-02-20 07:44:21.306 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:44:21.372 [info] > git rev-parse refs/remotes/origin/main [67ms]
+2026-02-20 07:44:21.450 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [66ms]
+2026-02-20 07:44:21.465 [info] > git status -z -uall [87ms]
+2026-02-20 07:44:26.540 [info] > git config --get commit.template [60ms]
+2026-02-20 07:44:26.549 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [64ms]
+2026-02-20 07:44:26.556 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:44:26.611 [info] > git rev-parse refs/remotes/origin/main [55ms]
+2026-02-20 07:44:26.685 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [60ms]
+2026-02-20 07:44:26.696 [info] > git status -z -uall [78ms]
+2026-02-20 07:44:38.076 [info] > git config --get commit.template [87ms]
+2026-02-20 07:44:38.090 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [91ms]
+2026-02-20 07:44:38.096 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:44:38.156 [info] > git rev-parse refs/remotes/origin/main [60ms]
+2026-02-20 07:44:38.255 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [86ms]
+2026-02-20 07:44:38.279 [info] > git status -z -uall [118ms]
+2026-02-20 07:45:07.132 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [105ms]
+2026-02-20 07:45:07.140 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:45:07.144 [info] > git config --get commit.template [130ms]
+2026-02-20 07:45:07.232 [info] > git rev-parse refs/remotes/origin/main [93ms]
+2026-02-20 07:45:07.364 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [111ms]
+2026-02-20 07:45:07.371 [info] > git status -z -uall [127ms]
+2026-02-20 07:45:12.607 [info] > git config --get commit.template [219ms]
+2026-02-20 07:45:12.651 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [257ms]
+2026-02-20 07:45:12.661 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:45:12.771 [info] > git rev-parse refs/remotes/origin/main [110ms]
+2026-02-20 07:45:12.878 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [88ms]
+2026-02-20 07:45:12.888 [info] > git status -z -uall [106ms]
+2026-02-20 07:45:17.964 [info] > git config --get commit.template [58ms]
+2026-02-20 07:45:17.970 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [58ms]
+2026-02-20 07:45:17.979 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:45:18.058 [info] > git rev-parse refs/remotes/origin/main [79ms]
+2026-02-20 07:45:18.160 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [87ms]
+2026-02-20 07:45:18.176 [info] > git status -z -uall [111ms]
+2026-02-20 07:46:15.406 [info] > git config --get commit.template [95ms]
+2026-02-20 07:46:15.423 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [102ms]
+2026-02-20 07:46:15.430 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:46:15.497 [info] > git rev-parse refs/remotes/origin/main [66ms]
+2026-02-20 07:46:15.583 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [72ms]
+2026-02-20 07:46:15.598 [info] > git status -z -uall [95ms]
+2026-02-20 07:46:39.847 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [494ms]
+2026-02-20 07:46:39.848 [info] > git config --get commit.template [528ms]
+2026-02-20 07:46:39.857 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:46:40.383 [info] > git rev-parse refs/remotes/origin/main [526ms]
+2026-02-20 07:46:40.572 [info] > git status -z -uall [182ms]
+2026-02-20 07:46:40.575 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [173ms]
+2026-02-20 07:46:45.859 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [229ms]
+2026-02-20 07:46:45.868 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:46:45.892 [info] > git config --get commit.template [276ms]
+2026-02-20 07:46:45.998 [info] > git rev-parse refs/remotes/origin/main [130ms]
+2026-02-20 07:46:46.166 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [153ms]
+2026-02-20 07:46:46.170 [info] > git status -z -uall [164ms]
+2026-02-20 07:46:51.847 [info] > git config --get commit.template [396ms]
+2026-02-20 07:46:51.901 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [440ms]
+2026-02-20 07:46:51.910 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:46:52.295 [info] > git rev-parse refs/remotes/origin/main [386ms]
+2026-02-20 07:46:52.519 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [199ms]
+2026-02-20 07:46:52.544 [info] > git status -z -uall [241ms]
+2026-02-20 07:46:57.666 [info] > git config --get commit.template [98ms]
+2026-02-20 07:46:57.668 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [93ms]
+2026-02-20 07:46:57.673 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:46:57.763 [info] > git rev-parse refs/remotes/origin/main [90ms]
+2026-02-20 07:46:58.131 [info] > git status -z -uall [361ms]
+2026-02-20 07:46:58.167 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [384ms]
+2026-02-20 07:47:06.785 [info] > git config --get commit.template [173ms]
+2026-02-20 07:47:06.797 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [173ms]
+2026-02-20 07:47:06.809 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:47:06.912 [info] > git rev-parse refs/remotes/origin/main [102ms]
+2026-02-20 07:47:07.033 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [107ms]
+2026-02-20 07:47:07.043 [info] > git status -z -uall [123ms]
+2026-02-20 07:47:44.226 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [209ms]
+2026-02-20 07:47:44.226 [info] > git config --get commit.template [218ms]
+2026-02-20 07:47:44.233 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:47:44.378 [info] > git rev-parse refs/remotes/origin/main [145ms]
+2026-02-20 07:47:44.520 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [119ms]
+2026-02-20 07:47:44.569 [info] > git status -z -uall [179ms]
+2026-02-20 07:48:20.753 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [133ms]
+2026-02-20 07:48:20.753 [info] > git config --get commit.template [148ms]
+2026-02-20 07:48:20.764 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:48:20.894 [info] > git rev-parse refs/remotes/origin/main [131ms]
+2026-02-20 07:48:21.171 [info] > git status -z -uall [265ms]
+2026-02-20 07:48:21.177 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [241ms]
+2026-02-20 07:48:26.301 [info] > git config --get commit.template [103ms]
+2026-02-20 07:48:26.325 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [119ms]
+2026-02-20 07:48:26.332 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:48:26.437 [info] > git rev-parse refs/remotes/origin/main [106ms]
+2026-02-20 07:48:26.734 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [282ms]
+2026-02-20 07:48:26.734 [info] > git status -z -uall [291ms]
+2026-02-20 07:48:31.851 [info] > git config --get commit.template [95ms]
+2026-02-20 07:48:31.856 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [91ms]
+2026-02-20 07:48:31.862 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:48:31.921 [info] > git rev-parse refs/remotes/origin/main [59ms]
+2026-02-20 07:48:32.004 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [68ms]
+2026-02-20 07:48:32.015 [info] > git status -z -uall [88ms]
+2026-02-20 07:49:31.050 [info] > git config --get commit.template [86ms]
+2026-02-20 07:49:31.096 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [120ms]
+2026-02-20 07:49:31.103 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:49:31.187 [info] > git rev-parse refs/remotes/origin/main [83ms]
+2026-02-20 07:49:31.295 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [95ms]
+2026-02-20 07:49:31.311 [info] > git status -z -uall [117ms]
+2026-02-20 07:50:43.363 [info] > git log --format=%H%n%aN%n%aE%n%at%n%ct%n%P%n%D%n%B -z --shortstat --diff-merges=first-parent -n50 --skip=0 --topo-order --decorate=full --stdin [163ms]
+2026-02-20 07:50:44.109 [info] > git check-ignore -v -z --stdin [56ms]
+2026-02-20 07:50:44.352 [info] > git merge-base main origin/main [65ms]
+2026-02-20 07:51:02.894 [info] > git add -A -- . [258ms]
+2026-02-20 07:51:02.894 [info] warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/charts.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/colors.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/icons.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/landing.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/products.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/prompts.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/react-performance.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/flutter.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/html-tailwind.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/jetpack-compose.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/nextjs.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/nuxt-ui.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/nuxtjs.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/react-native.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/react.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/shadcn.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/svelte.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/swiftui.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/stacks/vue.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/styles.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/typography.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/ui-reasoning.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/ux-guidelines.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/data/web-interface.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/scripts/core.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/scripts/design_system.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/.shared/ui-ux-pro-max/scripts/search.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/backend-specialist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/code-archaeologist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/database-architect.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/debugger.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/devops-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/documentation-writer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/explorer-agent.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/frontend-specialist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/game-developer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/mobile-developer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/orchestrator.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/penetration-tester.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/performance-optimizer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/product-manager.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/product-owner.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/project-planner.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/qa-automation-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/security-auditor.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/seo-specialist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/agents/test-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/mcp_config.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/rules/GEMINI.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/scripts/auto_preview.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/scripts/checklist.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/scripts/session_manager.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/scripts/verify_all.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/api-style.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/auth.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/documentation.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/graphql.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/rate-limiting.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/response.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/rest.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/scripts/api_validator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/security-testing.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/trpc.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/api-patterns/versioning.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/agent-coordination.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/feature-building.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/project-detection.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/scaffolding.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/tech-stack.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/astro-static/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/chrome-extension/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/cli-tool/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/electron-desktop/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/express-api/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/flutter-app/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/monorepo-turborepo/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/nextjs-fullstack/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/nextjs-saas/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/nextjs-static/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/nuxt-app/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/python-fastapi/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/app-builder/templates/react-native-app/TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/architecture/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/architecture/context-discovery.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/architecture/examples.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/architecture/pattern-selection.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/architecture/patterns-reference.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/architecture/trade-off-analysis.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/bash-linux/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/behavioral-modes/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/brainstorming/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/brainstorming/dynamic-questioning.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/clean-code/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/code-review-checklist/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/database-selection.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/indexing.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/migrations.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/optimization.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/orm-selection.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/schema-design.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/database-design/scripts/schema_validator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/deployment-procedures/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/doc.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/documentation-templates/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/animation-guide.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/color-system.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/decision-trees.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/motion-graphics.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/scripts/accessibility_checker.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/scripts/ux_audit.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/typography-system.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/ux-psychology.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/frontend-design/visual-effects.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/2d-games/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/3d-games/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/game-art/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/game-audio/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/game-design/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/mobile-games/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/multiplayer/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/pc-games/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/vr-ar/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/game-development/web-games/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/geo-fundamentals/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/geo-fundamentals/scripts/geo_checker.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/i18n-localization/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/i18n-localization/scripts/i18n_checker.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/intelligent-routing/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/lint-and-validate/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/lint-and-validate/scripts/lint_runner.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/lint-and-validate/scripts/type_coverage.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mcp-builder/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/decision-trees.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-backend.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-color-system.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-debugging.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-design-thinking.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-navigation.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-performance.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-testing.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/mobile-typography.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/platform-android.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/platform-ios.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/scripts/mobile_audit.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/mobile-design/touch-psychology.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/1-async-eliminating-waterfalls.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/2-bundle-bundle-size-optimization.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/3-server-server-side-performance.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/4-client-client-side-data-fetching.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/5-rerender-re-render-optimization.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/6-rendering-rendering-performance.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/7-js-javascript-performance.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/8-advanced-advanced-patterns.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/scripts/convert_rules.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nextjs-react-expert/scripts/react_performance_checker.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/nodejs-best-practices/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/parallel-agents/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/performance-profiling/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/performance-profiling/scripts/lighthouse_audit.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/plan-writing/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/powershell-windows/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/python-patterns/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/red-team-tactics/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/rust-pro/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/seo-fundamentals/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/seo-fundamentals/scripts/seo_checker.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/server-management/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/systematic-debugging/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/tailwind-patterns/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/tdd-workflow/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/testing-patterns/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/testing-patterns/scripts/test_runner.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/vulnerability-scanner/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/vulnerability-scanner/checklists.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/vulnerability-scanner/scripts/security_scan.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/web-design-guidelines/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/webapp-testing/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/skills/webapp-testing/scripts/playwright_runner.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/brainstorm.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/create.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/debug.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/deploy.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/enhance.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/orchestrate.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/plan.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/preview.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/status.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/test.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent/workflows/ui-ux-pro-max.md', LF will be replaced by CRLF the next time Git touches it
+2026-02-20 07:51:03.050 [info] > git -c user.useConfigOnly=true commit --quiet --allow-empty-message --file - [149ms]
+2026-02-20 07:51:03.050 [info] Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: no email was given and auto-detection is disabled
+2026-02-20 07:51:03.108 [info] > git config --get-all user.name [53ms]
+2026-02-20 07:51:03.173 [info] > git config --get commit.template [59ms]
+2026-02-20 07:51:03.180 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [58ms]
+2026-02-20 07:51:03.186 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:51:03.238 [info] > git rev-parse refs/remotes/origin/main [52ms]
+2026-02-20 07:51:03.309 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [59ms]
+2026-02-20 07:51:03.321 [info] > git status -z -uall [78ms]
+2026-02-20 07:51:03.549 [info] > git show -s --decorate=full --shortstat --format=%H%n%aN%n%aE%n%at%n%ct%n%P%n%D%n%B -z ab30a8fdb3a3c2393c68fbebaa995cb75812fef3 -- [217ms]
+2026-02-20 07:52:15.910 [info] > git config --get commit.template [76ms]
+2026-02-20 07:52:15.971 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [130ms]
+2026-02-20 07:52:15.978 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:52:16.125 [info] > git rev-parse refs/remotes/origin/main [147ms]
+2026-02-20 07:52:16.230 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [88ms]
+2026-02-20 07:52:16.258 [info] > git status -z -uall [124ms]
+2026-02-20 07:53:16.670 [info] > git config --get commit.template [88ms]
+2026-02-20 07:53:16.677 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [84ms]
+2026-02-20 07:53:16.688 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:53:16.770 [info] > git rev-parse refs/remotes/origin/main [82ms]
+2026-02-20 07:53:16.868 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [80ms]
+2026-02-20 07:53:16.895 [info] > git status -z -uall [116ms]
+2026-02-20 07:54:07.877 [info] > git check-ignore -v -z --stdin [63ms]
+2026-02-20 07:57:17.598 [info] > git config --get commit.template [100ms]
+2026-02-20 07:57:17.610 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [98ms]
+2026-02-20 07:57:17.618 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:57:17.718 [info] > git rev-parse refs/remotes/origin/main [101ms]
+2026-02-20 07:57:17.838 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [102ms]
+2026-02-20 07:57:17.861 [info] > git status -z -uall [132ms]
+2026-02-20 07:58:18.689 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [94ms]
+2026-02-20 07:58:18.696 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:58:18.711 [info] > git config --get commit.template [128ms]
+2026-02-20 07:58:18.813 [info] > git rev-parse refs/remotes/origin/main [116ms]
+2026-02-20 07:58:18.948 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [121ms]
+2026-02-20 07:58:18.973 [info] > git status -z -uall [153ms]
+2026-02-20 07:58:24.183 [info] > git config --get commit.template [199ms]
+2026-02-20 07:58:24.199 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) --ignore-case refs/heads/main refs/remotes/main [210ms]
+2026-02-20 07:58:24.207 [warning] [Git][revParse] Unable to read file: ENOENT: no such file or directory, open 'c:\Users\RDP\Documents\BL-XD\.git\refs\remotes\origin\main'
+2026-02-20 07:58:24.391 [info] > git rev-parse refs/remotes/origin/main [184ms]
+2026-02-20 07:58:24.525 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [118ms]
+2026-02-20 07:58:24.634 [info] > git status -z -uall [235ms]
