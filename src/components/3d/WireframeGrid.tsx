@@ -42,7 +42,9 @@ export function WireframeGrid({
   // Store original positions for reference
   const originalPositions = useMemo(() => {
     const geo = new THREE.PlaneGeometry(size, size, segments, segments);
-    return Float32Array.from(geo.attributes.position.array);
+    const positions = Float32Array.from(geo.attributes.position.array);
+    geo.dispose();
+    return positions;
   }, [size, segments]);
 
   useFrame((state) => {
