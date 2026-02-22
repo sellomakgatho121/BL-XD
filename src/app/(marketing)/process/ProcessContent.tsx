@@ -7,6 +7,8 @@ import GrainOverlay from "@/components/blacklight/grain-overlay";
 import Scanlines from "@/components/blacklight/scanlines";
 import GlitchText from "@/components/GlitchText";
 import { Button } from "@/components/ui/button";
+import { PageEffectsLayer, ScrollReveal3D } from "@/components/3d";
+import { Tilt3DCard } from "@/components/ui/Tilt3DCard";
 
 const values = [
   {
@@ -87,6 +89,7 @@ export default function ProcessContent() {
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
       <GrainOverlay opacity={0.03} />
       <Scanlines />
+      <PageEffectsLayer intensity="medium" />
 
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -128,22 +131,25 @@ export default function ProcessContent() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {values.map((value, i) => (
-              <motion.div
-                key={value.number}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="border border-[var(--border)] bg-[var(--card)] p-8"
-              >
-                <div className="flex items-start gap-6">
-                  <span className="text-4xl font-black text-[var(--signal-lime)]/30">{value.number}</span>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">{value.title}</h3>
-                    <p className="text-[var(--spectral-dim)]">{value.description}</p>
-                  </div>
-                </div>
-              </motion.div>
+              <ScrollReveal3D key={value.number} axis="x" maxRotation={4} parallaxShift={20}>
+                <Tilt3DCard maxTilt={7} glareColor="rgba(215, 255, 0, 0.03)">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="border border-[var(--border)] bg-[var(--card)] p-8"
+                  >
+                    <div className="flex items-start gap-6">
+                      <span className="text-4xl font-black text-[var(--signal-lime)]/30">{value.number}</span>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">{value.title}</h3>
+                        <p className="text-[var(--spectral-dim)]">{value.description}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </Tilt3DCard>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>
@@ -194,21 +200,24 @@ export default function ProcessContent() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="border border-[var(--border)] bg-[var(--card)] p-8"
-              >
-                <Quote className="w-8 h-8 text-[var(--signal-lime)] mb-4" />
-                <p className="text-[var(--spectral-dim)] mb-6 italic">&ldquo;{t.quote}&rdquo;</p>
-                <div>
-                  <div className="font-bold">{t.author}</div>
-                  <div className="text-sm text-[var(--spectral-muted)]">{t.role}</div>
-                </div>
-              </motion.div>
+              <ScrollReveal3D key={i} axis="both" maxRotation={4} parallaxShift={15}>
+                <Tilt3DCard maxTilt={6} glareColor="rgba(215, 255, 0, 0.03)">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="border border-[var(--border)] bg-[var(--card)] p-8"
+                  >
+                    <Quote className="w-8 h-8 text-[var(--signal-lime)] mb-4" />
+                    <p className="text-[var(--spectral-dim)] mb-6 italic">&ldquo;{t.quote}&rdquo;</p>
+                    <div>
+                      <div className="font-bold">{t.author}</div>
+                      <div className="text-sm text-[var(--spectral-muted)]">{t.role}</div>
+                    </div>
+                  </motion.div>
+                </Tilt3DCard>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>

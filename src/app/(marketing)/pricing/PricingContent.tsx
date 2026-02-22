@@ -9,6 +9,8 @@ import GlitchText from "@/components/GlitchText";
 import { Button } from "@/components/ui/button";
 import ServiceCard, { AgenticTier } from "@/components/blacklight/service-card";
 import SprintCalculator from "@/components/blacklight/sprint-calculator";
+import { PageEffectsLayer, ScrollReveal3D } from "@/components/3d";
+import { Tilt3DCard } from "@/components/ui/Tilt3DCard";
 
 const tiers = [
   {
@@ -91,6 +93,7 @@ export default function PricingContent() {
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
       <GrainOverlay opacity={0.03} />
       <Scanlines />
+      <PageEffectsLayer intensity="medium" />
 
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -141,18 +144,21 @@ export default function PricingContent() {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {tiers.map((tier, i) => (
-              <ServiceCard
-                key={tier.tier}
-                tier={tier.tier}
-                title={tier.title}
-                price={tier.price}
-                pricingModel={tier.pricingModel}
-                description={tier.description}
-                features={tier.features}
-                featured={tier.featured}
-                delay={i * 0.1}
-                href={tier.href}
-              />
+              <ScrollReveal3D key={tier.tier} axis="both" maxRotation={5} parallaxShift={25}>
+                <Tilt3DCard maxTilt={8} glareColor="rgba(215, 255, 0, 0.04)" borderColor="rgba(215, 255, 0, 0.2)">
+                  <ServiceCard
+                    tier={tier.tier}
+                    title={tier.title}
+                    price={tier.price}
+                    pricingModel={tier.pricingModel}
+                    description={tier.description}
+                    features={tier.features}
+                    featured={tier.featured}
+                    delay={i * 0.1}
+                    href={tier.href}
+                  />
+                </Tilt3DCard>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>
@@ -169,8 +175,9 @@ export default function PricingContent() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {sprints.map((sprint, i) => (
+              <ScrollReveal3D key={sprint.name} axis="x" maxRotation={4} parallaxShift={20}>
+              <Tilt3DCard maxTilt={7} glareColor="rgba(215, 255, 0, 0.03)">
               <motion.div
-                key={sprint.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -190,6 +197,8 @@ export default function PricingContent() {
                   <div className="text-2xl font-bold">{sprint.price}</div>
                 </div>
               </motion.div>
+              </Tilt3DCard>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>

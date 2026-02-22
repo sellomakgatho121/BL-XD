@@ -8,6 +8,8 @@ import Scanlines from "@/components/blacklight/scanlines";
 import GlitchText from "@/components/GlitchText";
 import { Button } from "@/components/ui/button";
 import ServiceCard from "@/components/blacklight/service-card";
+import { PageEffectsLayer, ScrollReveal3D } from "@/components/3d";
+import { Tilt3DCard } from "@/components/ui/Tilt3DCard";
 
 const agenticServices = [
   {
@@ -168,6 +170,7 @@ export default function ServicesContent() {
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
       <GrainOverlay opacity={0.03} />
       <Scanlines />
+      <PageEffectsLayer intensity="medium" showHero />
 
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -301,16 +304,18 @@ export default function ServicesContent() {
               viewport={{ once: true }}
               className="order-1 lg:order-2"
             >
-              <ServiceCard
-                tier="merchant"
-                title="WhatsApp AI Storefront"
-                price="From R12,000"
-                pricingModel="Setup + per-conversation"
-                description="Your 24/7 AI sales agent on WhatsApp. Handles 80% of customer queries automatically."
-                features={["WhatsApp Business API", "Local language support", "SA payment integration", "Product catalog", "Order tracking"]}
-                featured={true}
-                href="/contact"
-              />
+              <Tilt3DCard maxTilt={10} glareColor="rgba(37, 211, 102, 0.06)" borderColor="rgba(37, 211, 102, 0.3)">
+                <ServiceCard
+                  tier="merchant"
+                  title="WhatsApp AI Storefront"
+                  price="From R12,000"
+                  pricingModel="Setup + per-conversation"
+                  description="Your 24/7 AI sales agent on WhatsApp. Handles 80% of customer queries automatically."
+                  features={["WhatsApp Business API", "Local language support", "SA payment integration", "Product catalog", "Order tracking"]}
+                  featured={true}
+                  href="/contact"
+                />
+              </Tilt3DCard>
             </motion.div>
           </div>
         </div>
@@ -335,18 +340,21 @@ export default function ServicesContent() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {agenticServices.filter(s => s.tier !== "merchant").map((service, i) => (
-              <ServiceCard
-                key={service.tier}
-                tier={service.tier}
-                title={service.title}
-                price={service.price}
-                pricingModel={service.pricingModel}
-                description={service.description}
-                features={service.features}
-                savingsNote={service.savingsNote}
-                delay={i * 0.1}
-                href={service.href}
-              />
+              <ScrollReveal3D key={service.tier} axis="both" maxRotation={5} parallaxShift={25}>
+                <Tilt3DCard maxTilt={8} glareColor="rgba(215, 255, 0, 0.04)" borderColor="rgba(215, 255, 0, 0.2)">
+                  <ServiceCard
+                    tier={service.tier}
+                    title={service.title}
+                    price={service.price}
+                    pricingModel={service.pricingModel}
+                    description={service.description}
+                    features={service.features}
+                    savingsNote={service.savingsNote}
+                    delay={i * 0.1}
+                    href={service.href}
+                  />
+                </Tilt3DCard>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>
@@ -375,8 +383,9 @@ export default function ServicesContent() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {sprintPackages.map((pkg, i) => (
+              <ScrollReveal3D key={pkg.name} axis="x" maxRotation={4} parallaxShift={20}>
+              <Tilt3DCard maxTilt={7} glareColor="rgba(215, 255, 0, 0.03)">
               <motion.div
-                key={pkg.name}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -398,6 +407,8 @@ export default function ServicesContent() {
                   ))}
                 </ul>
               </motion.div>
+              </Tilt3DCard>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>

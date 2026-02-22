@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { PageEffectsLayer, ScrollReveal3D } from "@/components/3d";
 
 const budgetOptions = [
   { value: "", label: "Select budget range" },
@@ -82,6 +83,7 @@ export default function ContactContent() {
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
       <GrainOverlay opacity={0.03} />
       <Scanlines />
+      <PageEffectsLayer intensity="subtle" />
 
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,6 +107,7 @@ export default function ContactContent() {
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Left: Info */}
             <div>
+              <ScrollReveal3D axis="x" maxRotation={3} parallaxShift={15}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -168,6 +171,7 @@ export default function ContactContent() {
                   </div>
                 </div>
               </motion.div>
+              </ScrollReveal3D>
             </div>
 
             {/* Right: Form */}

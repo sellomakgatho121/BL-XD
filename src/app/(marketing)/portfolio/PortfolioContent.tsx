@@ -9,6 +9,8 @@ import GlitchText from "@/components/GlitchText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { PageEffectsLayer, ScrollReveal3D } from "@/components/3d";
+import { Tilt3DCard } from "@/components/ui/Tilt3DCard";
 
 const portfolioItems = [
   {
@@ -85,6 +87,7 @@ export default function PortfolioContent() {
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
       <GrainOverlay opacity={0.03} />
       <Scanlines />
+      <PageEffectsLayer intensity="medium" />
 
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,8 +138,9 @@ export default function PortfolioContent() {
           {/* Portfolio Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredItems.map((item, i) => (
+              <ScrollReveal3D key={item.id} axis="both" maxRotation={5} parallaxShift={20}>
+              <Tilt3DCard maxTilt={8} glareColor="rgba(215, 255, 0, 0.04)" borderColor="rgba(215, 255, 0, 0.2)">
               <motion.div
-                key={item.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -197,6 +201,8 @@ export default function PortfolioContent() {
                   </div>
                 </div>
               </motion.div>
+              </Tilt3DCard>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>
