@@ -1,24 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Lock, Mail, ArrowRight, AlertCircle } from "lucide-react";
+import { Lock, Mail, ArrowRight, AlertCircle, Chrome, Github, Sparkles } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import GlitchText from "@/components/GlitchText";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+type AuthMode = "password" | "magic-link";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [authMode, setAuthMode] = useState<AuthMode>("password");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const redirectedFrom = searchParams.get("redirectedFrom") || "/portal/dashboard";
+  const callbackError = searchParams.get("error");
+
+  const handlePasswordLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -35,7 +43,7 @@ export default function LoginPage() {
       }
 
       if (data.user) {
-        router.push("/portal/dashboard");
+        router.push(redirectedFrom);
         router.refresh();
       }
     } catch {
@@ -44,6 +52,57 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
+
+  const handleMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const { error: authError } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/api/auth/callback?redirectedFrom=${encodeURIComponent(redirectedFrom)}`,
+        },
+      });
+
+      if (authError) {
+        setError(authError.message);
+        return;
+      }
+
+      setSuccess("Check your email for a magic link to sign in.");
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOAuthLogin = async (provider: "google" | "github") => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const { error: authError } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/api/auth/callback?redirectedFrom=${encodeURIComponent(redirectedFrom)}`,
+        },
+      });
+
+      if (authError) {
+        setError(authError.message);
+        setIsLoading(false);
+      }
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmit = authMode === "password" ? handlePasswordLogin : handleMagicLink;
 
   return (
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] flex items-center justify-center p-4">
@@ -70,6 +129,67 @@ export default function LoginPage() {
         </div>
 
         <div className="border border-[var(--border)] bg-[var(--card)] p-8">
+          {/* OAuth Providers */}
+          <div className="space-y-3 mb-6">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => handleOAuthLogin("google")}
+              disabled={isLoading}
+              className="w-full h-12 bg-[var(--onyx)] border-[var(--border)] rounded-none font-mono uppercase text-sm hover:border-[var(--signal-lime)] hover:text-[var(--signal-lime)] transition-colors"
+            >
+              <Chrome className="w-4 h-4 mr-2" />
+              Continue with Google
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => handleOAuthLogin("github")}
+              disabled={isLoading}
+              className="w-full h-12 bg-[var(--onyx)] border-[var(--border)] rounded-none font-mono uppercase text-sm hover:border-[var(--signal-lime)] hover:text-[var(--signal-lime)] transition-colors"
+            >
+              <Github className="w-4 h-4 mr-2" />
+              Continue with GitHub
+            </Button>
+          </div>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[var(--border)]" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-[var(--card)] px-4 text-[var(--spectral-muted)] font-mono">or</span>
+            </div>
+          </div>
+
+          {/* Auth Mode Toggle */}
+          <div className="flex mb-6 border border-[var(--border)]">
+            <button
+              type="button"
+              onClick={() => { setAuthMode("password"); setError(""); setSuccess(""); }}
+              className={`flex-1 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
+                authMode === "password"
+                  ? "bg-[var(--signal-lime)] text-[var(--onyx)]"
+                  : "text-[var(--spectral-muted)] hover:text-[var(--spectral-white)]"
+              }`}
+            >
+              Password
+            </button>
+            <button
+              type="button"
+              onClick={() => { setAuthMode("magic-link"); setError(""); setSuccess(""); }}
+              className={`flex-1 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
+                authMode === "magic-link"
+                  ? "bg-[var(--signal-lime)] text-[var(--onyx)]"
+                  : "text-[var(--spectral-muted)] hover:text-[var(--spectral-white)]"
+              }`}
+            >
+              <Sparkles className="w-3 h-3 inline mr-1" />
+              Magic Link
+            </button>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-xs font-mono uppercase text-[var(--spectral-muted)]">
@@ -89,32 +209,50 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-xs font-mono uppercase text-[var(--spectral-muted)]">
-                Password
-              </Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--spectral-muted)]" />
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 bg-[var(--onyx)] border-[var(--border)] rounded-none"
-                  placeholder="••••••••"
-                  required
-                />
+            {authMode === "password" && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password" className="text-xs font-mono uppercase text-[var(--spectral-muted)]">
+                    Password
+                  </Label>
+                  <Link href="/reset-password" className="text-xs text-[var(--signal-lime)] hover:underline font-mono">
+                    Forgot?
+                  </Link>
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--spectral-muted)]" />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-10 bg-[var(--onyx)] border-[var(--border)] rounded-none"
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
-            {error && (
+            {(error || callbackError) && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
               >
-                <AlertCircle className="w-4 h-4" />
-                {error}
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                {error || "Authentication failed. Please try again."}
+              </motion.div>
+            )}
+
+            {success && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 text-sm text-[var(--signal-lime)] border border-[var(--signal-lime)]/50 bg-[var(--signal-lime)]/10 px-4 py-3"
+              >
+                <Sparkles className="w-4 h-4 shrink-0" />
+                {success}
               </motion.div>
             )}
 
@@ -125,10 +263,15 @@ export default function LoginPage() {
             >
               {isLoading ? (
                 "AUTHENTICATING..."
-              ) : (
+              ) : authMode === "password" ? (
                 <>
                   SIGN IN
                   <ArrowRight className="ml-2 w-4 h-4" />
+                </>
+              ) : (
+                <>
+                  SEND MAGIC LINK
+                  <Sparkles className="ml-2 w-4 h-4" />
                 </>
               )}
             </Button>
@@ -146,7 +289,7 @@ export default function LoginPage() {
 
         <p className="text-center mt-8 text-xs font-mono text-[var(--spectral-muted)] uppercase tracking-widest">
           <Link href="/" className="hover:text-[var(--spectral-white)] transition-colors">
-            ← Back to Website
+            &larr; Back to Website
           </Link>
         </p>
       </motion.div>

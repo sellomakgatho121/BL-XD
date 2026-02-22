@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CRTOverlay from "@/components/CRTOverlay";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import VercelAnalytics from "@/components/analytics/VercelAnalytics";
+import PlausibleAnalytics from "@/components/analytics/PlausibleAnalytics";
 import { AnimationProvider } from "@/components/Provider/AnimationProvider";
 
 const geistSans = Geist({
@@ -49,6 +51,10 @@ export default function RootLayout({
       >
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+        <VercelAnalytics />
+        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
+          <PlausibleAnalytics domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
         )}
         <CRTOverlay />
         <AnimationProvider>{children}</AnimationProvider>

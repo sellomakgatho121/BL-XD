@@ -73,13 +73,25 @@ const portfolioItems = [
   },
 ];
 
-const filters = ["All", "Retail", "Professional Services", "Technology", "Fashion", "Creative", "Health"];
+const industryFilters = ["All", "Retail", "Professional Services", "Technology", "Fashion", "Creative", "Health"];
+const tierFilters = ["All", "Spark", "Growth", "Shop"];
+const sortOptions = [
+  { label: "Newest", value: "newest" },
+  { label: "Lighthouse Score", value: "lighthouse" },
+] as const;
 
 export default function PortfolioContent() {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeIndustry, setActiveIndustry] = useState("All");
+  const [activeTier, setActiveTier] = useState("All");
+  const [sortBy, setSortBy] = useState<"newest" | "lighthouse">("newest");
 
-  const filteredItems =
-    activeFilter === "All" ? portfolioItems : portfolioItems.filter((item) => item.industry === activeFilter);
+  const filteredItems = portfolioItems
+    .filter((item) => activeIndustry === "All" || item.industry === activeIndustry)
+    .filter((item) => activeTier === "All" || item.tier === activeTier)
+    .sort((a, b) => {
+      if (sortBy === "lighthouse") return b.metrics.lighthouse - a.metrics.lighthouse;
+      return b.id - a.id; // newest first
+    });
 
   return (
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
@@ -114,22 +126,57 @@ export default function PortfolioContent() {
             </p>
           </motion.div>
 
-          {/* Filters */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-wrap justify-center gap-2 mb-12">
-            <Filter className="w-5 h-5 text-[var(--spectral-muted)] mr-2" />
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`px-4 py-2 text-sm font-mono uppercase tracking-wider transition-colors ${
-                  activeFilter === filter
-                    ? "bg-[var(--signal-lime)] text-[var(--onyx)]"
-                    : "border border-[var(--border)] text-[var(--spectral-dim)] hover:text-[var(--signal-lime)]"
-                }`}
-              >
-                {filter}
-              </button>
-            ))}
+          {/* Industry Filters */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 mb-12">
+            <div className="flex flex-wrap justify-center gap-2">
+              <Filter className="w-5 h-5 text-[var(--spectral-muted)] mr-2" />
+              {industryFilters.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => setActiveIndustry(filter)}
+                  className={`px-4 py-2 text-sm font-mono uppercase tracking-wider transition-colors ${
+                    activeIndustry === filter
+                      ? "bg-[var(--signal-lime)] text-[var(--onyx)]"
+                      : "border border-[var(--border)] text-[var(--spectral-dim)] hover:text-[var(--signal-lime)]"
+                  }`}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+
+            {/* Tier + Sort Controls */}
+            <div className="flex flex-wrap justify-center gap-2 items-center">
+              <span className="text-xs font-mono text-[var(--spectral-muted)] uppercase mr-2">Tier:</span>
+              {tierFilters.map((tier) => (
+                <button
+                  key={tier}
+                  onClick={() => setActiveTier(tier)}
+                  className={`px-3 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors ${
+                    activeTier === tier
+                      ? "bg-[var(--signal-lime)]/20 text-[var(--signal-lime)] border border-[var(--signal-lime)]/50"
+                      : "border border-[var(--border)] text-[var(--spectral-dim)] hover:text-[var(--signal-lime)]"
+                  }`}
+                >
+                  {tier}
+                </button>
+              ))}
+              <span className="text-[var(--border)] mx-2">|</span>
+              <span className="text-xs font-mono text-[var(--spectral-muted)] uppercase mr-2">Sort:</span>
+              {sortOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setSortBy(opt.value)}
+                  className={`px-3 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors ${
+                    sortBy === opt.value
+                      ? "text-[var(--signal-lime)]"
+                      : "text-[var(--spectral-dim)] hover:text-[var(--signal-lime)]"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </motion.div>
 
           {/* Portfolio Grid */}

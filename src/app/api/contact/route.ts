@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { sendEmail, emailTemplates } from '@/lib/email';
 import { analyzeLead } from '@/lib/ai/lead-scoring';
+import { sendWebhookNotification } from '@/lib/webhooks';
 
 export async function POST(request: Request) {
   try {
@@ -92,6 +93,19 @@ export async function POST(request: Request) {
     } catch (emailError) {
       console.error('Failed to send email:', emailError);
       // Don't fail the request if email fails
+    }
+
+    // Send Slack/Discord webhook notification
+    try {
+      await sendWebhookNotification('new_lead', {
+        name: body.name,
+        email: body.email,
+        business: body.business_name || 'Not specified',
+        budget: body.budget_range || 'Not specified',
+        message: body.message.slice(0, 200),
+      });
+    } catch (webhookError) {
+      console.error('Webhook notification failed:', webhookError);
     }
 
     // Create notification for admins

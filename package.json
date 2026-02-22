@@ -13,7 +13,12 @@
     "deploy:retry": "bash scripts/retry-deployment.sh",
     "deploy:webhook": "bash scripts/trigger-vercel-deploy.sh",
     "auto-commit": "bash scripts/auto-commit.sh",
-    "deploy": "npm run auto-commit"
+    "deploy": "npm run auto-commit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

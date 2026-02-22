@@ -23,12 +23,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { NotificationCenter } from "@/components/ui/notification-center";
 
 const sidebarItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/admin/admin/dashboard" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
   { icon: Users, label: "Clients", href: "/admin/clients" },
   { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
   { icon: MessageSquare, label: "Messages", href: "/admin/messages" },
-  { icon: Users, label: "Leads", href: "/admin/admin/leads" },
+  { icon: Users, label: "Leads", href: "/admin/leads" },
   { icon: Shield, label: "Team", href: "/admin/team" },
+  { icon: Settings, label: "Analytics", href: "/admin/analytics" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 

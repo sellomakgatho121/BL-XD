@@ -19,8 +19,9 @@ import { supabase, type Profile } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 
 const sidebarItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/portal/portal/dashboard" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/portal/dashboard" },
   { icon: FileText, label: "Projects", href: "/portal/projects" },
+  { icon: FileText, label: "Invoices", href: "/portal/invoices" },
   { icon: MessageSquare, label: "Messages", href: "/portal/messages" },
   { icon: Settings, label: "Settings", href: "/portal/settings" },
 ];
