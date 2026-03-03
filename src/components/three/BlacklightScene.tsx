@@ -270,22 +270,38 @@ function AccentGlow() {
    ───────────────────────────────────────────── */
 
 function PostProcessing({ isMobile = false }: { isMobile?: boolean }) {
+  if (isMobile) {
+    return (
+      <EffectComposer multisampling={0}>
+        <Bloom
+          intensity={0.6}
+          luminanceThreshold={0.1}
+          luminanceSmoothing={0.9}
+          mipmapBlur
+        />
+        <Vignette
+          offset={0.4}
+          darkness={0.9}
+          blendFunction={BlendFunction.NORMAL}
+        />
+      </EffectComposer>
+    );
+  }
+
   return (
-    <EffectComposer multisampling={isMobile ? 0 : 4}>
+    <EffectComposer multisampling={4}>
       <Bloom
-        intensity={isMobile ? 0.6 : 1.2}
+        intensity={1.2}
         luminanceThreshold={0.1}
         luminanceSmoothing={0.9}
         mipmapBlur
       />
-      {!isMobile && (
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={new Vector2(0.0015, 0.0015)}
-          radialModulation={true}
-          modulationOffset={0.5}
-        />
-      )}
+      <ChromaticAberration
+        blendFunction={BlendFunction.NORMAL}
+        offset={new Vector2(0.0015, 0.0015)}
+        radialModulation={true}
+        modulationOffset={0.5}
+      />
       <Vignette
         offset={0.4}
         darkness={0.9}

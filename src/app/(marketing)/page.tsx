@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   Terminal,
@@ -143,7 +143,7 @@ const processSteps = [
    STAGGER ANIMATION VARIANTS
    ────────────────────────────────────────── */
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
@@ -151,7 +151,7 @@ const fadeUp = {
     transition: {
       duration: 0.7,
       delay: i * 0.1,
-      ease: [0.16, 1, 0.3, 1],
+      ease: "circOut",
     },
   }),
 };
@@ -384,7 +384,7 @@ export default function LandingPage() {
                   transition={{
                     duration: 0.7,
                     delay: i * 0.12,
-                    ease: [0.16, 1, 0.3, 1],
+                    ease: "circOut",
                   }}
                   whileHover={{ y: -6, transition: { type: "spring", stiffness: 300, damping: 20 } }}
                   className={`group relative border border-[var(--spectral-white)]/[0.06] bg-[var(--onyx)] overflow-hidden cursor-pointer ${i % 2 === 1 ? "md:mt-12" : ""
@@ -498,7 +498,7 @@ export default function LandingPage() {
                 transition={{
                   duration: 0.6,
                   delay: i * 0.15,
-                  ease: [0.16, 1, 0.3, 1],
+                  ease: "circOut",
                 }}
                 className="flex gap-8 md:gap-12 py-10 group"
               >
