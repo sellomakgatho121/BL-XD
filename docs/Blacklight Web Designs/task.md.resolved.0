@@ -1,0 +1,16 @@
+# Blacklight Web Designs Setup Task List
+
+- [ ] Research Antigravity Kit and Rules <!-- id: 0 -->
+    - [x] List `.agent` directory <!-- id: 1 -->
+    - [x] Review [ARCHITECTURE.md](file:///C:/Users/Sellomakgatho/.agent/ARCHITECTURE.md) <!-- id: 2 -->
+    - [/] Review [rules/GEMINI.md](file:///C:/Users/Sellomakgatho/.agent/rules/GEMINI.md) <!-- id: 3 -->
+    - [ ] Review key specialist agent profiles (Orchestrator, Frontend, Product Manager) <!-- id: 4 -->
+- [ ] Establish Business Identity <!-- id: 5 -->
+    - [ ] Define "Blacklight Web Designs" core values and mission <!-- id: 6 -->
+    - [ ] Set up branding artifacts (logos, color palettes) <!-- id: 7 -->
+- [ ] Create Implementation Plan for Business Launch <!-- id: 8 -->
+    - [ ] Define service offerings <!-- id: 9 -->
+    - [ ] Set up project management structure <!-- id: 10 -->
+- [ ] Initial Business Artifacts <!-- id: 11 -->
+    - [ ] Portfolio template <!-- id: 12 -->
+    - [ ] Client onboarding workflow <!-- id: 13 -->
