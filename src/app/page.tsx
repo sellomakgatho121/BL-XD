@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ComingSoon from '@/components/screens/ComingSoon';
-import Home from '@/components/screens/Home';
-import DevModeSwitcher from '@/components/DevModeSwitcher';
+import ComingSoon from "@/components/screens/ComingSoon";
+import LandingPage from "@/app/(marketing)/page";
+import DevModeSwitcher from "@/components/DevModeSwitcher";
 
 export default function Page() {
   const [devMode, setDevMode] = useState<"main" | "coming-soon">("main");
   const [mounted, setMounted] = useState(false);
-  
-  const isDev = process.env.NODE_ENV === 'development';
+
+  const isDev = process.env.NODE_ENV === "development";
   const siteModeEnv = process.env.NEXT_PUBLIC_SITE_MODE;
 
   useEffect(() => {
@@ -20,18 +20,18 @@ export default function Page() {
     }
   }, [isDev]);
 
-  if (siteModeEnv === 'coming-soon') return <ComingSoon />;
-  if (siteModeEnv === 'main') return <Home />;
+  if (siteModeEnv === "coming-soon") return <ComingSoon />;
+  if (siteModeEnv === "main") return <LandingPage />;
 
   if (!isDev) {
     return <ComingSoon />;
   }
 
-  if (!mounted) return null; 
+  if (!mounted) return null;
 
   return (
     <>
-      {devMode === "main" ? <Home /> : <ComingSoon />}
+      {devMode === "main" ? <LandingPage /> : <ComingSoon />}
       <DevModeSwitcher />
     </>
   );

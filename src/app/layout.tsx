@@ -3,6 +3,7 @@ import { Space_Grotesk, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import CRTOverlay from "@/components/CRTOverlay";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -29,9 +30,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Blacklight Web Designs | Technical Sharpness",
-  description: "Elite web design for disruptive tech startups and luxury technical brands.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://blacklightwebdesigns.com"),
+  title: "Blacklight Web Designs | Revealing Brilliance",
+  description:
+    "Elite web design for disruptive tech startups and luxury technical brands. Bespoke, high-performance digital experiences from South Africa.",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://blacklightwebdesigns.com"
+  ),
 };
 
 export default function RootLayout({
@@ -43,7 +47,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body
@@ -54,7 +62,7 @@ export default function RootLayout({
           <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID} />
         )}
         <CRTOverlay />
-        {children}
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
   );
