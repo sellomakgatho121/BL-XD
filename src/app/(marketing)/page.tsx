@@ -16,6 +16,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const zContext = useRef<any>(null);
+  const stickyNavRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (!containerRef.current || !galleryRef.current) return;
@@ -25,7 +26,7 @@ export default function Home() {
 
     // Initial setup: push elements far back in Z space
     gsap.set(".floating-block", {
-      z: (i) => i * -2500 - 1000, // Stagger them much deeper into the screen to spread them out
+      z: (i) => i * -4000 - 1500, // MASSIVE stagger deeply into screen to completely separate them
       opacity: 0,
       scale: 0.8,
     });
@@ -34,7 +35,7 @@ export default function Home() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=10000", // Double the scroll distance for a longer, smoother flight
+        end: "+=15000", // Huge scroll distance to allow time between blocks
         pin: true,
         scrub: 1, // Smooth scrubbing
       }
@@ -42,12 +43,14 @@ export default function Home() {
 
     // Animate all blocks flying forward
     tl.to(".floating-block", {
-      z: 1000, // Fly past the camera
+      z: 1500, // Fly past the camera further
       opacity: 1,
       scale: 1.5,
       ease: "none",
-      stagger: 0.75, // Increase stagger so they fly by one by one with more time in between
-      duration: 4
+      stagger: {
+        each: 2, // Massive 2-second delay between each block's animation start to guarantee they don't overlap
+      },
+      duration: 6 // Longer duration for the flight
     }, 0);
 
     // Initial hero text fades out as we start scrolling
@@ -56,6 +59,21 @@ export default function Home() {
       y: -50,
       duration: 0.5
     }, 0);
+
+    // Sticky Nav appearance animation
+    if (stickyNavRef.current) {
+      gsap.from(".nav-link", {
+        scrollTrigger: {
+          trigger: stickyNavRef.current,
+          start: "top bottom-=100", // animate when it enters the viewport
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.5,
+        ease: "back.out(1.7)"
+      });
+    }
 
   }, { scope: containerRef });
 
@@ -172,8 +190,33 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ━━━ Sticky Navigation ━━━ */}
+      <div
+        ref={stickyNavRef}
+        className="sticky top-[70px] z-40 bg-[var(--neo-black)] text-[var(--neo-white)] border-y-4 border-b-8 border-[var(--neo-black)] overflow-hidden shadow-[0px_10px_0px_var(--neo-yellow)]"
+      >
+        <div className="max-w-[1400px] mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6 overflow-x-auto whitespace-nowrap hide-scrollbar">
+          <Link href="/services" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-yellow)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-yellow)] inline-block border-2 border-[var(--neo-white)]"></span>
+            Services
+          </Link>
+          <Link href="/portfolio" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-pink)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-pink)] inline-block border-2 border-[var(--neo-white)]"></span>
+            Portfolio
+          </Link>
+          <Link href="/process" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-blue)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-blue)] inline-block border-2 border-[var(--neo-white)]"></span>
+            Process
+          </Link>
+          <Link href="/pricing" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-green)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-green)] inline-block border-2 border-[var(--neo-white)]"></span>
+            Pricing
+          </Link>
+        </div>
+      </div>
+
       {/* ━━━ Normal Flow Content below the flight ━━━ */}
-      <section className="py-32 relative z-10 bg-[var(--neo-white)] border-t-4 border-[var(--neo-black)]">
+      <section className="py-32 relative z-10 bg-[var(--neo-white)] mt-4">
         <div className="max-w-[1400px] mx-auto px-6">
           <h2 className="text-5xl lg:text-8xl font-black uppercase tracking-tighter mb-16 border-b-8 border-[var(--neo-black)] pb-4 inline-block">
             The Method
