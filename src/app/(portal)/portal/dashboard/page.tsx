@@ -98,7 +98,7 @@ export default function DashboardPage() {
           { label: "Next Review", value: "2 days", icon: Clock },
         ].map((stat, i) => (
           <div
-            key={stat.label}}}}
+            key={stat.label}
             className="border border-[var(--border)] bg-[var(--card)] p-6"
           >
             <stat.icon className="w-5 h-5 text-[var(--signal-lime)] mb-4" />
@@ -145,7 +145,7 @@ export default function DashboardPage() {
               const status = statusConfig[project.status];
               return (
                 <div
-                  key={project.id}}}
+                  key={project.id}
                   className="border border-[var(--border)] bg-[var(--card)] p-6 hover:border-[var(--signal-lime)]/50 transition-colors"
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -167,7 +167,7 @@ export default function DashboardPage() {
                       <span className="font-mono">{project.progress}%</span>
                     </div>
                     <div className="h-2 bg-[var(--border)] overflow-hidden">
-                      <div}%` }}}
+                      <div
                         className="h-full bg-[var(--signal-lime)]"
                       />
                     </div>

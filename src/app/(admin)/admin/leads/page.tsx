@@ -184,7 +184,7 @@ export default function LeadsPage() {
               const status = statusConfig[lead.status];
               return (
                 <div
-                  key={lead.id}}}
+                  key={lead.id}
                   onClick={() => setSelectedLead(lead)}
                   className={`border bg-[var(--card)] p-6 cursor-pointer transition-all hover:border-[var(--signal-lime)]/50 ${
                     selectedLead?.id === lead.id ? "border-[var(--signal-lime)]" : "border-[var(--border)]"

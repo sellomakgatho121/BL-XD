@@ -92,7 +92,7 @@ export default function ContentStudioPage() {
       </div>
 
       {showDrafts && (
-        <div}}}
+        <div
           className="border border-[var(--border)] bg-[var(--card)] p-6"
         >
           <div className="flex items-center justify-between mb-4">
@@ -105,7 +105,7 @@ export default function ContentStudioPage() {
           <div className="space-y-2">
             {drafts.map((draft) => (
               <div
-                key={draft.id}}}
+                key={draft.id}
                 className="flex items-center gap-4 p-4 border border-[var(--border)] hover:border-[var(--spectral-muted)] transition-colors"
               >
                 <div className={`w-10 h-10 flex items-center justify-center rounded ${
@@ -140,7 +140,7 @@ export default function ContentStudioPage() {
       )}
 
       {calendarView && (
-        <div}}}
+        <div
           className="border border-[var(--border)] bg-[var(--card)] p-6"
         >
           <div className="flex items-center justify-between mb-4">

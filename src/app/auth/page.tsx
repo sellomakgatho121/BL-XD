@@ -53,7 +53,7 @@ export default function AuthPage() {
         }}
       />
 
-      <div}}}
+      <div
         className="relative z-10 w-full max-w-md space-y-8"
       >
         <div className="text-center space-y-4">
@@ -90,7 +90,7 @@ export default function AuthPage() {
           </div>
 
           {error && (
-            <div}}
+            <div
               className="border border-siren-red/50 bg-siren-red/10 px-4 py-3 text-siren-red text-sm font-mono"
             >
               {error}

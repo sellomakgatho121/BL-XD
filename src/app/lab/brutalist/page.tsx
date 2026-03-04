@@ -2,7 +2,6 @@
 
 import InfiniteCanvas from "@/components/lab/InfiniteCanvas";
 import BrutalistScene from "@/components/lab/BrutalistScene";
-
 export default function BrutalistLab() {
   return (
     <div className="relative w-full h-screen bg-[#111] overflow-hidden">

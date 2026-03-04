@@ -202,7 +202,7 @@ export default function TeamManagementPage() {
               
               return (
                 <div
-                  key={member.id}}}
+                  key={member.id}
                   onClick={() => setSelectedMember(member)}
                   className={`border bg-[var(--card)] p-6 cursor-pointer transition-all hover:border-[var(--signal-lime)]/50 ${
                     selectedMember?.id === member.id ? "border-[var(--signal-lime)]" : "border-[var(--border)]"

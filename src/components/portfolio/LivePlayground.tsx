@@ -58,8 +58,8 @@ export default function LivePlayground() {
                 setActivePreset(preset);
               }}
               className={`px-2 py-1 text-[10px] uppercase font-mono border transition-colors ${activePreset === preset
-                  ? "border-[var(--signal-lime)] text-[var(--signal-lime)]"
-                  : "border-[var(--border)] text-[var(--spectral-dim)] hover:text-white"
+                ? "border-[var(--signal-lime)] text-[var(--signal-lime)]"
+                : "border-[var(--border)] text-[var(--spectral-dim)] hover:text-white"
                 }`}
             >
               {preset}
@@ -89,9 +89,9 @@ export default function LivePlayground() {
           <div
             className="absolute inset-0 opacity-10 pointer-events-none"
             style={{
-              backgroundImage: \`linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)\`,
-          backgroundSize: '20px 20px'
-            }} 
+              backgroundImage: `linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)`,
+              backgroundSize: '20px 20px'
+            }}
           />
 
           <button

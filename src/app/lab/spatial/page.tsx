@@ -22,14 +22,14 @@ export default function SpatialLab() {
         <div className="text-[8px] font-mono text-white/30 uppercase tracking-widest">Z-Axis Depth</div>
         <div className="w-48 h-[1px] bg-white/10 relative">
            <div
-             className="absolute top-0 left-0 h-full bg-blue-500"}
+             className="absolute top-0 left-0 h-full bg-blue-500"
            />
         </div>
       </div>
 
       {/* Subtle interaction node for functional areas */}
       <div className="absolute top-10 right-10 z-20 flex flex-col items-end gap-4">
-        <div}
+        <div
           className="p-6 bg-blue-500/5 backdrop-blur-3xl border border-blue-500/20 text-blue-500 font-mono text-[9px] cursor-pointer"
         >
           <div className="mb-2 opacity-50 uppercase">Active Sector</div>

@@ -15,7 +15,7 @@ export default function OrganicLab() {
 
       {/* Persistent UI Overlay */}
       <div className="absolute top-10 left-10 z-20 pointer-events-none">
-        <h1}}
+        <h1
           className="text-white text-xs font-mono tracking-[0.5em] uppercase"
         >
           Project / Organism
@@ -24,7 +24,7 @@ export default function OrganicLab() {
 
       {/* Subtle interaction feedback for functional areas */}
       <div className="absolute bottom-10 right-10 z-20 flex gap-4">
-        <button}}
+        <button
           className="px-6 py-2 border border-signal-lime/30 bg-black/40 backdrop-blur-md text-signal-lime text-[10px] font-mono tracking-widest uppercase"
         >
           Initiate Contact

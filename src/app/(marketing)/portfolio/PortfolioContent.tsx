@@ -104,7 +104,7 @@ export default function PortfolioContent() {
 
       <section className="relative pt-32 pb-20 lg:pt-48">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div}} className="text-center mb-12">
+          <div className="text-center mb-12">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6">
               <GlitchText text="PORTFOLIO" intensity="medium" triggerOnHover />
             </h1>
@@ -114,7 +114,7 @@ export default function PortfolioContent() {
           </div>
 
           {/* Filters */}
-          <div}} className="flex flex-wrap justify-center gap-2 mb-12">
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
             <Filter className="w-5 h-5 text-[var(--spectral-muted)] mr-2" />
             {filters.map((filter) => (
               <button
@@ -135,7 +135,7 @@ export default function PortfolioContent() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredItems.map((item, i) => (
               <div
-                key={item.id}}}}}
+                key={item.id}
                 className="group border border-[var(--border)] bg-[var(--card)] overflow-hidden hover:border-[var(--signal-lime)]/50 transition-colors"
               >
                 {/* Image Placeholder */}
@@ -200,7 +200,7 @@ export default function PortfolioContent() {
       {/* Maestro Metrics Section */}
       <section className="py-20 border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div}}} className="text-center mb-12">
+          <div className="text-center mb-12">
             <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--signal-lime)] mb-4">
               Maestro Metrics
             </h2>
@@ -208,21 +208,21 @@ export default function PortfolioContent() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div}}}
+            <div
               className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
             >
               <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">98</div>
               <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Avg Lighthouse</div>
               <div className="text-xs text-[var(--spectral-dim)] mt-2">vs 72 industry average</div>
             </div>
-            <div}}}}
+            <div
               className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
             >
               <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">0.6s</div>
               <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Avg Time to Interactive</div>
               <div className="text-xs text-[var(--spectral-dim)] mt-2">vs 3.2s industry average</div>
             </div>
-            <div}}}}
+            <div
               className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
             >
               <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">100</div>
@@ -236,7 +236,7 @@ export default function PortfolioContent() {
       {/* CTA */}
       <section className="py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div}}}>
+          <div>
             <h2 className="text-4xl font-black tracking-tighter mb-6">
               Want to be our <span className="text-[var(--signal-lime)]">next</span> case study?
             </h2>

@@ -172,7 +172,7 @@ export default function SocialMediaGenerator() {
 
         <div className="relative z-10 max-w-[80%]">
           <h2 
-            key={content.mainText}}}
+            key={content.mainText}
             className="text-4xl md:text-5xl font-black tracking-tighter mb-6 uppercase"
             style={{ 
               color: '#fff',
@@ -183,14 +183,14 @@ export default function SocialMediaGenerator() {
           </h2>
           
           <p 
-            key={content.subText}}}}
+            key={content.subText}
             className="text-lg font-mono mb-8"
             style={{ color: 'rgba(255,255,255,0.8)' }}
           >
             {content.subText}
           </p>
 
-          <div}
+          <div
             className="inline-block px-6 py-3 border-2 font-bold uppercase tracking-wider text-sm"
             style={{ 
               borderColor: currentStyle.accent,

@@ -130,7 +130,7 @@ export default function AdminDashboardPage() {
           },
         ].map((stat, i) => (
           <div
-            key={stat.label}}}}
+            key={stat.label}
             className="border border-[var(--border)] bg-[var(--card)] p-6"
           >
             <div className="flex items-start justify-between mb-4">
@@ -152,7 +152,7 @@ export default function AdminDashboardPage() {
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Recent Activity */}
-        <div}}}
+        <div
           className="border border-[var(--border)] bg-[var(--card)]"
         >
           <div className="p-6 border-b border-[var(--border)] flex items-center justify-between">
@@ -193,7 +193,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div}}}
+        <div
           className="border border-[var(--border)] bg-[var(--card)]"
         >
           <div className="p-6 border-b border-[var(--border)]">

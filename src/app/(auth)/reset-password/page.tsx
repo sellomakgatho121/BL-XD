@@ -48,7 +48,7 @@ export default function ResetPasswordPage() {
         }}
       />
 
-      <div}}
+      <div
         className="relative z-10 w-full max-w-md"
       >
         <div className="text-center mb-8">
@@ -64,7 +64,7 @@ export default function ResetPasswordPage() {
 
         <div className="border border-[var(--border)] bg-[var(--card)] p-8">
           {success ? (
-            <div}}
+            <div
               className="text-center py-8"
             >
               <div className="flex justify-center mb-4">
@@ -109,7 +109,7 @@ export default function ResetPasswordPage() {
               </div>
 
               {error && (
-                <div}}
+                <div
                   className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
                 >
                   <AlertCircle className="w-4 h-4" />
