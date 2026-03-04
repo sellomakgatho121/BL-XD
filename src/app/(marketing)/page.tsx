@@ -89,9 +89,9 @@ export default function Home() {
       />
 
       {/* ━━━ NAVIGATION ━━━ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)]">
+      <nav aria-label="Main Navigation" className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)]">
         <div className="max-w-[1400px] mx-auto px-6 h-[70px] flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-3 group" aria-label="Go to Blacklight Homepage">
             <div className="w-10 h-10 bg-[var(--neo-yellow)] neo-border flex items-center justify-center neo-shadow">
               <span className="font-black text-xl">B</span>
             </div>
@@ -103,7 +103,8 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <Link
               href="/contact"
-              className="px-6 py-2 bg-[var(--neo-pink)] text-[var(--neo-white)] font-bold uppercase tracking-wider neo-border neo-shadow-interactive flex items-center gap-2"
+              className="px-6 py-2 bg-[var(--neo-red)] text-[var(--neo-white)] font-bold uppercase tracking-wider neo-border neo-shadow-interactive flex items-center gap-2"
+              aria-label="Get a custom quote"
             >
               Get Quote
               <ArrowRight size={16} />
@@ -118,7 +119,7 @@ export default function Home() {
         {/* Initial Static Hero */}
         <div className="hero-text absolute inset-0 flex flex-col items-center justify-center z-50 pointer-events-none">
           <div className="bg-[var(--neo-yellow)] neo-border neo-shadow p-4 mb-8 rotate-[-2deg] pointer-events-auto">
-            <h2 className="font-bold uppercase tracking-widest text-sm flex items-center gap-2">
+            <h2 className="font-bold uppercase tracking-widest text-sm flex items-center gap-2" aria-label="We are an Elite Web Agency">
               <Terminal size={16} /> Elite Web Agency
             </h2>
           </div>
@@ -128,13 +129,13 @@ export default function Home() {
           </h1>
 
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-            <span className="font-bold text-xs tracking-widest uppercase bg-[var(--neo-white)] border-2 border-[var(--neo-black)] px-4 py-1">Scroll to fly</span>
-            <div className="w-1 h-16 bg-[var(--neo-black)] animate-pulse" />
+            <span className="font-bold text-xs tracking-widest uppercase bg-[var(--neo-white)] border-2 border-[var(--neo-black)] px-4 py-1" aria-hidden="true">Scroll to fly</span>
+            <div className="w-1 h-16 bg-[var(--neo-black)] animate-pulse" aria-hidden="true" />
           </div>
         </div>
 
         {/* Floating Narrative Elements in 3D Space */}
-        <div ref={galleryRef} className="absolute inset-0 preserve-3d">
+        <div ref={galleryRef} className="absolute inset-0 preserve-3d" aria-label="Interactive 3D Web Experience Portfolio">
 
           {/* Block 1: Intro */}
           <div className="floating-block absolute top-[15%] left-[5%] md:left-[10%] w-[90vw] md:w-[400px] bg-[var(--neo-white)] neo-border neo-shadow p-8 rotate-[5deg]">
@@ -144,17 +145,17 @@ export default function Home() {
 
           {/* Block 2: Service - Spark */}
           <div className="floating-block absolute top-[5%] right-[5%] md:right-[15%] w-[85vw] md:w-[350px] bg-[var(--neo-yellow)] neo-border neo-shadow p-8 rotate-[-3deg]">
-            <Zap size={32} className="mb-4" />
+            <Zap size={32} className="mb-4" aria-hidden="true" />
             <h3 className="text-3xl font-black uppercase mb-2">Landing Pages</h3>
-            <p className="font-bold border-b-2 border-[var(--neo-black)] pb-4 mb-4">R3,500</p>
+            <p className="font-bold border-b-2 border-[var(--neo-black)] pb-4 mb-4" aria-label="Pricing starts at 3,500 Rand">R3,500</p>
             <p className="text-sm font-medium">High-impact single-page sites for new ventures. Asymmetric technical layout, 48-hour delivery.</p>
           </div>
 
           {/* Block 3: Giant Image / Visual */}
           <div className="floating-block absolute top-[40%] left-[5%] md:left-[35%] w-[90vw] md:w-[500px] h-[300px] bg-[var(--neo-black)] neo-border neo-shadow overflow-hidden group rotate-[2deg]">
-            <div className="absolute inset-0 bg-[var(--neo-pink)] opacity-50 mix-blend-multiply transition-opacity group-hover:opacity-0" />
-            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80" alt="Cyberpunk Aesthetic" className="w-full h-full object-cover grayscale" />
-            <div className="absolute top-4 left-4 bg-[var(--neo-white)] neo-border px-3 py-1 font-bold text-xs uppercase">Visual 01</div>
+            <div className="absolute inset-0 bg-[var(--neo-cyan)] opacity-50 mix-blend-multiply transition-opacity group-hover:opacity-0" aria-hidden="true" />
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80" alt="Dark cyberpunk motherboard aesthetic with glowing neon lines" className="w-full h-full object-cover grayscale" />
+            <div className="absolute top-4 left-4 bg-[var(--neo-white)] neo-border px-3 py-1 font-bold text-xs uppercase" aria-hidden="true">Visual 01</div>
           </div>
 
           {/* Block 4: Brutal Statement */}
@@ -169,19 +170,20 @@ export default function Home() {
 
           {/* Block 5: Service - Growth */}
           <div className="floating-block absolute top-[75%] right-[5%] md:right-[10%] w-[90vw] md:w-[400px] bg-[var(--neo-white)] neo-border neo-shadow p-8 rotate-[4deg]">
-            <Globe size={32} className="mb-4 text-[var(--neo-blue)]" />
+            <Globe size={32} className="mb-4 text-[var(--neo-blue)]" aria-hidden="true" />
             <h3 className="text-3xl font-black uppercase mb-2">Business Sites</h3>
-            <p className="font-bold border-b-2 border-[var(--neo-black)] pb-4 mb-4">R8,500</p>
+            <p className="font-bold border-b-2 border-[var(--neo-black)] pb-4 mb-4" aria-label="Pricing starts at 8,500 Rand">R8,500</p>
             <p className="text-sm font-medium mb-6">Professional 3-5 page presence for established SMEs. Custom design system with SEO foundation.</p>
-            <button className="w-full py-3 bg-[var(--neo-black)] text-[var(--neo-white)] font-bold uppercase transition-transform hover:-translate-y-1">Select Tier</button>
+            <button className="w-full py-3 bg-[var(--neo-black)] text-[var(--neo-white)] font-bold uppercase transition-transform hover:-translate-y-1" aria-label="Select Business Tier">Select Tier</button>
           </div>
 
           {/* Block 6: Contact floating CTA */}
-          <div className="floating-block absolute top-[25%] left-[50%] -translate-x-1/2 w-[95vw] md:w-[50vw] bg-[var(--neo-pink)] text-[var(--neo-black)] neo-border neo-shadow p-8 md:p-12 text-center rotate-[-2deg]">
+          <div className="floating-block absolute top-[25%] left-[50%] -translate-x-1/2 w-[95vw] md:w-[50vw] bg-[var(--neo-red)] text-[var(--neo-white)] neo-border neo-shadow p-8 md:p-12 text-center rotate-[-2deg]">
             <h2 className="text-4xl md:text-6xl font-black uppercase mb-8">Ready to Reveal Brilliance?</h2>
             <Link
               href="/contact"
               className="inline-flex items-center gap-4 px-6 md:px-10 py-5 bg-[var(--neo-white)] text-[var(--neo-black)] font-black text-lg md:text-xl uppercase tracking-wider neo-border neo-shadow-interactive"
+              aria-label="Initiate Sequence to proceed to contact us"
             >
               Initiate Sequence
               <ArrowRight size={24} />
@@ -194,22 +196,23 @@ export default function Home() {
       <div
         ref={stickyNavRef}
         className="sticky top-[70px] z-40 bg-[var(--neo-black)] text-[var(--neo-white)] border-y-4 border-b-8 border-[var(--neo-black)] overflow-hidden shadow-[0px_10px_0px_var(--neo-yellow)]"
+        aria-label="Secondary Navigation Context Menu"
       >
         <div className="max-w-[1400px] mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6 overflow-x-auto whitespace-nowrap hide-scrollbar">
-          <Link href="/services" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-yellow)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-yellow)] inline-block border-2 border-[var(--neo-white)]"></span>
+          <Link href="/services" aria-label="View our Services" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-yellow)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-yellow)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
             Services
           </Link>
-          <Link href="/portfolio" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-pink)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-pink)] inline-block border-2 border-[var(--neo-white)]"></span>
+          <Link href="/portfolio" aria-label="View our Web Development Portfolio" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-cyan)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-cyan)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
             Portfolio
           </Link>
-          <Link href="/process" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-blue)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-blue)] inline-block border-2 border-[var(--neo-white)]"></span>
+          <Link href="/process" aria-label="View our Development Process" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-blue)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-blue)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
             Process
           </Link>
-          <Link href="/pricing" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-green)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-green)] inline-block border-2 border-[var(--neo-white)]"></span>
+          <Link href="/pricing" aria-label="View our Pricing and Packages" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-green)] flex items-center gap-2 transition-colors">
+            <span className="w-4 h-4 bg-[var(--neo-green)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
             Pricing
           </Link>
         </div>

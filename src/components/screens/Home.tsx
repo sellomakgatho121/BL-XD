@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Logo from "@/components/Logo";
 import Link from "next/link";
 import { ArrowRight, Code, Cpu, Globe, Layout, Zap } from "lucide-react";
@@ -17,8 +16,8 @@ export default function Home() {
             <Link href="/process" className="hover:text-signal-lime transition-colors">Process</Link>
             <Link href="/portfolio" className="hover:text-signal-lime transition-colors">Portfolio</Link>
             <Link href="/blog" className="hover:text-signal-lime transition-colors">Insights</Link>
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="px-4 py-2 bg-signal-lime text-onyx font-bold rounded-sm hover:bg-signal-lime/90 transition-all flex items-center gap-2"
             >
               Start Project <ArrowRight size={16} />
@@ -35,42 +34,37 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center"
-          >
+          <div className="max-w-4xl mx-auto text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-spectral-white/10 bg-spectral-white/5 text-xs font-mono mb-8">
               <span className="w-2 h-2 rounded-full bg-signal-lime animate-pulse" />
               AGENCY OS v2.0 ONLINE
             </div>
-            
+
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-br from-white via-white to-white/50 bg-clip-text text-transparent">
-              Digital Architecture for <br/>
+              Digital Architecture for <br />
               <span className="text-signal-lime">Hyper-Scale Growth</span>
             </h1>
-            
+
             <p className="text-xl text-spectral-white/60 mb-10 max-w-2xl mx-auto leading-relaxed">
               We build high-performance web systems that combine aesthetic precision with agentic intelligence. Not just websites—digital assets that work while you sleep.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="w-full sm:w-auto px-8 py-4 bg-signal-lime text-onyx font-bold rounded-md hover:bg-signal-lime/90 transition-all flex items-center justify-center gap-2 group"
               >
                 Launch Your Vision
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link 
-                href="/portfolio" 
+              <Link
+                href="/portfolio"
                 className="w-full sm:w-auto px-8 py-4 border border-spectral-white/20 text-spectral-white font-medium rounded-md hover:bg-spectral-white/5 transition-all flex items-center justify-center gap-2"
               >
                 View Case Studies
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -95,24 +89,22 @@ export default function Home() {
                 desc: "AI-powered automations that handle leads, support, and content while you rest."
               }
             ].map((feature, i) => (
-              <motion.div 
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-xl border border-spectral-white/10 bg-spectral-white/5 hover:border-signal-lime/30 transition-colors group"
+                className="p-8 rounded-xl border border-spectral-white/10 bg-spectral-white/5 hover:border-signal-lime/30 transition-colors group animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both"
+                style={{ animationDelay: `${i * 150}ms` }}
               >
                 <div className="mb-4 p-3 rounded-lg bg-onyx inline-block group-hover:scale-110 transition-transform">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
                 <p className="text-spectral-white/60 leading-relaxed">{feature.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
-      
+
       {/* Dev Mode Indicator (Visible only in dev) */}
       <div className="fixed bottom-4 right-4 z-50 px-3 py-1 bg-purple-500/20 border border-purple-500/50 text-purple-300 text-xs rounded-full font-mono">
         DEV_MODE: MAIN_SITE

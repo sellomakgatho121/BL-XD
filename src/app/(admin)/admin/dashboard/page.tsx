@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Users,
   FolderKanban,
@@ -130,11 +129,8 @@ export default function AdminDashboardPage() {
             icon: MessageSquare,
           },
         ].map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
+          <div
+            key={stat.label}}}}
             className="border border-[var(--border)] bg-[var(--card)] p-6"
           >
             <div className="flex items-start justify-between mb-4">
@@ -150,16 +146,13 @@ export default function AdminDashboardPage() {
             </div>
             <div className="text-3xl font-black">{stat.value}</div>
             <div className="text-sm text-[var(--spectral-muted)]">{stat.label}</div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Recent Activity */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+        <div}}}
           className="border border-[var(--border)] bg-[var(--card)]"
         >
           <div className="p-6 border-b border-[var(--border)] flex items-center justify-between">
@@ -197,13 +190,10 @@ export default function AdminDashboardPage() {
               View All Activity
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+        <div}}}
           className="border border-[var(--border)] bg-[var(--card)]"
         >
           <div className="p-6 border-b border-[var(--border)]">
@@ -244,7 +234,7 @@ export default function AdminDashboardPage() {
               <span className="font-mono text-xs uppercase">View Alerts</span>
             </Button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

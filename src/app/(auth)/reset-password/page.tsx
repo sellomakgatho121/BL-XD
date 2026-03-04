@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Mail, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import GlitchText from "@/components/GlitchText";
@@ -49,9 +48,7 @@ export default function ResetPasswordPage() {
         }}
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+      <div}}
         className="relative z-10 w-full max-w-md"
       >
         <div className="text-center mb-8">
@@ -67,9 +64,7 @@ export default function ResetPasswordPage() {
 
         <div className="border border-[var(--border)] bg-[var(--card)] p-8">
           {success ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+            <div}}
               className="text-center py-8"
             >
               <div className="flex justify-center mb-4">
@@ -91,7 +86,7 @@ export default function ResetPasswordPage() {
               >
                 TRY AGAIN
               </Button>
-            </motion.div>
+            </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
@@ -114,14 +109,12 @@ export default function ResetPasswordPage() {
               </div>
 
               {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                <div}}
                   className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
                 >
                   <AlertCircle className="w-4 h-4" />
                   {error}
-                </motion.div>
+                </div>
               )}
 
               <Button
@@ -157,7 +150,7 @@ export default function ResetPasswordPage() {
             ← Back to Website
           </Link>
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import {
   LayoutDashboard,
   FileText,
@@ -84,9 +83,8 @@ export default function PortalLayout({
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[var(--card)] border-r border-[var(--border)] transform transition-transform duration-200 ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }`}
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[var(--card)] border-r border-[var(--border)] transform transition-transform duration-200 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          }`}
       >
         <div className="p-6 border-b border-[var(--border)]">
           <Link href="/" className="flex items-center gap-2">
@@ -152,13 +150,9 @@ export default function PortalLayout({
 
         {/* Page Content */}
         <main className="flex-1 overflow-auto p-4 lg:p-8">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+          <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
             {children}
-          </motion.div>
+          </div>
         </main>
       </div>
     </div>

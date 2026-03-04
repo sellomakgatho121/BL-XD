@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ExternalLink, TrendingUp, Gauge, Eye, ArrowRight, Filter } from "lucide-react";
 import Link from "next/link";
 import GrainOverlay from "@/components/blacklight/grain-overlay";
@@ -105,17 +104,17 @@ export default function PortfolioContent() {
 
       <section className="relative pt-32 pb-20 lg:pt-48">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+          <div}} className="text-center mb-12">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6">
               <GlitchText text="PORTFOLIO" intensity="medium" triggerOnHover />
             </h1>
             <p className="text-xl text-[var(--spectral-dim)] max-w-2xl mx-auto">
               Technical proof of our obsession with performance, design, and conversion.
             </p>
-          </motion.div>
+          </div>
 
           {/* Filters */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-wrap justify-center gap-2 mb-12">
+          <div}} className="flex flex-wrap justify-center gap-2 mb-12">
             <Filter className="w-5 h-5 text-[var(--spectral-muted)] mr-2" />
             {filters.map((filter) => (
               <button
@@ -130,17 +129,13 @@ export default function PortfolioContent() {
                 {filter}
               </button>
             ))}
-          </motion.div>
+          </div>
 
           {/* Portfolio Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredItems.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+              <div
+                key={item.id}}}}}
                 className="group border border-[var(--border)] bg-[var(--card)] overflow-hidden hover:border-[var(--signal-lime)]/50 transition-colors"
               >
                 {/* Image Placeholder */}
@@ -196,7 +191,7 @@ export default function PortfolioContent() {
                     <ExternalLink className="w-4 h-4" />
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -205,46 +200,35 @@ export default function PortfolioContent() {
       {/* Maestro Metrics Section */}
       <section className="py-20 border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <div}}} className="text-center mb-12">
             <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--signal-lime)] mb-4">
               Maestro Metrics
             </h2>
             <p className="text-3xl font-bold">Performance is our baseline</p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+            <div}}}
               className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
             >
               <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">98</div>
               <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Avg Lighthouse</div>
               <div className="text-xs text-[var(--spectral-dim)] mt-2">vs 72 industry average</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+            </div>
+            <div}}}}
               className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
             >
               <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">0.6s</div>
               <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Avg Time to Interactive</div>
               <div className="text-xs text-[var(--spectral-dim)] mt-2">vs 3.2s industry average</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+            </div>
+            <div}}}}
               className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
             >
               <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">100</div>
               <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Accessibility Score</div>
               <div className="text-xs text-[var(--spectral-dim)] mt-2">WCAG AAA compliant</div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -252,7 +236,7 @@ export default function PortfolioContent() {
       {/* CTA */}
       <section className="py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <div}}}>
             <h2 className="text-4xl font-black tracking-tighter mb-6">
               Want to be our <span className="text-[var(--signal-lime)]">next</span> case study?
             </h2>
@@ -263,7 +247,7 @@ export default function PortfolioContent() {
               Start Your Project
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

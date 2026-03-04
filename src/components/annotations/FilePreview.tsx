@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { X, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,12 +26,7 @@ export function FilePreview({ file, projectId, onClose }: FilePreviewProps) {
   const isImage = file.type.startsWith("image/");
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-[var(--onyx)]/95 flex flex-col"
-    >
+    <div className="fixed inset-0 z-50 bg-[var(--onyx)]/95 flex flex-col animate-in fade-in duration-300">
       <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)]">
         <div className="flex items-center gap-3">
           <span className="text-sm font-mono text-[var(--spectral-muted)]">PREVIEW</span>
@@ -63,8 +57,8 @@ export function FilePreview({ file, projectId, onClose }: FilePreviewProps) {
 
       <div className="flex-1 relative overflow-hidden">
         {isAnnotating ? (
-          <AnnotationCanvas 
-            projectId={projectId} 
+          <AnnotationCanvas
+            projectId={projectId}
             projectFileId={file.id}
             className="w-full h-full"
           >
@@ -74,7 +68,7 @@ export function FilePreview({ file, projectId, onClose }: FilePreviewProps) {
           <FileContent file={file} isImage={isImage} />
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 

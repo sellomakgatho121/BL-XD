@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+
 
 interface ScanlinesProps {
   className?: string;
@@ -26,21 +26,17 @@ export default function Scanlines({ className = "" }: ScanlinesProps) {
 // Flicker overlay for CRT effect
 export function FlickerOverlay() {
   return (
-    <motion.div
-      className="pointer-events-none fixed inset-0 z-[9996] opacity-[0.02]"
-      style={{
-        willChange: "opacity",
-        transform: "translateZ(0)",
-      }}
-      animate={{
-        opacity: [0.02, 0.04, 0.02],
-      }}
-      transition={{
-        duration: 0.15,
-        repeat: Infinity,
-        ease: "linear",
-      }}
-    />
+    <>
+      <style>{`@keyframes flicker { 0%,100% { opacity: 0.02; } 50% { opacity: 0.04; } }`}</style>
+      <div
+        className="pointer-events-none fixed inset-0 z-[9996]"
+        style={{
+          willChange: "opacity",
+          transform: "translateZ(0)",
+          animation: "flicker 0.15s linear infinite",
+        }}
+      />
+    </>
   );
 }
 

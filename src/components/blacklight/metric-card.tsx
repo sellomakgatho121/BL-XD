@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 
 interface MetricCardProps {
@@ -27,19 +26,13 @@ export default function MetricCard({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.5,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      className="relative border border-[var(--border)] bg-[var(--card)] p-6 overflow-hidden"
+    <div
+      className="relative border border-[var(--border)] bg-[var(--card)] p-6 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+      style={{ animationDelay: `${delay * 1000}ms` }}
     >
       {/* Glow effect on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--signal-lime-dim)] to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-      
+
       <div className="relative z-10">
         <div className="flex items-center gap-3 mb-2">
           {Icon && (
@@ -49,7 +42,7 @@ export default function MetricCard({
             {label}
           </span>
         </div>
-        
+
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-bold text-[var(--spectral-white)] tabular-nums">
             {value}
@@ -66,7 +59,7 @@ export default function MetricCard({
 
       {/* Corner accent */}
       <div className="absolute top-0 right-0 w-2 h-2 bg-[var(--signal-lime)]" />
-    </motion.div>
+    </div>
   );
 }
 

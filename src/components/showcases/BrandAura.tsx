@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Palette, RefreshCw, Copy, Check } from "lucide-react";
 
 const INDUSTRIES = ["Tech", "Finance", "Wellness", "Cyber"];
@@ -40,28 +39,27 @@ export default function BrandAura() {
   };
 
   return (
-    <div className="relative h-96 w-full max-w-sm rounded-xl bg-onyx/40 border border-white/10 overflow-hidden flex flex-col backdrop-blur-sm">
-      <div className="p-4 border-b border-white/5 bg-white/5 flex justify-between items-center">
+    <div className="relative h-96 w-full max-w-sm rounded-xl bg-[var(--onyx)]/40 border border-[var(--neo-white)]/10 overflow-hidden flex flex-col backdrop-blur-sm">
+      <div className="p-4 border-b border-[var(--neo-white)]/5 bg-[var(--neo-white)]/5 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Palette className="text-signal-lime" size={16} />
-          <span className="text-xs font-bold text-white tracking-widest">BRAND_AURA_GEN</span>
+          <Palette className="text-[var(--signal-lime)]" size={16} />
+          <span className="text-xs font-bold text-[var(--neo-white)] tracking-widest">BRAND_AURA_GEN</span>
         </div>
       </div>
 
       <div className="p-6 flex-1 flex flex-col gap-6">
         <div className="flex gap-2">
           <div className="flex-1 space-y-2">
-            <label className="text-[10px] text-white/40 uppercase font-mono">Sector</label>
+            <label className="text-[10px] text-[var(--neo-white)]/40 uppercase font-mono">Sector</label>
             <div className="grid grid-cols-2 gap-1">
               {INDUSTRIES.map(i => (
                 <button
                   key={i}
                   onClick={() => setIndustry(i)}
-                  className={`px-2 py-1 text-[10px] rounded border ${
-                    industry === i 
-                      ? "bg-white text-black border-white" 
-                      : "bg-transparent text-white/60 border-white/10 hover:border-white/30"
-                  } transition-colors`}
+                  className={`px-2 py-1 text-[10px] rounded border ${industry === i
+                      ? "bg-[var(--neo-white)] text-[var(--neo-black)] border-[var(--neo-white)]"
+                      : "bg-transparent text-[var(--neo-white)]/60 border-[var(--neo-white)]/10 hover:border-[var(--neo-white)]/30"
+                    } transition-colors`}
                 >
                   {i}
                 </button>
@@ -69,17 +67,16 @@ export default function BrandAura() {
             </div>
           </div>
           <div className="flex-1 space-y-2">
-            <label className="text-[10px] text-white/40 uppercase font-mono">Signal</label>
+            <label className="text-[10px] text-[var(--neo-white)]/40 uppercase font-mono">Signal</label>
             <div className="grid grid-cols-2 gap-1">
               {VIBES.map(v => (
                 <button
                   key={v}
                   onClick={() => setVibe(v)}
-                  className={`px-2 py-1 text-[10px] rounded border ${
-                    vibe === v 
-                      ? "bg-signal-lime text-black border-signal-lime" 
-                      : "bg-transparent text-white/60 border-white/10 hover:border-white/30"
-                  } transition-colors`}
+                  className={`px-2 py-1 text-[10px] rounded border ${vibe === v
+                      ? "bg-[var(--signal-lime)] text-[var(--neo-black)] border-[var(--signal-lime)]"
+                      : "bg-transparent text-[var(--neo-white)]/60 border-[var(--neo-white)]/10 hover:border-[var(--neo-white)]/30"
+                    } transition-colors`}
                 >
                   {v}
                 </button>
@@ -89,29 +86,23 @@ export default function BrandAura() {
         </div>
 
         <div className="flex-1 flex gap-2">
-          <AnimatePresence mode="wait">
-            {currentPalette.map((hex, i) => (
-              <motion.div
-                key={`${industry}-${vibe}-${i}`}
-                initial={{ scaleY: 0, opacity: 0 }}
-                animate={{ scaleY: 1, opacity: 1 }}
-                exit={{ scaleY: 0, opacity: 0 }}
-                transition={{ delay: i * 0.1, type: "spring", stiffness: 200, damping: 20 }}
-                className="flex-1 rounded-lg relative group cursor-pointer overflow-hidden shadow-lg border border-white/5"
-                style={{ backgroundColor: hex }}
-                onClick={() => handleCopy(hex)}
-              >
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 backdrop-blur-[2px]">
-                  {copied === hex ? <Check size={16} className="text-white" /> : <Copy size={16} className="text-white" />}
-                </div>
-                <div className="absolute bottom-2 left-0 w-full text-center">
-                  <span className="text-[10px] font-mono bg-black/50 text-white px-1 py-0.5 rounded backdrop-blur-md">
-                    {hex}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          {currentPalette.map((hex, i) => (
+            <div
+              key={`${industry}-${vibe}-${i}`}
+              className="flex-1 rounded-lg relative group cursor-pointer overflow-hidden shadow-lg border border-[var(--neo-white)]/5 animate-in fade-in zoom-in-75 duration-500 fill-mode-both"
+              style={{ backgroundColor: hex, animationDelay: `${i * 0.05}s` }}
+              onClick={() => handleCopy(hex)}
+            >
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 backdrop-blur-[2px]">
+                {copied === hex ? <Check size={16} className="text-white" /> : <Copy size={16} className="text-white" />}
+              </div>
+              <div className="absolute bottom-2 left-0 w-full text-center">
+                <span className="text-[10px] font-mono bg-black/50 text-white px-1 py-0.5 rounded backdrop-blur-md">
+                  {hex}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

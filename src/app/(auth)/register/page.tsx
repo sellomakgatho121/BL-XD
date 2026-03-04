@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Lock, Mail, User, Building2, ArrowRight, AlertCircle, CheckCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import GlitchText from "@/components/GlitchText";
@@ -74,17 +73,13 @@ export default function RegisterPage() {
   if (isSuccess) {
     return (
       <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center max-w-md"
-        >
+        <div className="text-center max-w-md animate-in zoom-in-90 fade-in duration-300">
           <CheckCircle className="w-16 h-16 text-[var(--signal-lime)] mx-auto mb-4" />
           <h1 className="text-3xl font-black tracking-tighter mb-4">Account Created</h1>
           <p className="text-[var(--spectral-dim)] mb-6">
             Please check your email to verify your account. Redirecting to login...
           </p>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -99,11 +94,7 @@ export default function RegisterPage() {
         }}
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 w-full max-w-md"
-      >
+      <div className="relative z-10 w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-black tracking-tighter mb-2">
             <GlitchText text="CREATE ACCOUNT" intensity="medium" triggerOnHover />
@@ -203,14 +194,10 @@ export default function RegisterPage() {
             </div>
 
             {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
-              >
+              <div className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3 animate-in fade-in slide-in-from-top-2 duration-300">
                 <AlertCircle className="w-4 h-4" />
                 {error}
-              </motion.div>
+              </div>
             )}
 
             <Button
@@ -244,7 +231,7 @@ export default function RegisterPage() {
             ← Back to Website
           </Link>
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

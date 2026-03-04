@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, useMemo, useState, useEffect, useCallback } from "react";
 
 // Generate random values once during component mount
@@ -14,16 +13,6 @@ const generateParticleData = (count: number) => {
     particles.push({
       initialX: Math.random() * 100,
       initialY: Math.random() * 100,
-      animateX: [
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-      ],
-      animateY: [
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-      ],
       duration: 3 + Math.random() * 4,
       delay: Math.random() * 3,
     });
@@ -65,7 +54,7 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // Game refs for high-performance updates
   const playerRef = useRef({ y: 50, velocity: 0, isJumping: false });
   const obstaclesRef = useRef<Array<{ id: number; x: number; width: number; height: number; type: 'wall' | 'gap' }>>([]);
@@ -81,11 +70,10 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
   // Constants
   const GRAVITY = 0.6;
   const JUMP_FORCE = -10;
-  const SPEED = 0.5; // Base speed multiplier
-  const SPAWN_RATE = 1500; // ms
+  const SPEED = 0.5;
 
   // Render state (for React updates)
-  const [renderTrigger, setRenderTrigger] = useState(0);
+  const [, setRenderTrigger] = useState(0);
 
   const startGame = () => {
     setGameState('playing');
@@ -95,10 +83,7 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
     playerRef.current = { y: 50, velocity: 0, isJumping: false };
     obstaclesRef.current = [];
     lastTimeRef.current = performance.now();
-    
-    // Initial obstacle
     spawnObstacle();
-    
     requestRef.current = requestAnimationFrame(gameLoop);
   };
 
@@ -119,24 +104,20 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
     const deltaTime = time - lastTimeRef.current;
     lastTimeRef.current = time;
 
-    // Physics Update
     const player = playerRef.current;
-    
-    // Gravity
+
     player.velocity += GRAVITY;
     player.y += player.velocity * (deltaTime / 16);
 
-    // Floor/Ceiling collision
-    if (player.y > 85) { // Floor
+    if (player.y > 85) {
       player.y = 85;
       player.velocity = 0;
       player.isJumping = false;
-    } else if (player.y < 5) { // Ceiling
+    } else if (player.y < 5) {
       player.y = 5;
       player.velocity = 0;
     }
 
-    // Move obstacles
     obstaclesRef.current.forEach(obs => {
       obs.x -= SPEED * (deltaTime / 16);
     });
@@ -149,25 +130,23 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
 
     const lastObstacle = obstaclesRef.current[obstaclesRef.current.length - 1];
     if (!lastObstacle || (100 - lastObstacle.x > 40 + Math.random() * 20)) {
-       if (Math.random() < 0.05) spawnObstacle();
+      if (Math.random() < 0.05) spawnObstacle();
     }
 
-    // Collision Detection
     const playerRect = { x: 20, y: player.y, w: 5, h: 5 };
-    
+
     for (const obs of obstaclesRef.current) {
       if (obs.x < playerRect.x + playerRect.w && obs.x + obs.width > playerRect.x) {
         const obsTop = 100 - obs.height;
         if (playerRect.y + playerRect.h > obsTop) {
           gameOver();
-          return; 
+          return;
         }
       }
     }
 
-    // Trigger render
     setRenderTrigger(prev => prev + 1);
-    
+
     if (gameStateRef.current === 'playing') {
       requestRef.current = requestAnimationFrame(gameLoop);
     }
@@ -189,9 +168,9 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
     } else if (gameStateRef.current !== 'playing') {
       startGame();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Keyboard handler for PC
   useEffect(() => {
     if (!isActive) return;
 
@@ -206,29 +185,25 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isActive, jump]);
 
-  // Touch handler attached to window for global tap
   useEffect(() => {
     if (!isActive) return;
-    
+
     const handleTouch = (e: TouchEvent) => {
-      e.preventDefault(); // Prevent scroll
+      e.preventDefault();
       jump();
     };
-    
-    // Also handle click for PC/Mouse users who want to click to jump
+
     const handleClick = (e: MouseEvent) => {
-        // Prevent clicking buttons from jumping if we had buttons overlaid
-        // But here we want click to jump anywhere
-        e.preventDefault();
-        jump();
-    }
-    
+      e.preventDefault();
+      jump();
+    };
+
     window.addEventListener('touchstart', handleTouch, { passive: false });
     window.addEventListener('click', handleClick);
-    
+
     return () => {
-        window.removeEventListener('touchstart', handleTouch);
-        window.removeEventListener('click', handleClick);
+      window.removeEventListener('touchstart', handleTouch);
+      window.removeEventListener('click', handleClick);
     };
   }, [isActive, jump]);
 
@@ -237,16 +212,16 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
   return (
     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
       <div className="relative w-full h-full max-w-md overflow-hidden bg-onyx border border-signal-lime/20">
-        
+
         {/* Game World */}
         <div className="absolute inset-0">
           {/* Ground */}
           <div className="absolute bottom-0 w-full h-[15%] bg-white/5 border-t border-signal-lime/50" />
-          
+
           {/* Player */}
-          <div 
+          <div
             className="absolute left-[20%] w-6 h-6 bg-signal-lime rounded shadow-[0_0_15px_rgba(0,255,65,0.6)]"
-            style={{ 
+            style={{
               top: `${playerRef.current.y}%`,
               transform: 'translateY(-100%)'
             }}
@@ -277,11 +252,11 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 text-center p-6 cursor-pointer" onClick={(e) => { e.stopPropagation(); startGame(); }}>
             <h3 className="text-2xl font-black text-white mb-2 tracking-tighter">QUANTUM RUNNER</h3>
             <p className="text-sm text-signal-lime font-mono mb-6 animate-pulse">
-                {isMobile ? "TAP TO START" : "PRESS SPACE / CLICK TO START"}
+              {isMobile ? "TAP TO START" : "PRESS SPACE / CLICK TO START"}
             </p>
             <div className="text-xs text-white/40 max-w-[200px]">
               Avoid the red glitch barriers.
-              <br/>
+              <br />
               Survive the simulation.
             </div>
           </div>
@@ -289,9 +264,9 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
 
         {gameState === 'gameover' && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-siren-red/20 backdrop-blur-sm text-center p-6">
-            <h3 className="text-3xl font-black text-siren-red mb-2 glitch-text">SYSTEM FAILURE</h3>
+            <h3 className="text-3xl font-black text-siren-red mb-2">SYSTEM FAILURE</h3>
             <div className="text-4xl font-mono text-white mb-6">{score}</div>
-            <button 
+            <button
               onClick={(e) => { e.stopPropagation(); startGame(); }}
               className="px-6 py-3 bg-signal-lime text-black font-bold font-mono uppercase tracking-widest hover:scale-105 transition-transform"
             >
@@ -305,7 +280,6 @@ const QuantumRunnerGame = ({ isActive }: { isActive: boolean }) => {
 };
 
 export function useReducedMotion(): boolean {
-  // Initialize with the current match state to avoid setState in effect
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -325,38 +299,15 @@ export function useReducedMotion(): boolean {
 
 export default function QuantumField() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const [gameActive, setGameActive] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  
-  // Lower stiffness for better performance
-  const mouseXSpring = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const mouseYSpring = useSpring(mouseY, { stiffness: 50, damping: 20 });
-  
-  const rotateX = useTransform(mouseYSpring, [-100, 100], [15, -15]);
-  const rotateY = useTransform(mouseXSpring, [-100, 100], [-15, 15]);
-  
-  // Create transform values for dynamic styles
-  const coreScale = useTransform([mouseX, mouseY], ([x, y]: number[]) => 1 + Math.abs((x ?? 0) + (y ?? 0)) / 200);
-  
-  // Mouse-following particle transforms - MUST be at top level (hooks rule)
-  const particleX = useTransform(mouseX, (v) => v * 3);
-  const particleY = useTransform(mouseY, (v) => v * 3);
 
-  const startGameManual = () => {
-    // For PC: Toggle game active if it's not active
-    // For Mobile: Same
-    setGameActive(true);
-  };
-
-  // Generate particle data once - reduce count on mobile
   const particleCount = useMemo(() => isMobile ? 15 : 30, [isMobile]);
   const particleData = useMemo(() => generateParticleData(particleCount), [particleCount]);
   const streamDelays = useMemo(() => generateRandomValues(5, 0, 0.8), []);
 
-  // Detect mobile
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
@@ -366,15 +317,13 @@ export default function QuantumField() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Enhanced mouse interaction for PC - throttled
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!containerRef.current || isMobile || !isHovering) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 100;
-    const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 100;
-    mouseX.set(x);
-    mouseY.set(y);
-  }, [isMobile, isHovering, mouseX, mouseY]);
+    const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 200;
+    const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 200;
+    setMousePos({ x, y });
+  }, [isMobile, isHovering]);
 
   const handleMouseEnter = useCallback(() => {
     setIsHovering(true);
@@ -382,19 +331,26 @@ export default function QuantumField() {
 
   const handleMouseLeave = useCallback(() => {
     setIsHovering(false);
-    mouseX.set(0);
-    mouseY.set(0);
-  }, [mouseX, mouseY]);
+    setMousePos({ x: 0, y: 0 });
+  }, []);
 
-  // Mobile touch handling
+  const startGameManual = () => {
+    setGameActive(true);
+  };
+
   const handleTouchStart = () => {
     if (isMobile) {
       setGameActive(true);
     }
   };
 
+  const rotateX = isHovering ? (mousePos.y / 200) * -15 : 0;
+  const rotateY = isHovering ? (mousePos.x / 200) * 15 : 0;
+  const cursorX = mousePos.x / 2;
+  const cursorY = mousePos.y / 2;
+
   return (
-    <div 
+    <div
       ref={containerRef}
       className="relative w-full h-96 overflow-hidden cursor-pointer"
       onMouseMove={handleMouseMove}
@@ -403,65 +359,87 @@ export default function QuantumField() {
       onTouchStart={handleTouchStart}
       onClick={startGameManual}
     >
-      {/* Enhanced Quantum Particles with mouse interaction */}
+      <style>{`
+        @keyframes qf-particle {
+          0%, 100% { opacity: 0; transform: scale(0); }
+          50% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes qf-scan {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(100%); }
+        }
+        @keyframes qf-stream {
+          0% { width: 0%; opacity: 0; left: 0%; }
+          50% { width: 100%; opacity: 1; }
+          100% { width: 0%; opacity: 0; left: 100%; }
+        }
+        @keyframes qf-rotate {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes qf-pulse-outer {
+          0%, 100% { transform: scale(1); opacity: 0.3; }
+          50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        @keyframes qf-pulse-inner {
+          0%, 100% { transform: scale(1); opacity: 0.5; }
+          50% { transform: scale(0.8); opacity: 1; }
+        }
+        @keyframes qf-glow {
+          0%, 100% { transform: scale(1); opacity: 0.8; }
+          50% { transform: scale(1.5); opacity: 0.2; }
+        }
+        @keyframes qf-cursor-pulse {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+          50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+        }
+        @keyframes qf-radial-pulse {
+          0%, 100% { opacity: 0.1; }
+          50% { opacity: 0.2; }
+        }
+      `}</style>
+
+      {/* Particles */}
       <div className="absolute inset-0">
         {particleData.map((particle, i) => (
-          <motion.div
+          <div
             key={i}
             className="absolute w-1 h-1 bg-signal-lime rounded-full"
-            initial={{
+            style={{
               left: `${particle.initialX}%`,
               top: `${particle.initialY}%`,
-              opacity: 0,
-              scale: 0,
-            }}
-            animate={{
-              left: particle.animateX.map((x) => `${x}%`),
-              top: particle.animateY.map((y) => `${y}%`),
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: particle.duration,
-              repeat: Infinity,
-              delay: particle.delay,
-              ease: "easeInOut",
+              animation: `qf-particle ${particle.duration}s ease-in-out ${particle.delay}s infinite`,
+              willChange: "transform, opacity",
             }}
           />
         ))}
-        
-        {/* Mouse-following particles for PC */}
-        {!isMobile && (
-          <motion.div
+
+        {/* Mouse-following particle for PC */}
+        {!isMobile && isHovering && (
+          <div
             className="absolute w-2 h-2 bg-signal-lime rounded-full"
             style={{
-              left: '50%',
-              top: '50%',
-              x: particleX,
-              y: particleY,
-            }}
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.5, 1, 0.5],
-            }}
-            transition={{
-              scale: { duration: 1, repeat: Infinity, ease: "easeInOut" },
-              opacity: { duration: 1, repeat: Infinity, ease: "easeInOut" },
+              left: "50%",
+              top: "50%",
+              marginLeft: cursorX,
+              marginTop: cursorY,
+              filter: "blur(2px)",
+              animation: "qf-cursor-pulse 1s ease-in-out infinite",
             }}
           />
         )}
       </div>
-        
-        {/* Enhanced Energy Grid with mouse interaction */}
-      <motion.div
+
+      {/* Energy Grid with mouse-driven 3D tilt */}
+      <div
         className="absolute inset-0"
         style={{
-          rotateX,
-          rotateY,
+          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
           transformStyle: "preserve-3d",
+          transition: "transform 0.1s ease-out",
         }}
       >
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             backgroundImage: `
@@ -473,133 +451,66 @@ export default function QuantumField() {
             backgroundSize: "50px 50px, 50px 50px, 50px 50px, 50px 50px",
           }}
         />
-        {/* Dynamic mouse-following gradient */}
-        <motion.div
+        {/* Pulsing radial gradient overlay */}
+        <div
           className="absolute inset-0"
-          animate={{
-            background: [
-              'radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 30%)',
-              'radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.2) 0%, transparent 30%)',
-              'radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 30%)',
-            ]
-          }}
           style={{
-            opacity: 0.5,
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
+            background: 'radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.15) 0%, transparent 30%)',
+            animation: "qf-radial-pulse 2s ease-in-out infinite",
           }}
         />
-      </motion.div>
+      </div>
 
-      {/* Enhanced Central Core with mouse interaction - simplified animation */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 w-32 h-32 -translate-x-1/2 -translate-y-1/2"
-        animate={{
-          rotate: 360,
-        }}
+      {/* Central Core */}
+      <div
+        className="absolute top-1/2 left-1/2 w-32 h-32"
         style={{
-          scale: isMobile ? 0.8 : coreScale,
+          animation: "qf-rotate 20s linear infinite",
           willChange: "transform",
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
         }}
       >
         <div className="relative w-full h-full">
-          {/* Outer Ring */}
-          <motion.div
+          <div
             className="absolute inset-0 border-2 border-signal-lime/30 rounded-full"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            style={{ animation: "qf-pulse-outer 2s ease-in-out infinite" }}
           />
-          
-          {/* Middle Ring */}
-          <motion.div
+          <div
             className="absolute inset-4 border border-signal-lime/50 rounded-full"
-            animate={{
-              scale: [1, 0.8, 1],
-              opacity: [0.5, 1, 0.5],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 0.5,
-            }}
+            style={{ animation: "qf-pulse-inner 2.5s ease-in-out 0.5s infinite" }}
           />
-          
-          {/* Inner Core */}
-          <motion.div
+          <div
             className="absolute inset-8 bg-signal-lime rounded-full"
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.8, 0.2, 0.8],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
             style={{
+              filter: "blur(8px)",
+              animation: "qf-glow 3s ease-in-out 1s infinite",
               willChange: "transform",
             }}
           />
         </div>
-      </motion.div>
+      </div>
 
-      {/* Enhanced Scanning Lines */}
-      <motion.div
+      {/* Scanning Lines */}
+      <div
         className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/10 to-transparent"
-        animate={{
-          y: ["-100%", "100%"],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        style={{ animation: "qf-scan 4s linear infinite" }}
       />
 
-      {/* Enhanced Data Streams */}
+      {/* Data Streams */}
       {[...Array(5)].map((_, i) => (
-        <motion.div
+        <div
           key={i}
           className="absolute h-px bg-gradient-to-r from-transparent via-signal-lime to-transparent"
-          initial={{ width: 0, opacity: 0 }}
-          animate={{
-            width: ["0%", "100%", "0%"],
-            opacity: [0, 1, 0],
-            x: ["0%", "0%", "100%"],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            delay: streamDelays[i],
-            ease: "easeInOut",
-          }}
           style={{
             top: `${20 + i * 15}%`,
             left: 0,
+            animation: `qf-stream 3s ease-in-out ${streamDelays[i]}s infinite`,
           }}
         />
       ))}
 
       {/* Game */}
       <QuantumRunnerGame isActive={gameActive} />
-      
+
       {/* Mobile/PC indicator */}
       <div className="absolute top-2 right-2 text-xs font-mono text-spectral-white/40 pointer-events-none">
         {gameActive ? (isMobile ? "TAP TO JUMP" : "SPACE TO JUMP") : (isMobile ? "TOUCH TO PLAY" : "CLICK TO PLAY")}

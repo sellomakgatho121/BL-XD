@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, Send, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -100,51 +99,41 @@ export function CommentThread({ annotation, onClose, className }: CommentThreadP
       </div>
 
       <div className="max-h-80 overflow-y-auto">
-        <AnimatePresence initial={false}>
-          {comments.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="p-6 text-center text-[var(--spectral-dim)] text-sm"
-            >
-              No comments yet. Start the discussion!
-            </motion.div>
-          )}
+        {comments.length === 0 && (
+          <div className="p-6 text-center text-[var(--spectral-dim)] text-sm animate-in fade-in duration-300">
+            No comments yet. Start the discussion!
+          </div>
+        )}
 
-          {comments.map((comment, index) => (
-            <motion.div
-              key={comment.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ delay: index * 0.05 }}
-              className="border-b last:border-b-0 px-4 py-3"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-sm">
-                      {comment.user_profile?.full_name || "Anonymous"}
-                    </span>
-                    <span className="text-xs text-[var(--spectral-dim)]">
-                      {formatDistanceToNow(new Date(comment.created_at))}
-                    </span>
-                  </div>
-                  <p className="text-sm text-[var(--spectral-muted)]">{comment.content}</p>
+        {comments.map((comment, index) => (
+          <div
+            key={comment.id}
+            className="border-b last:border-b-0 px-4 py-3 animate-in fade-in slide-in-from-top-2 duration-300 fill-mode-both"
+            style={{ animationDelay: `${index * 50}ms` }}
+          >
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="font-medium text-sm">
+                    {comment.user_profile?.full_name || "Anonymous"}
+                  </span>
+                  <span className="text-xs text-[var(--spectral-dim)]">
+                    {formatDistanceToNow(new Date(comment.created_at))}
+                  </span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  onClick={() => handleDeleteComment(comment.id)}
-                  className="h-6 w-6 text-[var(--spectral-dim)] hover:text-[var(--siren-red)] flex-shrink-0"
-                >
-                  <Trash2 className="w-3 h-3" />
-                </Button>
+                <p className="text-sm text-[var(--spectral-muted)]">{comment.content}</p>
               </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={() => handleDeleteComment(comment.id)}
+                className="h-6 w-6 text-[var(--spectral-dim)] hover:text-[var(--siren-red)] flex-shrink-0"
+              >
+                <Trash2 className="w-3 h-3" />
+              </Button>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="border-t p-3">

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Zap,
   Clock,
@@ -99,48 +98,33 @@ export default function SparkTierPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+              <div}}}
                 className="inline-flex items-center gap-2 border border-[var(--signal-lime)]/50 bg-[var(--signal-lime-dim)] px-3 py-1 font-mono text-xs text-[var(--signal-lime)] mb-6"
               >
                 <Terminal size={14} />
                 SPARK TIER
-              </motion.div>
+              </div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+              <h1}}}
                 className="text-5xl md:text-7xl font-black tracking-tighter mb-6"
               >
                 <GlitchText text="LANDING PAGE" intensity="medium" triggerOnHover />
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+              <p}}}
                 className="text-xl text-[var(--spectral-dim)] mb-8 leading-relaxed"
               >
                 High-impact, single-page site for new ventures and personal brands. Perfect for entrepreneurs building their first digital presence.
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+              <div}}}
                 className="flex items-baseline gap-4 mb-8"
               >
                 <span className="text-5xl font-bold text-[var(--signal-lime)]">R3,500</span>
                 <span className="text-[var(--spectral-muted)]">From</span>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+              <div}}}
                 className="flex flex-wrap gap-4"
               >
                 <Button
@@ -158,14 +142,11 @@ export default function SparkTierPage() {
                 >
                   <Link href="/portfolio">View Examples</Link>
                 </Button>
-              </motion.div>
+              </div>
             </div>
 
             {/* Visual */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+            <div}}}
               className="relative"
             >
               <div className="border border-[var(--border)] bg-[var(--card)] p-8 relative">
@@ -202,7 +183,7 @@ export default function SparkTierPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -210,32 +191,25 @@ export default function SparkTierPage() {
       {/* Features Grid */}
       <section className="py-20 border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div}}}
             className="text-center mb-16"
           >
             <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--signal-lime)] mb-4">
               What You Get
             </h2>
             <p className="text-3xl font-bold">Built for Speed & Impact</p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+              <div
+                key={feature.title}}}}}
                 className="group border border-[var(--border)] bg-[var(--card)] p-6 hover:border-[var(--signal-lime)]/50 transition-colors"
               >
                 <feature.icon className="w-8 h-8 text-[var(--signal-lime)] mb-4" />
                 <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
                 <p className="text-sm text-[var(--spectral-dim)]">{feature.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -253,12 +227,8 @@ export default function SparkTierPage() {
 
               <div className="space-y-6">
                 {process.map((step, i) => (
-                  <motion.div
-                    key={step.step}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                  <div
+                    key={step.step}}}}}
                     className="flex gap-6"
                   >
                     <div className="flex-shrink-0 w-12 h-12 border border-[var(--signal-lime)]/50 flex items-center justify-center font-mono text-[var(--signal-lime)]">
@@ -268,15 +238,12 @@ export default function SparkTierPage() {
                       <h4 className="font-bold text-lg">{step.title}</h4>
                       <p className="text-sm text-[var(--spectral-dim)]">{step.desc}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+            <div}}}
               className="border border-[var(--border)] bg-[var(--card)] p-8"
             >
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
@@ -285,20 +252,16 @@ export default function SparkTierPage() {
               </h3>
               <ul className="space-y-3">
                 {deliverables.map((item, i) => (
-                  <motion.li
-                    key={item}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05 }}
+                  <li
+                    key={item}}}}}
                     className="flex items-center gap-3 text-sm text-[var(--spectral-dim)]"
                   >
                     <div className="w-1.5 h-1.5 bg-[var(--signal-lime)]" />
                     {item}
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -341,10 +304,7 @@ export default function SparkTierPage() {
       {/* CTA */}
       <section className="py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div}}}
           >
             <h2 className="text-4xl font-black tracking-tighter mb-6">
               Ready to launch in <span className="text-[var(--signal-lime)]">48 hours</span>?
@@ -359,7 +319,7 @@ export default function SparkTierPage() {
               Book Spark Tier
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

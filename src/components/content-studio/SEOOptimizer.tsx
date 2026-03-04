@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   Search,
   CheckCircle2,
@@ -400,15 +399,12 @@ export default function SEOOptimizer({ content: initialContent }: SEOOptimizerPr
                         <span className="text-xs text-[var(--spectral-dim)]">{(density * 100).toFixed(2)}%</span>
                       </div>
                       <div className="h-2 bg-[var(--onyx)] rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(density * 50, 100)}%` }}
-                          transition={{ duration: 0.5 }}
-                          className={`h-full ${
-                            density > 0.03 ? 'bg-[var(--siren-red)]' : 
-                            density > 0.02 ? 'bg-[#F97316]' : 
-                            density >= 0.01 ? 'bg-[var(--signal-lime)]' : 'bg-[#FACC15]'
-                          }`}
+                        <div
+                          style={{ width: `${Math.min(density * 50, 100)}%`, transition: "width 0.5s ease" }}
+                          className={`h-full ${density > 0.03 ? 'bg-[var(--siren-red)]' :
+                              density > 0.02 ? 'bg-[#F97316]' :
+                                density >= 0.01 ? 'bg-[var(--signal-lime)]' : 'bg-[#FACC15]'
+                            }`}
                         />
                       </div>
                     </div>
@@ -446,16 +442,13 @@ export default function SEOOptimizer({ content: initialContent }: SEOOptimizerPr
 
           <div className="grid md:grid-cols-2 gap-4">
             {analysis.suggestions.map((suggestion, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={`p-4 border ${
-                  suggestion.priority === 'high' ? 'border-[var(--siren-red)] bg-[var(--siren-red)]/5' :
-                  suggestion.priority === 'medium' ? 'border-[#F97316] bg-[#F97316]/5' :
-                  'border-[#FACC15] bg-[#FACC15]/5'
-                }`}
+                className={`p-4 border animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both ${suggestion.priority === 'high' ? 'border-[var(--siren-red)] bg-[var(--siren-red)]/5' :
+                    suggestion.priority === 'medium' ? 'border-[#F97316] bg-[#F97316]/5' :
+                      'border-[#FACC15] bg-[#FACC15]/5'
+                  }`}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="flex items-start gap-3">
                   {getPriorityIcon(suggestion.priority)}
@@ -475,23 +468,19 @@ export default function SEOOptimizer({ content: initialContent }: SEOOptimizerPr
                     {suggestion.priority}
                   </Badge>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       )}
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-        className={`fixed bottom-4 right-4 bg-[var(--signal-lime)] text-[var(--onyx)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 ${
-          copyNotification ? '' : 'hidden'
-        }`}
+      <div
+        className={`fixed bottom-4 right-4 bg-[var(--signal-lime)] text-[var(--onyx)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4 duration-300 ${copyNotification ? '' : 'hidden'
+          }`}
       >
         <CheckCircle2 className="w-4 h-4" />
         Report exported!
-      </motion.div>
+      </div>
     </div>
   );
 }

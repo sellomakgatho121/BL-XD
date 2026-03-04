@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Bell, X, Check, CheckCheck, MessageSquare, FolderKanban, Users, Settings } from "lucide-react";
 import { useNotifications } from "@/lib/notifications";
 import { Button } from "@/components/ui/button";
@@ -43,105 +42,94 @@ export function NotificationCenter({ userId }: { userId: string }) {
       </Button>
 
       {/* Dropdown */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40"
-              onClick={() => setIsOpen(false)}
-            />
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40 animate-in fade-in duration-200"
+            onClick={() => setIsOpen(false)}
+          />
 
-            {/* Dropdown Content */}
-            <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              className="absolute right-0 top-12 w-96 bg-[var(--card)] border border-[var(--border)] rounded-none shadow-xl z-50"
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-[var(--border)]">
-                <h3 className="font-bold">Notifications</h3>
-                <div className="flex items-center gap-2">
-                  {unreadCount > 0 && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={markAllAsRead}
-                      className="text-xs text-[var(--signal-lime)] hover:text-[var(--signal-lime)]/80"
-                    >
-                      <CheckCheck className="w-3 h-3 mr-1" />
-                      Mark all read
-                    </Button>
-                  )}
+          {/* Dropdown Content */}
+          <div
+            className="absolute right-0 top-12 w-96 bg-[var(--card)] border border-[var(--border)] rounded-none shadow-xl z-50 animate-in slide-in-from-top-2 fade-in duration-200"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-[var(--border)]">
+              <h3 className="font-bold">Notifications</h3>
+              <div className="flex items-center gap-2">
+                {unreadCount > 0 && (
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setIsOpen(false)}
-                    className="p-1 hover:bg-[var(--spectral-muted)]/10"
+                    onClick={markAllAsRead}
+                    className="text-xs text-[var(--signal-lime)] hover:text-[var(--signal-lime)]/80"
                   >
-                    <X className="w-4 h-4" />
+                    <CheckCheck className="w-3 h-3 mr-1" />
+                    Mark all read
                   </Button>
-                </div>
-              </div>
-
-              {/* Notifications List */}
-              <ScrollArea className="h-96">
-                {notifications.length === 0 ? (
-                  <div className="p-8 text-center text-[var(--spectral-muted)]">
-                    <Bell className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>No notifications yet</p>
-                  </div>
-                ) : (
-                  <div className="divide-y divide-[var(--border)]">
-                    {notifications.map((notification) => {
-                      const Icon = typeIcons[notification.type];
-                      const colorClass = typeColors[notification.type];
-                      
-                      return (
-                        <motion.div
-                          key={notification.id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          className={`p-4 hover:bg-[var(--spectral-muted)]/5 cursor-pointer transition-colors ${
-                            !notification.read ? "bg-[var(--signal-lime)]/5" : ""
-                          }`}
-                          onClick={() => {
-                            if (!notification.read) {
-                              markAsRead(notification.id);
-                            }
-                          }}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className={`p-2 rounded-full bg-[var(--onyx)] ${colorClass}`}>
-                              <Icon className="w-4 h-4" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between mb-1">
-                                <h4 className="font-semibold text-sm truncate">{notification.title}</h4>
-                                {!notification.read && (
-                                  <div className="w-2 h-2 bg-[var(--signal-lime)] rounded-full" />
-                                )}
-                              </div>
-                              <p className="text-sm text-[var(--spectral-dim)] mb-2">{notification.message}</p>
-                              <p className="text-xs text-[var(--spectral-muted)]">
-                                {new Date(notification.created_at).toLocaleString()}
-                              </p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
                 )}
-              </ScrollArea>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsOpen(false)}
+                  className="p-1 hover:bg-[var(--spectral-muted)]/10"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Notifications List */}
+            <ScrollArea className="h-96">
+              {notifications.length === 0 ? (
+                <div className="p-8 text-center text-[var(--spectral-muted)]">
+                  <Bell className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>No notifications yet</p>
+                </div>
+              ) : (
+                <div className="divide-y divide-[var(--border)]">
+                  {notifications.map((notification) => {
+                    const Icon = typeIcons[notification.type];
+                    const colorClass = typeColors[notification.type];
+
+                    return (
+                      <div
+                        key={notification.id}
+                        className={`p-4 hover:bg-[var(--spectral-muted)]/5 cursor-pointer transition-colors animate-in slide-in-from-left-2 fade-in duration-300 ${!notification.read ? "bg-[var(--signal-lime)]/5" : ""
+                          }`}
+                        onClick={() => {
+                          if (!notification.read) {
+                            markAsRead(notification.id);
+                          }
+                        }}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className={`p-2 rounded-full bg-[var(--onyx)] ${colorClass}`}>
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-1">
+                              <h4 className="font-semibold text-sm truncate">{notification.title}</h4>
+                              {!notification.read && (
+                                <div className="w-2 h-2 bg-[var(--signal-lime)] rounded-full" />
+                              )}
+                            </div>
+                            <p className="text-sm text-[var(--spectral-dim)] mb-2">{notification.message}</p>
+                            <p className="text-xs text-[var(--spectral-muted)]">
+                              {new Date(notification.created_at).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </ScrollArea>
+          </div>
+        </>
+      )}
     </div>
   );
 }

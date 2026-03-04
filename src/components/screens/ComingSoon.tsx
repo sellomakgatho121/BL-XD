@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Terminal } from "lucide-react";
 import { useState, useEffect, Suspense, lazy } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
@@ -51,43 +50,29 @@ export default function ComingSoon() {
       <main className="relative z-10 flex flex-1 flex-col items-start justify-center px-8 lg:px-24">
         <DistortionTransition>
           <div className="max-w-4xl space-y-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 border border-siren-red/50 bg-siren-red/10 px-3 py-1 font-mono text-xs text-siren-red shadow-[0_0_15px_rgba(255,0,60,0.4)]"
-            >
+            <div className="mb-6 inline-flex items-center gap-2 border border-siren-red/50 bg-siren-red/10 px-3 py-1 font-mono text-xs text-siren-red shadow-[0_0_15px_rgba(255,0,60,0.4)] animate-in fade-in zoom-in-95 duration-500">
               <Terminal size={14} className="animate-pulse" />
               <GlitchText text="PREPARING AGENTIC SYSTEMS" intensity="high" triggerOnHover={true} />
-            </motion.div>
+            </div>
 
             <div className="relative">
-              <motion.h1
-                className="text-6xl font-black leading-[0.9] tracking-tighter md:text-8xl lg:text-9xl mix-blend-difference"
-              >
+              <h1 className="text-6xl font-black leading-[0.9] tracking-tighter md:text-8xl lg:text-9xl mix-blend-difference">
                 <GlitchText text="BLACKLIGHT WEB DESIGNS" intensity="medium" triggerOnHover={true} />
-              </motion.h1>
+              </h1>
               <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-siren-red to-blue-600 opacity-20 blur-xl animate-pulse" />
             </div>
 
-            <motion.p
-              className="max-w-xl text-lg leading-relaxed text-spectral-white/60 md:text-xl font-mono border-l-2 border-signal-lime pl-4"
-            >
+            <p className="max-w-xl text-lg leading-relaxed text-spectral-white/60 md:text-xl font-mono border-l-2 border-signal-lime pl-4">
               <GlitchText text="The future of web development is evolving." intensity="low" triggerOnHover={true} />
               <br />
               <span className="text-sm opacity-50">Something extraordinary is building at the intersection of code and intelligence.</span>
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className="my-12"
-            >
+            <div className="my-12 animate-in fade-in zoom-in-95 duration-1000 fill-mode-both" style={{ animationDelay: '500ms' }}>
               <Suspense fallback={<ComponentFallback />}>
                 <QuantumField />
               </Suspense>
-            </motion.div>
+            </div>
 
             <Suspense fallback={<ComponentFallback />}>
               <ShowcaseGallery />
@@ -99,36 +84,21 @@ export default function ComingSoon() {
             </Suspense>
 
             {/* Countdown Timer */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.4 }}
-              className="py-6"
-            >
+            <div className="py-6 animate-in fade-in duration-500 fill-mode-both" style={{ animationDelay: '1400ms' }}>
               <CountdownTimer targetDate="2026-04-01T00:00:00" />
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 2.0 }}
-              className="pt-8"
-            >
+            <div className="pt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '2000ms' }}>
               {/* Friendly Explanation */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 2.2 }}
-                className="mb-6 p-4 border border-signal-lime/20 bg-signal-lime/5 rounded-lg backdrop-blur-sm"
-              >
+              <div className="mb-6 p-4 border border-signal-lime/20 bg-signal-lime/5 rounded-lg backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500 fill-mode-both" style={{ animationDelay: '2200ms' }}>
                 <p className="text-sm text-spectral-white/80 text-center font-mono">
-                  <span className="text-signal-lime font-bold">✨ Interested in next-gen web development for your business, startup, or organization?</span><br/>
+                  <span className="text-signal-lime font-bold">✨ Interested in next-gen web development for your business, startup, or organization?</span><br />
                   <span className="text-xs opacity-70">Drop your email below and we&apos;ll notify you when we launch. No spam, just cutting-edge tech! 🚀</span>
                 </p>
-              </motion.div>
-              
+              </div>
+
               <NewsletterForm />
-            </motion.div>
+            </div>
           </div>
         </DistortionTransition>
       </main>

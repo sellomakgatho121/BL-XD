@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Users,
   Mail,
@@ -184,10 +183,8 @@ export default function LeadsPage() {
             filteredLeads.map((lead) => {
               const status = statusConfig[lead.status];
               return (
-                <motion.div
-                  key={lead.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                <div
+                  key={lead.id}}}
                   onClick={() => setSelectedLead(lead)}
                   className={`border bg-[var(--card)] p-6 cursor-pointer transition-all hover:border-[var(--signal-lime)]/50 ${
                     selectedLead?.id === lead.id ? "border-[var(--signal-lime)]" : "border-[var(--border)]"
@@ -244,7 +241,7 @@ export default function LeadsPage() {
                       </div>
                     </div>
                   )}
-                </motion.div>
+                </div>
               );
             })
           )}

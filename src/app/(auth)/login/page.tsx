@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Lock, Mail, ArrowRight, AlertCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import GlitchText from "@/components/GlitchText";
@@ -55,11 +54,7 @@ export default function LoginPage() {
         }}
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 w-full max-w-md"
-      >
+      <div className="relative z-10 w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-black tracking-tighter mb-2">
             <GlitchText text="PORTAL ACCESS" intensity="medium" triggerOnHover />
@@ -108,14 +103,10 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
-              >
+              <div className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3 animate-in fade-in slide-in-from-top-2 duration-300">
                 <AlertCircle className="w-4 h-4" />
                 {error}
-              </motion.div>
+              </div>
             )}
 
             <Button
@@ -149,7 +140,7 @@ export default function LoginPage() {
             ← Back to Website
           </Link>
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

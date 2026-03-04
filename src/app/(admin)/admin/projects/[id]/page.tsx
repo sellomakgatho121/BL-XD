@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { motion } from "framer-motion";
+
 import {
   ArrowLeft,
   Calendar,
@@ -69,7 +69,7 @@ const statusConfig = {
 export default function AdminProjectDetailPage() {
   const params = useParams();
   const projectId = params.id as string;
-  
+
   const [project, setProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -84,7 +84,7 @@ export default function AdminProjectDetailPage() {
     async function loadProject() {
       try {
         const response = await fetch(`/api/projects/${projectId}`);
-        
+
         if (!response.ok) {
           throw new Error("Project not found");
         }
@@ -193,13 +193,13 @@ export default function AdminProjectDetailPage() {
             Back to Projects
           </Link>
         </div>
-        
+
         <div className="flex items-center gap-4">
           <div className={`flex items-center gap-2 ${status.color}`}>
             <StatusIcon className="w-4 h-4" />
             <span className="text-sm font-mono uppercase">{status.label}</span>
           </div>
-          
+
           {!isEditing ? (
             <Button
               variant="outline"
@@ -255,7 +255,7 @@ export default function AdminProjectDetailPage() {
                 className="w-full px-4 py-2 bg-[var(--onyx)] border border-[var(--border)] rounded-none focus:border-[var(--signal-lime)] focus:outline-none"
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">
                 Description
@@ -267,7 +267,7 @@ export default function AdminProjectDetailPage() {
                 className="w-full px-4 py-2 bg-[var(--onyx)] border border-[var(--border)] rounded-none focus:border-[var(--signal-lime)] focus:outline-none resize-none"
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">
                 Status
@@ -340,12 +340,10 @@ export default function AdminProjectDetailPage() {
           <h2 className="text-xl font-bold mb-4">Project Phases</h2>
           <div className="space-y-3">
             {project.phases.map((phase, index) => (
-              <motion.div
+              <div
                 key={phase.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="flex items-center justify-between p-3 bg-[var(--onyx)] rounded-none"
+                className="flex items-center justify-between p-3 bg-[var(--onyx)] rounded-none animate-in fade-in slide-in-from-left-4 duration-400 fill-mode-both"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-[var(--signal-lime)]/10 text-[var(--signal-lime)] rounded-full flex items-center justify-center text-sm font-mono">
@@ -358,16 +356,15 @@ export default function AdminProjectDetailPage() {
                     </p>
                   </div>
                 </div>
-                <div className={`px-3 py-1 text-xs font-mono uppercase rounded-full ${
-                  phase.status === "completed" 
+                <div className={`px-3 py-1 text-xs font-mono uppercase rounded-full ${phase.status === "completed"
                     ? "bg-[var(--success)]/10 text-[var(--success)]"
                     : phase.status === "in_progress"
-                    ? "bg-[var(--electric-purple)]/10 text-[var(--electric-purple)]"
-                    : "bg-[var(--spectral-muted)]/10 text-[var(--spectral-muted)]"
-                }`}>
+                      ? "bg-[var(--electric-purple)]/10 text-[var(--electric-purple)]"
+                      : "bg-[var(--spectral-muted)]/10 text-[var(--spectral-muted)]"
+                  }`}>
                   {phase.status.replace("_", " ")}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

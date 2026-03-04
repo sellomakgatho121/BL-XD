@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Check, Plus, Minus, Calculator, RefreshCw, Zap, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -22,57 +21,57 @@ type AddOn = {
 };
 
 const basePackages: BasePackage[] = [
-  { 
-    id: "discovery", 
-    name: "Discovery Node", 
-    basePrice: 4500, 
+  {
+    id: "discovery",
+    name: "Discovery Node",
+    basePrice: 4500,
     baseWeeks: 1,
-    description: "AI-ready landing page + GEO setup" 
+    description: "AI-ready landing page + GEO setup"
   },
-  { 
-    id: "merchant", 
-    name: "Chat Merchant", 
-    basePrice: 12000, 
+  {
+    id: "merchant",
+    name: "Chat Merchant",
+    basePrice: 12000,
     baseWeeks: 3,
-    description: "WhatsApp AI store + Payments" 
+    description: "WhatsApp AI store + Payments"
   },
-  { 
-    id: "orchestrator", 
-    name: "Orchestrator Setup", 
-    basePrice: 25000, 
+  {
+    id: "orchestrator",
+    name: "Orchestrator Setup",
+    basePrice: 25000,
     baseWeeks: 6,
-    description: "Full multi-agent architecture" 
+    description: "Full multi-agent architecture"
   },
 ];
 
 const availableAddOns: AddOn[] = [
-  { 
-    id: "video", 
-    name: "Video Engine", 
-    price: 6000, 
-    durationWeeks: 0, 
-    description: "30 AI shorts/mo (Recurring)" 
+  {
+    id: "video",
+    name: "Video Engine",
+    price: 6000,
+    durationWeeks: 0,
+    description: "30 AI shorts/mo (Recurring)"
   },
-  { 
-    id: "blog", 
-    name: "Content Hub", 
-    price: 3500, 
-    durationWeeks: 1, 
-    description: "SEO blog engine setup" 
+  {
+    id: "blog",
+    name: "Content Hub",
+    price: 3500,
+    durationWeeks: 1,
+    description: "SEO blog engine setup"
   },
-  { 
-    id: "crm", 
-    name: "CRM Sync", 
-    price: 4500, 
-    durationWeeks: 1, 
-    description: "HubSpot/Pipedrive integration" 
+  {
+    id: "crm",
+    name: "CRM Sync",
+    price: 4500,
+    durationWeeks: 1,
+    description: "HubSpot/Pipedrive integration"
   },
-  { 
-    id: "training", 
-    name: "Deep Training", 
-    price: 5000, 
-    durationWeeks: 2, 
-    description: "Custom knowledge base ingestion" 
+  {
+    id: "training",
+    name: "Deep Training",
+    price: 5000,
+    durationWeeks: 2,
+    description: "Custom knowledge base ingestion"
   },
 ];
 
@@ -81,13 +80,13 @@ export default function SprintCalculator() {
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
 
   const toggleAddOn = (id: string) => {
-    setSelectedAddOns(prev => 
+    setSelectedAddOns(prev =>
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   };
 
   const currentPackage = basePackages.find(p => p.id === selectedPackage) || basePackages[0];
-  
+
   const totalPrice = currentPackage.basePrice + selectedAddOns.reduce((sum, id) => {
     const addOn = availableAddOns.find(a => a.id === id);
     return sum + (addOn?.price || 0);
@@ -99,10 +98,10 @@ export default function SprintCalculator() {
   }, 0);
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-ZA', { 
-      style: 'currency', 
+    return new Intl.NumberFormat('en-ZA', {
+      style: 'currency',
       currency: 'ZAR',
-      maximumFractionDigits: 0 
+      maximumFractionDigits: 0
     }).format(price);
   };
 
@@ -120,14 +119,13 @@ export default function SprintCalculator() {
             <label className="text-sm text-[var(--spectral-dim)] uppercase tracking-wider mb-4 block">Select Core System</label>
             <div className="space-y-3">
               {basePackages.map((pkg) => (
-                <div 
+                <div
                   key={pkg.id}
                   onClick={() => setSelectedPackage(pkg.id)}
-                  className={`p-4 border cursor-pointer transition-all duration-300 ${
-                    selectedPackage === pkg.id 
-                      ? "border-[var(--signal-lime)] bg-[var(--signal-lime)]/5" 
+                  className={`p-4 border cursor-pointer transition-all duration-300 ${selectedPackage === pkg.id
+                      ? "border-[var(--signal-lime)] bg-[var(--signal-lime)]/5"
                       : "border-[var(--border)] hover:border-[var(--border-hover)]"
-                  }`}
+                    }`}
                 >
                   <div className="flex justify-between items-center mb-1">
                     <span className="font-bold">{pkg.name}</span>
@@ -143,19 +141,17 @@ export default function SprintCalculator() {
             <label className="text-sm text-[var(--spectral-dim)] uppercase tracking-wider mb-4 block">Add Modules</label>
             <div className="grid grid-cols-1 gap-3">
               {availableAddOns.map((addOn) => (
-                <div 
+                <div
                   key={addOn.id}
                   onClick={() => toggleAddOn(addOn.id)}
-                  className={`flex items-center justify-between p-3 border cursor-pointer transition-all duration-300 ${
-                    selectedAddOns.includes(addOn.id)
+                  className={`flex items-center justify-between p-3 border cursor-pointer transition-all duration-300 ${selectedAddOns.includes(addOn.id)
                       ? "border-[var(--signal-lime)] bg-[var(--signal-lime)]/5"
                       : "border-[var(--border)] hover:border-[var(--border-hover)]"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${
-                      selectedAddOns.includes(addOn.id) ? "border-[var(--signal-lime)] bg-[var(--signal-lime)]" : "border-[var(--spectral-dim)]"
-                    }`}>
+                    <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${selectedAddOns.includes(addOn.id) ? "border-[var(--signal-lime)] bg-[var(--signal-lime)]" : "border-[var(--spectral-dim)]"
+                      }`}>
                       {selectedAddOns.includes(addOn.id) && <Check className="w-3 h-3 text-[var(--onyx)]" />}
                     </div>
                     <div>
@@ -182,9 +178,8 @@ export default function SprintCalculator() {
                 <span className="text-xl text-[var(--spectral-dim)] mb-1">Weeks</span>
               </div>
               <div className="w-full bg-[var(--border)] h-2 overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: `${Math.min((totalWeeks / 12) * 100, 100)}%` }}
+                <div
+                  style={{ width: `${Math.min((totalWeeks / 12) * 100, 100)}%`, transition: "width 0.4s ease" }}
                   className="h-full bg-[var(--signal-lime)]"
                 />
               </div>

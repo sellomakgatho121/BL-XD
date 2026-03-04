@@ -1,29 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export default function DistortionTransition({ children }: { children: ReactNode }) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
-        <motion.div
-            initial={{
-                opacity: 0,
-                scale: 1.1,
-                filter: "blur(20px) hue-rotate(90deg)" // Extreme initial state
-            }}
-            animate={{
-                opacity: 1,
-                scale: 1,
-                filter: "blur(0px) hue-rotate(0deg)"
-            }}
-            transition={{
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1], // Expo out
-                delay: 0.2
-            }}
-            className="relative will-change-transform"
+        <div
+            className={`relative will-change-transform transition-all duration-[800ms] ease-out delay-200 ${mounted
+                    ? "opacity-100 scale-100 blur-none hue-rotate-0"
+                    : "opacity-0 scale-110 blur-[20px] hue-rotate-90"
+                }`}
         >
             {children}
-        </motion.div>
+        </div>
     );
 }

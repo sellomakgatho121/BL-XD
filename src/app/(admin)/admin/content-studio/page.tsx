@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Wand2,
   FileText,
@@ -93,10 +92,7 @@ export default function ContentStudioPage() {
       </div>
 
       {showDrafts && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
+        <div}}}
           className="border border-[var(--border)] bg-[var(--card)] p-6"
         >
           <div className="flex items-center justify-between mb-4">
@@ -108,10 +104,8 @@ export default function ContentStudioPage() {
           </div>
           <div className="space-y-2">
             {drafts.map((draft) => (
-              <motion.div
-                key={draft.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+              <div
+                key={draft.id}}}
                 className="flex items-center gap-4 p-4 border border-[var(--border)] hover:border-[var(--spectral-muted)] transition-colors"
               >
                 <div className={`w-10 h-10 flex items-center justify-center rounded ${
@@ -139,17 +133,14 @@ export default function ContentStudioPage() {
                 <Button variant="ghost" size="icon" className="h-8 w-8 hover:text-[var(--siren-red)]">
                   <Trash2 className="w-4 h-4" />
                 </Button>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       )}
 
       {calendarView && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
+        <div}}}
           className="border border-[var(--border)] bg-[var(--card)] p-6"
         >
           <div className="flex items-center justify-between mb-4">
@@ -190,7 +181,7 @@ export default function ContentStudioPage() {
               );
             })}
           </div>
-        </motion.div>
+        </div>
       )}
 
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>

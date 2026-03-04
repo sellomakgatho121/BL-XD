@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowRight, Bot, MessageCircle, Network, Cpu, Video, Globe, Smartphone, Zap, TrendingUp, ShoppingBag, Stethoscope } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -121,17 +120,9 @@ export default function ServiceCard({
   const Icon = config.icon;
 
   const CardContent = (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      whileHover={{ y: -8 }}
-      className={`group relative border ${featured ? 'border-[var(--signal-lime)]' : 'border-[var(--border)]'} bg-[var(--card)] overflow-hidden cursor-pointer h-full`}
+    <div
+      className={`group relative border ${featured ? 'border-[var(--signal-lime)]' : 'border-[var(--border)]'} bg-[var(--card)] overflow-hidden cursor-pointer h-full transition-transform duration-300 hover:-translate-y-2 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both`}
+      style={{ animationDelay: `${delay * 1000}ms` }}
     >
       {/* Featured badge */}
       {featured && (
@@ -143,7 +134,7 @@ export default function ServiceCard({
       )}
 
       {/* Hover glow */}
-      <motion.div
+      <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background: `radial-gradient(circle at 50% 0%, ${config.glow}, transparent 70%)`,
@@ -210,28 +201,25 @@ export default function ServiceCard({
         {/* Features */}
         <ul className="space-y-3 mb-6">
           {features.map((feature, i) => (
-            <motion.li
+            <li
               key={i}
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: delay + 0.1 + i * 0.05 }}
-              className="flex items-center gap-3 text-sm text-[var(--spectral-dim)]"
+              className="flex items-center gap-3 text-sm text-[var(--spectral-dim)] animate-in fade-in slide-in-from-left-2 duration-500 fill-mode-both"
+              style={{ animationDelay: `${(delay + 0.1 + i * 0.05) * 1000}ms` }}
             >
               <div
                 className="w-1.5 h-1.5"
                 style={{ backgroundColor: config.color }}
               />
               {feature}
-            </motion.li>
+            </li>
           ))}
         </ul>
 
         {/* Savings Note (new) */}
         {savingsNote && (
-          <div 
+          <div
             className="mb-6 px-4 py-3 text-sm font-mono"
-            style={{ 
+            style={{
               backgroundColor: config.accent,
               borderLeft: `3px solid ${config.color}`,
               color: config.color
@@ -242,10 +230,8 @@ export default function ServiceCard({
         )}
 
         {/* CTA */}
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full flex items-center justify-center gap-2 py-3 font-mono text-sm uppercase tracking-wider transition-all duration-300 group/btn"
+        <button
+          className="w-full flex items-center justify-center gap-2 py-3 font-mono text-sm uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group/btn"
           style={{
             backgroundColor: featured ? config.color : config.accent,
             color: featured ? "var(--onyx)" : config.color,
@@ -254,9 +240,9 @@ export default function ServiceCard({
         >
           <span>Get Started</span>
           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-        </motion.button>
+        </button>
       </div>
-    </motion.div>
+    </div>
   );
 
   if (href) {
@@ -281,12 +267,9 @@ export function ServiceCardCompact({
   const Icon = config.icon;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay }}
-      className="flex-shrink-0 w-64 border border-[var(--border)] bg-[var(--card)] p-6 cursor-pointer hover:border-[var(--signal-lime)] transition-colors"
+    <div
+      className="flex-shrink-0 w-64 border border-[var(--border)] bg-[var(--card)] p-6 cursor-pointer hover:border-[var(--signal-lime)] transition-colors animate-in fade-in slide-in-from-right-4 duration-500 fill-mode-both"
+      style={{ animationDelay: `${delay * 1000}ms` }}
     >
       <div className="flex items-center gap-3 mb-4">
         <div
@@ -305,7 +288,7 @@ export function ServiceCardCompact({
       <div className="text-2xl font-bold" style={{ color: config.color }}>
         {price}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -324,12 +307,9 @@ export function AgenticHighlightCard({
   const Icon = CustomIcon || Bot;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      className="border border-[var(--signal-lime)]/30 bg-[var(--card)] p-6"
+    <div
+      className="border border-[var(--signal-lime)]/30 bg-[var(--card)] p-6 animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+      style={{ animationDelay: `${delay * 1000}ms` }}
     >
       <div className="flex items-center gap-3 mb-4">
         <div className="w-12 h-12 bg-[var(--signal-lime)]/10 flex items-center justify-center">
@@ -345,6 +325,6 @@ export function AgenticHighlightCard({
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }

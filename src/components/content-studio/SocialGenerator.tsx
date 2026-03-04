@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Share2,
   Wand2,
@@ -188,11 +187,10 @@ export default function SocialGenerator({ onContentGenerated, onSaveDraft }: Soc
                       <button
                         key={p.id}
                         onClick={() => setPlatform(p.id)}
-                        className={`flex items-center gap-2 p-3 text-sm font-mono border transition-all ${
-                          platform === p.id
+                        className={`flex items-center gap-2 p-3 text-sm font-mono border transition-all ${platform === p.id
                             ? "border-[var(--signal-lime)] bg-[var(--signal-lime)]/10 text-[var(--signal-lime)]"
                             : "border-[var(--border)] text-[var(--spectral-dim)] hover:border-[var(--spectral-muted)]"
-                        }`}
+                          }`}
                       >
                         <Icon className="w-4 h-4" />
                         <span>{p.label}</span>
@@ -403,19 +401,12 @@ export default function SocialGenerator({ onContentGenerated, onSaveDraft }: Soc
         </div>
       </div>
 
-      <AnimatePresence>
-        {copyNotification && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-4 right-4 bg-[var(--signal-lime)] text-[var(--onyx)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2"
-          >
-            <CheckCircle className="w-4 h-4" />
-            Copied to clipboard!
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {copyNotification && (
+        <div className="fixed bottom-4 right-4 bg-[var(--signal-lime)] text-[var(--onyx)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <CheckCircle className="w-4 h-4" />
+          Copied to clipboard!
+        </div>
+      )}
     </div>
   );
 }

@@ -10,13 +10,26 @@
   /* Brutalist High Contrast Accents */
   --neo-yellow: #f5df4d;
   /* Sharp, loud yellow */
-  --neo-pink: #ff007f;
-  /* Aggressive magenta */
+  --neo-red: #ff3333;
+  /* Replaced banned magenta with severe alert red */
   --neo-blue: #0000ff;
   /* True primary blue */
-  --neo-green: #00ff00;
-  /* Acid green */
+  --neo-cyan: #00FFFF;
+  /* Neon cyan for secondary high contrast */
   --neo-orange: #ff5500;
+
+  /* Fluid Typography Scale (clamp based on vw) */
+  --text-xs: clamp(0.75rem, 0.7vw + 0.5rem, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8vw + 0.6rem, 1rem);
+  --text-base: clamp(1rem, 1vw + 0.75rem, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.2vw + 0.8rem, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.5vw + 0.9rem, 1.5rem);
+  --text-2xl: clamp(1.5rem, 2vw + 1rem, 2rem);
+  --text-3xl: clamp(2rem, 3vw + 1.25rem, 2.5rem);
+  --text-4xl: clamp(2.5rem, 4vw + 1.5rem, 3.5rem);
+  --text-5xl: clamp(3rem, 5vw + 2rem, 4.5rem);
+  --text-6xl: clamp(3.75rem, 7vw + 2.5rem, 6rem);
+  --text-8xl: clamp(5rem, 10vw + 3rem, 9rem);
 
   /* Hard Edges */
   --radius: 0px;
@@ -41,10 +54,10 @@
   --muted: #f0f0f0;
   --muted-foreground: #555555;
 
-  --accent: var(--neo-pink);
-  --accent-foreground: var(--neo-white);
+  --accent: var(--neo-cyan);
+  --accent-foreground: var(--neo-black);
 
-  --destructive: var(--neo-orange);
+  --destructive: var(--neo-red);
   --destructive-foreground: var(--neo-white);
 
   --border: var(--neo-black);
@@ -77,8 +90,8 @@
   --accent: var(--neo-yellow);
   --accent-foreground: var(--neo-black);
 
-  --destructive: var(--neo-pink);
-  --destructive-foreground: var(--neo-black);
+  --destructive: var(--neo-red);
+  --destructive-foreground: var(--neo-white);
 
   --border: var(--neo-white);
   --input: var(--neo-white);
@@ -89,9 +102,9 @@
   --color-neo-white: var(--neo-white);
   --color-neo-black: var(--neo-black);
   --color-neo-yellow: var(--neo-yellow);
-  --color-neo-pink: var(--neo-pink);
+  --color-neo-red: var(--neo-red);
   --color-neo-blue: var(--neo-blue);
-  --color-neo-green: var(--neo-green);
+  --color-neo-cyan: var(--neo-cyan);
   --color-neo-orange: var(--neo-orange);
 
   --color-background: var(--background);
@@ -130,12 +143,40 @@
     box-sizing: border-box;
   }
 
+  /* Global a11y focus states for keyboard navigation */
+  *:focus-visible {
+    outline: 4px solid var(--neo-cyan) !important;
+    outline-offset: 4px !important;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-space-grotesk), system-ui, sans-serif;
     margin: 0;
     overflow-x: hidden;
     /* Removed the noise overlay layer for a cleaner, flatter brutalist look */
+  }
+
+  /* Apply fluid typography globally to HTML standard tags */
+  h1 {
+    font-size: var(--text-6xl);
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: var(--text-5xl);
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: var(--text-4xl);
+    line-height: 1.2;
+  }
+
+  p {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    max-width: 65ch;
   }
 }
 
@@ -154,29 +195,40 @@
     border-color: var(--neo-white);
   }
 
-  /* Hard, offset drop shadows typical of brutalism */
+  /* Hard, offset drop shadows typical of brutalism, but layered for slight depth */
   .neo-shadow {
-    box-shadow: 6px 6px 0px 0px var(--neo-black);
-    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow:
+      2px 2px 0px 0px var(--neo-black),
+      6px 6px 0px 0px var(--neo-black);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .dark .neo-shadow {
-    box-shadow: 6px 6px 0px 0px var(--neo-white);
+    box-shadow:
+      2px 2px 0px 0px var(--neo-white),
+      6px 6px 0px 0px var(--neo-white);
   }
 
-  /* Interactive state for brutalist buttons/cards */
+  /* Interactive state for brutalist buttons/cards (Spring physics feel) */
   .neo-shadow-interactive:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0px 0px var(--neo-black);
+    transform: translate(-4px, -4px);
+    box-shadow:
+      2px 2px 0px 0px var(--neo-black),
+      4px 4px 0px 0px var(--neo-black),
+      10px 10px 0px 0px var(--neo-black);
   }
 
   .dark .neo-shadow-interactive:hover {
-    box-shadow: 8px 8px 0px 0px var(--neo-white);
+    box-shadow:
+      2px 2px 0px 0px var(--neo-white),
+      4px 4px 0px 0px var(--neo-white),
+      10px 10px 0px 0px var(--neo-white);
   }
 
   .neo-shadow-interactive:active {
     transform: translate(6px, 6px);
     box-shadow: 0px 0px 0px 0px var(--neo-black);
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
   }
 
   .dark .neo-shadow-interactive:active {

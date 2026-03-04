@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { RefreshCw, Code, Eye, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -58,11 +57,10 @@ export default function LivePlayground() {
                 setCode(presets[preset as keyof typeof presets]);
                 setActivePreset(preset);
               }}
-              className={`px-2 py-1 text-[10px] uppercase font-mono border transition-colors ${
-                activePreset === preset 
-                  ? "border-[var(--signal-lime)] text-[var(--signal-lime)]" 
+              className={`px-2 py-1 text-[10px] uppercase font-mono border transition-colors ${activePreset === preset
+                  ? "border-[var(--signal-lime)] text-[var(--signal-lime)]"
                   : "border-[var(--border)] text-[var(--spectral-dim)] hover:text-white"
-              }`}
+                }`}
             >
               {preset}
             </button>
@@ -72,7 +70,7 @@ export default function LivePlayground() {
 
       <div className="grid md:grid-cols-2 h-80">
         <div className="relative border-r border-[var(--border)] group">
-          <textarea 
+          <textarea
             value={code}
             onChange={e => {
               setCode(e.target.value);
@@ -88,17 +86,15 @@ export default function LivePlayground() {
 
         <div className="relative flex items-center justify-center bg-[var(--card)] overflow-hidden">
           {/* Grid Background */}
-          <div 
+          <div
             className="absolute inset-0 opacity-10 pointer-events-none"
-            style={{ 
-              backgroundImage: `linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)`,
-              backgroundSize: '20px 20px'
+            style={{
+              backgroundImage: \`linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)\`,
+          backgroundSize: '20px 20px'
             }} 
           />
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <button
             style={{
               backgroundColor: 'var(--primary)',
               color: 'var(--text)',
@@ -107,10 +103,10 @@ export default function LivePlayground() {
               boxShadow: 'var(--shadow)',
               ...style
             } as any}
-            className="px-8 py-4 font-bold uppercase tracking-wider min-w-[200px] transition-all duration-200"
+            className="px-8 py-4 font-bold uppercase tracking-wider min-w-[200px] transition-all duration-200 hover:scale-105 active:scale-95"
           >
             Hover Me
-          </motion.button>
+          </button>
         </div>
       </div>
     </div>

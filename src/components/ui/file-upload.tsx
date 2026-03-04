@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
 import {
   Upload,
   File,
@@ -77,7 +76,7 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
 
         // Upload file
         const uploadResult = await uploadFile(StorageBuckets.PROJECT_FILES, filePath, file);
-        
+
         // Get public URL
         const publicUrl = await getPublicUrl(StorageBuckets.PROJECT_FILES, filePath);
 
@@ -146,11 +145,8 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
             className="hidden"
             accept="image/*,.pdf,.doc,.docx,.txt,.zip"
           />
-          
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+
+          <div className="inline-block transition-transform hover:scale-[1.02] active:scale-[0.98]">
             <Button
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading}
@@ -159,7 +155,7 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
               <Upload className="w-4 h-4 mr-2" />
               {isUploading ? `Uploading... ${Math.round(uploadProgress)}%` : "Upload Files"}
             </Button>
-          </motion.div>
+          </div>
 
           <p className="text-sm text-[var(--spectral-muted)] mt-4">
             Images, PDFs, documents, and archives (Max 10MB per file)
@@ -173,17 +169,15 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
           <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)]">
             Files ({files.length})
           </h3>
-          
+
           <div className="space-y-2">
             {files.map((file) => {
               const Icon = getFileIcon(file.type);
-              
+
               return (
-                <motion.div
+                <div
                   key={file.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center justify-between p-3 bg-[var(--card)] border border-[var(--border)] hover:border-[var(--signal-lime)]/50 transition-colors"
+                  className="flex items-center justify-between p-3 bg-[var(--card)] border border-[var(--border)] hover:border-[var(--signal-lime)]/50 transition-colors animate-in fade-in slide-in-from-bottom-2 duration-300"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <Icon className="w-5 h-5 text-[var(--spectral-muted)] flex-shrink-0" />
@@ -194,7 +188,7 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     {file.type.startsWith("image/") && onPreviewFile && (
                       <Button
@@ -206,7 +200,7 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
                         <Eye className="w-4 h-4" />
                       </Button>
                     )}
-                    
+
                     <Button
                       variant="ghost"
                       size="sm"
@@ -215,7 +209,7 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
                     >
                       <Download className="w-4 h-4" />
                     </Button>
-                    
+
                     {!disabled && (
                       <Button
                         variant="ghost"
@@ -227,7 +221,7 @@ export function FileUpload({ projectId, files, onFilesChange, disabled, onPrevie
                       </Button>
                     )}
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>

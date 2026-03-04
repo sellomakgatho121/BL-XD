@@ -84,17 +84,17 @@ export default function ProcessContent() {
     <div className="min-h-screen bg-[var(--neo-yellow)] text-[var(--neo-black)] font-space-grotesk overflow-x-hidden selection:bg-[var(--neo-black)] selection:text-[var(--neo-white)]">
 
       {/* ━━━ Header Navigation ━━━ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)]">
+      <nav aria-label="Main Navigation" className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[70px] flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[var(--neo-black)] flex items-center justify-center border-2 border-[var(--neo-black)] group-hover:bg-[var(--neo-pink)] transition-colors">
+          <Link href="/" aria-label="Homepage" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-[var(--neo-black)] flex items-center justify-center border-2 border-[var(--neo-black)] group-hover:bg-[var(--neo-red)] transition-colors duration-300 ease-out">
               <span className="font-black text-xl text-[var(--neo-white)]">B</span>
             </div>
             <span className="font-black text-xl tracking-tighter uppercase">Blacklight</span>
           </Link>
           <div className="flex items-center gap-6">
-            <Link href="/services" className="font-bold uppercase tracking-widest hover:text-[var(--neo-blue)] transition-colors p-2">Services</Link>
-            <Link href="/portfolio" className="hidden sm:block font-bold uppercase tracking-widest hover:text-[var(--neo-green)] transition-colors p-2">Portfolio</Link>
+            <Link href="/services" aria-current="page" className="font-bold uppercase tracking-widest hover:text-[var(--neo-blue)] transition-colors duration-300 p-2">Services</Link>
+            <Link href="/portfolio" className="hidden sm:block font-bold uppercase tracking-widest hover:text-[var(--neo-cyan)] transition-colors duration-300 p-2">Portfolio</Link>
           </div>
         </div>
       </nav>
@@ -102,10 +102,10 @@ export default function ProcessContent() {
       {/* ━━━ Hero Section ━━━ */}
       <section className="pt-32 pb-16 px-4 md:min-h-[60vh] flex items-center bg-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
         <div className="max-w-7xl mx-auto w-full">
-          <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter mb-8 leading-[0.8] text-[var(--neo-black)]">
+          <h1 className="text-[var(--text-6xl)] font-black uppercase tracking-tighter mb-8 leading-[0.8] text-[var(--neo-black)]">
             <GlitchText text="THE PROCESS" intensity="low" triggerOnHover />
           </h1>
-          <p className="text-2xl md:text-3xl font-bold max-w-4xl border-l-8 border-[var(--neo-pink)] pl-6 py-2 bg-[var(--neo-white)]">
+          <p className="text-[var(--text-2xl)] font-bold max-w-4xl border-l-8 border-[var(--neo-red)] pl-6 py-2 bg-[var(--neo-white)]">
             How we reveal the unseen brilliance of your brand. A methodical, brutalist approach to exceptional digital experiences.
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function ProcessContent() {
       <section className="py-24 px-4 bg-[var(--neo-black)] text-[var(--neo-white)]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter bg-[var(--neo-pink)] text-[var(--neo-black)] inline-block px-4 py-2 border-4 border-[var(--neo-black)] shadow-[8px_8px_0px_var(--neo-white)] -rotate-1">
+            <h2 className="text-[var(--text-5xl)] font-black uppercase tracking-tighter bg-[var(--neo-red)] text-[var(--neo-black)] inline-block px-4 py-2 border-4 border-[var(--neo-black)] shadow-[8px_8px_0px_var(--neo-white)] -rotate-1">
               Core Values
             </h2>
           </div>
@@ -124,15 +124,15 @@ export default function ProcessContent() {
             {values.map((value, i) => (
               <div
                 key={value.number}
-                className="border-8 border-[var(--neo-white)] bg-[var(--neo-black)] p-8 relative hover:-translate-y-2 transition-transform group"
+                className="border-8 border-[var(--neo-white)] bg-[var(--neo-black)] p-8 relative hover:-translate-y-2 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group"
               >
-                <div className="absolute top-4 right-4 text-6xl font-black text-transparent text-stroke-2 text-stroke-[var(--neo-white)] opacity-30 group-hover:opacity-100 transition-opacity">
+                <div aria-hidden="true" className="absolute top-4 right-4 text-6xl font-black text-transparent text-stroke-2 text-stroke-[var(--neo-white)] opacity-30 group-hover:opacity-100 transition-opacity">
                   {value.number}
                 </div>
-                <h3 className="text-3xl font-black uppercase mb-4 text-[var(--neo-yellow)] group-hover:text-[var(--neo-pink)] transition-colors max-w-[80%]">
+                <h3 className="text-[var(--text-3xl)] font-black uppercase mb-4 text-[var(--neo-yellow)] group-hover:text-[var(--neo-red)] transition-colors max-w-[80%]">
                   {value.title}
                 </h3>
-                <p className="text-xl font-bold opacity-90 leading-relaxed">
+                <p className="text-[var(--text-xl)] font-bold opacity-90 leading-relaxed">
                   {value.description}
                 </p>
               </div>
@@ -144,13 +144,13 @@ export default function ProcessContent() {
       {/* ━━━ The Method ━━━ */}
       <section className="py-24 px-4 bg-[var(--neo-white)] border-b-8 border-[var(--neo-black)] relative overflow-hidden">
 
-        <div className="absolute right-[-10vw] top-[20%] text-[30vw] font-black text-[var(--neo-black)] opacity-5 pointer-events-none rotate-90 leading-none">
+        <div aria-hidden="true" className="absolute right-[-10vw] top-[20%] text-[30vw] font-black text-[var(--neo-black)] opacity-5 pointer-events-none rotate-90 leading-none">
           SYSTEM
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="mb-20 text-center">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[var(--neo-black)]">
+            <h2 className="text-[var(--text-5xl)] font-black uppercase tracking-tighter text-[var(--neo-black)]">
               The Blacklight Method
             </h2>
           </div>
@@ -159,9 +159,9 @@ export default function ProcessContent() {
             {process.map((step, i) => (
               <div
                 key={step.step}
-                className="flex flex-col md:flex-row gap-6 md:gap-12 items-start border-4 border-[var(--neo-black)] bg-[var(--neo-yellow)] p-6 md:p-8 relative hover:-translate-x-2 transition-transform shadow-[10px_10px_0px_var(--neo-black)] group"
+                className="flex flex-col md:flex-row gap-6 md:gap-12 items-start border-4 border-[var(--neo-black)] bg-[var(--neo-yellow)] p-6 md:p-8 relative hover:-translate-x-2 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] shadow-[10px_10px_0px_var(--neo-black)] group"
               >
-                <div className="flex-shrink-0 bg-[var(--neo-black)] text-[var(--neo-white)] w-24 h-24 flex flex-col items-center justify-center border-4 border-[var(--neo-white)] group-hover:bg-[var(--neo-pink)] group-hover:text-[var(--neo-black)] transition-colors">
+                <div aria-hidden="true" className="flex-shrink-0 bg-[var(--neo-black)] text-[var(--neo-white)] w-24 h-24 flex flex-col items-center justify-center border-4 border-[var(--neo-white)] group-hover:bg-[var(--neo-red)] group-hover:text-[var(--neo-black)] transition-colors duration-300">
                   <div className="text-2xl font-black">{step.step}</div>
                 </div>
 
@@ -169,8 +169,8 @@ export default function ProcessContent() {
                   <div className="absolute top-0 right-0 bg-[var(--neo-white)] text-[var(--neo-black)] font-bold px-3 py-1 border-2 border-[var(--neo-black)] text-sm uppercase">
                     {step.duration}
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-black uppercase mb-4 pr-24">{step.title}</h3>
-                  <p className="text-xl font-bold opacity-90 max-w-2xl">
+                  <h3 className="text-[var(--text-4xl)] font-black uppercase mb-4 pr-24">{step.title}</h3>
+                  <p className="text-[var(--text-xl)] font-bold opacity-90 max-w-2xl">
                     {step.description}
                   </p>
                 </div>
@@ -184,7 +184,7 @@ export default function ProcessContent() {
       <section className="py-24 px-4 bg-[var(--neo-blue)] text-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 text-center">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter drop-shadow-[5px_5px_0px_var(--neo-black)]">
+            <h2 className="text-[var(--text-5xl)] font-black uppercase tracking-tighter drop-shadow-[5px_5px_0px_var(--neo-black)]">
               Client Logs
             </h2>
           </div>
@@ -193,12 +193,12 @@ export default function ProcessContent() {
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="border-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)] p-8 md:p-12 relative shadow-[12px_12px_0px_var(--neo-black)] rotate-1 hover:-rotate-1 transition-transform cursor-pointer"
+                className="border-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)] p-8 md:p-12 relative shadow-[12px_12px_0px_var(--neo-black)] rotate-1 hover:-rotate-1 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] cursor-pointer"
               >
-                <div className="absolute -top-6 left-8 bg-[var(--neo-green)] border-4 border-[var(--neo-black)] p-2">
+                <div aria-hidden="true" className="absolute -top-6 left-8 bg-[var(--neo-green)] border-4 border-[var(--neo-black)] p-2">
                   <Quote className="w-8 h-8 text-[var(--neo-black)]" />
                 </div>
-                <p className="text-2xl md:text-3xl font-black mb-8 italic leading-tight mt-6 uppercase">
+                <p className="text-[var(--text-2xl)] font-black mb-8 italic leading-tight mt-6 uppercase">
                   "{t.quote}"
                 </p>
                 <div className="border-t-4 border-[var(--neo-black)] pt-4">
@@ -214,11 +214,11 @@ export default function ProcessContent() {
       {/* ━━━ CTA ━━━ */}
       <section className="py-32 px-4 bg-[var(--neo-green)] text-[var(--neo-black)] text-center">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-12 leading-none border-[var(--neo-black)]">
+          <h2 className="text-[var(--text-6xl)] font-black uppercase tracking-tighter mb-12 leading-none border-[var(--neo-black)]">
             Engage Protocol?
           </h2>
-          <Button size="lg" className="bg-[var(--neo-black)] text-[var(--neo-white)] text-2xl md:text-4xl font-black uppercase px-12 py-8 border-4 border-[var(--neo-white)] shadow-[12px_12px_0px_var(--neo-black)] hover:bg-[var(--neo-pink)] hover:text-[var(--neo-black)] transition-colors active:translate-y-2 active:translate-x-2 active:shadow-none" asChild>
-            <Link href="/contact">
+          <Button size="lg" className="bg-[var(--neo-black)] text-[var(--neo-white)] text-2xl md:text-4xl font-black uppercase px-12 py-8 border-4 border-[var(--neo-white)] shadow-[12px_12px_0px_var(--neo-black)] hover:bg-[var(--neo-red)] hover:text-[var(--neo-black)] transition-all duration-300 ease-out active:translate-y-2 active:translate-x-2 active:shadow-none" asChild>
+            <Link href="/contact" aria-label="Initiate new Project by contacting us">
               Initiate Project
             </Link>
           </Button>

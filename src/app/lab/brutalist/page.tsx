@@ -2,7 +2,6 @@
 
 import InfiniteCanvas from "@/components/lab/InfiniteCanvas";
 import BrutalistScene from "@/components/lab/BrutalistScene";
-import { motion } from "framer-motion";
 
 export default function BrutalistLab() {
   return (

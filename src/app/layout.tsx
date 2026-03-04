@@ -3,6 +3,8 @@ import { Space_Grotesk, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import CRTOverlay from "@/components/CRTOverlay";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import SmoothScroll from "@/components/SmoothScroll";
+import Script from "next/script";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -37,6 +39,28 @@ export const metadata: Metadata = {
   ),
 };
 
+// Organization Schema for GEO (Generative Engine Optimization)
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Blacklight Web Designs",
+  "url": "https://blacklightwebdesigns.com",
+  "logo": "https://blacklightwebdesigns.com/logo.png",
+  "sameAs": [
+    "https://github.com/blacklight",
+    "https://linkedin.com/company/blacklight",
+    "https://instagram.com/blacklight"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+27-00-000-0000",
+    "contactType": "customer service",
+    "email": "hello@blacklight.co.za",
+    "areaServed": ["ZA", "Global"],
+    "availableLanguage": "en"
+  }
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -52,6 +76,12 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          strategy="worker"
+        />
       </head>
       <body
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} font-sans antialiased`}
@@ -60,8 +90,10 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID} />
         )}
-        <CRTOverlay />
-        {children}
+        <SmoothScroll>
+          <CRTOverlay />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

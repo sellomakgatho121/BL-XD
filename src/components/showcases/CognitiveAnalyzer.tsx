@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Brain, Zap, Activity } from "lucide-react";
 
 export default function CognitiveAnalyzer() {
@@ -29,32 +28,30 @@ export default function CognitiveAnalyzer() {
 
   const MetricBar = ({ label, value, color, icon: Icon }: any) => (
     <div className="flex flex-col gap-1 w-full">
-      <div className="flex justify-between text-[10px] uppercase font-mono tracking-wider text-spectral-white/60">
+      <div className="flex justify-between text-[10px] uppercase font-mono tracking-wider text-[var(--spectral-white)]/60">
         <span className="flex items-center gap-1"><Icon size={10} /> {label}</span>
         <span>{Math.round(value)}%</span>
       </div>
-      <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-        <motion.div 
-          className={`h-full ${color}`}
-          initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
-          transition={{ type: "spring", stiffness: 100 }}
+      <div className="h-1.5 w-full bg-[var(--neo-white)]/5 rounded-full overflow-hidden">
+        <div
+          className={`h-full ${color} transition-all duration-1000 ease-out`}
+          style={{ width: `${value}%` }}
         />
       </div>
     </div>
   );
 
   return (
-    <div className="relative h-96 w-full max-w-sm rounded-xl bg-onyx/40 border border-white/10 overflow-hidden flex flex-col backdrop-blur-sm">
-      <div className="p-4 border-b border-white/5 bg-white/5 flex justify-between items-center">
+    <div className="relative h-96 w-full max-w-sm rounded-xl bg-[var(--onyx)]/40 border border-[var(--neo-white)]/10 overflow-hidden flex flex-col backdrop-blur-sm">
+      <div className="p-4 border-b border-[var(--neo-white)]/5 bg-[var(--neo-white)]/5 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Brain className="text-purple-400" size={16} />
-          <span className="text-xs font-bold text-white tracking-widest">COGNITIVE_ANALYZER</span>
+          <Brain className="text-[#a855f7]" size={16} /> {/* equivalent to purple-400 */}
+          <span className="text-xs font-bold text-[var(--neo-white)] tracking-widest">COGNITIVE_ANALYZER</span>
         </div>
         <div className="flex gap-1">
-          <div className="w-2 h-2 rounded-full bg-red-500/50" />
-          <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
-          <div className="w-2 h-2 rounded-full bg-green-500/50" />
+          <div className="w-2 h-2 rounded-full bg-[var(--siren-red)]/50" />
+          <div className="w-2 h-2 rounded-full bg-[#eab308]/50" /> {/* equivalent to yellow-500 */}
+          <div className="w-2 h-2 rounded-full bg-[#22c55e]/50" /> {/* equivalent to green-500 */}
         </div>
       </div>
 
@@ -64,32 +61,33 @@ export default function CognitiveAnalyzer() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Input raw data stream for analysis..."
-            className="w-full h-32 bg-black/20 border border-white/10 rounded-lg p-3 text-sm font-mono text-white/80 focus:outline-none focus:border-purple-500/50 transition-colors resize-none placeholder:text-white/20"
+            className="w-full h-32 bg-[var(--neo-black)]/20 border border-[var(--neo-white)]/10 rounded-lg p-3 text-sm font-mono text-[var(--neo-white)]/80 focus:outline-none focus:border-[#a855f7]/50 transition-colors resize-none placeholder:text-[var(--neo-white)]/20"
             spellCheck={false}
           />
-          <div className="absolute bottom-2 right-2 text-[10px] text-white/30 font-mono">
+          <div className="absolute bottom-2 right-2 text-[10px] text-[var(--neo-white)]/30 font-mono">
             {text.length} CHARS
           </div>
         </div>
 
         <div className="space-y-4">
-          <MetricBar label="Sentiment" value={metrics.sentiment} color="bg-blue-500" icon={Activity} />
-          <MetricBar label="Complexity" value={metrics.complexity} color="bg-purple-500" icon={Brain} />
-          <MetricBar label="Urgency" value={metrics.urgency} color="bg-siren-red" icon={Zap} />
+          <MetricBar label="Sentiment" value={metrics.sentiment} color="bg-[#3b82f6]" icon={Activity} /> {/* blue-500 */}
+          <MetricBar label="Complexity" value={metrics.complexity} color="bg-[#a855f7]" icon={Brain} /> {/* purple-500 */}
+          <MetricBar label="Urgency" value={metrics.urgency} color="bg-[var(--siren-red)]" icon={Zap} />
         </div>
       </div>
-      
-      <AnimatePresence>
-        {text.length > 0 && (
-          <motion.div
-            initial={{ top: 0, opacity: 0 }}
-            animate={{ top: "100%", opacity: [0, 0.5, 0] }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="absolute left-0 w-full h-1 bg-purple-500/50 blur-sm pointer-events-none"
-          />
-        )}
-      </AnimatePresence>
+
+      {text.length > 0 && (
+        <>
+          <div className="absolute left-0 w-full h-1 bg-[#a855f7]/50 blur-sm pointer-events-none animate-[scan_2s_linear_infinite]" />
+          <style jsx>{`
+            @keyframes scan {
+              0% { top: 0; opacity: 0; }
+              50% { opacity: 0.5; }
+              100% { top: 100%; opacity: 0; }
+            }
+          `}</style>
+        </>
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import {
   Users,
   UserPlus,
@@ -202,10 +201,8 @@ export default function TeamManagementPage() {
               const role = roleConfig[member.role as keyof typeof roleConfig];
               
               return (
-                <motion.div
-                  key={member.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                <div
+                  key={member.id}}}
                   onClick={() => setSelectedMember(member)}
                   className={`border bg-[var(--card)] p-6 cursor-pointer transition-all hover:border-[var(--signal-lime)]/50 ${
                     selectedMember?.id === member.id ? "border-[var(--signal-lime)]" : "border-[var(--border)]"
@@ -257,7 +254,7 @@ export default function TeamManagementPage() {
                       {new Date(member.hire_date).toLocaleDateString()}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })
           )}

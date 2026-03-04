@@ -1,7 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ReactNode } from "react";
+
+const grainAnimation = `
+  @keyframes grain-shift {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+`;
 
 interface GrainOverlayProps {
   opacity?: number;
@@ -28,22 +34,17 @@ export default function GrainOverlay({
 // Alternative: Animated grain component for more dynamic texture
 export function AnimatedGrain({ opacity = 0.03 }: { opacity?: number }) {
   return (
-    <motion.div
-      className="pointer-events-none fixed inset-0 z-[9998]"
-      style={{
-        opacity,
-        backgroundImage: `url("https://grainy-gradients.vercel.app/noise.svg")`,
-        transform: "translateZ(0)",
-      }}
-      animate={{
-        backgroundPosition: ["0% 0%", "100% 100%"],
-      }}
-      transition={{
-        duration: 0.5,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "linear",
-      }}
-    />
+    <>
+      <style>{`@keyframes grain-shift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }`}</style>
+      <div
+        className="pointer-events-none fixed inset-0 z-[9998]"
+        style={{
+          opacity,
+          backgroundImage: `url("https://grainy-gradients.vercel.app/noise.svg")`,
+          transform: "translateZ(0)",
+          animation: "grain-shift 0.5s linear infinite alternate",
+        }}
+      />
+    </>
   );
 }

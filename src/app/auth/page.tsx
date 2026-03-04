@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Lock, ShieldAlert, ArrowRight } from "lucide-react";
 import GlitchText from "@/components/GlitchText";
 
@@ -54,10 +53,7 @@ export default function AuthPage() {
         }}
       />
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
+      <div}}}
         className="relative z-10 w-full max-w-md space-y-8"
       >
         <div className="text-center space-y-4">
@@ -94,13 +90,11 @@ export default function AuthPage() {
           </div>
 
           {error && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
+            <div}}
               className="border border-siren-red/50 bg-siren-red/10 px-4 py-3 text-siren-red text-sm font-mono"
             >
               {error}
-            </motion.div>
+            </div>
           )}
 
           <button
@@ -122,7 +116,7 @@ export default function AuthPage() {
         <p className="text-center text-[10px] font-mono tracking-widest text-spectral-white/30 uppercase">
           Authorized Personnel Only
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

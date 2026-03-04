@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   MousePointer,
   Square,
@@ -206,218 +205,197 @@ export function AnnotationCanvas({
         />
       )}
 
-      <AnimatePresence>
-        {annotations.map((annotation) => (
-          <motion.div
-            key={annotation.id}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="absolute z-30 cursor-pointer"
-            style={
-              annotation.type === "point"
-                ? { left: `${annotation.coordinates.x}%`, top: `${annotation.coordinates.y}%`, transform: "translate(-50%, -50%)" }
-                : annotation.type === "rectangle"
+      {annotations.map((annotation) => (
+        <div
+          key={annotation.id}
+          className="absolute z-30 cursor-pointer animate-in zoom-in-90 fade-in duration-200"
+          style={
+            annotation.type === "point"
+              ? { left: `${annotation.coordinates.x}%`, top: `${annotation.coordinates.y}%`, transform: "translate(-50%, -50%)" }
+              : annotation.type === "rectangle"
                 ? {
-                    left: `${annotation.coordinates.x}%`,
-                    top: `${annotation.coordinates.y}%`,
-                    width: `${annotation.coordinates.width}%`,
-                    height: `${annotation.coordinates.height}%`,
-                  }
-                : {}
-            }
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedAnnotationId(annotation.id);
-            }}
-          >
-            {annotation.type === "point" && (
-              <div
-                className="w-4 h-4 rounded-full border-2 border-white shadow-lg"
-                style={{ backgroundColor: annotation.color }}
-              />
-            )}
-
-            {annotation.type === "rectangle" && (
-              <div
-                className="absolute inset-0 border-2 border-white shadow-lg"
-                style={{ borderColor: annotation.color, borderWidth: annotation.stroke_width }}
-              />
-            )}
-
-            {annotation.type === "freehand" && annotation.coordinates.points && (
-              <svg className="absolute inset-0 overflow-visible">
-                <polyline
-                  points={annotation.coordinates.points.map((p) => `${p.x}% ${p.y}%`).join(" ")}
-                  fill="none"
-                  stroke={annotation.color}
-                  strokeWidth={annotation.stroke_width}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"
-                />
-              </svg>
-            )}
-
-            {(annotation.comments?.length || 0) > 0 && (
-              <div
-                className="absolute flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold text-white bg-[var(--onyx)] shadow-md"
-                style={
-                  annotation.type === "point"
-                    ? { transform: "translate(4px, -4px)" }
-                    : { top: "-10px", left: "-10px" }
+                  left: `${annotation.coordinates.x}%`,
+                  top: `${annotation.coordinates.y}%`,
+                  width: `${annotation.coordinates.width}%`,
+                  height: `${annotation.coordinates.height}%`,
                 }
-              >
-                {annotation.comments?.length}
-              </div>
-            )}
-
-            {annotation.resolved && (
-              <div className="absolute -top-1 -right-1 bg-[var(--signal-lime)] rounded-full p-0.5">
-                <CheckCircle2 className="w-3 h-3 text-[var(--onyx)]" />
-              </div>
-            )}
-          </motion.div>
-        ))}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {selectedAnnotation && (
-          <div
-            className="absolute z-50"
-            style={
-              selectedAnnotation.type === "point"
-                ? { left: `${selectedAnnotation.coordinates.x}%`, top: `${selectedAnnotation.coordinates.y}%`, transform: "translate(20px, -50%)" }
-                : { left: `${selectedAnnotation.coordinates.x}%`, top: `${selectedAnnotation.coordinates.y}%`, transform: "translate(10px, -10px)" }
-            }
-          >
-            <CommentThread
-              annotation={selectedAnnotation}
-              onClose={() => setSelectedAnnotationId(null)}
+                : {}
+          }
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedAnnotationId(annotation.id);
+          }}
+        >
+          {annotation.type === "point" && (
+            <div
+              className="w-4 h-4 rounded-full border-2 border-white shadow-lg"
+              style={{ backgroundColor: annotation.color }}
             />
-          </div>
-        )}
-      </AnimatePresence>
+          )}
 
-      <AnimatePresence>
-        {showToolbar && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50"
-          >
-            <Card className="flex items-center gap-2 px-4 py-2">
-              <Button
-                variant={currentTool === "point" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setCurrentTool("point")}
-                className="h-9 w-9"
-              >
-                <MousePointer className="w-4 h-4" />
-              </Button>
+          {annotation.type === "rectangle" && (
+            <div
+              className="absolute inset-0 border-2 border-white shadow-lg"
+              style={{ borderColor: annotation.color, borderWidth: annotation.stroke_width }}
+            />
+          )}
 
-              <Button
-                variant={currentTool === "rectangle" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setCurrentTool("rectangle")}
-                className="h-9 w-9"
-              >
-                <Square className="w-4 h-4" />
-              </Button>
+          {annotation.type === "freehand" && annotation.coordinates.points && (
+            <svg className="absolute inset-0 overflow-visible">
+              <polyline
+                points={annotation.coordinates.points.map((p) => `${p.x}% ${p.y}%`).join(" ")}
+                fill="none"
+                stroke={annotation.color}
+                strokeWidth={annotation.stroke_width}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"
+              />
+            </svg>
+          )}
 
-              <Button
-                variant={currentTool === "freehand" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setCurrentTool("freehand")}
-                className="h-9 w-9"
-              >
-                <Pencil className="w-4 h-4" />
-              </Button>
+          {(annotation.comments?.length || 0) > 0 && (
+            <div
+              className="absolute flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold text-white bg-[var(--onyx)] shadow-md"
+              style={
+                annotation.type === "point"
+                  ? { transform: "translate(4px, -4px)" }
+                  : { top: "-10px", left: "-10px" }
+              }
+            >
+              {annotation.comments?.length}
+            </div>
+          )}
 
-              <div className="w-px h-6 bg-[var(--border)] mx-1" />
+          {annotation.resolved && (
+            <div className="absolute -top-1 -right-1 bg-[var(--signal-lime)] rounded-full p-0.5">
+              <CheckCircle2 className="w-3 h-3 text-[var(--onyx)]" />
+            </div>
+          )}
+        </div>
+      ))}
 
-              <div className="flex items-center gap-1">
-                {colors.map((color) => (
-                  <button
-                    key={color}
-                    onClick={() => setCurrentColor(color)}
-                    className={cn(
-                      "w-6 h-6 rounded-full border-2 transition-all",
-                      currentColor === color ? "border-white scale-110" : "border-transparent"
-                    )}
-                    style={{ backgroundColor: color }}
-                  />
-                ))}
-              </div>
+      {selectedAnnotation && (
+        <div
+          className="absolute z-50"
+          style={
+            selectedAnnotation.type === "point"
+              ? { left: `${selectedAnnotation.coordinates.x}%`, top: `${selectedAnnotation.coordinates.y}%`, transform: "translate(20px, -50%)" }
+              : { left: `${selectedAnnotation.coordinates.x}%`, top: `${selectedAnnotation.coordinates.y}%`, transform: "translate(10px, -10px)" }
+          }
+        >
+          <CommentThread
+            annotation={selectedAnnotation}
+            onClose={() => setSelectedAnnotationId(null)}
+          />
+        </div>
+      )}
 
-              <div className="w-px h-6 bg-[var(--border)] mx-1" />
+      {showToolbar && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-200">
+          <Card className="flex items-center gap-2 px-4 py-2">
+            <Button
+              variant={currentTool === "point" ? "default" : "ghost"}
+              size="icon"
+              onClick={() => setCurrentTool("point")}
+              className="h-9 w-9"
+            >
+              <MousePointer className="w-4 h-4" />
+            </Button>
 
-              <Button
-                variant={isAnnotating ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setIsAnnotating(!isAnnotating)}
-                className="h-9 w-9"
-              >
-                <MessageSquare className="w-4 h-4" />
-              </Button>
+            <Button
+              variant={currentTool === "rectangle" ? "default" : "ghost"}
+              size="icon"
+              onClick={() => setCurrentTool("rectangle")}
+              className="h-9 w-9"
+            >
+              <Square className="w-4 h-4" />
+            </Button>
 
-              <Button variant="ghost" size="icon" onClick={handleExport} className="h-9 w-9">
-                <Download className="w-4 h-4" />
-              </Button>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Button
+              variant={currentTool === "freehand" ? "default" : "ghost"}
+              size="icon"
+              onClick={() => setCurrentTool("freehand")}
+              className="h-9 w-9"
+            >
+              <Pencil className="w-4 h-4" />
+            </Button>
 
-      <AnimatePresence>
-        {selectedAnnotation && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute top-4 right-4 z-50"
-          >
-            <Card className="flex items-center gap-2 px-3 py-2">
-              <span className="text-sm font-medium">
-                {selectedAnnotation.comments?.length || 0} comments
-              </span>
+            <div className="w-px h-6 bg-[var(--border)] mx-1" />
 
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                onClick={() => handleToggleResolve(selectedAnnotation)}
-                className={cn(
-                  "h-7 w-7",
-                  selectedAnnotation.resolved
-                    ? "text-[var(--signal-lime)]"
-                    : "text-[var(--spectral-muted)] hover:text-[var(--signal-lime)]"
-                )}
-              >
-                <CheckCircle2 className="w-4 h-4" />
-              </Button>
+            <div className="flex items-center gap-1">
+              {colors.map((color) => (
+                <button
+                  key={color}
+                  onClick={() => setCurrentColor(color)}
+                  className={cn(
+                    "w-6 h-6 rounded-full border-2 transition-all",
+                    currentColor === color ? "border-white scale-110" : "border-transparent"
+                  )}
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </div>
 
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                onClick={() => handleDeleteAnnotation(selectedAnnotation.id)}
-                className="h-7 w-7 text-[var(--spectral-muted)] hover:text-[var(--siren-red)]"
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
+            <div className="w-px h-6 bg-[var(--border)] mx-1" />
 
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                onClick={() => setSelectedAnnotationId(null)}
-                className="h-7 w-7 text-[var(--spectral-muted)] hover:text-[var(--spectral-white)]"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Button
+              variant={isAnnotating ? "default" : "ghost"}
+              size="icon"
+              onClick={() => setIsAnnotating(!isAnnotating)}
+              className="h-9 w-9"
+            >
+              <MessageSquare className="w-4 h-4" />
+            </Button>
+
+            <Button variant="ghost" size="icon" onClick={handleExport} className="h-9 w-9">
+              <Download className="w-4 h-4" />
+            </Button>
+          </Card>
+        </div>
+      )}
+
+      {selectedAnnotation && (
+        <div className="absolute top-4 right-4 z-50 animate-in fade-in duration-200">
+          <Card className="flex items-center gap-2 px-3 py-2">
+            <span className="text-sm font-medium">
+              {selectedAnnotation.comments?.length || 0} comments
+            </span>
+
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              onClick={() => handleToggleResolve(selectedAnnotation)}
+              className={cn(
+                "h-7 w-7",
+                selectedAnnotation.resolved
+                  ? "text-[var(--signal-lime)]"
+                  : "text-[var(--spectral-muted)] hover:text-[var(--signal-lime)]"
+              )}
+            >
+              <CheckCircle2 className="w-4 h-4" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              onClick={() => handleDeleteAnnotation(selectedAnnotation.id)}
+              className="h-7 w-7 text-[var(--spectral-muted)] hover:text-[var(--siren-red)]"
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              onClick={() => setSelectedAnnotationId(null)}
+              className="h-7 w-7 text-[var(--spectral-muted)] hover:text-[var(--spectral-white)]"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

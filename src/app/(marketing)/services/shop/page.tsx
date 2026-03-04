@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   ShoppingBag,
   CreditCard,
@@ -89,48 +88,33 @@ export default function ShopTierPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+              <div}}}
                 className="inline-flex items-center gap-2 border border-[var(--siren-red)]/50 bg-[var(--siren-red-dim)] px-3 py-1 font-mono text-xs text-[var(--siren-red)] mb-6"
               >
                 <Terminal size={14} />
                 SHOP TIER
-              </motion.div>
+              </div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+              <h1}}}
                 className="text-5xl md:text-7xl font-black tracking-tighter mb-6"
               >
                 <GlitchText text="E-COMMERCE" intensity="medium" triggerOnHover />
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+              <p}}}
                 className="text-xl text-[var(--spectral-dim)] mb-8 leading-relaxed"
               >
                 Fast, secure online stores for local retailers. Designed for speed, trust, and conversions. South African payment integration included.
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+              <div}}}
                 className="flex items-baseline gap-4 mb-8"
               >
                 <span className="text-5xl font-bold text-[var(--siren-red)]">R18,500</span>
                 <span className="text-[var(--spectral-muted)]">From</span>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+              <div}}}
                 className="flex flex-wrap gap-4"
               >
                 <Button
@@ -148,13 +132,10 @@ export default function ShopTierPage() {
                 >
                   <Link href="/portfolio">View Stores</Link>
                 </Button>
-              </motion.div>
+              </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+            <div}}}
               className="grid grid-cols-2 gap-4"
             >
               <div className="border border-[var(--border)] bg-[var(--card)] p-6 text-center">
@@ -177,32 +158,28 @@ export default function ShopTierPage() {
                 <div className="text-3xl font-bold">Auto</div>
                 <div className="text-sm text-[var(--spectral-dim)]">Delivery</div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="py-20 border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <div}}} className="text-center mb-16">
             <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--siren-red)] mb-4">What You Get</h2>
             <p className="text-3xl font-bold">Built for Sales</p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+              <div
+                key={feature.title}}}}}
                 className="group border border-[var(--border)] bg-[var(--card)] p-6 hover:border-[var(--siren-red)]/50 transition-colors"
               >
                 <feature.icon className="w-8 h-8 text-[var(--siren-red)] mb-4" />
                 <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
                 <p className="text-sm text-[var(--spectral-dim)]">{feature.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -210,10 +187,7 @@ export default function ShopTierPage() {
 
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div}}}
             className="border border-[var(--border)] bg-[var(--card)] p-8"
           >
             <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
@@ -222,26 +196,22 @@ export default function ShopTierPage() {
             </h3>
             <div className="grid sm:grid-cols-2 gap-3">
               {deliverables.map((item, i) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.03 }}
+                <div
+                  key={item}}}}}
                   className="flex items-center gap-3 text-sm text-[var(--spectral-dim)]"
                 >
                   <div className="w-1.5 h-1.5 bg-[var(--siren-red)]" />
                   {item}
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       <section className="py-32 border-t border-[var(--border)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <div}}}>
             <h2 className="text-4xl font-black tracking-tighter mb-6">
               Ready to <span className="text-[var(--siren-red)]">sell</span>?
             </h2>
@@ -249,7 +219,7 @@ export default function ShopTierPage() {
               Book Shop Tier
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

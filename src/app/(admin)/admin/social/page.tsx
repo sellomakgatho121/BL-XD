@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { 
   Instagram, 
   Linkedin, 
@@ -172,10 +171,8 @@ export default function SocialMediaGenerator() {
         </div>
 
         <div className="relative z-10 max-w-[80%]">
-          <motion.h2 
-            key={content.mainText}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          <h2 
+            key={content.mainText}}}
             className="text-4xl md:text-5xl font-black tracking-tighter mb-6 uppercase"
             style={{ 
               color: '#fff',
@@ -183,21 +180,17 @@ export default function SocialMediaGenerator() {
             }}
           >
             {content.mainText}
-          </motion.h2>
+          </h2>
           
-          <motion.p 
-            key={content.subText}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+          <p 
+            key={content.subText}}}}
             className="text-lg font-mono mb-8"
             style={{ color: 'rgba(255,255,255,0.8)' }}
           >
             {content.subText}
-          </motion.p>
+          </p>
 
-          <motion.div
-            whileHover={{ scale: 1.05 }}
+          <div}
             className="inline-block px-6 py-3 border-2 font-bold uppercase tracking-wider text-sm"
             style={{ 
               borderColor: currentStyle.accent,
@@ -206,7 +199,7 @@ export default function SocialMediaGenerator() {
             }}
           >
             Get Notified 🚀
-          </motion.div>
+          </div>
         </div>
 
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-4 w-full animate-scanline pointer-events-none" />

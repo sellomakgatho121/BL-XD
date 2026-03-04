@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Folder,
   MessageSquare,
@@ -98,17 +97,14 @@ export default function DashboardPage() {
           { label: "Completed", value: "0", icon: CheckCircle2 },
           { label: "Next Review", value: "2 days", icon: Clock },
         ].map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
+          <div
+            key={stat.label}}}}
             className="border border-[var(--border)] bg-[var(--card)] p-6"
           >
             <stat.icon className="w-5 h-5 text-[var(--signal-lime)] mb-4" />
             <div className="text-3xl font-black">{stat.value}</div>
             <div className="text-sm text-[var(--spectral-muted)]">{stat.label}</div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -148,10 +144,8 @@ export default function DashboardPage() {
             {projects.map((project) => {
               const status = statusConfig[project.status];
               return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                <div
+                  key={project.id}}}
                   className="border border-[var(--border)] bg-[var(--card)] p-6 hover:border-[var(--signal-lime)]/50 transition-colors"
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -173,10 +167,7 @@ export default function DashboardPage() {
                       <span className="font-mono">{project.progress}%</span>
                     </div>
                     <div className="h-2 bg-[var(--border)] overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${project.progress}%` }}
-                        transition={{ duration: 1, delay: 0.5 }}
+                      <div}%` }}}
                         className="h-full bg-[var(--signal-lime)]"
                       />
                     </div>
@@ -198,7 +189,7 @@ export default function DashboardPage() {
                       </Link>
                     </Button>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
