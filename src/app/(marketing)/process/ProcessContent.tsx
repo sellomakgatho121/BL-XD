@@ -1,10 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Lightbulb, Search, Code, Rocket, CheckCircle, ArrowRight, Quote } from "lucide-react";
 import Link from "next/link";
-import GrainOverlay from "@/components/blacklight/grain-overlay";
-import Scanlines from "@/components/blacklight/scanlines";
 import GlitchText from "@/components/GlitchText";
 import { Button } from "@/components/ui/button";
 
@@ -84,147 +81,147 @@ const testimonials = [
 
 export default function ProcessContent() {
   return (
-    <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
-      <GrainOverlay opacity={0.03} />
-      <Scanlines />
+    <div className="min-h-screen bg-[var(--neo-yellow)] text-[var(--neo-black)] font-space-grotesk overflow-x-hidden selection:bg-[var(--neo-black)] selection:text-[var(--neo-white)]">
 
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[var(--signal-lime)] flex items-center justify-center">
-                <span className="text-[var(--onyx)] font-bold text-lg">B</span>
-              </div>
-              <span className="font-mono text-sm tracking-wider uppercase hidden sm:block">Blacklight</span>
-            </Link>
-            <div className="flex items-center gap-8">
-              <Link href="/services" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors uppercase tracking-wider">Services</Link>
-              <Link href="/portfolio" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors uppercase tracking-wider">Portfolio</Link>
-              <Link href="/contact" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors uppercase tracking-wider">Contact</Link>
+      {/* ━━━ Header Navigation ━━━ */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[70px] flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-[var(--neo-black)] flex items-center justify-center border-2 border-[var(--neo-black)] group-hover:bg-[var(--neo-pink)] transition-colors">
+              <span className="font-black text-xl text-[var(--neo-white)]">B</span>
             </div>
+            <span className="font-black text-xl tracking-tighter uppercase">Blacklight</span>
+          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/services" className="font-bold uppercase tracking-widest hover:text-[var(--neo-blue)] transition-colors p-2">Services</Link>
+            <Link href="/portfolio" className="hidden sm:block font-bold uppercase tracking-widest hover:text-[var(--neo-green)] transition-colors p-2">Portfolio</Link>
           </div>
         </div>
       </nav>
 
-      <section className="relative pt-32 pb-20 lg:pt-48">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6">
-              <GlitchText text="THE PROCESS" intensity="medium" triggerOnHover />
-            </h1>
-            <p className="text-xl text-[var(--spectral-dim)] max-w-2xl mx-auto">
-              How we reveal the unseen brilliance of your brand. A methodical approach to exceptional digital experiences.
-            </p>
-          </motion.div>
+      {/* ━━━ Hero Section ━━━ */}
+      <section className="pt-32 pb-16 px-4 md:min-h-[60vh] flex items-center bg-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
+        <div className="max-w-7xl mx-auto w-full">
+          <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter mb-8 leading-[0.8] text-[var(--neo-black)]">
+            <GlitchText text="THE PROCESS" intensity="low" triggerOnHover />
+          </h1>
+          <p className="text-2xl md:text-3xl font-bold max-w-4xl border-l-8 border-[var(--neo-pink)] pl-6 py-2 bg-[var(--neo-white)]">
+            How we reveal the unseen brilliance of your brand. A methodical, brutalist approach to exceptional digital experiences.
+          </p>
         </div>
       </section>
 
-      <section className="py-20 border-y border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--signal-lime)] mb-4">Core Values</h2>
-            <p className="text-3xl font-bold">What Drives Us</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {values.map((value, i) => (
-              <motion.div
-                key={value.number}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="border border-[var(--border)] bg-[var(--card)] p-8"
-              >
-                <div className="flex items-start gap-6">
-                  <span className="text-4xl font-black text-[var(--signal-lime)]/30">{value.number}</span>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">{value.title}</h3>
-                    <p className="text-[var(--spectral-dim)]">{value.description}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--signal-lime)] mb-4">How We Work</h2>
-            <p className="text-3xl font-bold">The Blacklight Method</p>
-          </motion.div>
-
-          <div className="space-y-8">
-            {process.map((step, i) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex gap-6 border-l-2 border-[var(--border)] pl-8 hover:border-[var(--signal-lime)] transition-colors"
-              >
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 border border-[var(--signal-lime)]/50 flex items-center justify-center">
-                    <step.icon className="w-5 h-5 text-[var(--signal-lime)]" />
-                  </div>
-                </div>
-                <div className="flex-1 pb-8">
-                  <div className="flex items-center gap-4 mb-2">
-                    <span className="font-mono text-sm text-[var(--signal-lime)]">{step.step}</span>
-                    <span className="font-mono text-xs text-[var(--spectral-muted)] px-2 py-1 border border-[var(--border)]">{step.duration}</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                  <p className="text-[var(--spectral-dim)]">{step.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 border-y border-[var(--border)]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--signal-lime)] mb-4">Testimonials</h2>
-            <p className="text-3xl font-bold">What Clients Say</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="border border-[var(--border)] bg-[var(--card)] p-8"
-              >
-                <Quote className="w-8 h-8 text-[var(--signal-lime)] mb-4" />
-                <p className="text-[var(--spectral-dim)] mb-6 italic">&ldquo;{t.quote}&rdquo;</p>
-                <div>
-                  <div className="font-bold">{t.author}</div>
-                  <div className="text-sm text-[var(--spectral-muted)]">{t.role}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-32">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-4xl font-black tracking-tighter mb-6">
-              Ready to start your <span className="text-[var(--signal-lime)]">journey</span>?
+      {/* ━━━ Core Values ━━━ */}
+      <section className="py-24 px-4 bg-[var(--neo-black)] text-[var(--neo-white)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16">
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter bg-[var(--neo-pink)] text-[var(--neo-black)] inline-block px-4 py-2 border-4 border-[var(--neo-black)] shadow-[8px_8px_0px_var(--neo-white)] -rotate-1">
+              Core Values
             </h2>
-            <Button size="lg" className="bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 font-mono uppercase tracking-wider rounded-none text-lg px-8 py-6 group">
-              Start Project
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </motion.div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 pl-0 md:pl-12">
+            {values.map((value, i) => (
+              <div
+                key={value.number}
+                className="border-8 border-[var(--neo-white)] bg-[var(--neo-black)] p-8 relative hover:-translate-y-2 transition-transform group"
+              >
+                <div className="absolute top-4 right-4 text-6xl font-black text-transparent text-stroke-2 text-stroke-[var(--neo-white)] opacity-30 group-hover:opacity-100 transition-opacity">
+                  {value.number}
+                </div>
+                <h3 className="text-3xl font-black uppercase mb-4 text-[var(--neo-yellow)] group-hover:text-[var(--neo-pink)] transition-colors max-w-[80%]">
+                  {value.title}
+                </h3>
+                <p className="text-xl font-bold opacity-90 leading-relaxed">
+                  {value.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ The Method ━━━ */}
+      <section className="py-24 px-4 bg-[var(--neo-white)] border-b-8 border-[var(--neo-black)] relative overflow-hidden">
+
+        <div className="absolute right-[-10vw] top-[20%] text-[30vw] font-black text-[var(--neo-black)] opacity-5 pointer-events-none rotate-90 leading-none">
+          SYSTEM
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="mb-20 text-center">
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[var(--neo-black)]">
+              The Blacklight Method
+            </h2>
+          </div>
+
+          <div className="space-y-12">
+            {process.map((step, i) => (
+              <div
+                key={step.step}
+                className="flex flex-col md:flex-row gap-6 md:gap-12 items-start border-4 border-[var(--neo-black)] bg-[var(--neo-yellow)] p-6 md:p-8 relative hover:-translate-x-2 transition-transform shadow-[10px_10px_0px_var(--neo-black)] group"
+              >
+                <div className="flex-shrink-0 bg-[var(--neo-black)] text-[var(--neo-white)] w-24 h-24 flex flex-col items-center justify-center border-4 border-[var(--neo-white)] group-hover:bg-[var(--neo-pink)] group-hover:text-[var(--neo-black)] transition-colors">
+                  <div className="text-2xl font-black">{step.step}</div>
+                </div>
+
+                <div className="flex-1 w-full relative">
+                  <div className="absolute top-0 right-0 bg-[var(--neo-white)] text-[var(--neo-black)] font-bold px-3 py-1 border-2 border-[var(--neo-black)] text-sm uppercase">
+                    {step.duration}
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-black uppercase mb-4 pr-24">{step.title}</h3>
+                  <p className="text-xl font-bold opacity-90 max-w-2xl">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ Testimonials ━━━ */}
+      <section className="py-24 px-4 bg-[var(--neo-blue)] text-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16 text-center">
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter drop-shadow-[5px_5px_0px_var(--neo-black)]">
+              Client Logs
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className="border-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)] p-8 md:p-12 relative shadow-[12px_12px_0px_var(--neo-black)] rotate-1 hover:-rotate-1 transition-transform cursor-pointer"
+              >
+                <div className="absolute -top-6 left-8 bg-[var(--neo-green)] border-4 border-[var(--neo-black)] p-2">
+                  <Quote className="w-8 h-8 text-[var(--neo-black)]" />
+                </div>
+                <p className="text-2xl md:text-3xl font-black mb-8 italic leading-tight mt-6 uppercase">
+                  "{t.quote}"
+                </p>
+                <div className="border-t-4 border-[var(--neo-black)] pt-4">
+                  <div className="font-black text-xl uppercase">{t.author}</div>
+                  <div className="font-bold text-[var(--neo-blue)] uppercase">{t.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ CTA ━━━ */}
+      <section className="py-32 px-4 bg-[var(--neo-green)] text-[var(--neo-black)] text-center">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-12 leading-none border-[var(--neo-black)]">
+            Engage Protocol?
+          </h2>
+          <Button size="lg" className="bg-[var(--neo-black)] text-[var(--neo-white)] text-2xl md:text-4xl font-black uppercase px-12 py-8 border-4 border-[var(--neo-white)] shadow-[12px_12px_0px_var(--neo-black)] hover:bg-[var(--neo-pink)] hover:text-[var(--neo-black)] transition-colors active:translate-y-2 active:translate-x-2 active:shadow-none" asChild>
+            <Link href="/contact">
+              Initiate Project
+            </Link>
+          </Button>
         </div>
       </section>
     </div>

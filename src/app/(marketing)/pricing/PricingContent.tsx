@@ -1,18 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Check, ArrowRight, Zap, Calculator, Clock, Target, Calendar, BarChart, Shield, Globe, MessageCircle, Network, Bot } from "lucide-react";
+import { Target, Zap, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import GrainOverlay from "@/components/blacklight/grain-overlay";
-import Scanlines from "@/components/blacklight/scanlines";
 import GlitchText from "@/components/GlitchText";
-import { Button } from "@/components/ui/button";
-import ServiceCard, { AgenticTier } from "@/components/blacklight/service-card";
-import SprintCalculator from "@/components/blacklight/sprint-calculator";
 
 const tiers = [
   {
-    tier: "discovery" as AgenticTier,
+    tier: "discovery",
     title: "Discovery Node",
     price: "R4,500",
     pricingModel: "Fixed / One-time",
@@ -25,10 +19,11 @@ const tiers = [
       "Hosting Setup Included"
     ],
     cta: "Launch Node",
-    href: "/contact?package=discovery"
+    href: "/contact?package=discovery",
+    featured: false
   },
   {
-    tier: "merchant" as AgenticTier,
+    tier: "merchant",
     title: "Chat Merchant",
     price: "R12,000",
     pricingModel: "Setup + R250/mo",
@@ -41,11 +36,11 @@ const tiers = [
       "Local Language Support"
     ],
     cta: "Start Selling",
-    featured: true,
-    href: "/contact?package=merchant"
+    href: "/contact?package=merchant",
+    featured: true
   },
   {
-    tier: "orchestrator" as AgenticTier,
+    tier: "orchestrator",
     title: "The Orchestrator",
     price: "Custom",
     pricingModel: "Monthly Retainer",
@@ -58,7 +53,8 @@ const tiers = [
       "Auditability-as-a-Service"
     ],
     cta: "Deploy Workforce",
-    href: "/contact?package=orchestrator"
+    href: "/contact?package=orchestrator",
+    featured: false
   }
 ];
 
@@ -88,139 +84,148 @@ const sprints = [
 
 export default function PricingContent() {
   return (
-    <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
-      <GrainOverlay opacity={0.03} />
-      <Scanlines />
+    <div className="min-h-screen bg-[var(--neo-white)] text-[var(--neo-black)] font-space-grotesk overflow-x-hidden selection:bg-[var(--neo-yellow)] selection:text-[var(--neo-black)]">
 
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[var(--signal-lime)] flex items-center justify-center">
-                <span className="text-[var(--onyx)] font-bold text-lg">B</span>
-              </div>
-              <span className="font-mono text-sm tracking-wider uppercase hidden sm:block">Blacklight</span>
-            </Link>
-            <div className="flex items-center gap-8">
-              <Link href="/services" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors uppercase tracking-wider">Services</Link>
-              <Link href="/contact" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors uppercase tracking-wider">Contact</Link>
+      {/* ━━━ Header Navigation ━━━ */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[70px] flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-[var(--neo-pink)] flex items-center justify-center border-2 border-[var(--neo-black)] group-hover:bg-[var(--neo-blue)] transition-colors">
+              <span className="font-black text-xl text-[var(--neo-black)]">B</span>
             </div>
+            <span className="font-black text-xl tracking-tighter uppercase">Blacklight</span>
+          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/services" className="font-bold uppercase tracking-widest hover:bg-[var(--neo-black)] hover:text-[var(--neo-white)] px-3 py-1 border-2 border-transparent hover:border-[var(--neo-black)] transition-colors active:scale-95">Services</Link>
+            <Link href="/contact" className="font-bold uppercase tracking-widest hover:bg-[var(--neo-black)] hover:text-[var(--neo-white)] px-3 py-1 border-2 border-transparent hover:border-[var(--neo-black)] transition-colors active:scale-95">Contact</Link>
           </div>
         </div>
       </nav>
 
-      <section className="relative pt-32 pb-20 lg:pt-48">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 border border-[var(--signal-lime)]/50 px-3 py-1 font-mono text-xs text-[var(--signal-lime)] mb-6"
-          >
-            <Calculator className="w-3 h-3" />
-            TRANSPARENT PRICING
-          </motion.div>
+      {/* ━━━ Hero Section ━━━ */}
+      <section className="pt-32 pb-16 px-4 md:min-h-[50vh] flex flex-col justify-center bg-[var(--neo-blue)] text-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
+        <div className="max-w-7xl mx-auto w-full text-center">
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6"
-          >
-            <GlitchText text="VALUE > HOURS" intensity="medium" triggerOnHover />
-          </motion.h1>
+          <div className="inline-block bg-[var(--neo-yellow)] text-[var(--neo-black)] px-6 py-2 font-black uppercase text-xl md:text-2xl border-4 border-[var(--neo-black)] shadow-[8px_8px_0px_var(--neo-pink)] rotate-2 mb-12">
+            Transparent Pricing
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-[var(--spectral-dim)] max-w-3xl mx-auto mb-16"
-          >
-            We don&apos;t sell hours. We sell outcomes. Fixed-price sprints, clear deliverables, and AI agents that work for you 24/7.
-          </motion.p>
+          <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter mb-8 leading-[0.8] drop-shadow-[6px_6px_0px_var(--neo-black)]">
+            <GlitchText text="VALUE" intensity="low" /> <br />
+            <span className="text-[var(--neo-yellow)]">{'>'}</span> HOURS
+          </h1>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <p className="text-xl md:text-3xl font-bold max-w-3xl mx-auto p-6 bg-[var(--neo-white)] text-[var(--neo-black)] border-4 border-[var(--neo-black)] -rotate-1 shadow-[8px_8px_0px_var(--neo-green)] leading-tight">
+            We don't sell hours. We sell outcomes. Fixed-price sprints, clear deliverables, and AI agents that work for you 24/7.
+          </p>
+        </div>
+      </section>
+
+      {/* ━━━ Pricing Tiers ━━━ */}
+      <section className="py-24 px-4 bg-[var(--neo-white)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 gap-y-12">
             {tiers.map((tier, i) => (
-              <ServiceCard
+              <div
                 key={tier.tier}
-                tier={tier.tier}
-                title={tier.title}
-                price={tier.price}
-                pricingModel={tier.pricingModel}
-                description={tier.description}
-                features={tier.features}
-                featured={tier.featured}
-                delay={i * 0.1}
-                href={tier.href}
-              />
+                className={`relative border-8 border-[var(--neo-black)] flex flex-col justify-between group
+                  ${tier.featured ? 'bg-[var(--neo-yellow)] shadow-[15px_15px_0px_var(--neo-black)] -translate-y-4' : 'bg-[var(--neo-white)] shadow-[10px_10px_0px_var(--neo-black)] hover:-translate-y-2'} transition-transform p-6 md:p-8
+                `}
+              >
+                {tier.featured && (
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[var(--neo-black)] text-[var(--neo-white)] font-black uppercase px-6 py-2 border-4 border-[var(--neo-black)]">
+                    Most Popular
+                  </div>
+                )}
+
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-black uppercase mb-4 mt-4">{tier.title}</h3>
+                  <div className="flex flex-col mb-8 p-4 bg-[var(--neo-black)] text-[var(--neo-white)] border-2 border-[var(--neo-black)]">
+                    <span className="text-4xl font-black text-[var(--neo-green)]">{tier.price}</span>
+                    <span className="text-sm font-mono mt-1 opacity-80 uppercase">{tier.pricingModel}</span>
+                  </div>
+
+                  <p className="text-xl font-bold mb-8 opacity-90 leading-tight min-h-[80px]">
+                    {tier.description}
+                  </p>
+
+                  <ul className="mb-8 space-y-4 font-bold border-l-4 border-[var(--neo-black)] pl-4">
+                    {tier.features.map(f => (
+                      <li key={f} className="flex items-start gap-2">
+                        <span className="text-[var(--neo-pink)] text-xl leading-none">{'>>'}</span>
+                        <span className="leading-tight">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Link
+                  href={tier.href}
+                  className="block w-full text-center bg-[var(--neo-black)] text-[var(--neo-white)] font-black text-xl uppercase py-4 border-4 border-transparent hover:bg-transparent hover:text-[var(--neo-black)] hover:border-[var(--neo-black)] transition-colors active:scale-95 touch-manipulation"
+                >
+                  {tier.cta}
+                </Link>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20 border-y border-[var(--border)] bg-[var(--card)]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">The Sprint Model</h2>
-            <p className="text-[var(--spectral-dim)] max-w-2xl mx-auto">
-              Traditional development drags on for months. We work in intense, focused sprints to ship value fast.
-            </p>
+      {/* ━━━ Sprint Model ━━━ */}
+      <section className="py-24 px-4 bg-[var(--neo-black)] text-[var(--neo-white)] border-y-8 border-[var(--neo-black)] relative overflow-hidden">
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="mb-16 border-l-8 border-[var(--neo-yellow)] pl-6 max-w-2xl">
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[var(--neo-yellow)] mb-6">The Sprint Model</h2>
+            <p className="text-2xl font-bold opacity-90">Traditional development drags on for months. We work in intense, focused sprints to ship value fast.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {sprints.map((sprint, i) => (
-              <motion.div
+              <div
                 key={sprint.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative border border-[var(--border)] bg-[var(--card)] p-8"
+                className="bg-[var(--neo-white)] text-[var(--neo-black)] p-8 border-4 border-[var(--neo-white)] relative hover:bg-[var(--neo-pink)] transition-colors group cursor-crosshair"
               >
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                  <sprint.icon className="w-24 h-24 text-[var(--signal-lime)]" />
+                <div className="w-16 h-16 bg-[var(--neo-black)] text-[var(--neo-white)] flex items-center justify-center mb-8 rotate-3 group-hover:rotate-12 transition-transform shadow-[4px_4px_0px_var(--neo-yellow)]">
+                  <sprint.icon size={32} />
                 </div>
-                <div className="relative z-10">
-                  <div className="w-12 h-12 bg-[var(--signal-lime)]/10 flex items-center justify-center mb-6">
-                    <sprint.icon className="w-6 h-6 text-[var(--signal-lime)]" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{sprint.name}</h3>
-                  <div className="text-sm font-mono text-[var(--signal-lime)] mb-4">{sprint.duration}</div>
-                  <p className="text-[var(--spectral-dim)] mb-6">{sprint.description}</p>
-                  <div className="text-2xl font-bold">{sprint.price}</div>
+
+                <h3 className="text-3xl font-black uppercase mb-4 pr-12">{sprint.name}</h3>
+
+                <div className="inline-block bg-[var(--neo-black)] text-[var(--neo-yellow)] font-mono font-bold px-3 py-1 mb-6 border-2 border-[var(--neo-black)]">
+                  {sprint.duration}
                 </div>
-              </motion.div>
+
+                <p className="text-lg font-bold mb-8 min-h-[80px]">{sprint.description}</p>
+
+                <div className="border-t-4 border-[var(--neo-black)] pt-4 text-3xl font-black text-[var(--neo-blue)]">
+                  {sprint.price}
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20">
-         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SprintCalculator />
-         </div>
-      </section>
-
-      <section className="py-32">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-black tracking-tighter mb-6">
-            Ready to <span className="text-[var(--signal-lime)]">start</span>?
+      {/* ━━━ CTA ━━━ */}
+      <section className="py-32 px-4 bg-[var(--neo-green)] text-[var(--neo-black)] text-center border-t-8 border-[var(--neo-black)]">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-8 leading-none">
+            Ready to <span className="bg-[var(--neo-black)] text-[var(--neo-white)] px-4">Start</span>?
           </h2>
-          <p className="text-lg text-[var(--spectral-dim)] mb-8 max-w-xl mx-auto">
-            Book a free strategy session. We&apos;ll define your first sprint and show you exactly what you get.
+          <p className="text-2xl font-bold mb-12 max-w-2xl mx-auto bg-[var(--neo-white)] p-4 border-4 border-[var(--neo-black)] shadow-[6px_6px_0px_var(--neo-pink)] -rotate-1">
+            Book a free strategy session. We'll define your first sprint and show you exactly what you get.
           </p>
-          <Button
-            size="lg"
-            className="bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 font-mono uppercase tracking-wider rounded-none text-lg px-8 py-6 group"
-            asChild
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-4 bg-[var(--neo-black)] text-[var(--neo-white)] text-2xl md:text-4xl font-black uppercase px-8 py-6 border-4 border-[var(--neo-black)] hover:bg-[var(--neo-yellow)] hover:text-[var(--neo-black)] transition-colors group shadow-[10px_10px_0px_var(--neo-blue)] active:translate-y-2 active:translate-x-2 active:shadow-none touch-manipulation"
           >
-            <Link href="/contact">
-              Book Strategy Session
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </Button>
+            <span>Book Strategy Session</span>
+            <ArrowRight size={40} className="group-hover:translate-x-2 transition-transform" />
+          </Link>
         </div>
       </section>
+
     </div>
   );
 }
