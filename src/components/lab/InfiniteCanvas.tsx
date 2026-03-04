@@ -4,7 +4,6 @@ import { useRef, useState, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, OrbitControls, useCursor } from "@react-three/drei";
 import * as THREE from "three";
-import { motion } from "framer-motion-3d";
 
 interface NodeProps {
   position: [number, number, number];
