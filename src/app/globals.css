@@ -6,9 +6,9 @@
 
 :root {
   /* Midnight Spectrum - Blacklight Web Designs */
-  --onyx: #0A0A0A;
-  --onyx-light: #1A1A1A;
-  --onyx-lighter: #2A2A2A;
+  --onyx: #050505;
+  --onyx-light: #151515;
+  --onyx-lighter: #252525;
   --signal-lime: #D7FF00;
   --signal-lime-dim: rgba(215, 255, 0, 0.1);
   --signal-lime-glow: rgba(215, 255, 0, 0.4);
@@ -26,9 +26,9 @@
   --radius-lg: 0px;
   
   /* Shadcn overrides - Midnight Spectrum */
-  --background: #0A0A0A;
+  --background: #050505;
   --foreground: #FDFDFD;
-  --card: #1A1A1A;
+  --card: #151515;
   --card-foreground: #FDFDFD;
   --popover: #1A1A1A;
   --popover-foreground: #FDFDFD;
@@ -137,9 +137,11 @@
 }
 
 body {
-  font-family: var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-raleway), var(--font-playfair), var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden; /* Hide scrollbar for spatial hijack */
+  background-color: var(--background);
+  color: var(--foreground);
   /* Enable smooth scrolling but with better performance */
   scroll-behavior: smooth;
   /* Grain texture overlay principle */
@@ -166,6 +168,23 @@ body::after {
   100% {
     transform: translateX(100%);
   }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
 }
 
 /* Optimized scroll container */
@@ -216,5 +235,44 @@ body::after {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Glassmorphic & Gradient Utilities */
+@layer utilities {
+  .glass-panel {
+    background: rgba(10, 10, 10, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(253, 253, 253, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  }
+  .glass-panel-light {
+    background: rgba(253, 253, 253, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(253, 253, 253, 0.1);
+  }
+  .bg-gradient-midnight {
+    background: linear-gradient(135deg, #050505 0%, #0a0a0f 50%, #050505 100%);
+  }
+  .bg-gradient-emerald-velvet {
+    background: linear-gradient(135deg, rgba(215, 255, 0, 0.1) 0%, rgba(5, 5, 5, 0) 50%, rgba(0, 255, 136, 0.05) 100%);
+  }
+  .text-gradient-neon {
+    background: linear-gradient(90deg, var(--signal-lime), #00FF88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-siren {
+    background: linear-gradient(90deg, var(--siren-red), #FF8800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-neon-lime {
+    color: var(--signal-lime);
+    text-shadow: 0 0 20px var(--signal-lime-glow), 0 0 10px rgba(215, 255, 0, 0.2);
   }
 }

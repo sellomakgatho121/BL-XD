@@ -134,85 +134,85 @@ export default function SocialMediaGenerator() {
     alert(`Posted successfully to ${connectedPlatforms.length} platforms!`);
   };
 
-  const PostPreview = () => {
-    const currentStyle = styles[selectedStyle];
-    
-    return (
-      <div className="relative w-full aspect-square bg-black border border-[var(--border)] overflow-hidden flex flex-col items-center justify-center p-8 text-center group">
+const PostPreview = ({ selectedStyle, content }: { selectedStyle: DesignStyle, content: PostContent }) => {
+  const currentStyle = styles[selectedStyle];
+  
+  return (
+    <div className="relative w-full aspect-square bg-black border border-[var(--border)] overflow-hidden flex flex-col items-center justify-center p-8 text-center group">
+      <div 
+        className="absolute inset-0 opacity-20 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, ${currentStyle.accent}20 0%, transparent 70%)`
+        }}
+      />
+      
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
+        <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke={currentStyle.accent} strokeWidth="0.5"/>
+        </pattern>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+
+      <div className="absolute top-6 left-6 flex items-center gap-3 z-10">
         <div 
-          className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, ${currentStyle.accent}20 0%, transparent 70%)`
+          className="w-10 h-10 flex items-center justify-center font-bold text-black clip-path-hexagon"
+          style={{ 
+            backgroundColor: currentStyle.accent,
+            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
           }}
-        />
-        
-        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
-          <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke={currentStyle.accent} strokeWidth="0.5"/>
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-
-        <div className="absolute top-6 left-6 flex items-center gap-3 z-10">
-          <div 
-            className="w-10 h-10 flex items-center justify-center font-bold text-black clip-path-hexagon"
-            style={{ 
-              backgroundColor: currentStyle.accent,
-              clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
-            }}
-          >
-            B
-          </div>
-          <div 
-            className="text-[10px] font-bold tracking-widest leading-tight text-left"
-            style={{ color: currentStyle.accent }}
-          >
-            BLACKLIGHT<br/>WEB DESIGNS
-          </div>
+        >
+          B
         </div>
-
-        <div className="relative z-10 max-w-[80%]">
-          <motion.h2 
-            key={content.mainText}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black tracking-tighter mb-6 uppercase"
-            style={{ 
-              color: '#fff',
-              textShadow: `2px 2px 0px ${currentStyle.secondary}`
-            }}
-          >
-            {content.mainText}
-          </motion.h2>
-          
-          <motion.p 
-            key={content.subText}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg font-mono mb-8"
-            style={{ color: 'rgba(255,255,255,0.8)' }}
-          >
-            {content.subText}
-          </motion.p>
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="inline-block px-6 py-3 border-2 font-bold uppercase tracking-wider text-sm"
-            style={{ 
-              borderColor: currentStyle.accent,
-              color: currentStyle.accent,
-              boxShadow: `0 0 20px ${currentStyle.accent}40`
-            }}
-          >
-            Get Notified 🚀
-          </motion.div>
+        <div 
+          className="text-[10px] font-bold tracking-widest leading-tight text-left"
+          style={{ color: currentStyle.accent }}
+        >
+          BLACKLIGHT<br/>WEB DESIGNS
         </div>
-
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-4 w-full animate-scanline pointer-events-none" />
       </div>
-    );
-  };
+
+      <div className="relative z-10 max-w-[80%]">
+        <motion.h2 
+          key={content.mainText}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-4xl md:text-5xl font-black tracking-tighter mb-6 uppercase"
+          style={{ 
+            color: '#fff',
+            textShadow: `2px 2px 0px ${currentStyle.secondary}`
+          }}
+        >
+          {content.mainText}
+        </motion.h2>
+        
+        <motion.p 
+          key={content.subText}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg font-mono mb-8"
+          style={{ color: 'rgba(255,255,255,0.8)' }}
+        >
+          {content.subText}
+        </motion.p>
+
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          className="inline-block px-6 py-3 border-2 font-bold uppercase tracking-wider text-sm"
+          style={{ 
+            borderColor: currentStyle.accent,
+            color: currentStyle.accent,
+            boxShadow: `0 0 20px ${currentStyle.accent}40`
+          }}
+        >
+          Get Notified 🚀
+        </motion.div>
+      </div>
+
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-4 w-full animate-scanline pointer-events-none" />
+    </div>
+  );
+};
 
   return (
     <div className="space-y-8 pb-20">
@@ -338,7 +338,7 @@ export default function SocialMediaGenerator() {
               </div>
             </div>
             
-            <PostPreview />
+            <PostPreview selectedStyle={selectedStyle} content={content} />
 
             <div className="mt-6 flex gap-4">
               <Button 

@@ -1,38 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import ComingSoon from "@/components/screens/ComingSoon";
-import LandingPage from "@/app/(marketing)/page";
-import DevModeSwitcher from "@/components/DevModeSwitcher";
+import { useState } from "react";
+import Scene from "@/components/blacklight/Scene";
+import BrandSequence from "@/components/blacklight/BrandSequence";
 
 export default function Page() {
-  const [devMode, setDevMode] = useState<"main" | "coming-soon">("main");
-  const [mounted, setMounted] = useState(false);
-
-  const isDev = process.env.NODE_ENV === "development";
-  const siteModeEnv = process.env.NEXT_PUBLIC_SITE_MODE;
-
-  useEffect(() => {
-    if (isDev) {
-      const stored = localStorage.getItem("dev_site_mode") as "main" | "coming-soon";
-      if (stored) setDevMode(stored);
-      setMounted(true);
-    }
-  }, [isDev]);
-
-  if (siteModeEnv === "coming-soon") return <ComingSoon />;
-  if (siteModeEnv === "main") return <LandingPage />;
-
-  if (!isDev) {
-    return <ComingSoon />;
-  }
-
-  if (!mounted) return null;
+  const [sequenceComplete, setSequenceComplete] = useState(false);
 
   return (
-    <>
-      {devMode === "main" ? <LandingPage /> : <ComingSoon />}
-      <DevModeSwitcher />
-    </>
+    <main className="relative w-screen h-screen overflow-hidden bg-onyx">
+      {/* 2D to 3D Pre-loader Sequence */}
+      {!sequenceComplete && (
+        <BrandSequence onComplete={() => setSequenceComplete(true)} />
+      )}
+
+      {/* The Interactive 3D Spatial Canvas (Now handles all UI via Drei HTML) */}
+      <Scene />
+    </main>
   );
 }

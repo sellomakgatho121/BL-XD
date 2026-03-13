@@ -10,7 +10,11 @@ const GRID_SIZE = 12;
 const CELL_COUNT = GRID_SIZE * GRID_SIZE;
 
 export default function MemeticSimulator() {
-  const [grid, setGrid] = useState<CellState[]>(Array(CELL_COUNT).fill("susceptible"));
+  const [grid, setGrid] = useState<CellState[]>(() => {
+    const seed = Array(CELL_COUNT).fill("susceptible");
+    seed[Math.floor(CELL_COUNT / 2) + GRID_SIZE / 2] = "infected";
+    return seed as CellState[];
+  });
   const [isRunning, setIsRunning] = useState(false);
   const [virality, setVirality] = useState(0.6);
   const [resistance, setResistance] = useState(0.1);
@@ -18,7 +22,11 @@ export default function MemeticSimulator() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const resetGrid = useCallback(() => {
-    setGrid(Array(CELL_COUNT).fill("susceptible"));
+    setGrid(() => {
+      const seed = Array(CELL_COUNT).fill("susceptible");
+      seed[Math.floor(CELL_COUNT / 2) + GRID_SIZE / 2] = "infected";
+      return seed as CellState[];
+    });
     setIsRunning(false);
     if (intervalRef.current) clearInterval(intervalRef.current);
   }, []);
@@ -81,12 +89,6 @@ export default function MemeticSimulator() {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isRunning, stepSimulation]);
-
-  useEffect(() => {
-    const seed = Array(CELL_COUNT).fill("susceptible");
-    seed[Math.floor(CELL_COUNT / 2) + GRID_SIZE / 2] = "infected";
-    setGrid(seed);
-  }, []);
 
   return (
     <div className="relative h-96 w-full max-w-sm rounded-xl bg-onyx/40 border border-white/10 overflow-hidden flex flex-col backdrop-blur-sm group">
