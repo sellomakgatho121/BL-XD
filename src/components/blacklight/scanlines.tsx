@@ -9,11 +9,11 @@ interface ScanlinesProps {
 export default function Scanlines({ className = "" }: ScanlinesProps) {
   return (
     <div
-      className={`pointer-events-none fixed inset-0 z-[9997] opacity-10 ${className}`}
+      className={`pointer-events-none fixed inset-0 z-[9997] opacity-5 ${className}`}
       style={{
         background: `
           linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-          linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))
+          linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03))
         `,
         backgroundSize: "100% 2px, 3px 100%",
         willChange: "transform",
@@ -27,13 +27,13 @@ export default function Scanlines({ className = "" }: ScanlinesProps) {
 export function FlickerOverlay() {
   return (
     <motion.div
-      className="pointer-events-none fixed inset-0 z-[9996] opacity-[0.02]"
+      className="pointer-events-none fixed inset-0 z-[9996] opacity-[0.01]"
       style={{
         willChange: "opacity",
         transform: "translateZ(0)",
       }}
       animate={{
-        opacity: [0.02, 0.04, 0.02],
+        opacity: [0.01, 0.02, 0.01],
       }}
       transition={{
         duration: 0.15,
@@ -45,7 +45,7 @@ export function FlickerOverlay() {
 }
 
 // Vignette effect
-export function Vignette({ intensity = 0.6 }: { intensity?: number }) {
+export function Vignette({ intensity = 0.3 }: { intensity?: number }) {
   return (
     <div
       className="pointer-events-none fixed inset-0 z-[9995]"
@@ -63,7 +63,7 @@ export function CRTEffect({ children }: { children: React.ReactNode }) {
     <>
       <Scanlines />
       <FlickerOverlay />
-      <Vignette intensity={0.4} />
+      <Vignette intensity={0.2} />
       {children}
     </>
   );

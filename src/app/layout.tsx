@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, JetBrains_Mono, Inter, Raleway, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import { ThemeClient } from "@/components/theme/ThemeClient";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -70,6 +71,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} ${raleway.variable} ${playfair.variable} antialiased`}
         suppressHydrationWarning
       >
+        <ThemeClient />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID} />
         )}
