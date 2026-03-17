@@ -30,6 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# local caches / vendored tools
+.npm-cache/
+.ruff_cache/
+.vendor/
+
 # env files (can opt-in for committing if needed)
 .env*
 
