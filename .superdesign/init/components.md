@@ -362,7 +362,7 @@ function DialogFooter({
           <Button variant="outline">Close</Button>
         </DialogPrimitive.Close>
       )}
-    </div>
+        </div>
   )
 }
 
