@@ -1,0 +1,43 @@
+
+> bl-web@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.3.193:3000
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+✓ Starting...
+○ Compiling middleware ...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+⚠ Duplicate page detected. src/app/sitemap.ts and src/app/sitemap.xml/route.ts resolve to /sitemap.xml
+⚠ Duplicate page detected. src/app/sitemap.ts and src/app/sitemap.xml/route.ts resolve to /sitemap.xml
+✓ Ready in 21.6s
+○ Compiling / ...
+ HEAD / 200 in 39.4s (compile: 37.0s, proxy.ts: 486ms, render: 1915ms)
+✓ Finished writing to filesystem cache in 10.8s
+ GET / 200 in 1614ms (compile: 61ms, proxy.ts: 323ms, render: 1230ms)
+  Reload env: .env.local
+✓ Compiled in 4s
+Persisting failed: Unable to write SST file 00000127.sst
+
+Caused by:
+    No such file or directory (os error 2)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+  Downloading swc package @next/swc-wasm-nodejs... to /Users/lavie omari/Library/Caches/next-swc
+⚠ Attempted to load @next/swc-darwin-x64, but an error occurred: dlopen(/Users/lavie omari/Documents/BL-XD/node_modules/@next/swc-darwin-x64/next-swc.darwin-x64.node, 0x0001): tried: '/Users/lavie omari/Documents/BL-XD/node_modules/@next/swc-darwin-x64/next-swc.darwin-x64.node' (code signature in <5881A711-A188-3222-BC38-1274A5A63F21> '/Users/lavie omari/Documents/BL-XD/node_modules/@next/swc-darwin-x64/next-swc.darwin-x64.node' not valid for use in process: library load denied by system policy)
+⚠ TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: getaddrinfo ENOTFOUND registry.npmjs.org
+      at ignore-listed frames {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'registry.npmjs.org'
+  }
+}
+⨯ Failed to load SWC binary for darwin/x64, see more info here: https://nextjs.org/docs/messages/failed-loading-swc
+[?25h

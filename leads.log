@@ -1,0 +1,13 @@
+{"email":"sellomakgatho121@gmail.com","timestamp":"2026-02-06T19:11:47.085Z","source":"blacklight-landing-page","error":null}
+{"email":"sellomakgatho121@gmail.com","timestamp":"2026-02-06T20:46:50.742Z","source":"blacklight-landing-page","error":null}
+{"email":"sellomakgatho121@gmail.com","timestamp":"2026-02-07T00:04:17.084Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"test@example.com","timestamp":"2026-02-07T01:04:29.710Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"test123@example.com","timestamp":"2026-02-07T01:15:11.967Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"test2@example.com","timestamp":"2026-02-07T01:15:47.839Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"testlog@example.com","timestamp":"2026-02-07T02:20:28.123Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"test@example.com","timestamp":"2026-02-07T06:49:32.456Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"test@example.com","timestamp":"2026-02-07T06:51:22.764Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"test@example.com","timestamp":"2026-02-07T06:54:01.521Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: [object Object]"}
+{"email":"test@example.com","timestamp":"2026-02-07T06:54:21.782Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: {\"status\":403,\"text\":\"API calls are disabled for non-browser applications\"}"}
+{"email":"test@example.com","timestamp":"2026-02-07T06:54:45.492Z","source":"blacklight-landing-page","error":"Error: EmailJS Error: API calls are disabled for non-browser applications"}
+{"email":"test@example.com","timestamp":"2026-02-07T07:15:59.696Z","source":"blacklight-landing-page","error":"Error: Email Error: Error: Resend Error: The blacklightwebdesigns.com domain is not verified. Please, add and verify your domain on https://resend.com/domains"}
