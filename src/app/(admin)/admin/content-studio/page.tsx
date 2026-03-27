@@ -40,12 +40,12 @@ export default function ContentStudioPage() {
   ]);
   const [calendarView, setCalendarView] = useState(false);
 
-  const handleContentGenerated = (content: any) => {
-    console.log('Content generated:', content);
+  const handleContentGenerated = () => {
+    // TODO: Add analytics/tracking when needed
   };
 
-  const handleSaveDraft = (content: any) => {
-    console.log('Draft saved:', content);
+  const handleSaveDraft = () => {
+    // TODO: Add analytics/tracking when needed
   };
 
   const getStatusColor = (status: string) => {

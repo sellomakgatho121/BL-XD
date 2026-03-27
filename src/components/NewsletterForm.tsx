@@ -53,9 +53,9 @@ export default function NewsletterForm() {
                         </div>
                         <div className="flex flex-col">
                             <span className="font-mono text-xs font-bold tracking-widest uppercase">
-                                You&apos;re Notified! 🎉
+                                You&apos;re on the list.
                             </span>
-                            <span className="text-sm">We&apos;ll send you launch updates when we go live!</span>
+                            <span className="text-sm">We&apos;ll let you know when we actually launch.</span>
                         </div>
                     </motion.div>
                 ) : (
@@ -97,11 +97,11 @@ export default function NewsletterForm() {
                             {status === "loading" ? (
                                 <>
                                     <Loader2 size={16} className="animate-spin" />
-                                    PROCESSING
+                                    WORKING ON IT
                                 </>
                             ) : (
                                 <>
-                                    REQUEST ACCESS
+                                    NOTIFY ME
                                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                                 </>
                             )}

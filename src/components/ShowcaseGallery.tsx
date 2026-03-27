@@ -21,32 +21,32 @@ const showcaseItems = [
   { 
     id: "cognitive", 
     Component: CognitiveAnalyzer, 
-    title: "AI Sentiment Analysis", 
-    description: "Real-time linguistic pattern recognition."
+    title: "AI That Gets You", 
+    description: "It reads text better than your ex reads signals."
   },
   { 
     id: "brand", 
     Component: BrandAura, 
-    title: "Generative Identity", 
-    description: "Algorithmic design system creation."
+    title: "Logo Generator", 
+    description: "Makes logos so you don't have to use WordArt."
   },
   { 
     id: "latency", 
     Component: LatencySimulator, 
-    title: "Performance ROI", 
-    description: "Financial impact of technical latency."
+    title: "Speed Matters", 
+    description: "Your site loads slow? Your users leave. Simple."
   },
   { 
     id: "memetic", 
     Component: MemeticSimulator, 
-    title: "Viral Propagation", 
-    description: "Agent-based memetic simulation."
+    title: "Viral Stuff", 
+    description: "Things that spread online. For better or worse."
   },
   { 
     id: "social", 
     Component: SocialSequencer, 
-    title: "Content Rhythm", 
-    description: "Cross-channel frequency orchestration."
+    title: "Post Scheduler", 
+    description: "Auto-post so you don't have to wake up at 3am."
   }
 ];
 
@@ -105,9 +105,10 @@ export default function ShowcaseGallery() {
     >
       <div className="mb-16">
         <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
-          <GlitchText text="LIVE DEMONSTRATIONS" intensity="medium" triggerOnHover={true} />
+          <GlitchText text="THINGS THAT WORK" intensity="medium" triggerOnHover={true} />
         </h2>
         <div className="h-1 w-24 bg-signal-lime" />
+        <p className="text-sm text-white/40 mt-2 font-mono">Yes, actually. We checked.</p>
       </div>
 
       <div className="relative max-w-2xl mx-auto">

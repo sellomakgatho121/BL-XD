@@ -6,7 +6,7 @@ interface SEOProps {
   keywords?: string[];
   image?: string;
   url?: string;
-  type?: 'website' | 'article' | 'product';
+  type?: 'website' | 'article';
   locale?: string;
   siteName?: string;
   author?: string;
@@ -45,7 +45,7 @@ export function generateMetadata({
     
     // Open Graph
     openGraph: {
-      type: type as any,
+      type: type as 'website' | 'article',
       locale,
       url: fullUrl,
       title: title || 'Blacklight Web Designs',

@@ -215,7 +215,7 @@ export default function BlogGenerator({ onContentGenerated, onSaveDraft }: BlogG
                   </label>
                   <select
                     value={tone}
-                    onChange={(e) => setTone(e.target.value as any)}
+                    onChange={(e) => setTone(e.target.value as "professional" | "casual" | "technical" | "friendly")}
                     className="w-full h-10 px-3 bg-[var(--onyx)] border border-[var(--border)] text-sm focus:border-[var(--signal-lime)] focus:outline-none"
                   >
                     <option value="professional">Professional</option>
@@ -314,7 +314,7 @@ export default function BlogGenerator({ onContentGenerated, onSaveDraft }: BlogG
                     Generated Content
                   </h3>
                 </div>
-                <Tabs value={activeView} onValueChange={(v) => setActiveView(v as any)}>
+                <Tabs value={activeView} onValueChange={(v) => setActiveView(v as "input" | "preview" | "edit")}>
                   <TabsList className="h-8 bg-[var(--onyx)]">
                     <TabsTrigger value="preview" className="text-xs">
                       <Eye className="w-3 h-3 mr-1" /> Preview

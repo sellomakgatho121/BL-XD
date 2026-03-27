@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, Radio, Server } from "lucide-react";
 
 const STATUS_ITEMS = [
-    { icon: Server, text: "AGENTS: PREPARING", color: "text-signal-lime" },
-    { icon: Radio, text: "NETWORK: ENCRYPTED", color: "text-blue-400" },
-    { icon: CheckCircle2, text: "CHANNEL: SECURE", color: "text-spectral-white" },
-    { icon: AlertTriangle, text: "SYSTEM: BUILDING", color: "text-siren-red" },
-    { icon: Server, text: "FRAMEWORK: ASSEMBLING", color: "text-signal-lime" },
-    { icon: Radio, text: "WAITLIST: PROCESSING", color: "text-blue-400" },
+    { icon: Server, text: "STILL BUILDING", color: "text-signal-lime" },
+    { icon: Radio, text: "COFFEE: BREWING", color: "text-blue-400" },
+    { icon: CheckCircle2, text: "CODE: WRITING ITSELF", color: "text-spectral-white" },
+    { icon: AlertTriangle, text: "SKYNET: DORMANT", color: "text-siren-red" },
+    { icon: Server, text: "AESTHETIC: 1999", color: "text-signal-lime" },
+    { icon: Radio, text: "DEADLINES: ADVISORY", color: "text-blue-400" },
 ];
 
 export default function SystemStatus() {

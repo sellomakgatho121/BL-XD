@@ -3,6 +3,7 @@ import { Space_Grotesk, JetBrains_Mono, Inter, Raleway, Playfair_Display } from 
 import "./globals.css";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { ThemeClient } from "@/components/theme/ThemeClient";
+import { ClientErrorBoundary } from "@/components/ClientErrorBoundary";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -71,11 +72,13 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} ${raleway.variable} ${playfair.variable} antialiased`}
         suppressHydrationWarning
       >
-        <ThemeClient />
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
-        {children}
+        <ClientErrorBoundary>
+          <ThemeClient />
+          {process.env.NEXT_PUBLIC_GA_ID && (
+            <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID} />
+          )}
+          {children}
+        </ClientErrorBoundary>
       </body>
     </html>
   );

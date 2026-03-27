@@ -33,15 +33,15 @@ export default function LivePlayground() {
   const [code, setCode] = useState(presets.neon);
   const [activePreset, setActivePreset] = useState("neon");
 
-  const style = code.split('\n').reduce((acc, line) => {
+  const style = code.split('\n').reduce<Record<string, string>>((acc, line) => {
     const [key, val] = line.split(':');
     if (key && val) {
       const cleanKey = key.trim();
       const cleanVal = val.trim().replace(';', '');
-      (acc as any)[cleanKey] = cleanVal;
+      acc[cleanKey] = cleanVal;
     }
     return acc;
-  }, {} as React.CSSProperties);
+  }, {});
 
   return (
     <div className="border border-[var(--border)] bg-[var(--onyx)] overflow-hidden">
@@ -105,8 +105,7 @@ export default function LivePlayground() {
               border: 'var(--border-width) solid var(--text)',
               borderRadius: 'var(--radius)',
               boxShadow: 'var(--shadow)',
-              ...style
-            } as any}
+            } as React.CSSProperties}
             className="px-8 py-4 font-bold uppercase tracking-wider min-w-[200px] transition-all duration-200"
           >
             Hover Me

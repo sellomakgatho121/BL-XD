@@ -58,7 +58,7 @@ export default function ComingSoon() {
               className="mb-6 inline-flex items-center gap-2 border border-siren-red/50 bg-siren-red/10 px-3 py-1 font-mono text-xs text-siren-red shadow-[0_0_15px_rgba(255,0,60,0.4)]"
             >
               <Terminal size={14} className="animate-pulse" />
-              <GlitchText text="PREPARING AGENTIC SYSTEMS" intensity="high" triggerOnHover={true} />
+              <GlitchText text="COGS TURNING" intensity="high" triggerOnHover={true} />
             </motion.div>
 
             <div className="relative">
@@ -73,9 +73,9 @@ export default function ComingSoon() {
             <motion.p
               className="max-w-xl text-lg leading-relaxed text-spectral-white/60 md:text-xl font-mono border-l-2 border-signal-lime pl-4"
             >
-              <GlitchText text="The future of web development is evolving." intensity="low" triggerOnHover={true} />
+              <GlitchText text="Web development, but someone actually cared." intensity="low" triggerOnHover={true} />
               <br />
-              <span className="text-sm opacity-50">Something extraordinary is building at the intersection of code and intelligence.</span>
+              <span className="text-sm opacity-50">Yes, we still use the terminal aesthetic. No, we haven't figured out why. But it looks cool, right? We're basically 1990s hacker movie protagonists who figured out self-care.</span>
             </motion.p>
 
             <motion.div
@@ -105,7 +105,7 @@ export default function ComingSoon() {
               transition={{ delay: 1.4 }}
               className="py-6"
             >
-              <CountdownTimer targetDate="2026-04-01T00:00:00" />
+              <CountdownTimer targetDate="2026-06-01T00:00:00" />
             </motion.div>
 
             <motion.div
@@ -122,8 +122,8 @@ export default function ComingSoon() {
                 className="mb-6 p-4 border border-signal-lime/20 bg-signal-lime/5 rounded-lg backdrop-blur-sm"
               >
                 <p className="text-sm text-spectral-white/80 text-center font-mono">
-                  <span className="text-signal-lime font-bold">✨ Interested in next-gen web development for your business, startup, or organization?</span><br/>
-                  <span className="text-xs opacity-70">Drop your email below and we&apos;ll notify you when we launch. No spam, just cutting-edge tech! 🚀</span>
+                  <span className="text-signal-lime font-bold">Fancy being notified when we launch?</span><br/>
+                  <span className="text-xs opacity-70">Drop your email below. We'll only spam you with updates if you're lucky.</span>
                 </p>
               </motion.div>
               
@@ -135,8 +135,8 @@ export default function ComingSoon() {
 
       <footer className="relative z-10 border-t border-spectral-white/10 p-8 text-[10px] font-mono tracking-widest text-spectral-white/30 flex justify-between uppercase">
         <span>© 2026 BLACKLIGHT WEB DESIGNS</span>
-        <span>ENCRYPTED_SESSION_STABLE</span>
-        <span>SCALES_WITHIN_CHAOS</span>
+        <span>WE'RE COMING</span>
+        <span>EVENTUALLY</span>
       </footer>
 
       <div className="fixed bottom-0 left-0 right-0 z-50">

@@ -1,0 +1,15 @@
+{
+  "project": "BL-XD",
+  "version": "0.1.0",
+  "workflow": {
+    "autoCommit": false,
+    "atomicCommits": true,
+    "verificationRequired": true
+  },
+  "preferences": {
+    "model": "balanced",
+    "skipResearch": false,
+    "skipUAT": false
+  },
+  "created": "2026-03-28"
+}

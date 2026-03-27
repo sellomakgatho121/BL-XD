@@ -7,26 +7,26 @@ import { HelpCircle, Sparkles, Mouse, Mail } from "lucide-react";
 const quirkyTips = [
   {
     icon: Mouse,
-    title: "Control Your Interface",
-    description: "Move your mouse around the quantum field above. See how it responds? That&apos;s you controlling the digital energy!",
+    title: "Mess With the Background",
+    description: "Move your mouse around the quantum thing above. See how it responds? That's you messing with the pretty lights!",
     position: "top-4 right-4"
   },
   {
     icon: Sparkles,
-    title: "Watch the System Messages",
-    description: "Those dynamic messages that change? They&apos;re hinting at something amazing coming soon. Hover over them for extra effects!",
+    title: "Check the Glitchy Text",
+    description: "Those weird messages that change? They're hinting at what we're building. Hover over them for extra chaos!",
     position: "top-4 left-4"
   },
   {
     icon: Mail,
-    title: "Get Notified First",
-    description: "Down below, there&apos;s a notification portal (newsletter form). Enter your email to get launch updates when we go live!",
+    title: "Get Early Access",
+    description: "Down below, there's an email form. Drop your address and we'll tell you when we actually launch!",
     position: "bottom-4 right-4"
   },
   {
     icon: HelpCircle,
-    title: "Countdown to Launch",
-    description: "The numbers ticking down? That&apos;s when the system goes live. Mark your calendar for the big reveal!",
+    title: "Countdown Timer",
+    description: "The numbers ticking down? That's when we go live. June 1st, 2026. Set a reminder!",
     position: "bottom-4 left-4"
   }
 ];
@@ -131,7 +131,7 @@ export default function ClientGuide() {
           <div className="flex items-center gap-2 mb-2">
             <Icon className="text-signal-lime/60" size={14} />
             <span className="text-xs font-mono text-signal-lime/60 font-bold">
-              TIP #{activeTip + 1}
+              TIP_0{activeTip + 1}
             </span>
           </div>
 

@@ -55,9 +55,9 @@ export default function Footer() {
 
           {/* Newsletter Column */}
           <div>
-            <h4 className="font-mono text-sm font-bold uppercase tracking-wider mb-6 text-[var(--spectral-white)]">Stay Synchronised</h4>
+            <h4 className="font-mono text-sm font-bold uppercase tracking-wider mb-6 text-[var(--spectral-white)]">Stay in the Loop</h4>
             <p className="text-sm text-[var(--spectral-dim)] mb-6">
-              Join our signal network for updates on AI trends and digital strategy.
+              Drop your email and we'll let you know when we launch. No spam, just news.
             </p>
             <NewsletterForm />
           </div>

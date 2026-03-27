@@ -63,7 +63,7 @@ function Button({
         "perspective-900 tilt-3d sheen-3d press-depth",
         buttonVariants({ variant, size, className })
       )}
-      onPointerMove={(e: React.PointerEvent) => {
+      onPointerMove={(e) => {
         const el = e.currentTarget as HTMLElement
         const r = el.getBoundingClientRect()
         const px = (e.clientX - r.left) / r.width
@@ -76,15 +76,15 @@ function Button({
         el.style.setProperty("--sheen-x", `${px * 100}%`)
         el.style.setProperty("--sheen-y", `${py * 100}%`)
         el.dataset.tiltActive = "true"
-        props.onPointerMove?.(e)
+        props.onPointerMove?.(e as unknown as React.PointerEvent<HTMLButtonElement>)
       }}
-      onPointerLeave={(e: React.PointerEvent) => {
+      onPointerLeave={(e) => {
         const el = e.currentTarget as HTMLElement
         el.style.setProperty("--rx", "0deg")
         el.style.setProperty("--ry", "0deg")
         el.style.setProperty("--tz", "0px")
         el.dataset.tiltActive = "false"
-        props.onPointerLeave?.(e)
+        props.onPointerLeave?.(e as unknown as React.PointerEvent<HTMLButtonElement>)
       }}
       {...props}
     />
