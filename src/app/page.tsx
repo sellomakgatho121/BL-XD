@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSearchParams } from "react";
 import Scene from "@/components/blacklight/Scene";
 import BrandSequence from "@/components/blacklight/BrandSequence";
 import ComingSoon from "@/components/screens/ComingSoon";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 const MarketingPage = dynamic(() => import("@/components/screens/MarketingLanding"), {
   ssr: false,
@@ -21,6 +22,10 @@ export default function Page() {
   const [sequenceComplete, setSequenceComplete] = useState(false);
   const [isLaunched, setIsLaunched] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const previewMode = searchParams.get("preview") === "true";
+  const isDev = process.env.NODE_ENV === "development";
 
   useEffect(() => {
     setMounted(true);
@@ -38,7 +43,7 @@ export default function Page() {
     );
   }
 
-  if (isLaunched) {
+  if (isLaunched || previewMode) {
     return <MarketingPage />;
   }
 
