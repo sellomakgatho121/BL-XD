@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import LandingPage from "@/app/(marketing)/page";
+import MarketingContent from "@/app/(marketing)/MarketingContent";
 
 export default function MarketingLanding() {
   const router = useRouter();
@@ -16,5 +16,5 @@ export default function MarketingLanding() {
     }
   }, []);
 
-  return <LandingPage />;
+  return <MarketingContent />;
 }

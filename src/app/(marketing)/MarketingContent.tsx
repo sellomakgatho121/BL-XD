@@ -10,11 +10,8 @@ import ServiceCard from "@/components/blacklight/service-card";
 import MetricCard from "@/components/blacklight/metric-card";
 import Navigation from "@/components/marketing/navigation";
 import { Button } from "@/components/ui/button";
-import { pageMetadata } from "@/lib/seo";
 import HeroCanvas from "@/components/three/HeroCanvas";
 import { Tilt3D } from "@/components/motion/Tilt3D";
-
-export const metadata = pageMetadata.home();
 
 const services = [
   {
@@ -78,14 +75,12 @@ const metrics = [
   { label: "Clients Served", value: "50+", trend: "up" as const, comparison: "SA SMEs" },
 ];
 
-export default function LandingPage() {
+export default function MarketingContent() {
   return (
     <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative overflow-x-hidden">
-      {/* Effects */}
       <GrainOverlay opacity={0.03} />
       <Scanlines />
 
-      {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -115,12 +110,10 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-[1fr_400px] gap-12 items-center">
             <div className="space-y-8">
-              {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -131,7 +124,6 @@ export default function LandingPage() {
                 <GlitchText text="SOUTH AFRICA'S ELITE WEB AGENCY" intensity="low" triggerOnHover={true} />
               </motion.div>
 
-              {/* Headline */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -143,7 +135,6 @@ export default function LandingPage() {
                 <span className="text-[var(--signal-lime)]">BRILLIANCE</span>
               </motion.h1>
 
-              {/* Subheadline */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -153,7 +144,6 @@ export default function LandingPage() {
                 We dismantle the template-first culture. Bespoke, high-performance digital experiences that wow at first glance.
               </motion.p>
 
-              {/* CTAs */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -177,7 +167,6 @@ export default function LandingPage() {
               </motion.div>
             </div>
 
-            {/* Quantum Field */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -202,7 +191,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -219,7 +207,6 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* Metrics Section */}
       <section className="py-20 border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -249,7 +236,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Services Section */}
       <section className="py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -278,7 +264,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
       <section className="py-20 border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -291,7 +276,7 @@ export default function LandingPage() {
               Why Blacklight
             </h2>
             <p className="text-3xl md:text-4xl font-black tracking-tight text-[var(--spectral-white)]">
-              We're not your typical agency.
+              We&apos;re not your typical agency.
             </p>
           </motion.div>
 
@@ -317,7 +302,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -366,7 +350,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Trust Indicators */}
       <section className="py-16 border-y border-[var(--border)] bg-[var(--card)]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-[var(--spectral-muted)] font-mono uppercase tracking-widest mb-8">
@@ -382,7 +365,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-32 border-t border-[var(--border)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -410,7 +392,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-[var(--border)] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
