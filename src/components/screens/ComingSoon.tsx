@@ -1,6 +1,7 @@
 "use client";
 
 import { Terminal } from "lucide-react";
+import Link from "next/link";
 import { useState, useEffect, Suspense, lazy } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import GlitchText from "@/components/GlitchText";
@@ -35,11 +36,11 @@ export default function ComingSoon() {
   if (!mounted) return null;
 
   return (
-    <div className="flex min-h-screen flex-col bg-onyx text-spectral-white selection:bg-signal-lime selection:text-onyx">
+    <div className="flex min-h-screen flex-col bg-[#0a0a0a] text-white selection:bg-[#00FFFF] selection:text-black">
       {/* Grid Pattern Background */}
-      <div className="fixed inset-0 z-0 opacity-20"
+      <div className="fixed inset-0 z-0"
         style={{
-          backgroundImage: "linear-gradient(#1A1A1A 1px, transparent 1px), linear-gradient(90deg, #1A1A1A 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
           backgroundSize: "40px 40px"
         }} />
 
@@ -62,7 +63,29 @@ export default function ComingSoon() {
               <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-siren-red to-blue-600 opacity-20 blur-xl animate-pulse" />
             </div>
 
-            <p className="max-w-xl text-lg leading-relaxed text-spectral-white/60 md:text-xl font-mono border-l-2 border-signal-lime pl-4">
+            {/* Menu Ribbon (Screenshot Match) */}
+            <div className="w-full bg-black border-b-[3px] border-[#d2bb3b] py-6 px-12 mt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '300ms' }}>
+              <div className="flex flex-row items-center justify-between w-full max-w-6xl mx-auto text-2xl md:text-4xl font-black text-white uppercase">
+                <Link href="/services" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
+                  <span className="w-3 h-3 bg-[#9e8f2a] group-hover:rotate-45 transition-transform duration-300"></span>
+                  SERVICES
+                </Link>
+                <Link href="/portfolio" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
+                  <span className="w-3 h-3 bg-[#00FFFF] group-hover:rotate-45 transition-transform duration-300"></span>
+                  PORTFOLIO
+                </Link>
+                <Link href="/process" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
+                  <span className="w-3 h-3 bg-[#0000FF] group-hover:rotate-45 transition-transform duration-300"></span>
+                  PROCESS
+                </Link>
+                <Link href="/pricing" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
+                  <span className="w-3 h-3 border-[2px] border-white bg-transparent group-hover:rotate-45 transition-transform duration-300"></span>
+                  PRICING
+                </Link>
+              </div>
+            </div>
+
+            <p className="max-w-xl text-lg leading-relaxed text-white/60 md:text-xl font-mono border-l-2 border-[#00FFFF] pl-4">
               <GlitchText text="The future of web development is evolving." intensity="low" triggerOnHover={true} />
               <br />
               <span className="text-sm opacity-50">Something extraordinary is building at the intersection of code and intelligence.</span>
@@ -85,14 +108,14 @@ export default function ComingSoon() {
 
             {/* Countdown Timer */}
             <div className="py-6 animate-in fade-in duration-500 fill-mode-both" style={{ animationDelay: '1400ms' }}>
-              <CountdownTimer targetDate="2026-04-01T00:00:00" />
+              <CountdownTimer targetDate="2026-06-15T00:00:00" />
             </div>
 
             <div className="pt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '2000ms' }}>
               {/* Friendly Explanation */}
-              <div className="mb-6 p-4 border border-signal-lime/20 bg-signal-lime/5 rounded-lg backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500 fill-mode-both" style={{ animationDelay: '2200ms' }}>
-                <p className="text-sm text-spectral-white/80 text-center font-mono">
-                  <span className="text-signal-lime font-bold">✨ Interested in next-gen web development for your business, startup, or organization?</span><br />
+              <div className="mb-6 p-4 border border-[#00FFFF]/20 bg-[#00FFFF]/5 rounded-lg backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500 fill-mode-both" style={{ animationDelay: '2200ms' }}>
+                <p className="text-sm text-white/80 text-center font-mono">
+                  <span className="text-[#00FFFF] font-bold">✨ Interested in next-gen web development for your business, startup, or organization?</span><br />
                   <span className="text-xs opacity-70">Drop your email below and we&apos;ll notify you when we launch. No spam, just cutting-edge tech! 🚀</span>
                 </p>
               </div>
@@ -103,7 +126,7 @@ export default function ComingSoon() {
         </DistortionTransition>
       </main>
 
-      <footer className="relative z-10 border-t border-spectral-white/10 p-8 text-[10px] font-mono tracking-widest text-spectral-white/30 flex justify-between uppercase">
+      <footer className="relative z-10 border-t border-white/10 p-8 text-[10px] font-mono tracking-widest text-white/30 flex justify-between uppercase">
         <span>© 2026 BLACKLIGHT WEB DESIGNS</span>
         <span>ENCRYPTED_SESSION_STABLE</span>
         <span>SCALES_WITHIN_CHAOS</span>
