@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Monitor, Rocket } from "lucide-react";
 
 export default function DevModeSwitcher() {
-  const [mode, setMode] = useState<"main" | "coming-soon">("main");
+  const [mode, setMode] = useState<"main" | "coming-soon">("coming-soon");
 
   useEffect(() => {
     // Check local storage or cookie for preference
