@@ -1,7 +1,6 @@
 "use client";
 
 import { Terminal } from "lucide-react";
-import Link from "next/link";
 import { useState, useEffect, Suspense, lazy } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import GlitchText from "@/components/GlitchText";
@@ -61,28 +60,6 @@ export default function ComingSoon() {
                 <GlitchText text="BLACKLIGHT WEB DESIGNS" intensity="medium" triggerOnHover={true} />
               </h1>
               <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-siren-red to-blue-600 opacity-20 blur-xl animate-pulse" />
-            </div>
-
-            {/* Menu Ribbon (Screenshot Match) */}
-            <div className="w-full bg-black border-b-[3px] border-[#d2bb3b] py-6 px-12 mt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '300ms' }}>
-              <div className="flex flex-row items-center justify-between w-full max-w-6xl mx-auto text-2xl md:text-4xl font-black text-white uppercase">
-                <Link href="/services" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
-                  <span className="w-3 h-3 bg-[#9e8f2a] group-hover:rotate-45 transition-transform duration-300"></span>
-                  SERVICES
-                </Link>
-                <Link href="/portfolio" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
-                  <span className="w-3 h-3 bg-[#00FFFF] group-hover:rotate-45 transition-transform duration-300"></span>
-                  PORTFOLIO
-                </Link>
-                <Link href="/process" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
-                  <span className="w-3 h-3 bg-[#0000FF] group-hover:rotate-45 transition-transform duration-300"></span>
-                  PROCESS
-                </Link>
-                <Link href="/pricing" className="group flex items-center gap-4 transition-transform hover:-translate-y-1">
-                  <span className="w-3 h-3 border-[2px] border-white bg-transparent group-hover:rotate-45 transition-transform duration-300"></span>
-                  PRICING
-                </Link>
-              </div>
             </div>
 
             <p className="max-w-xl text-lg leading-relaxed text-white/60 md:text-xl font-mono border-l-2 border-[#00FFFF] pl-4">

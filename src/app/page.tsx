@@ -6,7 +6,7 @@ import LandingPage from "@/app/(marketing)/page";
 import DevModeSwitcher from "@/components/DevModeSwitcher";
 
 export default function Page() {
-  const [devMode, setDevMode] = useState<"main" | "coming-soon">("main");
+  const [devMode, setDevMode] = useState<"main" | "coming-soon">("coming-soon");
   const [mounted, setMounted] = useState(false);
 
   const isDev = process.env.NODE_ENV === "development";
@@ -24,7 +24,7 @@ export default function Page() {
   if (siteModeEnv === "main") return <LandingPage />;
 
   if (!isDev) {
-    return <ComingSoon />;
+    return <LandingPage />;
   }
 
   if (!mounted) return null;

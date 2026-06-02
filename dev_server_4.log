@@ -1,0 +1,23 @@
+
+> bl-web@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+- Experiments (use with caution):
+  · optimizePackageImports
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 1792ms
+○ Compiling / ...
+ GET / 200 in 4.8s (compile: 4.3s, proxy.ts: 181ms, render: 337ms)
+ GET / 200 in 125ms (compile: 11ms, proxy.ts: 12ms, render: 102ms)
+ GET / 200 in 76ms (compile: 7ms, proxy.ts: 7ms, render: 62ms)
+ GET / 200 in 66ms (compile: 4ms, proxy.ts: 5ms, render: 57ms)
+ GET / 200 in 143ms (compile: 7ms, proxy.ts: 6ms, render: 129ms)
+ GET / 200 in 86ms (compile: 7ms, proxy.ts: 6ms, render: 74ms)
+ GET / 200 in 111ms (compile: 7ms, proxy.ts: 7ms, render: 97ms)
+ GET / 200 in 59ms (compile: 4ms, proxy.ts: 5ms, render: 51ms)
+ GET / 200 in 85ms (compile: 7ms, proxy.ts: 9ms, render: 69ms)
