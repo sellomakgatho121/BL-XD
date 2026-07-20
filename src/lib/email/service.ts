@@ -1,5 +1,4 @@
-import "server-only";
-
+import { Resend } from "resend";
 type SendEmailParams = {
   to: string;
   subject: string;
