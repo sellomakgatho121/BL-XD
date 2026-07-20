@@ -78,7 +78,7 @@ export default function PortfolioContent() {
     activeFilter === "All" ? portfolioItems : portfolioItems.filter((item) => item.industry === activeFilter);
 
   return (
-    <div className="min-h-screen bg-bl-deep text-bl-text overflow-x-hidden">
+    <div className="min-h-screen bg-bl-deep text-bl-text">
       {/* Isometric grid overlay */}
       <div className="fixed inset-0 iso-grid pointer-events-none z-0" />
 
