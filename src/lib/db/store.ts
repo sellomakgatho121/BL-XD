@@ -1,5 +1,3 @@
-import "server-only";
-
 // BL-XD Data Store — in-memory adapter with Neon Postgres fallback
 // Works without any external service. Swap to Neon by setting DATABASE_URL.
 
