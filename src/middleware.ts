@@ -1,35 +1,43 @@
 import { auth } from "@/lib/auth/config";
 import { NextResponse } from "next/server";
 
+const publicPaths = ["/", "/services", "/portfolio", "/pricing", "/process", "/blog", "/contact", "/login", "/register", "/reset-password", "/lab"];
+const publicApiPaths = ["/api/blog", "/api/team", "/api/portfolio", "/api/contact"];
+
 export default auth((req) => {
   const { pathname } = req.nextUrl;
   const isLoggedIn = !!req.auth;
-  const role = (req.auth?.user as any)?.role;
 
-  // Auth pages — redirect to admin if already logged in
-  if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
-    if (isLoggedIn) {
-      return NextResponse.redirect(new URL("/admin", req.url));
-    }
-    return NextResponse.next();
+  // Public API routes — no auth required
+  if (publicApiPaths.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
+    return;
+  }
+
+  // Protected API routes — require auth
+  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/auth/") && !pathname.startsWith("/api/contact") && !pathname.startsWith("/api/blog") && !pathname.startsWith("/api/team") && !pathname.startsWith("/api/portfolio")) {
+    if (!isLoggedIn) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   // Admin routes — require auth
-  if (pathname.startsWith("/admin") || pathname.startsWith("/dashboard")) {
-    if (!isLoggedIn) {
-      const loginUrl = new URL("/login", req.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-    // Check admin role
-    if (pathname.startsWith("/admin") && role !== "admin" && role !== "superadmin") {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
+  if (pathname.startsWith("/admin") && !isLoggedIn) {
+    const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return Response.redirect(loginUrl);
   }
 
-  return NextResponse.next();
+  // Portal routes — require auth
+  if (pathname.startsWith("/portal") && !isLoggedIn) {
+    const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return Response.redirect(loginUrl);
+  }
+
+  // Public marketing pages — allow
+  if (publicPaths.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
+    return;
+  }
 });
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|public).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/auth).*)"],
 };

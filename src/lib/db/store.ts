@@ -248,3 +248,4 @@ export function seedAdmin() {
 
 // Call seed on import
 seedAdmin();
+seedAdmin();
