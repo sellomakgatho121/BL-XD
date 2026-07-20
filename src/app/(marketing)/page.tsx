@@ -1,312 +1,570 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, Terminal, Globe, Zap, Mail, Github, Linkedin, Instagram } from "lucide-react";
+import { ArrowRight, Sparkles, Globe, Layers, Move3d, Github, Linkedin, Instagram, Menu, X } from "lucide-react";
 import Link from "next/link";
 
-// Register ScrollTrigger
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
+// ─── Gold Particles (ambient floating dots) ───
+function GoldParticles({ count = 30 }: { count?: number }) {
+  const [dots] = useState(() =>
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      size: Math.random() * 3 + 1,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      delay: Math.random() * 8,
+      duration: Math.random() * 6 + 6,
+    }))
+  );
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {dots.map((d) => (
+        <div
+          key={d.id}
+          className="absolute rounded-full opacity-0"
+          style={{
+            left: `${d.x}%`,
+            top: `${d.y}%`,
+            width: d.size,
+            height: d.size,
+            background: d.size > 2 ? "rgba(181, 154, 95, 0.6)" : "rgba(181, 154, 95, 0.3)",
+            animation: `float-y ${d.duration}s ease-in-out ${d.delay}s infinite`,
+            filter: d.size > 2 ? "blur(0px)" : "blur(1px)",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── 3D Tilt Card Wrapper ───
+function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    cardRef.current.style.setProperty("--mouse-x", `${x * 30}`);
+    cardRef.current.style.setProperty("--mouse-y", `${y * -30}`);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!cardRef.current) return;
+    cardRef.current.style.setProperty("--mouse-x", "0");
+    cardRef.current.style.setProperty("--mouse-y", "0");
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`tilt-card ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ─── Isometric Floating Shape (decorative) ───
+function IsoShape({ className = "" }: { className?: string }) {
+  return (
+    <div className={`absolute pointer-events-none ${className}`}>
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 0L74.641 20V60L40 80L5.359 60V20L40 0Z" fill="rgba(181, 154, 95, 0.06)" stroke="rgba(181, 154, 95, 0.15)" strokeWidth="1" />
+      </svg>
+    </div>
+  );
+}
+
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const zContext = useRef<any>(null);
-  const stickyNavRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
+  // ─── GSAP Scroll Animations ───
   useGSAP(() => {
-    if (!containerRef.current || !galleryRef.current) return;
+    if (!containerRef.current) return;
 
-    // Create a massive Z-axis pinning animation
-    // The gallery container gets pinned, and its children move towards the camera (translateZ)
+    // Hero entrance
+    const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    heroTl
+      .from(".hero-badge", { opacity: 0, y: 30, duration: 0.8 })
+      .from(".hero-title", { opacity: 0, y: 40, duration: 1 }, "-=0.4")
+      .from(".hero-subtitle", { opacity: 0, y: 30, duration: 0.8 }, "-=0.6")
+      .from(".hero-cta", { opacity: 0, y: 20, duration: 0.6 }, "-=0.4")
+      .from(".hero-scroll-indicator", { opacity: 0, y: 10, duration: 0.5 }, "-=0.2");
 
-    // Initial setup: push elements far back in Z space
-    gsap.set(".floating-block", {
-      z: (i) => i * -4000 - 1500, // MASSIVE stagger deeply into screen to completely separate them
-      opacity: 0,
-      scale: 0.8,
-    });
-
-    const tl = gsap.timeline({
+    // Parallax hero shapes
+    gsap.to(".hero-shape-1", {
+      y: 80,
+      rotation: 15,
+      ease: "none",
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=15000", // Huge scroll distance to allow time between blocks
-        pin: true,
-        scrub: 1, // Smooth scrubbing
-      }
+        end: "bottom top",
+        scrub: 1.5,
+      },
+    });
+    gsap.to(".hero-shape-2", {
+      y: -60,
+      rotation: -10,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1.5,
+      },
     });
 
-    // Animate all blocks flying forward
-    tl.to(".floating-block", {
-      z: 1500, // Fly past the camera further
-      opacity: 1,
-      scale: 1.5,
-      ease: "none",
-      stagger: {
-        each: 2, // Massive 2-second delay between each block's animation start to guarantee they don't overlap
-      },
-      duration: 6 // Longer duration for the flight
-    }, 0);
-
-    // Initial hero text fades out as we start scrolling
-    tl.to(".hero-text", {
-      opacity: 0,
-      y: -50,
-      duration: 0.5
-    }, 0);
-
-    // Sticky Nav appearance animation
-    if (stickyNavRef.current) {
-      gsap.from(".nav-link", {
+    // Section headers fade up
+    gsap.utils.toArray<HTMLElement>(".section-header").forEach((header) => {
+      gsap.from(header, {
         scrollTrigger: {
-          trigger: stickyNavRef.current,
-          start: "top bottom-=100", // animate when it enters the viewport
+          trigger: header,
+          start: "top 85%",
         },
-        y: 50,
         opacity: 0,
-        stagger: 0.1,
-        duration: 0.5,
-        ease: "back.out(1.7)"
+        y: 40,
+        duration: 0.8,
+        ease: "power3.out",
       });
-    }
+    });
+
+    // Service cards staggered entrance
+    gsap.utils.toArray<HTMLElement>(".service-card").forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+        },
+        opacity: 0,
+        y: 50,
+        rotationX: 10,
+        duration: 0.7,
+        delay: i * 0.1,
+        ease: "power3.out",
+      });
+    });
+
+    // Method steps staggered
+    gsap.utils.toArray<HTMLElement>(".method-step").forEach((step, i) => {
+      gsap.from(step, {
+        scrollTrigger: {
+          trigger: step,
+          start: "top 88%",
+        },
+        opacity: 0,
+        x: i % 2 === 0 ? -30 : 30,
+        duration: 0.6,
+        delay: i * 0.12,
+        ease: "power2.out",
+      });
+    });
+
+    // CTA section parallax
+    gsap.from(".cta-section", {
+      scrollTrigger: {
+        trigger: ".cta-section",
+        start: "top 80%",
+      },
+      opacity: 0,
+      scale: 0.95,
+      duration: 1,
+      ease: "power2.out",
+    });
 
   }, { scope: containerRef });
 
   return (
-    <main className="relative bg-[var(--neo-white)] text-[var(--neo-black)] overflow-hidden selection:bg-[var(--neo-yellow)] selection:text-[var(--neo-black)] font-space-grotesk">
+    <main
+      ref={containerRef}
+      className="relative bg-bl-deep text-bl-text overflow-x-hidden font-body"
+    >
+      {/* ─── Ambient Gold Particles ─── */}
+      <GoldParticles count={40} />
 
-      {/* Grid Background */}
-      <div className="fixed inset-0 pointer-events-none opacity-20"
-        style={{
-          backgroundImage: 'linear-gradient(var(--neo-black) 1px, transparent 1px), linear-gradient(90deg, var(--neo-black) 1px, transparent 1px)',
-          backgroundSize: '40px 40px'
-        }}
-      />
+      {/* ─── Isometric Grid Overlay ─── */}
+      <div className="fixed inset-0 iso-grid pointer-events-none z-[1]" />
 
-      {/* ━━━ NAVIGATION ━━━ */}
-      <nav aria-label="Main Navigation" className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)]">
-        <div className="max-w-[1400px] mx-auto px-6 h-[70px] flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group" aria-label="Go to Blacklight Homepage">
-            <div className="w-10 h-10 bg-[var(--neo-yellow)] neo-border flex items-center justify-center neo-shadow">
-              <span className="font-black text-xl">B</span>
-            </div>
-            <span className="font-bold text-xl tracking-tighter uppercase hidden sm:block">
-              Blacklight
-            </span>
-          </Link>
+      {/* ═══════════════════════════════════════
+         FLOATING PILL NAV (floating-ui + spatial)
+         ═══════════════════════════════════════ */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 float-pill px-6 py-3 flex items-center gap-6 max-w-[90vw] overflow-x-auto hide-scrollbar">
+        <Link href="/" className="flex items-center gap-2 shrink-0">
+          <span className="w-8 h-8 rounded-lg bg-bl-gold/20 border border-bl-gold/30 flex items-center justify-center">
+            <span className="text-bl-gold font-bold text-sm">B</span>
+          </span>
+          <span className="font-display font-bold text-sm tracking-wider uppercase hidden sm:block text-bl-text/80">
+            Blacklight
+          </span>
+        </Link>
 
-          <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-6 ml-4">
+          {["Services", "Portfolio", "Process", "Pricing"].map((item) => (
             <Link
-              href="/contact"
-              className="px-6 py-2 bg-[var(--neo-red)] text-[var(--neo-white)] font-bold uppercase tracking-wider neo-border neo-shadow-interactive flex items-center gap-2"
-              aria-label="Get a custom quote"
+              key={item}
+              href={`/${item.toLowerCase()}`}
+              className="text-xs font-medium uppercase tracking-widest text-bl-text-muted hover:text-bl-gold transition-colors"
             >
-              Get Quote
-              <ArrowRight size={16} />
+              {item}
             </Link>
-          </div>
+          ))}
         </div>
+
+        <Link
+          href="/contact"
+          className="ml-auto shrink-0 px-5 py-2 bg-bl-gold/15 border border-bl-gold/30 rounded-full text-xs font-bold uppercase tracking-wider text-bl-gold hover:bg-bl-gold/25 transition-all flex items-center gap-2"
+        >
+          Get Quote
+          <ArrowRight size={14} />
+        </Link>
+
+        <button
+          className="md:hidden ml-2 text-bl-text-muted"
+          onClick={() => setMobileNavOpen(!mobileNavOpen)}
+          aria-label="Toggle navigation menu"
+        >
+          {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </nav>
 
-      {/* ━━━ Cinematic Zero-Gravity Container ━━━ */}
-      <div ref={containerRef} className="h-screen w-full relative perspective-[1000px] transform-view">
+      {/* Mobile nav dropdown */}
+      {mobileNavOpen && (
+        <div className="fixed top-20 left-4 right-4 z-50 float-pill p-6 md:hidden">
+          <div className="flex flex-col gap-4">
+            {["Services", "Portfolio", "Process", "Pricing"].map((item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase()}`}
+                className="text-sm font-medium uppercase tracking-widest text-bl-text hover:text-bl-gold transition-colors"
+                onClick={() => setMobileNavOpen(false)}
+              >
+                {item}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
-        {/* Initial Static Hero */}
-        <div className="hero-text absolute inset-0 flex flex-col items-center justify-center z-50 pointer-events-none">
-          <div className="bg-[var(--neo-yellow)] neo-border neo-shadow p-4 mb-8 rotate-[-2deg] pointer-events-auto">
-            <h2 className="font-bold uppercase tracking-widest text-sm flex items-center gap-2" aria-label="We are an Elite Web Agency">
-              <Terminal size={16} /> Elite Web Agency
-            </h2>
+      {/* ═══════════════════════════════════════
+         HERO SECTION — 3D UI + Spatial Design
+         ═══════════════════════════════════════ */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center scene-3d z-10 pt-24 pb-16">
+        {/* Decorative 3D shapes */}
+        <IsoShape className="hero-shape-1 top-[15%] left-[8%] w-32 h-32 opacity-0" />
+        <IsoShape className="hero-shape-2 bottom-[20%] right-[10%] w-24 h-24 opacity-0" />
+
+        {/* 3D floating glass orbs (CSS) */}
+        <div className="absolute top-1/4 right-[15%] w-64 h-64 rounded-full bg-bl-gold/5 blur-[80px] animate-float-slow pointer-events-none" />
+        <div className="absolute bottom-1/3 left-[10%] w-48 h-48 rounded-full bg-bl-cyan/5 blur-[60px] animate-float-delayed pointer-events-none" />
+
+        <div className="relative text-center max-w-4xl mx-auto px-6 preserve-3d">
+          {/* Badge */}
+          <div className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-8">
+            <Sparkles size={14} />
+            Elite Web Engineering
           </div>
 
-          <h1 className="text-[10vw] font-black leading-[0.85] tracking-tighter text-center uppercase mix-blend-difference text-[var(--neo-white)]" style={{ textShadow: '4px 4px 0 var(--neo-black)' }}>
-            Break <br /> The Rules
+          {/* Hero Title — 3D perspective text */}
+          <h1 className="hero-title text-[clamp(3rem,10vw,8rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
+            <span className="block">Break The</span>
+            <span className="gold-gradient">Surface</span>
           </h1>
 
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-            <span className="font-bold text-xs tracking-widest uppercase bg-[var(--neo-white)] border-2 border-[var(--neo-black)] px-4 py-1" aria-hidden="true">Scroll to fly</span>
-            <div className="w-1 h-16 bg-[var(--neo-black)] animate-pulse" aria-hidden="true" />
-          </div>
-        </div>
+          {/* Subtitle */}
+          <p className="hero-subtitle text-lg md:text-xl text-bl-text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
+            We engineer spatial web experiences that exist in three dimensions.
+            <br className="hidden md:block" />
+            Passive browsing is dead — welcome to the depth.
+          </p>
 
-        {/* Floating Narrative Elements in 3D Space */}
-        <div ref={galleryRef} className="absolute inset-0 preserve-3d" aria-label="Interactive 3D Web Experience Portfolio">
-
-          {/* Block 1: Intro */}
-          <div className="floating-block absolute top-[15%] left-[5%] md:left-[10%] w-[90vw] md:w-[400px] bg-[var(--neo-white)] neo-border neo-shadow p-8 rotate-[5deg]">
-            <h3 className="text-4xl font-black uppercase mb-4">We Engineer Anomalies</h3>
-            <p className="text-lg font-medium">Passive browsing is dead. We build cinematic, high-performance web experiences that refuse to blend in.</p>
-          </div>
-
-          {/* Block 2: Service - Spark */}
-          <div className="floating-block absolute top-[5%] right-[5%] md:right-[15%] w-[85vw] md:w-[350px] bg-[var(--neo-yellow)] neo-border neo-shadow p-8 rotate-[-3deg]">
-            <Zap size={32} className="mb-4" aria-hidden="true" />
-            <h3 className="text-3xl font-black uppercase mb-2">Landing Pages</h3>
-            <p className="font-bold border-b-2 border-[var(--neo-black)] pb-4 mb-4" aria-label="Pricing starts at 3,500 Rand">R3,500</p>
-            <p className="text-sm font-medium">High-impact single-page sites for new ventures. Asymmetric technical layout, 48-hour delivery.</p>
-          </div>
-
-          {/* Block 3: Giant Image / Visual */}
-          <div className="floating-block absolute top-[40%] left-[5%] md:left-[35%] w-[90vw] md:w-[500px] h-[300px] bg-[var(--neo-black)] neo-border neo-shadow overflow-hidden group rotate-[2deg]">
-            <div className="absolute inset-0 bg-[var(--neo-cyan)] opacity-50 mix-blend-multiply transition-opacity group-hover:opacity-0" aria-hidden="true" />
-            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80" alt="Dark cyberpunk motherboard aesthetic with glowing neon lines" className="w-full h-full object-cover grayscale" />
-            <div className="absolute top-4 left-4 bg-[var(--neo-white)] neo-border px-3 py-1 font-bold text-xs uppercase" aria-hidden="true">Visual 01</div>
-          </div>
-
-          {/* Block 4: Brutal Statement */}
-          <div className="floating-block absolute top-[65%] left-[5%] md:left-[10%] w-[90vw] md:w-[600px] bg-[var(--neo-blue)] text-[var(--neo-white)] neo-border neo-shadow p-8 md:p-10 rotate-[-1deg]">
-            <h2 className="text-6xl md:text-[5rem] leading-[0.9] font-black uppercase tracking-tighter">
-              No<br />Templates.
-            </h2>
-            <div className="mt-6 font-bold text-xl md:ml-20 bg-[var(--neo-white)] text-[var(--neo-black)] inline-block px-4 py-2 neo-border">
-              Just Raw Code.
-            </div>
-          </div>
-
-          {/* Block 5: Service - Growth */}
-          <div className="floating-block absolute top-[75%] right-[5%] md:right-[10%] w-[90vw] md:w-[400px] bg-[var(--neo-white)] neo-border neo-shadow p-8 rotate-[4deg]">
-            <Globe size={32} className="mb-4 text-[var(--neo-blue)]" aria-hidden="true" />
-            <h3 className="text-3xl font-black uppercase mb-2">Business Sites</h3>
-            <p className="font-bold border-b-2 border-[var(--neo-black)] pb-4 mb-4" aria-label="Pricing starts at 8,500 Rand">R8,500</p>
-            <p className="text-sm font-medium mb-6">Professional 3-5 page presence for established SMEs. Custom design system with SEO foundation.</p>
-            <button className="w-full py-3 bg-[var(--neo-black)] text-[var(--neo-white)] font-bold uppercase transition-transform hover:-translate-y-1" aria-label="Select Business Tier">Select Tier</button>
-          </div>
-
-          {/* Block 6: Contact floating CTA */}
-          <div className="floating-block absolute top-[25%] left-[50%] -translate-x-1/2 w-[95vw] md:w-[50vw] bg-[var(--neo-red)] text-[var(--neo-white)] neo-border neo-shadow p-8 md:p-12 text-center rotate-[-2deg]">
-            <h2 className="text-4xl md:text-6xl font-black uppercase mb-8">Ready to Reveal Brilliance?</h2>
+          {/* CTA Buttons */}
+          <div className="hero-cta flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-4 px-6 md:px-10 py-5 bg-[var(--neo-white)] text-[var(--neo-black)] font-black text-lg md:text-xl uppercase tracking-wider neo-border neo-shadow-interactive"
-              aria-label="Initiate Sequence to proceed to contact us"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-bl-gold text-bl-deep font-bold uppercase tracking-wider rounded-full transition-all hover:bg-bl-amber hover:shadow-[0_0_40px_rgba(181,154,95,0.3)]"
             >
               Initiate Sequence
-              <ArrowRight size={24} />
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-3 px-8 py-4 border border-bl-glass-border rounded-full text-bl-text/80 font-medium hover:bg-bl-glass transition-all"
+            >
+              <Move3d size={18} />
+              View in 3D
             </Link>
           </div>
+
+          {/* Scroll indicator */}
+          <div className="hero-scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-bl-text-muted/60 font-mono">Scroll</span>
+            <div className="w-px h-12 bg-gradient-to-b from-bl-gold/40 to-transparent" />
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* ━━━ Sticky Navigation ━━━ */}
-      <div
-        ref={stickyNavRef}
-        className="sticky top-[70px] z-40 bg-[var(--neo-black)] text-[var(--neo-white)] border-y-4 border-b-8 border-[var(--neo-black)] overflow-hidden shadow-[0px_10px_0px_var(--neo-yellow)]"
-        aria-label="Secondary Navigation Context Menu"
-      >
-        <div className="max-w-[1400px] mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6 overflow-x-auto whitespace-nowrap hide-scrollbar">
-          <Link href="/services" aria-label="View our Services" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-yellow)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-yellow)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
-            Services
-          </Link>
-          <Link href="/portfolio" aria-label="View our Web Development Portfolio" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-cyan)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-cyan)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
-            Portfolio
-          </Link>
-          <Link href="/process" aria-label="View our Development Process" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-blue)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-blue)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
-            Process
-          </Link>
-          <Link href="/pricing" aria-label="View our Pricing and Packages" className="nav-link text-2xl md:text-3xl font-black uppercase tracking-tighter hover:text-[var(--neo-green)] flex items-center gap-2 transition-colors">
-            <span className="w-4 h-4 bg-[var(--neo-green)] inline-block border-2 border-[var(--neo-white)]" aria-hidden="true"></span>
-            Pricing
-          </Link>
-        </div>
-      </div>
+      {/* ═══════════════════════════════════════
+         SERVICES — Isometric + Layered + Floating
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="section-header text-center mb-20">
+            <span className="inline-block px-3 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Layers size={14} className="inline mr-1" />
+              What We Build
+            </span>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
+              Depth <span className="gold-gradient">Engineered</span>
+            </h2>
+            <p className="text-bl-text-muted mt-4 max-w-xl mx-auto">
+              Three layers of service, each with its own dimension of depth.
+            </p>
+          </div>
 
-      {/* ━━━ Normal Flow Content below the flight ━━━ */}
-      <section className="py-32 relative z-10 bg-[var(--neo-white)] mt-4">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <h2 className="text-5xl lg:text-8xl font-black uppercase tracking-tighter mb-16 border-b-8 border-[var(--neo-black)] pb-4 inline-block">
-            The Method
-          </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { id: "01", title: "Discovery", desc: "We reverse-engineer what your market expects — then design the opposite." },
-              { id: "02", title: "Architecture", desc: "Every pixel placement is intentional, every interaction maps to a conversion goal." },
-              { id: "03", title: "Build", desc: "Performance-first engineering with React, Next.js, and raw GSAP power." },
-              { id: "04", title: "Launch", desc: "We measure real performance metrics, not vanity numbers." }
-            ].map((step, i) => (
-              <div key={step.id} className="bg-[var(--neo-white)] neo-border neo-shadow p-8 relative">
-                <div className="absolute -top-6 -left-6 bg-[var(--neo-yellow)] neo-border w-16 h-16 flex items-center justify-center font-black text-2xl neo-shadow rotate-[-6deg]">
-                  {step.id}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 scene-3d-near">
+            {/* Card 1: Landing Pages — 3D tilt + glass */}
+            <TiltCard className="service-card">
+              <div className="spatial-panel p-8 md:p-10 h-full flex flex-col rim-light">
+                <div className="w-14 h-14 rounded-2xl bg-bl-gold/10 border border-bl-gold/20 flex items-center justify-center mb-6">
+                  <Sparkles size={28} className="text-bl-gold" />
                 </div>
-                <h3 className="text-2xl font-black uppercase mt-8 mb-4">{step.title}</h3>
-                <p className="font-medium text-lg border-t-2 border-dashed border-[var(--neo-black)] pt-4">
-                  {step.desc}
+                <h3 className="text-2xl font-bold uppercase mb-2 font-display">Landing</h3>
+                <div className="text-3xl font-black gold-gradient mb-4">R3,500</div>
+                <p className="text-bl-text-muted text-sm flex-1 leading-relaxed">
+                  High-impact single-page sites for new ventures. Asymmetric spatial layout, 48-hour delivery. You break through, fast.
                 </p>
+                <div className="mt-6 pt-6 border-t border-bl-glass-border">
+                  <Link href="/contact" className="text-bl-gold text-xs font-bold uppercase tracking-widest hover:underline flex items-center gap-2">
+                    Select Tier <ArrowRight size={12} />
+                  </Link>
+                </div>
+              </div>
+            </TiltCard>
+
+            {/* Card 2: Business Sites — isometric tilt */}
+            <TiltCard className="service-card">
+              <div className="spatial-panel p-8 md:p-10 h-full flex flex-col rim-light spatial-panel-gold">
+                <div className="w-14 h-14 rounded-2xl bg-bl-gold/15 border border-bl-gold/30 flex items-center justify-center mb-6">
+                  <Globe size={28} className="text-bl-gold" />
+                </div>
+                <h3 className="text-2xl font-bold uppercase mb-2 font-display">Business</h3>
+                <div className="text-3xl font-black gold-gradient mb-4">R8,500</div>
+                <p className="text-bl-text-muted text-sm flex-1 leading-relaxed">
+                  Professional 3–5 page presence for established SMEs. Custom design system with SEO foundation and spatial UX principles.
+                </p>
+                <div className="mt-6 pt-6 border-t border-bl-glass-border">
+                  <Link href="/contact" className="text-bl-gold text-xs font-bold uppercase tracking-widest hover:underline flex items-center gap-2">
+                    Select Tier <ArrowRight size={12} />
+                  </Link>
+                </div>
+              </div>
+            </TiltCard>
+
+            {/* Card 3: Enterprise — layered overlapping */}
+            <TiltCard className="service-card">
+              <div className="spatial-panel p-8 md:p-10 h-full flex flex-col rim-light">
+                <div className="w-14 h-14 rounded-2xl bg-bl-cyan/10 border border-bl-cyan/20 flex items-center justify-center mb-6">
+                  <Layers size={28} className="text-bl-cyan" />
+                </div>
+                <h3 className="text-2xl font-bold uppercase mb-2 font-display">Enterprise</h3>
+                <div className="text-3xl font-black text-bl-cyan mb-4">Custom</div>
+                <p className="text-bl-text-muted text-sm flex-1 leading-relaxed">
+                  Full-stack web applications with real-time data, auth, payment, and deployment. Built on Next.js, Supabase, and Three.js.
+                </p>
+                <div className="mt-6 pt-6 border-t border-bl-glass-border">
+                  <Link href="/contact" className="text-bl-cyan text-xs font-bold uppercase tracking-widest hover:underline flex items-center gap-2">
+                    Let&apos;s Talk <ArrowRight size={12} />
+                  </Link>
+                </div>
+              </div>
+            </TiltCard>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+         THE METHOD — Layered Design + Isometric
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-32 px-6">
+        {/* Layered decorative element */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-bl-gold/[0.02] to-transparent pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto">
+          <div className="section-header text-center mb-20">
+            <span className="inline-block px-3 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Move3d size={14} className="inline mr-1" />
+              Our Process
+            </span>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
+              The <span className="gold-gradient">Method</span>
+            </h2>
+            <p className="text-bl-text-muted mt-4 max-w-xl mx-auto">
+              Four dimensions of depth we take every project through.
+            </p>
+          </div>
+
+          {/* Layered stack (overlapping cards) */}
+          <div className="layer-stack max-w-3xl mx-auto">
+            {[
+              { num: "01", title: "Discovery", desc: "We reverse-engineer what your market expects — then design the opposite. Surface assumptions, find the gap.", color: "gold" },
+              { num: "02", title: "Architecture", desc: "Every pixel placed with intent. Every interaction mapped to a conversion goal in 3D space.", color: "cyan" },
+              { num: "03", title: "Build", desc: "Performance-first engineering with React, Next.js, Three.js, and raw spatial design power.", color: "gold" },
+              { num: "04", title: "Launch", desc: "We measure real performance metrics — not vanity. Core Web Vitals, conversion, and depth.", color: "cyan" },
+            ].map((step, i) => (
+              <div
+                key={step.num}
+                className={`method-step spatial-panel p-8 md:p-10 mb-4 md:mb-6 ml-0 md:ml-${i * 6} mr-0 md:mr-${(3 - i) * 6} rim-light`}
+              >
+                <div className="flex items-start gap-6">
+                  <div className={`shrink-0 w-16 h-16 rounded-2xl ${step.color === "gold" ? "bg-bl-gold/10 border border-bl-gold/20" : "bg-bl-cyan/10 border border-bl-cyan/20"} flex items-center justify-center`}>
+                    <span className={`text-2xl font-black ${step.color === "gold" ? "text-bl-gold" : "text-bl-cyan"}`}>
+                      {step.num}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl md:text-3xl font-bold uppercase mb-3 font-display">{step.title}</h3>
+                    <p className="text-bl-text-muted leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ━━━ FOOTER ━━━ */}
-      <footer className="border-t-4 border-[var(--neo-black)] bg-[var(--neo-yellow)] pt-20 pb-10">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-[var(--neo-white)] neo-border flex items-center justify-center neo-shadow">
-                  <span className="font-black text-2xl">B</span>
-                </div>
-                <span className="font-black text-2xl tracking-tighter uppercase">
-                  Blacklight
-                </span>
+      {/* ═══════════════════════════════════════
+         CTA SECTION — Spatial Glass + 3D Depth
+         ═══════════════════════════════════════ */}
+      <section className="cta-section relative z-10 py-32 px-6">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bl-gold/[0.02] to-transparent pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto">
+          <div className="spatial-panel p-10 md:p-16 text-center rim-light spatial-panel-gold relative overflow-hidden">
+            {/* Background glow */}
+            <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-bl-gold/8 blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-bl-cyan/5 blur-[100px] pointer-events-none" />
+
+            <div className="relative">
+              <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-gold/10 border border-bl-gold/20 text-bl-gold text-xs font-semibold uppercase tracking-widest mb-6">
+                <Sparkles size={14} />
+                Ready for Depth?
+              </span>
+
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 gold-glow">
+                Reveal Your<br />
+                <span className="gold-gradient">Brilliance</span>
+              </h2>
+
+              <p className="text-bl-text-muted text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+                Stop blending in. Let&apos;s build a spatial web experience that lives in another dimension &mdash; yours.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-3 px-10 py-5 bg-bl-gold text-bl-deep font-bold uppercase tracking-wider rounded-full transition-all hover:bg-bl-amber hover:shadow-[0_0_60px_rgba(181,154,95,0.3)] text-lg"
+                >
+                  Initiate Sequence
+                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+                </Link>
               </div>
-              <p className="text-lg font-bold max-w-xs">
-                Revealing unseen brilliance.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+         FOOTER — Layered Design
+         ═══════════════════════════════════════ */}
+      <footer className="relative z-10 border-t border-bl-glass-border py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            {/* Brand */}
+            <div className="md:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-10 h-10 rounded-xl bg-bl-gold/15 border border-bl-gold/25 flex items-center justify-center">
+                  <span className="text-bl-gold font-black text-lg">B</span>
+                </span>
+                <span className="font-display font-bold text-base uppercase tracking-wider">Blacklight</span>
+              </div>
+              <p className="text-sm text-bl-text-muted max-w-xs leading-relaxed">
+                Revealing unseen brilliance through spatial web engineering.
               </p>
             </div>
 
+            {/* Contact */}
             <div>
-              <h4 className="text-xl font-black uppercase mb-6 bg-[var(--neo-black)] text-[var(--neo-white)] inline-block px-3 py-1">Contact</h4>
-              <a href="mailto:hello@blacklight.co.za" className="text-lg font-bold hover:underline flex items-center gap-2 mb-4">
-                <Mail size={20} /> hello@blacklight.co.za
+              <h4 className="text-xs font-bold uppercase tracking-widest text-bl-gold mb-6">Contact</h4>
+              <a href="mailto:hello@blacklight.co.za" className="block text-sm text-bl-text-muted hover:text-bl-gold transition-colors mb-4">
+                hello@blacklight.co.za
               </a>
-              <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 bg-[var(--neo-white)] neo-border neo-shadow-interactive flex items-center justify-center">
-                  <Github size={24} />
-                </a>
-                <a href="#" className="w-12 h-12 bg-[var(--neo-blue)] text-[var(--neo-white)] neo-border neo-shadow-interactive flex items-center justify-center">
-                  <Linkedin size={24} />
-                </a>
-                <a href="#" className="w-12 h-12 bg-[var(--neo-pink)] text-[var(--neo-black)] neo-border neo-shadow-interactive flex items-center justify-center">
-                  <Instagram size={24} />
-                </a>
+              <div className="flex gap-3">
+                {[Github, Linkedin, Instagram].map((Icon, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="w-10 h-10 rounded-full bg-bl-glass border border-bl-glass-border flex items-center justify-center text-bl-text-muted hover:text-bl-gold hover:border-bl-gold/30 transition-all"
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
               </div>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-bl-gold mb-6">Services</h4>
+              <ul className="space-y-3">
+                {["Landing Pages", "Business Sites", "Enterprise Apps", "Consulting"].map((s) => (
+                  <li key={s}>
+                    <Link href="/services" className="text-sm text-bl-text-muted hover:text-bl-gold transition-colors">
+                      {s}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Explore */}
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-bl-gold mb-6">Explore</h4>
+              <ul className="space-y-3">
+                {["Portfolio", "Process", "Pricing", "Contact"].map((s) => (
+                  <li key={s}>
+                    <Link href={`/${s.toLowerCase()}`} className="text-sm text-bl-text-muted hover:text-bl-gold transition-colors">
+                      {s}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          <div className="border-t-4 border-[var(--neo-black)] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="font-bold text-sm uppercase">
-              © 2026 Blacklight Web Designs
+          {/* Bottom bar */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-bl-glass-border">
+            <p className="text-xs text-bl-text-muted/60 uppercase tracking-wider">
+              &copy; 2026 Blacklight Web Designs
             </p>
-            <p className="font-bold text-sm uppercase bg-[var(--neo-white)] px-4 py-2 neo-border">
+            <span className="text-xs text-bl-text-muted/40 px-3 py-1 rounded-full border border-bl-glass-border">
               Designed in South Africa
-            </p>
+            </span>
           </div>
         </div>
       </footer>
-
-      {/* Required CSS for the 3D aspect */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .perspective-\\[1000px\\] {
-          perspective: 1000px;
-        }
-        .transform-view {
-          transform-style: preserve-3d;
-        }
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-      `}} />
     </main>
   );
 }

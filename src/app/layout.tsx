@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import CRTOverlay from "@/components/CRTOverlay";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import SmoothScroll from "@/components/SmoothScroll";
 import Script from "next/script";
 
 const spaceGrotesk = Space_Grotesk({
@@ -31,15 +28,15 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Blacklight Web Designs | Revealing Brilliance",
+  title: "Blacklight Web Designs | Depth Engineered",
   description:
-    "Elite web design for disruptive tech startups and luxury technical brands. Bespoke, high-performance digital experiences from South Africa.",
+    "Elite spatial web engineering for disruptive tech startups and luxury technical brands. Custom, high-performance digital experiences from South Africa.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://blacklightwebdesigns.com"
   ),
 };
 
-// Organization Schema for GEO (Generative Engine Optimization)
+// Organization Schema for GEO
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -84,16 +81,10 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} font-sans antialiased`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
-        <SmoothScroll>
-          <CRTOverlay />
-          {children}
-        </SmoothScroll>
+        {children}
       </body>
     </html>
   );

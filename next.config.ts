@@ -12,9 +12,7 @@ const nextConfig: NextConfig = {
 
   reactStrictMode: true,
 
-  turbopack: {
-    resolveExtensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
-  },
+  // Turbopack disabled on ARM64 Termux — WASM bindings don't support turbo.createProject
 
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
 
