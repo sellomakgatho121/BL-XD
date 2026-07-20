@@ -1,132 +1,73 @@
 "use client";
 
-import { useState } from "react";
-import { Bell, X, Check, CheckCheck, MessageSquare, FolderKanban, Users, Settings } from "lucide-react";
-import { useNotifications } from "@/lib/notifications";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useEffect, useState } from "react";
+import { Bell, X } from "lucide-react";
 
-const typeIcons = {
-  message: MessageSquare,
-  project_update: FolderKanban,
-  lead: Users,
-  system: Settings,
+const icons: Record<string, any> = {
+  message: Bell,
+  project_update: Bell,
+  lead: Bell,
+  system: Bell,
 };
 
-const typeColors = {
-  message: "text-[var(--signal-lime)]",
-  project_update: "text-[var(--electric-purple)]",
-  lead: "text-[var(--siren-red)]",
-  system: "text-[var(--spectral-muted)]",
+const iconColors: Record<string, string> = {
+  message: "#B59A5F",
+  project_update: "#00CCFF",
+  lead: "#D7FF00",
+  system: "#00FF88",
 };
 
-export function NotificationCenter({ userId }: { userId: string }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const { notifications, markAsRead, markAllAsRead, unreadCount } = useNotifications(userId);
+export default function NotificationCenter() {
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/notifications")
+      .then((r) => r.json())
+      .then(setNotifications)
+      .catch(() => {});
+  }, []);
+
+  const unread = notifications.filter((n: any) => !n.read).length;
 
   return (
     <div className="relative">
-      {/* Bell Button */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 hover:bg-[var(--signal-lime)]/10"
-      >
-        <Bell className="w-4 h-4" />
-        {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-[var(--siren-red)] text-[var(--spectral-white)] text-xs font-bold rounded-full flex items-center justify-center">
-            {unreadCount > 9 ? "9+" : unreadCount}
+      <button onClick={() => setOpen(!open)} className="relative p-2 text-bl-ice/40 hover:text-bl-ice transition-colors">
+        <Bell size={16} />
+        {unread > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-bl-gold text-bl-deep text-[8px] font-bold rounded-full flex items-center justify-center">
+            {unread}
           </span>
         )}
-      </Button>
-
-      {/* Dropdown */}
-      {isOpen && (
+      </button>
+      {open && (
         <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-40 animate-in fade-in duration-200"
-            onClick={() => setIsOpen(false)}
-          />
-
-          {/* Dropdown Content */}
-          <div
-            className="absolute right-0 top-12 w-96 bg-[var(--card)] border border-[var(--border)] rounded-none shadow-xl z-50 animate-in slide-in-from-top-2 fade-in duration-200"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-[var(--border)]">
-              <h3 className="font-bold">Notifications</h3>
-              <div className="flex items-center gap-2">
-                {unreadCount > 0 && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={markAllAsRead}
-                    className="text-xs text-[var(--signal-lime)] hover:text-[var(--signal-lime)]/80"
-                  >
-                    <CheckCheck className="w-3 h-3 mr-1" />
-                    Mark all read
-                  </Button>
-                )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsOpen(false)}
-                  className="p-1 hover:bg-[var(--spectral-muted)]/10"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 top-full mt-2 w-72 z-50 bg-bl-slate/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+            <div className="p-3 border-b border-white/5 flex items-center justify-between">
+              <span className="text-xs font-semibold text-bl-ice">Notifications</span>
+              <button onClick={() => setOpen(false)} className="text-bl-ice/20"><X size={12} /></button>
             </div>
-
-            {/* Notifications List */}
-            <ScrollArea className="h-96">
+            <div className="max-h-80 overflow-y-auto">
               {notifications.length === 0 ? (
-                <div className="p-8 text-center text-[var(--spectral-muted)]">
-                  <Bell className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>No notifications yet</p>
-                </div>
+                <div className="p-6 text-center text-xs text-bl-ice/30">No notifications</div>
               ) : (
-                <div className="divide-y divide-[var(--border)]">
-                  {notifications.map((notification) => {
-                    const Icon = typeIcons[notification.type];
-                    const colorClass = typeColors[notification.type];
-
-                    return (
-                      <div
-                        key={notification.id}
-                        className={`p-4 hover:bg-[var(--spectral-muted)]/5 cursor-pointer transition-colors animate-in slide-in-from-left-2 fade-in duration-300 ${!notification.read ? "bg-[var(--signal-lime)]/5" : ""
-                          }`}
-                        onClick={() => {
-                          if (!notification.read) {
-                            markAsRead(notification.id);
-                          }
-                        }}
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-full bg-[var(--onyx)] ${colorClass}`}>
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between mb-1">
-                              <h4 className="font-semibold text-sm truncate">{notification.title}</h4>
-                              {!notification.read && (
-                                <div className="w-2 h-2 bg-[var(--signal-lime)] rounded-full" />
-                              )}
-                            </div>
-                            <p className="text-sm text-[var(--spectral-dim)] mb-2">{notification.message}</p>
-                            <p className="text-xs text-[var(--spectral-muted)]">
-                              {new Date(notification.created_at).toLocaleString()}
-                            </p>
-                          </div>
-                        </div>
+                notifications.map((n: any) => {
+                  const Icon = icons[n.type] || Bell;
+                  return (
+                    <div key={n.id} className={`p-3 border-b border-white/5 flex gap-3 ${!n.read ? "bg-bl-gold/[0.02]" : ""}`}>
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: `${iconColors[n.type] || "#666"}15`, color: iconColors[n.type] || "#666" }}>
+                        <Icon size={12} />
                       </div>
-                    );
-                  })}
-                </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-bl-ice font-medium">{n.title}</p>
+                        <p className="text-[10px] text-bl-ice/40 mt-0.5">{n.message}</p>
+                      </div>
+                    </div>
+                  );
+                })
               )}
-            </ScrollArea>
+            </div>
           </div>
         </>
       )}

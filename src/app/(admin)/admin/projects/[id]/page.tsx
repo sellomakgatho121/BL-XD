@@ -2,382 +2,133 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
-import {
-  ArrowLeft,
-  Calendar,
-  User,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  MessageSquare,
-  Paperclip,
-  Edit,
-  Save,
-  X,
-} from "lucide-react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { FileUpload } from "@/components/ui/file-upload";
+import { ArrowLeft, Clock, CheckCircle, MessageSquare, ExternalLink, Upload } from "lucide-react";
+import FileUpload from "@/components/ui/file-upload";
 import { createNotification } from "@/lib/notifications";
 
 interface Project {
   id: string;
   name: string;
-  description: string;
-  status: "planning" | "in_progress" | "review" | "completed" | "on_hold";
-  client_id: string;
-  client: {
-    id: string;
-    full_name: string;
-    email: string;
-    company_name: string;
-  };
-  phases: Array<{
-    id: string;
-    name: string;
-    status: string;
-    due_date: string;
-  }>;
-  files: Array<{
-    id: string;
-    name: string;
-    type: string;
-    size: number;
-    url: string;
-    created_at: string;
-  }>;
-  messages: Array<{
-    id: string;
-    content: string;
-    sender_id: string;
-    created_at: string;
-  }>;
-  created_at: string;
-  updated_at: string;
+  description?: string;
+  status: string;
+  progress: number;
+  startDate?: string;
+  dueDate?: string;
 }
 
-const statusConfig = {
-  planning: { label: "Planning", color: "text-[var(--signal-lime)]", icon: Clock },
-  in_progress: { label: "In Progress", color: "text-[var(--electric-purple)]", icon: AlertCircle },
-  review: { label: "Review", color: "text-[var(--spectral-white)]", icon: MessageSquare },
-  completed: { label: "Completed", color: "text-[var(--success)]", icon: CheckCircle2 },
-  on_hold: { label: "On Hold", color: "text-[var(--siren-red)]", icon: AlertCircle },
+const statusConfig: Record<string, { color: string; label: string }> = {
+  planning: { color: "#B59A5F", label: "Planning" },
+  in_progress: { color: "#00CCFF", label: "In Progress" },
+  review: { color: "#D7FF00", label: "Review" },
+  completed: { color: "#00FF88", label: "Completed" },
 };
 
-export default function AdminProjectDetailPage() {
+export default function AdminProjectDetail() {
   const params = useParams();
-  const projectId = params.id as string;
-
   const [project, setProject] = useState<Project | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
-  const [editForm, setEditForm] = useState({
-    name: "",
-    description: "",
-    status: "planning" as Project["status"],
-  });
+  const [loading, setLoading] = useState(true);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
-    async function loadProject() {
-      try {
-        const response = await fetch(`/api/projects/${projectId}`);
+    fetch(`/api/projects/${params.id}`)
+      .then((r) => r.json())
+      .then((data) => { setProject(data); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [params.id]);
 
-        if (!response.ok) {
-          throw new Error("Project not found");
-        }
+  if (loading) return <div className="flex justify-center py-20"><div className="w-8 h-8 border-2 border-bl-gold border-t-transparent rounded-full animate-spin" /></div>;
+  if (!project) return <div className="text-center py-20 text-bl-ice/40">Project not found</div>;
 
-        const data = await response.json();
-        setProject(data.project);
-        setEditForm({
-          name: data.project.name,
-          description: data.project.description,
-          status: data.project.status,
-        });
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load project");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (projectId) {
-      loadProject();
-    }
-  }, [projectId]);
-
-  const handleSaveEdit = async () => {
-    if (!project) return;
-
-    try {
-      const response = await fetch(`/api/projects/${projectId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editForm),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update project");
-      }
-
-      const data = await response.json();
-      setProject(data.project);
-      setIsEditing(false);
-
-      // Notify client about the update
-      await createNotification(
-        project.client_id,
-        "project_update",
-        "Project Updated",
-        `Project "${editForm.name}" has been updated`,
-        { project_id: project.id, changes: editForm }
-      );
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to update project");
-    }
-  };
-
-  const handleFilesChange = async (newFiles: Project["files"]) => {
-    if (!project) return;
-
-    // Update local state
-    setProject({ ...project, files: newFiles });
-
-    // Notify client about new files
-    await createNotification(
-      project.client_id,
-      "project_update",
-      "New Files Added",
-      `${newFiles.length - project.files.length} file(s) added to your project`,
-      { project_id: project.id, file_count: newFiles.length }
-    );
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-pulse text-[var(--signal-lime)] font-mono">LOADING...</div>
-      </div>
-    );
-  }
-
-  if (error || !project) {
-    return (
-      <div className="text-center py-12">
-        <h2 className="text-2xl font-bold mb-4">Project Not Found</h2>
-        <p className="text-[var(--spectral-dim)] mb-6">{error}</p>
-        <Link href="/admin/projects">
-          <Button className="bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 rounded-none">
-            Back to Projects
-          </Button>
-        </Link>
-      </div>
-    );
-  }
-
-  const status = statusConfig[project.status];
-  const StatusIcon = status.icon;
+  const cfg = statusConfig[project.status] || { color: "#666", label: project.status };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/admin/projects"
-            className="flex items-center gap-2 text-sm text-[var(--spectral-muted)] hover:text-[var(--spectral-white)] transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Projects
-          </Link>
-        </div>
+    <div>
+      <Link href="/admin/projects" className="inline-flex items-center gap-2 text-sm text-bl-ice/40 hover:text-bl-gold mb-6 transition-colors">
+        <ArrowLeft size={14} /> Back to Projects
+      </Link>
 
-        <div className="flex items-center gap-4">
-          <div className={`flex items-center gap-2 ${status.color}`}>
-            <StatusIcon className="w-4 h-4" />
-            <span className="text-sm font-mono uppercase">{status.label}</span>
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Main */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="spatial-panel p-6 rounded-2xl border border-white/5">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h1 className="text-xl font-bold text-bl-ice">{project.name}</h1>
+                {project.description && <p className="text-sm text-bl-ice/40 mt-2">{project.description}</p>}
+              </div>
+              <span className="text-[10px] px-2 py-1 rounded-full border whitespace-nowrap"
+                style={{ borderColor: `${cfg.color}30`, color: cfg.color, backgroundColor: `${cfg.color}10` }}>
+                {cfg.label}
+              </span>
+            </div>
+            {project.progress > 0 && (
+              <div className="mt-4">
+                <div className="flex justify-between text-xs text-bl-ice/40 mb-2">
+                  <span>Progress</span><span>{project.progress}%</span>
+                </div>
+                <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full rounded-full transition-all" style={{ width: `${project.progress}%`, backgroundColor: cfg.color }} />
+                </div>
+              </div>
+            )}
+            <div className="flex gap-4 mt-4 text-[10px] text-bl-ice/30">
+              {project.startDate && <span className="flex items-center gap-1"><Clock size={10} /> Started: {project.startDate}</span>}
+              {project.dueDate && <span className="flex items-center gap-1"><Clock size={10} /> Due: {project.dueDate}</span>}
+            </div>
           </div>
 
-          {!isEditing ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsEditing(true)}
-              className="border-[var(--border)] rounded-none"
-            >
-              <Edit className="w-4 h-4 mr-2" />
-              Edit
-            </Button>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                onClick={handleSaveEdit}
-                className="bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 rounded-none"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                Save
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setIsEditing(false);
-                  setEditForm({
-                    name: project.name,
-                    description: project.description,
-                    status: project.status,
-                  });
-                }}
-                className="border-[var(--border)] rounded-none"
-              >
-                <X className="w-4 h-4" />
-              </Button>
+          {/* Comments */}
+          <div className="spatial-panel p-6 rounded-2xl border border-white/5">
+            <h2 className="text-sm font-semibold text-bl-ice mb-4 flex items-center gap-2"><MessageSquare size={14} /> Comments</h2>
+            <div className="text-center py-8 text-xs text-bl-ice/30">
+              <MessageSquare size={24} className="mx-auto mb-2 opacity-30" />
+              No comments yet
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* Project Info */}
-      <div className="border border-[var(--border)] bg-[var(--card)] p-6">
-        {isEditing ? (
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">
-                Project Name
-              </label>
+            <div className="flex gap-2">
               <input
-                type="text"
-                value={editForm.name}
-                onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                className="w-full px-4 py-2 bg-[var(--onyx)] border border-[var(--border)] rounded-none focus:border-[var(--signal-lime)] focus:outline-none"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Add a comment..."
+                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-bl-ice placeholder:text-bl-ice/20 outline-none focus:border-bl-gold/30 transition-colors"
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">
-                Description
-              </label>
-              <textarea
-                value={editForm.description}
-                onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                rows={4}
-                className="w-full px-4 py-2 bg-[var(--onyx)] border border-[var(--border)] rounded-none focus:border-[var(--signal-lime)] focus:outline-none resize-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">
-                Status
-              </label>
-              <select
-                value={editForm.status}
-                onChange={(e) => setEditForm({ ...editForm, status: e.target.value as Project["status"] })}
-                className="w-full px-4 py-2 bg-[var(--onyx)] border border-[var(--border)] rounded-none focus:border-[var(--signal-lime)] focus:outline-none"
+              <button
+                onClick={() => { createNotification(); setComment(""); }}
+                className="px-4 py-2 bg-bl-gold text-bl-deep text-xs font-semibold rounded-xl hover:bg-bl-gold/90 transition-colors"
               >
-                <option value="planning">Planning</option>
-                <option value="in_progress">In Progress</option>
-                <option value="review">Review</option>
-                <option value="completed">Completed</option>
-                <option value="on_hold">On Hold</option>
-              </select>
+                Send
+              </button>
             </div>
           </div>
-        ) : (
-          <>
-            <h1 className="text-3xl font-black tracking-tighter mb-4">{project.name}</h1>
-            <p className="text-[var(--spectral-dim)] mb-6">{project.description}</p>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Client</h3>
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-[var(--spectral-muted)]" />
-                  <div>
-                    <p className="font-medium">{project.client.full_name}</p>
-                    <p className="text-sm text-[var(--spectral-dim)]">{project.client.company_name}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Timeline</h3>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Calendar className="w-4 h-4 text-[var(--spectral-muted)]" />
-                    Created: {new Date(project.created_at).toLocaleDateString()}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Clock className="w-4 h-4 text-[var(--spectral-muted)]" />
-                    Updated: {new Date(project.updated_at).toLocaleDateString()}
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Quick Stats</h3>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Paperclip className="w-4 h-4 text-[var(--spectral-muted)]" />
-                    {project.files.length} Files
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <MessageSquare className="w-4 h-4 text-[var(--spectral-muted)]" />
-                    {project.messages.length} Messages
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-
-      {/* Project Phases */}
-      {project.phases.length > 0 && (
-        <div className="border border-[var(--border)] bg-[var(--card)] p-6">
-          <h2 className="text-xl font-bold mb-4">Project Phases</h2>
-          <div className="space-y-3">
-            {project.phases.map((phase, index) => (
-              <div
-                key={phase.id}
-                className="flex items-center justify-between p-3 bg-[var(--onyx)] rounded-none animate-in fade-in slide-in-from-left-4 duration-400 fill-mode-both"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-[var(--signal-lime)]/10 text-[var(--signal-lime)] rounded-full flex items-center justify-center text-sm font-mono">
-                    {index + 1}
-                  </div>
-                  <div>
-                    <h3 className="font-medium">{phase.name}</h3>
-                    <p className="text-sm text-[var(--spectral-dim)]">
-                      Due: {new Date(phase.due_date).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div className={`px-3 py-1 text-xs font-mono uppercase rounded-full ${phase.status === "completed"
-                    ? "bg-[var(--success)]/10 text-[var(--success)]"
-                    : phase.status === "in_progress"
-                      ? "bg-[var(--electric-purple)]/10 text-[var(--electric-purple)]"
-                      : "bg-[var(--spectral-muted)]/10 text-[var(--spectral-muted)]"
-                  }`}>
-                  {phase.status.replace("_", " ")}
-                </div>
-              </div>
-            ))}
+          {/* Files */}
+          <div className="spatial-panel p-6 rounded-2xl border border-white/5">
+            <h2 className="text-sm font-semibold text-bl-ice mb-4 flex items-center gap-2"><Upload size={14} /> Files</h2>
+            <FileUpload label="Upload project files" multiple />
           </div>
         </div>
-      )}
 
-      {/* Files Section */}
-      <div className="border border-[var(--border)] bg-[var(--card)] p-6">
-        <h2 className="text-xl font-bold mb-4">Project Files</h2>
-        <FileUpload
-          projectId={project.id}
-          files={project.files}
-          onFilesChange={handleFilesChange}
-        />
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Quick Actions */}
+          <div className="spatial-panel p-5 rounded-2xl border border-white/5">
+            <h3 className="text-xs font-semibold text-bl-ice mb-4 uppercase tracking-wider">Actions</h3>
+            <div className="space-y-2">
+              <button className="w-full flex items-center gap-2 px-3 py-2 bg-bl-gold text-bl-deep text-xs font-semibold rounded-xl">
+                <CheckCircle size={12} /> Mark Complete
+              </button>
+              <button className="w-full flex items-center gap-2 px-3 py-2 border border-white/10 text-bl-ice text-xs rounded-xl hover:bg-white/5">
+                <ExternalLink size={12} /> Open Preview
+              </button>
+            </div>
+          </div>
+
+          {/* Team */}
+          <div className="spatial-panel p-5 rounded-2xl border border-white/5">
+            <h3 className="text-xs font-semibold text-bl-ice mb-4 uppercase tracking-wider">Team</h3>
+            <div className="text-center py-6 text-xs text-bl-ice/30">No team members assigned</div>
+          </div>
+        </div>
       </div>
     </div>
   );

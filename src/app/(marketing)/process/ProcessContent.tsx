@@ -1,9 +1,9 @@
 "use client";
 
-import { Lightbulb, Search, Code, Rocket, CheckCircle, ArrowRight, Quote } from "lucide-react";
+import { Lightbulb, Search, Code, Rocket, CheckCircle, ArrowRight, Quote, Layers, Move3d, Sparkles } from "lucide-react";
 import Link from "next/link";
-import GlitchText from "@/components/GlitchText";
-import { Button } from "@/components/ui/button";
+import Navigation from "@/components/marketing/navigation";
+import Footer from "@/components/marketing/footer";
 
 const values = [
   {
@@ -19,7 +19,7 @@ const values = [
   {
     number: "03",
     title: "Performance as Feature",
-    description: "A beautiful site that is slow is a failure. We adhere to strict 2025 Core Web Vitals standards.",
+    description: "A beautiful site that is slow is a failure. We adhere to strict Core Web Vitals standards across every dimension.",
   },
   {
     number: "04",
@@ -81,98 +81,63 @@ const testimonials = [
 
 export default function ProcessContent() {
   return (
-    <div className="min-h-screen bg-[var(--neo-yellow)] text-[var(--neo-black)] font-space-grotesk overflow-x-hidden selection:bg-[var(--neo-black)] selection:text-[var(--neo-white)]">
+    <div className="min-h-screen bg-bl-deep text-bl-text overflow-x-hidden">
+      {/* Isometric grid overlay */}
+      <div className="fixed inset-0 iso-grid pointer-events-none z-0" />
 
-      {/* ━━━ Header Navigation ━━━ */}
-      <nav aria-label="Main Navigation" className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[70px] flex items-center justify-between">
-          <Link href="/" aria-label="Homepage" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[var(--neo-black)] flex items-center justify-center border-2 border-[var(--neo-black)] group-hover:bg-[var(--neo-red)] transition-colors duration-300 ease-out">
-              <span className="font-black text-xl text-[var(--neo-white)]">B</span>
-            </div>
-            <span className="font-black text-xl tracking-tighter uppercase">Blacklight</span>
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/services" aria-current="page" className="font-bold uppercase tracking-widest hover:text-[var(--neo-blue)] transition-colors duration-300 p-2">Services</Link>
-            <Link href="/portfolio" className="hidden sm:block font-bold uppercase tracking-widest hover:text-[var(--neo-cyan)] transition-colors duration-300 p-2">Portfolio</Link>
+      {/* Ambient glow */}
+      <div className="fixed top-1/4 right-[10%] w-96 h-96 rounded-full bg-bl-gold/5 blur-[120px] pointer-events-none z-0" />
+      <div className="fixed bottom-1/4 left-[8%] w-64 h-64 rounded-full bg-bl-cyan/4 blur-[80px] pointer-events-none z-0" />
+
+      <Navigation />
+
+      {/* ═══════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pt-36 pb-20 px-6 scene-3d">
+        <div className="max-w-6xl mx-auto preserve-3d">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-8">
+            <Move3d size={14} />
+            Our Methodology
           </div>
-        </div>
-      </nav>
 
-      {/* ━━━ Hero Section ━━━ */}
-      <section className="pt-32 pb-16 px-4 md:min-h-[60vh] flex items-center bg-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
-        <div className="max-w-7xl mx-auto w-full">
-          <h1 className="text-[var(--text-6xl)] font-black uppercase tracking-tighter mb-8 leading-[0.8] text-[var(--neo-black)]">
-            <GlitchText text="THE PROCESS" intensity="low" triggerOnHover />
+          <h1 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
+            <span className="block">The</span>
+            <span className="gold-gradient">Process</span>
           </h1>
-          <p className="text-[var(--text-2xl)] font-bold max-w-4xl border-l-8 border-[var(--neo-red)] pl-6 py-2 bg-[var(--neo-white)]">
-            How we reveal the unseen brilliance of your brand. A methodical, brutalist approach to exceptional digital experiences.
+
+          <p className="text-lg md:text-xl text-bl-text-muted max-w-3xl leading-relaxed">
+            How we reveal the unseen brilliance of your brand. A methodical, depth-engineered
+            approach to exceptional digital experiences.
           </p>
         </div>
       </section>
 
-      {/* ━━━ Core Values ━━━ */}
-      <section className="py-24 px-4 bg-[var(--neo-black)] text-[var(--neo-white)]">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-[var(--text-5xl)] font-black uppercase tracking-tighter bg-[var(--neo-red)] text-[var(--neo-black)] inline-block px-4 py-2 border-4 border-[var(--neo-black)] shadow-[8px_8px_0px_var(--neo-white)] -rotate-1">
-              Core Values
+      {/* ═══════════════════════════════════════
+         CORE VALUES — 2×2 Grid
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Sparkles size={14} />
+              Foundation
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+              Core <span className="gold-gradient">Values</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 pl-0 md:pl-12">
+          <div className="grid md:grid-cols-2 gap-6 scene-3d-near">
             {values.map((value, i) => (
-              <div
-                key={value.number}
-                className="border-8 border-[var(--neo-white)] bg-[var(--neo-black)] p-8 relative hover:-translate-y-2 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group"
-              >
-                <div aria-hidden="true" className="absolute top-4 right-4 text-6xl font-black text-transparent text-stroke-2 text-stroke-[var(--neo-white)] opacity-30 group-hover:opacity-100 transition-opacity">
-                  {value.number}
-                </div>
-                <h3 className="text-[var(--text-3xl)] font-black uppercase mb-4 text-[var(--neo-yellow)] group-hover:text-[var(--neo-red)] transition-colors max-w-[80%]">
-                  {value.title}
-                </h3>
-                <p className="text-[var(--text-xl)] font-bold opacity-90 leading-relaxed">
-                  {value.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ━━━ The Method ━━━ */}
-      <section className="py-24 px-4 bg-[var(--neo-white)] border-b-8 border-[var(--neo-black)] relative overflow-hidden">
-
-        <div aria-hidden="true" className="absolute right-[-10vw] top-[20%] text-[30vw] font-black text-[var(--neo-black)] opacity-5 pointer-events-none rotate-90 leading-none">
-          SYSTEM
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="mb-20 text-center">
-            <h2 className="text-[var(--text-5xl)] font-black uppercase tracking-tighter text-[var(--neo-black)]">
-              The Blacklight Method
-            </h2>
-          </div>
-
-          <div className="space-y-12">
-            {process.map((step, i) => (
-              <div
-                key={step.step}
-                className="flex flex-col md:flex-row gap-6 md:gap-12 items-start border-4 border-[var(--neo-black)] bg-[var(--neo-yellow)] p-6 md:p-8 relative hover:-translate-x-2 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] shadow-[10px_10px_0px_var(--neo-black)] group"
-              >
-                <div aria-hidden="true" className="flex-shrink-0 bg-[var(--neo-black)] text-[var(--neo-white)] w-24 h-24 flex flex-col items-center justify-center border-4 border-[var(--neo-white)] group-hover:bg-[var(--neo-red)] group-hover:text-[var(--neo-black)] transition-colors duration-300">
-                  <div className="text-2xl font-black">{step.step}</div>
-                </div>
-
-                <div className="flex-1 w-full relative">
-                  <div className="absolute top-0 right-0 bg-[var(--neo-white)] text-[var(--neo-black)] font-bold px-3 py-1 border-2 border-[var(--neo-black)] text-sm uppercase">
-                    {step.duration}
+              <div key={value.number} className="tilt-card">
+                <div className="spatial-panel p-8 md:p-10 h-full flex flex-col rim-light relative group">
+                  <div className="absolute top-4 right-4 text-6xl font-black text-bl-text-muted/10 group-hover:text-bl-gold/20 transition-colors pointer-events-none">
+                    {value.number}
                   </div>
-                  <h3 className="text-[var(--text-4xl)] font-black uppercase mb-4 pr-24">{step.title}</h3>
-                  <p className="text-[var(--text-xl)] font-bold opacity-90 max-w-2xl">
-                    {step.description}
-                  </p>
+
+                  <h3 className="text-2xl font-bold uppercase mb-4 font-display text-bl-gold">{value.title}</h3>
+                  <p className="text-bl-text-muted leading-relaxed flex-1">{value.description}</p>
                 </div>
               </div>
             ))}
@@ -180,30 +145,40 @@ export default function ProcessContent() {
         </div>
       </section>
 
-      {/* ━━━ Testimonials ━━━ */}
-      <section className="py-24 px-4 bg-[var(--neo-blue)] text-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16 text-center">
-            <h2 className="text-[var(--text-5xl)] font-black uppercase tracking-tighter drop-shadow-[5px_5px_0px_var(--neo-black)]">
-              Client Logs
+      {/* ═══════════════════════════════════════
+         THE METHOD — Step Timeline
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Layers size={14} />
+              5 Dimensions
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+              The Blacklight <span className="gold-gradient">Method</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="border-4 border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)] p-8 md:p-12 relative shadow-[12px_12px_0px_var(--neo-black)] rotate-1 hover:-rotate-1 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] cursor-pointer"
-              >
-                <div aria-hidden="true" className="absolute -top-6 left-8 bg-[var(--neo-green)] border-4 border-[var(--neo-black)] p-2">
-                  <Quote className="w-8 h-8 text-[var(--neo-black)]" />
-                </div>
-                <p className="text-[var(--text-2xl)] font-black mb-8 italic leading-tight mt-6 uppercase">
-                  "{t.quote}"
-                </p>
-                <div className="border-t-4 border-[var(--neo-black)] pt-4">
-                  <div className="font-black text-xl uppercase">{t.author}</div>
-                  <div className="font-bold text-[var(--neo-blue)] uppercase">{t.role}</div>
+          <div className="space-y-6 scene-3d-near">
+            {process.map((step, i) => (
+              <div key={step.step} className="tilt-card">
+                <div className="spatial-panel p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start rim-light">
+                  {/* Step Number */}
+                  <div className="shrink-0 w-16 h-16 rounded-2xl bg-bl-gold/10 border border-bl-gold/25 flex items-center justify-center">
+                    <span className="text-xl font-black text-bl-gold">{step.step}</span>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 w-full relative">
+                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-text-muted text-[10px] font-mono uppercase tracking-wider mb-3">
+                      {step.duration}
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold uppercase mb-3 font-display">{step.title}</h3>
+                    <p className="text-bl-text-muted leading-relaxed max-w-2xl">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -211,19 +186,73 @@ export default function ProcessContent() {
         </div>
       </section>
 
-      {/* ━━━ CTA ━━━ */}
-      <section className="py-32 px-4 bg-[var(--neo-green)] text-[var(--neo-black)] text-center">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-[var(--text-6xl)] font-black uppercase tracking-tighter mb-12 leading-none border-[var(--neo-black)]">
-            Engage Protocol?
-          </h2>
-          <Button size="lg" className="bg-[var(--neo-black)] text-[var(--neo-white)] text-2xl md:text-4xl font-black uppercase px-12 py-8 border-4 border-[var(--neo-white)] shadow-[12px_12px_0px_var(--neo-black)] hover:bg-[var(--neo-red)] hover:text-[var(--neo-black)] transition-all duration-300 ease-out active:translate-y-2 active:translate-x-2 active:shadow-none" asChild>
-            <Link href="/contact" aria-label="Initiate new Project by contacting us">
-              Initiate Project
-            </Link>
-          </Button>
+      {/* ═══════════════════════════════════════
+         TESTIMONIALS
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Quote size={14} />
+              Client Logs
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+              What They <span className="gold-gradient">Say</span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 scene-3d-near">
+            {testimonials.map((t, i) => (
+              <div key={i} className="tilt-card">
+                <div className="spatial-panel p-8 md:p-10 rim-light relative">
+                  <div className="absolute -top-3 -left-3 w-12 h-12 rounded-2xl bg-bl-gold/15 border border-bl-gold/30 flex items-center justify-center">
+                    <Quote size={20} className="text-bl-gold" />
+                  </div>
+
+                  <p className="text-lg md:text-xl font-medium leading-relaxed mb-8 mt-4 text-bl-text/90 italic">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+
+                  <div className="border-t border-bl-glass-border pt-4">
+                    <div className="font-bold uppercase tracking-wider text-bl-gold">{t.author}</div>
+                    <div className="text-sm text-bl-text-muted">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════
+         CTA
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-32 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="spatial-panel p-10 md:p-16 text-center rim-light spatial-panel-gold relative overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-bl-gold/8 blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-bl-cyan/5 blur-[100px] pointer-events-none" />
+
+            <div className="relative">
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 gold-glow">
+                Engage <span className="gold-gradient">Protocol</span>?
+              </h2>
+              <p className="text-bl-text-muted text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+                Ready to initiate your project? Let&apos;s build something that breaks the surface.
+              </p>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-10 py-5 bg-bl-gold text-bl-deep font-bold uppercase tracking-wider rounded-full transition-all hover:bg-bl-amber hover:shadow-[0_0_60px_rgba(181,154,95,0.3)] text-lg"
+              >
+                Initiate Project
+                <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }

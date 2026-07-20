@@ -1,49 +1,35 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { updateSession } from '@/lib/supabase/middleware';
+import { auth } from "@/lib/auth/config";
+import { NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  // First check Supabase auth for portal/admin routes
-  if (request.nextUrl.pathname.startsWith('/portal') || request.nextUrl.pathname.startsWith('/admin')) {
-    return await updateSession(request);
-  }
+export default auth((req) => {
+  const { pathname } = req.nextUrl;
+  const isLoggedIn = !!req.auth;
+  const role = (req.auth?.user as any)?.role;
 
-  // Check if password protection is enabled
-  const isPasswordProtected = process.env.NEXT_PUBLIC_PASSWORD_PROTECTED === 'true';
-  const sitePassword = process.env.SITE_PASSWORD || 'blacklight2026';
-
-  if (!isPasswordProtected) {
+  // Auth pages — redirect to admin if already logged in
+  if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
+    if (isLoggedIn) {
+      return NextResponse.redirect(new URL("/admin", req.url));
+    }
     return NextResponse.next();
   }
 
-  // Check for password in cookie
-  const passwordCookie = request.cookies.get('site_access')?.value;
-  
-  // If password is correct, allow access
-  if (passwordCookie === sitePassword) {
-    return NextResponse.next();
+  // Admin routes — require auth
+  if (pathname.startsWith("/admin") || pathname.startsWith("/dashboard")) {
+    if (!isLoggedIn) {
+      const loginUrl = new URL("/login", req.url);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    // Check admin role
+    if (pathname.startsWith("/admin") && role !== "admin" && role !== "superadmin") {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
   }
 
-  // Check if this is the password entry page or auth API
-  const url = request.nextUrl.clone();
-  if (
-    url.pathname === '/auth' || 
-    url.pathname === '/api/auth' ||
-    url.pathname.startsWith('/_next') || 
-    url.pathname.startsWith('/api/auth')
-  ) {
-    return NextResponse.next();
-  }
-
-  // Redirect to password page
-  url.pathname = '/auth';
-  return NextResponse.redirect(url);
-}
+  return NextResponse.next();
+});
 
 export const config = {
-  matcher: [
-    '/portal/:path*',
-    '/admin/:path*',
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|public).*)"],
 };

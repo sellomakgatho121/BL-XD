@@ -1,191 +1,64 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { sendEmail, emailTemplates } from '@/lib/email';
-import { analyzeLead } from '@/lib/ai/lead-scoring';
+import { NextRequest, NextResponse } from "next/server";
+import { store } from "@/lib/db/store";
+import { sendEmail, renderContactNotification } from "@/lib/email/service";
 
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json();
-    
-    // Validate required fields
-    if (!body.name || !body.email || !body.message) {
-      return NextResponse.json(
-        { error: 'Name, email, and message are required' },
-        { status: 400 }
-      );
+    const body = await req.json();
+    const { name, email, businessName, businessType, budgetRange, message } = body;
+
+    if (!name || !email || !message) {
+      return NextResponse.json({ error: "Name, email, and message are required" }, { status: 400 });
     }
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
-      return NextResponse.json(
-        { error: 'Invalid email address' },
-        { status: 400 }
-      );
-    }
+    const submission = {
+      id: store.generateId(),
+      name,
+      email,
+      businessName: businessName || "",
+      businessType: businessType || "",
+      budgetRange: budgetRange || "",
+      message,
+      status: "new" as const,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    store.contacts.set(submission.id, submission);
 
-    const supabase = await createClient();
-
-    const { data: submission, error } = await supabase
-      .from('contact_submissions')
-      .insert({
-        name: body.name,
-        email: body.email,
-        business_name: body.business_name || null,
-        business_type: body.business_type || null,
-        budget_range: body.budget_range || null,
-        message: body.message,
-        status: 'new',
-      })
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Contact submission error:', error);
-      return NextResponse.json(
-        { error: 'Failed to submit contact form' },
-        { status: 500 }
-      );
-    }
-
-    // AI Lead Scoring
-    try {
-      // Don't block the response significantly, but ensure execution
-      const aiPromise = async () => {
-        const scoreResult = await analyzeLead({
-          name: body.name,
-          email: body.email,
-          business_name: body.business_name,
-          business_type: body.business_type,
-          budget_range: body.budget_range,
-          message: body.message,
-        });
-
-        await supabase.from('lead_scores').insert({
-          submission_id: submission.id,
-          score: scoreResult.score,
-          category: scoreResult.category,
-          analysis: scoreResult.analysis,
-        });
+    // Create notification for admins
+    const admin = Array.from(store.profiles.values()).find(
+      (p) => p.role === "superadmin" || p.role === "admin"
+    );
+    if (admin) {
+      const notif = {
+        id: store.generateId(),
+        userId: admin.id,
+        type: "lead" as const,
+        title: "New Lead",
+        message: `New contact form submission from ${name}`,
+        data: { leadId: submission.id, name, email },
+        read: false,
+        createdAt: new Date(),
       };
-      
-      // In Vercel serverless, this might be killed if not awaited. 
-      // We await it for reliability in this MVP phase.
-      await aiPromise();
-    } catch (aiError) {
-      console.error('AI Analysis failed:', aiError);
+      store.notifications.set(notif.id, notif);
     }
 
     // Send email notification
-    try {
-      await sendEmail({
-        to: process.env.ADMIN_EMAIL || 'Blacklight_Web_Designs@protonmail.com',
-        ...emailTemplates.contactSubmission({
-          name: body.name,
-          email: body.email,
-          businessName: body.business_name,
-          businessType: body.business_type,
-          budget: body.budget_range,
-          message: body.message,
-        }),
-      });
-    } catch (emailError) {
-      console.error('Failed to send email:', emailError);
-      // Don't fail the request if email fails
-    }
+    const { subject, html } = renderContactNotification(name, email, message, businessName);
+    await sendEmail({
+      to: "sellomakgatho121@gmail.com",
+      subject,
+      html,
+    });
 
-    // Create notification for admins
-    try {
-      const { data: adminProfile } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('role', 'admin')
-        .limit(1)
-        .single();
-
-      if (adminProfile) {
-        await supabase
-          .from('notifications')
-          .insert({
-            user_id: adminProfile.id,
-            type: 'lead',
-            title: 'New Lead',
-            message: `New contact form submission from ${body.name}`,
-            data: { name: body.name, email: body.email, business_name: body.business_name },
-            read: false,
-          });
-      }
-    } catch (notificationError) {
-      console.error('Failed to create notification:', notificationError);
-    }
-
-    return NextResponse.json(
-      { 
-        success: true, 
-        message: 'Thank you for your message. We will get back to you within 24 hours.',
-        id: submission.id 
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error('Contact POST error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: true, id: submission.id });
+  } catch (e) {
+    return NextResponse.json({ error: "Failed to submit" }, { status: 500 });
   }
 }
 
-// Admin-only endpoint to get all submissions
 export async function GET() {
-  try {
-    const supabase = await createClient();
-    
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
-
-    const isAdmin = profile?.role === 'admin' || profile?.role === 'superadmin';
-
-    if (!isAdmin) {
-      return NextResponse.json(
-        { error: 'Forbidden - Admin access required' },
-        { status: 403 }
-      );
-    }
-
-    const { data: submissions, error } = await supabase
-      .from('contact_submissions')
-      .select(`
-        *,
-        assigned_to_profile:profiles!assigned_to(id, full_name, email)
-      `)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({ submissions });
-  } catch (error) {
-    console.error('Contact GET error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+  const submissions = Array.from(store.contacts.values())
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  return NextResponse.json(submissions);
 }

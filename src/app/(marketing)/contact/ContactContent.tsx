@@ -1,174 +1,350 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowRight, Terminal, Mail, MapPin, Phone, Github, Linkedin, Instagram, ArrowLeft } from "lucide-react";
+import { useState, FormEvent } from "react";
+import { ArrowRight, Mail, MapPin, Phone, Github, Linkedin, Instagram, Send, CheckCircle, Loader2, Layers } from "lucide-react";
 import Link from "next/link";
+import Navigation from "@/components/marketing/navigation";
+import Footer from "@/components/marketing/footer";
+
+interface FormData {
+  name: string;
+  email: string;
+  businessName: string;
+  businessType: string;
+  budgetRange: string;
+  message: string;
+}
 
 export default function ContactContent() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
-    service: "",
+    businessName: "",
+    businessType: "",
+    budgetRange: "",
     message: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message. Please try again.");
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        setSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          businessName: "",
+          businessType: "",
+          budgetRange: "",
+          message: "",
+        });
+      } else {
+        throw new Error(data.error || "Failed to send message.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
-    <main className="bg-[var(--neo-white)] text-[var(--neo-black)] min-h-screen font-space-grotesk selection:bg-[var(--neo-yellow)] selection:text-[var(--neo-black)] pb-32">
-      {/* ━━━ NAVIGATION ━━━ */}
-      <nav aria-label="Main Navigation" className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)]">
-        <div className="max-w-[1400px] mx-auto px-6 h-[70px] flex items-center justify-between">
-          <Link href="/" aria-label="Homepage" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[var(--neo-yellow)] neo-border flex items-center justify-center neo-shadow group-hover:bg-[var(--neo-red)] transition-colors duration-300 ease-out">
-              <span className="font-black text-xl">B</span>
-            </div>
-            <span className="font-bold text-xl tracking-tighter uppercase hidden sm:block">
-              Blacklight
-            </span>
-          </Link>
+    <div className="min-h-screen bg-bl-deep text-bl-text overflow-x-hidden">
+      {/* Isometric grid overlay */}
+      <div className="fixed inset-0 iso-grid pointer-events-none z-0" />
 
-          <Link
-            href="/"
-            aria-label="Go back to previous page"
-            className="px-6 py-2 bg-[var(--neo-black)] text-[var(--neo-white)] font-bold uppercase tracking-wider neo-border neo-shadow-interactive flex items-center gap-2 hover:bg-[var(--neo-blue)] transition-colors duration-300"
-          >
-            <ArrowLeft aria-hidden="true" size={16} />
-            Back
-          </Link>
-        </div>
-      </nav>
+      {/* Ambient glow */}
+      <div className="fixed top-1/3 right-[12%] w-80 h-80 rounded-full bg-bl-gold/5 blur-[100px] pointer-events-none z-0" />
+      <div className="fixed bottom-1/4 left-[8%] w-64 h-64 rounded-full bg-bl-cyan/4 blur-[80px] pointer-events-none z-0" />
 
-      <div className="pt-32 max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-16">
+      <Navigation />
 
-        {/* Left Side: Brutal Form */}
-        <div>
-          <div className="bg-[var(--neo-yellow)] neo-border neo-shadow inline-block p-4 mb-8 rotate-[-2deg]">
-            <h1 className="text-[var(--text-4xl)] md:text-[var(--text-6xl)] font-black uppercase tracking-tighter">Initiate<br />Sequence</h1>
+      {/* ═══════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pt-36 pb-16 px-6 scene-3d">
+        <div className="max-w-6xl mx-auto preserve-3d">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-8">
+            <Layers size={14} />
+            Connect
           </div>
 
-          <p className="font-bold text-[var(--text-xl)] mb-12 max-w-md">
+          <h1 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
+            <span className="block">Initiate</span>
+            <span className="gold-gradient">Sequence</span>
+          </h1>
+
+          <p className="text-lg md:text-xl text-bl-text-muted max-w-2xl leading-relaxed">
             Skip the small talk. Tell us what you need and we&apos;ll build you a digital anomaly.
           </p>
-
-          <form aria-label="Contact Form" className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <label htmlFor="name" className="font-black uppercase tracking-widest block text-[var(--text-lg)] bg-[var(--neo-black)] text-[var(--neo-white)] px-3 py-1 w-max">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full bg-transparent neo-border p-4 text-[var(--text-xl)] font-bold focus:bg-[var(--neo-yellow)] focus:outline-none transition-colors duration-300 ease-out neo-shadow-interactive"
-                  placeholder="JOHN DOE"
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="space-y-4">
-                <label htmlFor="email" className="font-black uppercase tracking-widest block text-[var(--text-lg)] bg-[var(--neo-black)] text-[var(--neo-white)] px-3 py-1 w-max">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full bg-transparent neo-border p-4 text-[var(--text-xl)] font-bold focus:bg-[var(--neo-yellow)] focus:outline-none transition-colors duration-300 ease-out neo-shadow-interactive"
-                  placeholder="JANE@CORP.COM"
-                  required
-                  aria-required="true"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <label htmlFor="service" className="font-black uppercase tracking-widest block text-[var(--text-lg)] bg-[var(--neo-black)] text-[var(--neo-white)] px-3 py-1 w-max">Requirement</label>
-              <select
-                id="service"
-                className="w-full bg-transparent neo-border p-4 text-[var(--text-xl)] font-bold appearance-none focus:bg-[var(--neo-yellow)] focus:outline-none transition-colors duration-300 cursor-pointer neo-shadow-interactive"
-                required
-                aria-required="true"
-              >
-                <option value="">SELECT A TIER...</option>
-                <option value="spark">LANDING PAGE</option>
-                <option value="growth">BUSINESS SITE</option>
-                <option value="shop">E-COMMERCE</option>
-                <option value="pulse">PULSE CHECK AUDIT</option>
-                <option value="other">BESPOKE / OTHER</option>
-              </select>
-            </div>
-
-            <div className="space-y-4">
-              <label htmlFor="message" className="font-black uppercase tracking-widest block text-[var(--text-lg)] bg-[var(--neo-black)] text-[var(--neo-white)] px-3 py-1 w-max">Intel</label>
-              <textarea
-                id="message"
-                rows={6}
-                className="w-full bg-transparent neo-border p-4 text-[var(--text-xl)] font-bold focus:bg-[var(--neo-yellow)] focus:outline-none transition-colors duration-300 neo-shadow-interactive resize-y"
-                placeholder="THE UNVARNISHED TRUTH..."
-                required
-                aria-required="true"
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-6 bg-[var(--neo-red)] text-[var(--neo-white)] font-black uppercase text-[var(--text-3xl)] neo-border neo-shadow-interactive flex items-center justify-center gap-4 group hover:bg-[var(--neo-blue)] transition-colors duration-300 ease-out"
-            >
-              TRANSMIT
-              <ArrowRight aria-hidden="true" className="group-hover:translate-x-2 transition-transform duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]" />
-            </button>
-          </form>
         </div>
+      </section>
 
-        {/* Right Side: Brutal Info Blocks */}
-        <div className="flex flex-col gap-8">
+      {/* ═══════════════════════════════════════
+         FORM + INFO — 2 Column Layout
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pb-32 px-6">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-12 items-start">
+          {/* ─── FORM — 3/5 width ─── */}
+          <div className="lg:col-span-3">
+            {submitted ? (
+              <div className="spatial-panel p-10 md:p-12 text-center rim-light spatial-panel-gold">
+                <div className="w-20 h-20 rounded-full bg-bl-gold/10 border border-bl-gold/30 flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle size={40} className="text-bl-gold" />
+                </div>
+                <h2 className="text-3xl font-bold uppercase mb-4 font-display gold-gradient">Message Received</h2>
+                <p className="text-bl-text-muted max-w-md mx-auto mb-8 leading-relaxed">
+                  Your transmission has been received. We&apos;ll review and get back to you within 24 hours.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="px-8 py-4 rounded-full bg-bl-gold/10 border border-bl-gold/30 text-bl-gold text-sm font-bold uppercase tracking-wider hover:bg-bl-gold hover:text-bl-deep transition-all duration-300"
+                >
+                  Send Another
+                </button>
+              </div>
+            ) : (
+              <div className="spatial-panel p-8 md:p-10 rim-light">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {/* Name */}
+                    <div className="space-y-2">
+                      <label htmlFor="name" className="text-xs font-semibold uppercase tracking-widest text-bl-gold">
+                        Name <span className="text-bl-amber">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-bl-glass border border-bl-glass-border rounded-2xl p-4 text-sm text-bl-text placeholder:text-bl-text-muted/40 focus:outline-none focus:border-bl-gold/50 focus:bg-bl-glass-hover transition-all duration-300"
+                        placeholder="John Doe"
+                      />
+                    </div>
 
-          {/* Info Block 1 */}
-          <div className="bg-[var(--neo-white)] neo-border neo-shadow p-8 flex items-start items-center gap-6 group hover:bg-[var(--neo-blue)] transition-colors duration-500 ease-out">
-            <div aria-hidden="true" className="w-16 h-16 bg-[var(--neo-yellow)] neo-border flex items-center justify-center shrink-0">
-              <Mail size={32} />
-            </div>
-            <div>
-              <h3 className="font-black text-[var(--text-2xl)] uppercase group-hover:text-[var(--neo-white)] transition-colors">Direct Line</h3>
-              <a href="mailto:hello@blacklight.co.za" className="font-bold text-[var(--text-xl)] underline group-hover:text-[var(--neo-white)] transition-colors">hello@blacklight.co.za</a>
-            </div>
+                    {/* Email */}
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="text-xs font-semibold uppercase tracking-widest text-bl-gold">
+                        Email <span className="text-bl-amber">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-bl-glass border border-bl-glass-border rounded-2xl p-4 text-sm text-bl-text placeholder:text-bl-text-muted/40 focus:outline-none focus:border-bl-gold/50 focus:bg-bl-glass-hover transition-all duration-300"
+                        placeholder="john@corp.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {/* Business Name */}
+                    <div className="space-y-2">
+                      <label htmlFor="businessName" className="text-xs font-semibold uppercase tracking-widest text-bl-gold">
+                        Business Name
+                      </label>
+                      <input
+                        type="text"
+                        id="businessName"
+                        name="businessName"
+                        value={formData.businessName}
+                        onChange={handleChange}
+                        className="w-full bg-bl-glass border border-bl-glass-border rounded-2xl p-4 text-sm text-bl-text placeholder:text-bl-text-muted/40 focus:outline-none focus:border-bl-gold/50 focus:bg-bl-glass-hover transition-all duration-300"
+                        placeholder="Acme Corp"
+                      />
+                    </div>
+
+                    {/* Business Type */}
+                    <div className="space-y-2">
+                      <label htmlFor="businessType" className="text-xs font-semibold uppercase tracking-widest text-bl-gold">
+                        Business Type
+                      </label>
+                      <select
+                        id="businessType"
+                        name="businessType"
+                        value={formData.businessType}
+                        onChange={handleChange}
+                        className="w-full bg-bl-glass border border-bl-glass-border rounded-2xl p-4 text-sm text-bl-text placeholder:text-bl-text-muted/40 focus:outline-none focus:border-bl-gold/50 focus:bg-bl-glass-hover transition-all duration-300 appearance-none cursor-pointer"
+                      >
+                        <option value="">Select a category...</option>
+                        <option value="startup">Startup / New Venture</option>
+                        <option value="sme">SME / Established Business</option>
+                        <option value="ecommerce">E-Commerce / Retail</option>
+                        <option value="agency">Agency / Creative</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Budget Range */}
+                  <div className="space-y-2">
+                    <label htmlFor="budgetRange" className="text-xs font-semibold uppercase tracking-widest text-bl-gold">
+                      Budget Range
+                    </label>
+                    <select
+                      id="budgetRange"
+                      name="budgetRange"
+                      value={formData.budgetRange}
+                      onChange={handleChange}
+                      className="w-full bg-bl-glass border border-bl-glass-border rounded-2xl p-4 text-sm text-bl-text focus:outline-none focus:border-bl-gold/50 focus:bg-bl-glass-hover transition-all duration-300 appearance-none cursor-pointer"
+                    >
+                      <option value="">Select a range...</option>
+                      <option value="R1,500 - R3,500">R1,500 - R3,500 (Diagnostic / Spark)</option>
+                      <option value="R3,500 - R8,500">R3,500 - R8,500 (Spark / Growth)</option>
+                      <option value="R8,500 - R18,500">R8,500 - R18,500 (Growth / Shop)</option>
+                      <option value="R18,500+">R18,500+ (Shop / Custom)</option>
+                      <option value="unsure">Not Sure Yet</option>
+                    </select>
+                  </div>
+
+                  {/* Message */}
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="text-xs font-semibold uppercase tracking-widest text-bl-gold">
+                      Message <span className="text-bl-amber">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={5}
+                      required
+                      className="w-full bg-bl-glass border border-bl-glass-border rounded-2xl p-4 text-sm text-bl-text placeholder:text-bl-text-muted/40 focus:outline-none focus:border-bl-gold/50 focus:bg-bl-glass-hover transition-all duration-300 resize-y"
+                      placeholder="Tell us about your project..."
+                    />
+                  </div>
+
+                  {error && (
+                    <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+                      {error}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="group w-full py-5 rounded-full bg-bl-gold text-bl-deep font-bold uppercase tracking-wider flex items-center justify-center gap-3 hover:bg-bl-amber hover:shadow-[0_0_40px_rgba(181,154,95,0.3)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-base"
+                  >
+                    {submitting ? (
+                      <>
+                        <Loader2 size={20} className="animate-spin" />
+                        Transmitting...
+                      </>
+                    ) : (
+                      <>
+                        <Send size={18} />
+                        Transmit
+                        <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
 
-          {/* Info Block 2 */}
-          <div className="bg-[var(--neo-white)] neo-border neo-shadow p-8 flex items-start items-center gap-6 group hover:bg-[var(--neo-green)] transition-colors duration-500 ease-out">
-            <div aria-hidden="true" className="w-16 h-16 bg-[var(--neo-red)] text-[var(--neo-white)] neo-border flex items-center justify-center shrink-0">
-              <Phone size={32} />
+          {/* ─── INFO PANELS — 2/5 width ─── */}
+          <div className="lg:col-span-2 flex flex-col gap-6">
+            {/* Email */}
+            <div className="spatial-panel p-6 md:p-8 rim-light group hover:spatial-panel-gold transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-bl-gold/10 border border-bl-gold/25 flex items-center justify-center shrink-0">
+                  <Mail size={24} className="text-bl-gold" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-bl-gold mb-1">Direct Line</h3>
+                  <a href="mailto:hello@blacklight.co.za" className="text-sm text-bl-text/80 hover:text-bl-gold transition-colors">
+                    hello@blacklight.co.za
+                  </a>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3 className="font-black text-[var(--text-2xl)] uppercase group-hover:text-[var(--neo-black)] transition-colors">Comms</h3>
-              <p className="font-bold text-[var(--text-xl)] group-hover:text-[var(--neo-black)] transition-colors">+27 (0) 00 000 0000</p>
+
+            {/* Phone */}
+            <div className="spatial-panel p-6 md:p-8 rim-light group hover:spatial-panel-gold transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-bl-cyan/10 border border-bl-cyan/25 flex items-center justify-center shrink-0">
+                  <Phone size={24} className="text-bl-cyan" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-bl-cyan mb-1">Comms</h3>
+                  <p className="text-sm text-bl-text/80">+27 (0) 00 000 0000</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="spatial-panel p-6 md:p-8 rim-light group hover:spatial-panel-gold transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-bl-amber/10 border border-bl-amber/25 flex items-center justify-center shrink-0">
+                  <MapPin size={24} className="text-bl-amber" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-bl-amber mb-1">HQ</h3>
+                  <p className="text-sm text-bl-text/80">Johannesburg, ZA<br />(Remote Globally)</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Socials */}
+            <div className="spatial-panel p-6 md:p-8 rim-light spatial-panel-gold">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-bl-gold mb-6">Node Access</h3>
+              <div className="flex gap-4">
+                <a
+                  href="#"
+                  aria-label="GitHub"
+                  className="w-12 h-12 rounded-2xl bg-bl-glass border border-bl-glass-border flex items-center justify-center text-bl-text-muted hover:text-bl-gold hover:border-bl-gold/30 hover:bg-bl-glass-hover transition-all duration-300"
+                >
+                  <Github size={20} />
+                </a>
+                <a
+                  href="#"
+                  aria-label="LinkedIn"
+                  className="w-12 h-12 rounded-2xl bg-bl-glass border border-bl-glass-border flex items-center justify-center text-bl-text-muted hover:text-bl-gold hover:border-bl-gold/30 hover:bg-bl-glass-hover transition-all duration-300"
+                >
+                  <Linkedin size={20} />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="w-12 h-12 rounded-2xl bg-bl-glass border border-bl-glass-border flex items-center justify-center text-bl-text-muted hover:text-bl-gold hover:border-bl-gold/30 hover:bg-bl-glass-hover transition-all duration-300"
+                >
+                  <Instagram size={20} />
+                </a>
+              </div>
             </div>
           </div>
-
-          {/* Info Block 3 */}
-          <div className="bg-[var(--neo-white)] neo-border neo-shadow p-8 flex items-start items-center gap-6 group hover:bg-[var(--neo-orange)] transition-colors duration-500 ease-out">
-            <div aria-hidden="true" className="w-16 h-16 bg-[var(--neo-blue)] text-[var(--neo-white)] neo-border flex items-center justify-center shrink-0">
-              <MapPin size={32} />
-            </div>
-            <div>
-              <h3 className="font-black text-[var(--text-2xl)] uppercase group-hover:text-[var(--neo-white)] transition-colors">HQ</h3>
-              <p className="font-bold text-[var(--text-xl)] group-hover:text-[var(--neo-white)] transition-colors">Johannesburg, ZA<br />(Remote Globally)</p>
-            </div>
-          </div>
-
-          {/* Socials Box */}
-          <div className="bg-[var(--neo-black)] text-[var(--neo-white)] neo-border neo-shadow p-8 mt-auto rotate-[1deg]">
-            <h3 className="font-black text-[var(--text-3xl)] uppercase mb-6 bg-[var(--neo-white)] text-[var(--neo-black)] inline-block px-4 py-1">Node Access</h3>
-            <div className="flex gap-6">
-              <a href="#" aria-label="Visit our Github" className="w-16 h-16 bg-[var(--neo-white)] text-[var(--neo-black)] neo-border neo-shadow-interactive flex items-center justify-center hover:bg-[var(--neo-yellow)] transition-colors duration-300">
-                <Github aria-hidden="true" size={32} />
-              </a>
-              <a href="#" aria-label="Visit our LinkedIn" className="w-16 h-16 bg-[var(--neo-blue)] text-[var(--neo-white)] neo-border neo-shadow-interactive flex items-center justify-center hover:bg-[var(--neo-red)] transition-colors duration-300">
-                <Linkedin aria-hidden="true" size={32} />
-              </a>
-              <a href="#" aria-label="Visit our Instagram" className="w-16 h-16 bg-[var(--neo-red)] text-[var(--neo-white)] neo-border neo-shadow-interactive flex items-center justify-center hover:bg-[var(--neo-yellow)] transition-colors duration-300">
-                <Instagram aria-hidden="true" size={32} />
-              </a>
-            </div>
-          </div>
-
         </div>
+      </section>
 
-      </div>
-    </main>
+      <Footer />
+    </div>
   );
 }

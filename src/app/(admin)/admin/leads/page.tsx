@@ -1,102 +1,66 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import {
   Users,
   Mail,
-  Phone,
   Building2,
   Calendar,
   CheckCircle2,
-  XCircle,
   Clock,
-  ArrowLeft,
-  Filter,
   Search,
-  MoreHorizontal,
-  Trash2,
-  UserCheck,
+  MessageSquare,
+  DollarSign,
 } from "lucide-react";
-import { supabase } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 interface Lead {
   id: string;
   name: string;
   email: string;
-  business_name: string | null;
-  business_type: string | null;
-  budget_range: string | null;
+  businessName: string;
+  businessType: string;
+  budgetRange: string;
   message: string;
   status: "new" | "contacted" | "qualified" | "converted" | "archived";
-  assigned_to: string | null;
-  assigned_to_profile: { full_name: string; email: string } | null;
-  created_at: string;
-  notes: string | null;
-  lead_scores: { score: number; category: string; analysis: any }[];
+  createdAt: string;
+  updatedAt: string;
 }
 
-const statusConfig = {
-  new: { label: "New", color: "bg-[var(--signal-lime)]/10 text-[var(--signal-lime)]", icon: Clock },
-  contacted: { label: "Contacted", color: "bg-[var(--electric-purple)]/10 text-[var(--electric-purple)]", icon: Mail },
-  qualified: { label: "Qualified", color: "bg-[var(--spectral-white)]/10 text-[var(--spectral-white)]", icon: UserCheck },
-  converted: { label: "Converted", color: "bg-[var(--success)]/10 text-[var(--success)]", icon: CheckCircle2 },
-  archived: { label: "Archived", color: "bg-[var(--spectral-muted)]/10 text-[var(--spectral-muted)]", icon: XCircle },
+const statusConfig: Record<Lead["status"], { label: string; color: string; bg: string; border: string }> = {
+  new: { label: "New", color: "text-bl-amber", bg: "bg-bl-amber/10", border: "border-bl-amber/20" },
+  contacted: { label: "Contacted", color: "text-bl-cyan", bg: "bg-bl-cyan/10", border: "border-bl-cyan/20" },
+  qualified: { label: "Qualified", color: "text-bl-gold", bg: "bg-bl-gold/10", border: "border-bl-gold/20" },
+  converted: { label: "Converted", color: "text-green-400", bg: "bg-green-400/10", border: "border-green-400/20" },
+  archived: { label: "Archived", color: "text-bl-text-muted", bg: "bg-white/5", border: "border-white/10" },
 };
 
 export default function LeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState<Lead["status"] | "all">("all");
+  const [filter, setFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   useEffect(() => {
     async function loadLeads() {
-      const { data, error } = await supabase
-        .from("contact_submissions")
-        .select(`
-          *,
-          assigned_to_profile:profiles!assigned_to(full_name, email),
-          lead_scores(score, category, analysis)
-        `)
-        .order("created_at", { ascending: false });
-
-      if (!error && data) {
+      try {
+        const res = await fetch("/api/contact");
+        const data = await res.json();
         setLeads(data);
+      } catch (e) {
+        console.error("Failed to load leads", e);
       }
       setIsLoading(false);
     }
-
     loadLeads();
   }, []);
 
   const updateLeadStatus = async (leadId: string, newStatus: Lead["status"]) => {
-    const { error } = await supabase
-      .from("contact_submissions")
-      .update({ status: newStatus })
-      .eq("id", leadId);
-
-    if (!error) {
-      setLeads(leads.map((lead) =>
-        lead.id === leadId ? { ...lead, status: newStatus } : lead
-      ));
-    }
-  };
-
-  const deleteLead = async (leadId: string) => {
-    const { error } = await supabase
-      .from("contact_submissions")
-      .delete()
-      .eq("id", leadId);
-
-    if (!error) {
-      setLeads(leads.filter((lead) => lead.id !== leadId));
-      if (selectedLead?.id === leadId) {
-        setSelectedLead(null);
-      }
+    setLeads(leads.map((lead) =>
+      lead.id === leadId ? { ...lead, status: newStatus } : lead
+    ));
+    if (selectedLead?.id === leadId) {
+      setSelectedLead({ ...selectedLead, status: newStatus });
     }
   };
 
@@ -106,56 +70,44 @@ export default function LeadsPage() {
       searchQuery === "" ||
       lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       lead.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.business_name?.toLowerCase().includes(searchQuery.toLowerCase());
+      lead.businessName?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-pulse text-[var(--signal-lime)] font-mono">LOADING...</div>
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="w-8 h-8 border-2 border-bl-gold border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-4 mb-2">
-            <Link
-              href="/admin/dashboard"
-              className="flex items-center gap-2 text-sm text-[var(--spectral-muted)] hover:text-[var(--spectral-white)] transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Dashboard
-            </Link>
-          </div>
-          <h1 className="text-3xl font-black tracking-tighter">Lead Management</h1>
-          <p className="text-[var(--spectral-dim)]">
-            {leads.length} total submissions • {leads.filter((l) => l.status === "new").length} new
-          </p>
-        </div>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-bl-ice">Leads</h1>
+        <p className="text-sm text-bl-ice/40 mt-1">
+          {leads.length} total submissions &bull; {leads.filter((l) => l.status === "new").length} new
+        </p>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--spectral-muted)]" />
-          <Input
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-bl-ice/30" />
+          <input
             placeholder="Search leads..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-[var(--onyx)] border-[var(--border)] rounded-none"
+            className="w-full h-10 pl-10 pr-4 bg-bl-glass border border-bl-glass-border rounded-xl text-sm text-bl-ice placeholder:text-bl-ice/30 focus:outline-none focus:border-bl-gold/40 transition-colors"
           />
         </div>
         <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-[var(--spectral-muted)]" />
           <select
             value={filter}
-            onChange={(e) => setFilter(e.target.value as Lead["status"] | "all")}
-            className="h-10 px-4 bg-[var(--onyx)] border border-[var(--border)] rounded-none text-sm focus:border-[var(--signal-lime)] focus:outline-none"
+            onChange={(e) => setFilter(e.target.value)}
+            className="h-10 px-4 bg-bl-glass border border-bl-glass-border rounded-xl text-sm text-bl-ice focus:outline-none focus:border-bl-gold/40 transition-colors"
           >
             <option value="all">All Status</option>
             <option value="new">New</option>
@@ -167,16 +119,16 @@ export default function LeadsPage() {
         </div>
       </div>
 
-      {/* Leads Grid */}
+      {/* Content Grid */}
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Lead List */}
-        <div className="lg:col-span-2 space-y-4">
+        {/* Leads List */}
+        <div className="lg:col-span-2 space-y-3">
           {filteredLeads.length === 0 ? (
-            <div className="border border-[var(--border)] bg-[var(--card)] p-12 text-center">
-              <Users className="w-12 h-12 text-[var(--spectral-muted)] mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2">No leads found</h3>
-              <p className="text-[var(--spectral-dim)]">
-                {searchQuery ? "Try adjusting your search" : "Contact form submissions will appear here"}
+            <div className="spatial-panel p-12 text-center">
+              <Users className="w-12 h-12 text-bl-gold/30 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-bl-ice mb-2">No leads found</h3>
+              <p className="text-sm text-bl-ice/40">
+                {searchQuery ? "Try adjusting your search or filter" : "Contact form submissions will appear here"}
               </p>
             </div>
           ) : (
@@ -186,60 +138,57 @@ export default function LeadsPage() {
                 <div
                   key={lead.id}
                   onClick={() => setSelectedLead(lead)}
-                  className={`border bg-[var(--card)] p-6 cursor-pointer transition-all hover:border-[var(--signal-lime)]/50 ${
-                    selectedLead?.id === lead.id ? "border-[var(--signal-lime)]" : "border-[var(--border)]"
+                  className={`spatial-panel p-5 cursor-pointer transition-all duration-200 ${
+                    selectedLead?.id === lead.id
+                      ? "border-bl-gold/30 rim-light"
+                      : "hover:border-white/10"
                   }`}
                 >
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h3 className="font-bold text-lg">{lead.name}</h3>
-                      <p className="text-sm text-[var(--spectral-muted)]">{lead.email}</p>
+                      <h3 className="text-sm font-semibold text-bl-ice">{lead.name}</h3>
+                      <p className="text-xs text-bl-ice/50 mt-0.5">{lead.email}</p>
                     </div>
-                    <div className={`flex items-center gap-2 px-3 py-1 ${status.color}`}>
-                      <status.icon className="w-3 h-3" />
-                      <span className="text-xs font-mono uppercase">{status.label}</span>
-                    </div>
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider ${status.bg} ${status.color} ${status.border} border`}
+                    >
+                      {lead.status === "new" && <Clock className="w-2.5 h-2.5" />}
+                      {lead.status === "contacted" && <Mail className="w-2.5 h-2.5" />}
+                      {(lead.status === "qualified" || lead.status === "converted") && <CheckCircle2 className="w-2.5 h-2.5" />}
+                      {status.label}
+                    </span>
                   </div>
 
-                  <div className="flex items-center gap-6 text-sm text-[var(--spectral-dim)]">
-                    {lead.business_name && (
-                      <div className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4" />
-                        {lead.business_name}
-                      </div>
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-bl-ice/50">
+                    {lead.businessName && (
+                      <span className="flex items-center gap-1.5">
+                        <Building2 className="w-3 h-3" />
+                        {lead.businessName}
+                      </span>
                     )}
-                    {lead.budget_range && (
-                      <div className="flex items-center gap-2">
-                        <span className="text-[var(--signal-lime)]">R</span>
-                        {lead.budget_range}
-                      </div>
+                    {lead.businessType && (
+                      <span className="flex items-center gap-1.5">
+                        <Users className="w-3 h-3" />
+                        {lead.businessType}
+                      </span>
                     )}
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(lead.created_at).toLocaleDateString()}
-                    </div>
+                    {lead.budgetRange && (
+                      <span className="flex items-center gap-1.5 text-bl-gold">
+                        <DollarSign className="w-3 h-3" />
+                        {lead.budgetRange}
+                      </span>
+                    )}
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3 h-3" />
+                      {new Date(lead.createdAt).toLocaleDateString()}
+                    </span>
                   </div>
-                  {lead.lead_scores?.[0] && (
-                    <div className="mt-3 pt-3 border-t border-[var(--border)]">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-[var(--spectral-muted)] uppercase tracking-wider">AI Score</span>
-                        <span className={`text-xs font-bold font-mono ${
-                          lead.lead_scores[0].score >= 80 ? 'text-[var(--signal-lime)]' : 
-                          lead.lead_scores[0].score >= 50 ? 'text-[var(--electric-purple)]' : 'text-[var(--spectral-dim)]'
-                        }`}>
-                          {lead.lead_scores[0].score}/100
-                        </span>
-                      </div>
-                      <div className="w-full bg-[var(--onyx)] h-1 mt-1">
-                        <div 
-                          className={`h-full ${
-                            lead.lead_scores[0].score >= 80 ? 'bg-[var(--signal-lime)]' : 
-                            lead.lead_scores[0].score >= 50 ? 'bg-[var(--electric-purple)]' : 'bg-[var(--spectral-dim)]'
-                          }`}
-                          style={{ width: `${lead.lead_scores[0].score}%` }}
-                        />
-                      </div>
-                    </div>
+
+                  {lead.message && (
+                    <p className="mt-3 text-xs text-bl-ice/40 line-clamp-2 border-t border-white/5 pt-3">
+                      <MessageSquare className="w-3 h-3 inline mr-1 opacity-50" />
+                      {lead.message}
+                    </p>
                   )}
                 </div>
               );
@@ -247,121 +196,73 @@ export default function LeadsPage() {
           )}
         </div>
 
-        {/* Lead Detail */}
-        <div className="border border-[var(--border)] bg-[var(--card)] p-6 h-fit">
+        {/* Lead Detail Panel */}
+        <div className="spatial-panel p-6 h-fit lg:sticky lg:top-6">
           {selectedLead ? (
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div>
-                <h2 className="text-xl font-bold mb-1">{selectedLead.name}</h2>
+                <h2 className="text-base font-semibold text-bl-ice mb-1">{selectedLead.name}</h2>
                 <a
                   href={`mailto:${selectedLead.email}`}
-                  className="text-sm text-[var(--signal-lime)] hover:underline"
+                  className="text-xs text-bl-gold hover:text-bl-gold/80 transition-colors"
                 >
                   {selectedLead.email}
                 </a>
               </div>
 
-              <div className="space-y-3">
-                {selectedLead.business_name && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Building2 className="w-4 h-4 text-[var(--spectral-muted)]" />
-                    {selectedLead.business_name}
+              <div className="space-y-2.5 text-xs">
+                {selectedLead.businessName && (
+                  <div className="flex items-center gap-2.5 text-bl-ice/60">
+                    <Building2 className="w-3.5 h-3.5 text-bl-ice/30 shrink-0" />
+                    <span>{selectedLead.businessName}</span>
                   </div>
                 )}
-                {selectedLead.business_type && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <Users className="w-4 h-4 text-[var(--spectral-muted)]" />
-                    {selectedLead.business_type}
+                {selectedLead.businessType && (
+                  <div className="flex items-center gap-2.5 text-bl-ice/60">
+                    <Users className="w-3.5 h-3.5 text-bl-ice/30 shrink-0" />
+                    <span>{selectedLead.businessType}</span>
                   </div>
                 )}
-                {selectedLead.budget_range && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <span className="text-[var(--signal-lime)] font-bold">R</span>
-                    Budget: {selectedLead.budget_range}
+                {selectedLead.budgetRange && (
+                  <div className="flex items-center gap-2.5 text-bl-gold">
+                    <DollarSign className="w-3.5 h-3.5 shrink-0" />
+                    <span>Budget: {selectedLead.budgetRange}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-3 text-sm">
-                  <Calendar className="w-4 h-4 text-[var(--spectral-muted)]" />
-                  Submitted: {new Date(selectedLead.created_at).toLocaleString()}
+                <div className="flex items-center gap-2.5 text-bl-ice/60">
+                  <Calendar className="w-3.5 h-3.5 text-bl-ice/30 shrink-0" />
+                  <span>Submitted: {new Date(selectedLead.createdAt).toLocaleString()}</span>
                 </div>
               </div>
 
-              <div className="border-t border-[var(--border)] pt-4">
-                <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Message</h3>
-                <p className="text-sm text-[var(--spectral-dim)] whitespace-pre-wrap">{selectedLead.message}</p>
+              <div className="border-t border-white/5 pt-4">
+                <h3 className="text-[10px] font-semibold uppercase tracking-widest text-bl-ice/30 mb-2">Message</h3>
+                <p className="text-xs text-bl-ice/60 whitespace-pre-wrap leading-relaxed">{selectedLead.message}</p>
               </div>
 
-              {selectedLead.lead_scores?.[0] && (
-                <div className="border-t border-[var(--border)] pt-4">
-                  <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2 flex items-center gap-2">
-                    AI Insight 
-                    <span className={`text-xs px-2 py-0.5 border ${
-                      selectedLead.lead_scores[0].category === 'hot' ? 'border-[var(--signal-lime)] text-[var(--signal-lime)]' : 
-                      'border-[var(--spectral-dim)] text-[var(--spectral-dim)]'
-                    }`}>
-                      {selectedLead.lead_scores[0].category.toUpperCase()}
-                    </span>
-                  </h3>
-                  <div className="bg-[var(--onyx)] p-4 text-sm space-y-3 border border-[var(--border)]">
-                    <div>
-                      <span className="text-[var(--spectral-muted)] block text-xs uppercase mb-1">Intent</span>
-                      <span className="text-[var(--spectral-white)]">{selectedLead.lead_scores[0].analysis.intent}</span>
-                    </div>
-                    <div>
-                      <span className="text-[var(--spectral-muted)] block text-xs uppercase mb-1">Suggested Action</span>
-                      <span className="text-[var(--signal-lime)]">{selectedLead.lead_scores[0].analysis.suggested_action}</span>
-                    </div>
-                    <div>
-                      <span className="text-[var(--spectral-muted)] block text-xs uppercase mb-1">Key Factors</span>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedLead.lead_scores[0].analysis.factors?.map((factor: string, i: number) => (
-                          <span key={i} className="text-xs bg-[var(--card)] border border-[var(--border)] px-2 py-1 text-[var(--spectral-dim)]">
-                            {factor}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="border-t border-[var(--border)] pt-4 space-y-3">
-                <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)]">Update Status</h3>
+              <div className="border-t border-white/5 pt-4">
+                <h3 className="text-[10px] font-semibold uppercase tracking-widest text-bl-ice/30 mb-3">Update Status</h3>
                 <div className="grid grid-cols-2 gap-2">
                   {(Object.keys(statusConfig) as Lead["status"][]).map((status) => (
-                    <Button
+                    <button
                       key={status}
-                      variant="outline"
-                      size="sm"
                       onClick={() => updateLeadStatus(selectedLead.id, status)}
-                      className={`rounded-none text-xs font-mono uppercase ${
+                      className={`px-3 py-2 rounded-xl text-[10px] font-medium uppercase tracking-wider transition-all border ${
                         selectedLead.status === status
-                          ? "bg-[var(--signal-lime)]/20 border-[var(--signal-lime)] text-[var(--signal-lime)]"
-                          : "border-[var(--border)]"
+                          ? `${statusConfig[status].bg} ${statusConfig[status].color} ${statusConfig[status].border}`
+                          : "border-white/5 text-bl-ice/40 hover:border-white/10 hover:text-bl-ice/60"
                       }`}
                     >
                       {statusConfig[status].label}
-                    </Button>
+                    </button>
                   ))}
                 </div>
               </div>
-
-              <div className="border-t border-[var(--border)] pt-4">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => deleteLead(selectedLead.id)}
-                  className="w-full border-[var(--siren-red)]/50 text-[var(--siren-red)] hover:bg-[var(--siren-red)]/10 rounded-none"
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Delete Lead
-                </Button>
-              </div>
             </div>
           ) : (
-            <div className="text-center py-12 text-[var(--spectral-muted)]">
-              <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>Select a lead to view details</p>
+            <div className="text-center py-12">
+              <Users className="w-10 h-10 text-bl-gold/30 mx-auto mb-3" />
+              <p className="text-xs text-bl-ice/40">Select a lead to view details</p>
             </div>
           )}
         </div>

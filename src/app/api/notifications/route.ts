@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { store } from "@/lib/db/store";
 
 export async function GET() {
-  const messages = Array.from(store.contacts.values())
-    .filter((c) => c.status !== "archived")
+  const notifs = Array.from(store.notifications.values())
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-  return NextResponse.json(messages);
+  return NextResponse.json(notifs);
 }

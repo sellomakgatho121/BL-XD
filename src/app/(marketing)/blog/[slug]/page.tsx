@@ -1,135 +1,92 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Calendar, User, Clock, Share2 } from "lucide-react";
-import { pageMetadata } from "@/lib/seo";
-import GrainOverlay from "@/components/blacklight/grain-overlay";
-import Scanlines from "@/components/blacklight/scanlines";
-import Navigation from "@/components/marketing/navigation";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { createClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
+import { ArrowLeft, Calendar, Clock, Tag, User } from "lucide-react";
 
-interface BlogPost {
-  slug: string;
-  title: string;
-  content: string;
-  excerpt: string | null;
-  published_at: string | null;
-  category: string;
-  read_time: number;
-  featured_image: string | null;
-  meta_title: string | null;
-  meta_description: string | null;
-  profiles?: { full_name: string | null } | null;
-}
+export default function BlogPost({ params }: { params: { slug: string } }) {
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  const supabase = await createClient();
-  
-  const { data, error } = await supabase
-    .from("blog_posts")
-    .select("slug, title, content, excerpt, published_at, category, read_time, featured_image, meta_title, meta_description, profiles(full_name)")
-    .eq("slug", slug)
-    .eq("status", "published")
-    .single();
+  useEffect(() => {
+    fetch("/api/blog")
+      .then((r) => r.json())
+      .then((posts) => {
+        const found = posts.find((p: any) => p.slug === params.slug);
+        setPost(found || null);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [params.slug]);
 
-  if (error || !data) {
-    return null;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-bl-deep flex items-center justify-center pt-20">
+        <div className="w-8 h-8 border-2 border-bl-gold border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
   }
-
-  return {
-    ...data,
-    profiles: Array.isArray(data.profiles) ? data.profiles[0] : data.profiles
-  } as BlogPost;
-}
-
-type Params = Promise<{ slug: string }>;
-
-export async function generateMetadata({ params }: { params: Params }) {
-  const { slug } = await params;
-  const post = await getBlogPost(slug);
-  
-  if (!post) return pageMetadata.blog();
-  
-  return pageMetadata.blogPost(
-    post.meta_title || post.title,
-    post.meta_description || post.excerpt || "Read our latest analysis",
-    post.profiles?.full_name || "Blacklight Team",
-    post.published_at || ""
-  );
-}
-
-export default async function BlogPostPage({ params }: { params: Params }) {
-  const { slug } = await params;
-  const post = await getBlogPost(slug);
 
   if (!post) {
-    notFound();
+    return (
+      <div className="min-h-screen bg-bl-deep flex items-center justify-center pt-20">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-bl-ice mb-4">Post Not Found</h1>
+          <Link href="/blog" className="text-bl-gold hover:underline flex items-center gap-2">
+            <ArrowLeft size={14} /> Back to Blog
+          </Link>
+        </div>
+      </div>
+    );
   }
 
-  const authorName = post.profiles?.full_name || "Blacklight Team";
-  const publishedDate = post.published_at 
-    ? new Date(post.published_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
-    : "";
-
   return (
-    <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
-      <GrainOverlay opacity={0.03} />
-      <Scanlines />
-      <Navigation />
+    <div className="min-h-screen bg-bl-deep pt-24 pb-20">
+      <div className="max-w-3xl mx-auto px-6">
+        <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-bl-ice/40 hover:text-bl-gold mb-8 transition-colors">
+          <ArrowLeft size={14} /> Back to Blog
+        </Link>
 
-      <article className="relative pt-32 pb-20 lg:pt-48">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link 
-            href="/blog"
-            className="inline-flex items-center text-sm text-[var(--spectral-muted)] hover:text-[var(--signal-lime)] transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Transmissions
-          </Link>
-
-          <header className="mb-12">
-            <div className="flex gap-2 mb-6">
-              <Badge className="bg-[var(--signal-lime)] text-[var(--onyx)] rounded-none border-none">
-                {post.category}
-              </Badge>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-6 leading-tight">
-              {post.title}
-            </h1>
-
-            <div className="flex flex-wrap items-center gap-6 text-sm text-[var(--spectral-muted)] font-mono border-y border-[var(--border)] py-4">
-              <span className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                {publishedDate}
-              </span>
-              <span className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                {authorName}
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                {post.read_time} min read
-              </span>
-            </div>
-          </header>
-
-          <div 
-            className="prose prose-invert prose-lime max-w-none mb-16"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-
-          <div className="border-t border-[var(--border)] pt-8 flex justify-between items-center">
-            <div className="text-sm text-[var(--spectral-muted)]">
-              End of Transmission
-            </div>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Share2 className="w-4 h-4" /> Share
-            </Button>
+        <article className="spatial-panel p-8 md:p-12 rounded-3xl border border-white/10">
+          <div className="flex flex-wrap gap-2 mb-4">
+            <span className="px-3 py-1 bg-bl-gold/10 text-bl-gold text-[10px] tracking-wider uppercase rounded-full border border-bl-gold/20">
+              {post.category}
+            </span>
           </div>
-        </div>
-      </article>
+
+          <h1 className="text-3xl md:text-4xl font-bold text-bl-ice mb-4 leading-tight">{post.title}</h1>
+
+          <div className="flex flex-wrap items-center gap-4 text-xs text-bl-ice/30 mb-8 pb-8 border-b border-white/5">
+            <span className="flex items-center gap-1"><User size={12} /> Blacklight</span>
+            <span className="flex items-center gap-1"><Calendar size={12} /> {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : ""}</span>
+            <span className="flex items-center gap-1"><Clock size={12} /> {post.readTime} min read</span>
+          </div>
+
+          {post.tags?.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              <Tag size={12} className="text-bl-ice/20 mt-1" />
+              {post.tags.map((tag: string) => (
+                <span key={tag} className="text-[10px] text-bl-ice/30 border border-white/5 px-2 py-0.5 rounded">{tag}</span>
+              ))}
+            </div>
+          )}
+
+          <div className="prose prose-invert max-w-none">
+            {post.content?.split("\n").map((line: string, i: number) => {
+              if (line.startsWith("# ")) return <h1 key={i} className="text-2xl font-bold text-bl-ice mt-8 mb-4">{line.replace("# ", "")}</h1>;
+              if (line.startsWith("## ")) return <h2 key={i} className="text-xl font-bold text-bl-gold mt-6 mb-3">{line.replace("## ", "")}</h2>;
+              if (line.startsWith("### ")) return <h3 key={i} className="text-lg font-semibold text-bl-ice mt-5 mb-2">{line.replace("### ", "")}</h3>;
+              if (line.startsWith("- ")) return <li key={i} className="text-sm text-bl-ice/60 ml-4 list-disc">{line.replace("- ", "")}</li>;
+              if (line.startsWith("**")) {
+                const match = line.match(/\*\*(.+?)\*\*/);
+                if (match) return <p key={i} className="text-sm text-bl-ice/60 font-bold mt-2">{line}</p>;
+              }
+              if (line.trim() === "") return <div key={i} className="h-3" />;
+              return <p key={i} className="text-sm text-bl-ice/60 leading-relaxed mt-2">{line}</p>;
+            })}
+          </div>
+        </article>
+      </div>
     </div>
   );
 }

@@ -1,112 +1,132 @@
 "use client";
 
-import { MessageCircle, Globe, Video, Bot, Zap, Check, Users, Wallet } from "lucide-react";
+import { Zap, TrendingUp, ShoppingBag, Sparkles, ArrowRight, Check, Layers, Move3d } from "lucide-react";
 import Link from "next/link";
-import GlitchText from "@/components/GlitchText";
-import { Button } from "@/components/ui/button";
+import Navigation from "@/components/marketing/navigation";
+import Footer from "@/components/marketing/footer";
 
-const agenticServices = [
+const tiers = [
   {
-    tier: "merchant" as const,
-    title: "WhatsApp AI Storefront",
-    price: "From R12,000",
-    pricingModel: "Setup + per-conversation",
-    description: "Your 24/7 AI sales agent on WhatsApp. 96% of SA internet users are already there.",
+    tier: "spark",
+    title: "Spark",
+    price: "R3,500",
+    pricingModel: "Fixed one-time",
+    description: "High-impact landing page for new ventures. 48-hour delivery with spatial layout and GEO optimisation.",
     features: [
-      "WhatsApp Business API integration",
-      "Local language support",
-      "Payment links",
-      "Product catalog",
-      "Automated order tracking",
+      "Single-page spatial design",
+      "GEO-optimised content",
+      "AgentCard schema markup",
+      "Mobile-first responsive",
+      "48-hour delivery",
     ],
-    valueProps: [
-      "Mobile-first commerce",
-      "AI handles 80% of queries",
+    icon: Zap,
+    color: "#D7FF00",
+    gradient: "from-lime-400/10 to-transparent",
+    cta: "Ignite Spark",
+    href: "/services/spark",
+    featured: false,
+  },
+  {
+    tier: "growth",
+    title: "Growth",
+    price: "R8,500",
+    pricingModel: "Fixed one-time",
+    description: "Professional 3–5 page business presence with custom design system, SEO foundation, and spatial UX.",
+    features: [
+      "Multi-page spatial website",
+      "Custom design system",
+      "SEO architecture",
+      "Blog/content engine",
+      "Performance audit included",
     ],
-    savingsNote: "70-80% cost advantage",
+    icon: TrendingUp,
+    color: "#00CCFF",
+    gradient: "from-cyan-400/10 to-transparent",
+    cta: "Accelerate Growth",
+    href: "/services/growth",
     featured: true,
   },
   {
-    tier: "discovery" as const,
-    title: "AI Landing + GEO",
-    price: "R4,500",
-    pricingModel: "Fixed quick-start",
-    description: "An autonomous web node that ranks in AI search engines like ChatGPT and Claude.",
+    tier: "shop",
+    title: "Shop",
+    price: "R18,500",
+    pricingModel: "Fixed one-time",
+    description: "Full e-commerce experience with product management, payments, and inventory integrated.",
     features: [
-      "GEO-optimized landing page",
-      "AgentCard schema markup",
-      "AI-readable structured data",
-      "48-hour delivery",
+      "Full e-commerce platform",
+      "Payment gateway integration",
+      "Product catalogue CMS",
+      "Order management system",
+      "Analytics dashboard",
     ],
+    icon: ShoppingBag,
+    color: "#FF003C",
+    gradient: "from-red-500/10 to-transparent",
+    cta: "Open Shop",
+    href: "/services/shop",
+    featured: false,
   },
   {
-    tier: "orchestrator" as const,
-    title: "Silicon Workforce",
-    price: "Custom",
-    pricingModel: "Hybrid retainer",
-    description: "A full AI operations team. Multi-agent systems for content, sales, and support.",
+    tier: "diagnostic",
+    title: "Diagnostic",
+    price: "R1,500",
+    pricingModel: "Fixed one-time",
+    description: "Deep performance audit of your existing site. Lighthouse analysis, UX review, and actionable roadmap.",
     features: [
-      "Custom multi-agent architecture",
-      "AI sales qualification",
-      "Real-time analytics",
-      "Monthly strategy calls",
+      "Full Lighthouse audit",
+      "UX heuristics evaluation",
+      "SEO gap analysis",
+      "Competitor benchmark",
+      "Prioritised roadmap",
     ],
+    icon: Sparkles,
+    color: "#FF8800",
+    gradient: "from-amber-400/10 to-transparent",
+    cta: "Book Audit",
+    href: "/contact",
+    featured: false,
   },
-  {
-    tier: "video" as const,
-    title: "Video Content Engine",
-    price: "From R6,000/mo",
-    pricingModel: "Monthly subscription",
-    description: "AI-generated video content optimized for social media algorithms.",
-    features: [
-      "30-60 videos per month",
-      "Trend-aware content",
-      "Auto-captioning",
-      "Performance analytics",
-    ],
-  }
 ];
 
 export default function ServicesContent() {
   return (
-    <div className="min-h-screen bg-[var(--neo-white)] text-[var(--neo-black)] font-space-grotesk overflow-x-hidden selection:bg-[var(--neo-red)] selection:text-[var(--neo-white)]">
+    <div className="min-h-screen bg-bl-deep text-bl-text overflow-x-hidden">
+      {/* Isometric grid overlay */}
+      <div className="fixed inset-0 iso-grid pointer-events-none z-0" />
 
-      {/* ━━━ Header Navigation ━━━ */}
-      <nav aria-label="Main Navigation" className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[70px] flex items-center justify-between">
-          <Link href="/" aria-label="Homepage" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[var(--neo-yellow)] flex items-center justify-center border-2 border-[var(--neo-black)] group-hover:bg-[var(--neo-red)] transition-colors duration-300 ease-out">
-              <span className="font-black text-xl">B</span>
-            </div>
-            <span className="font-black text-xl tracking-tighter uppercase">Blacklight</span>
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/portfolio" className="font-bold uppercase tracking-widest hover:text-[var(--neo-blue)] transition-colors duration-300 p-2 active:translate-y-1">Portfolio</Link>
-            <Link href="/contact" className="hidden sm:block font-bold uppercase tracking-widest hover:text-[var(--neo-green)] transition-colors duration-300 p-2 active:translate-y-1">Contact</Link>
-          </div>
-        </div>
-      </nav>
+      {/* Ambient glow orbs */}
+      <div className="fixed top-1/4 right-[10%] w-96 h-96 rounded-full bg-bl-gold/5 blur-[120px] pointer-events-none z-0" />
+      <div className="fixed bottom-1/3 left-[5%] w-64 h-64 rounded-full bg-bl-cyan/5 blur-[80px] pointer-events-none z-0" />
 
-      {/* ━━━ Hero Section ━━━ */}
-      <section className="pt-32 pb-16 px-4 border-b-8 border-[var(--neo-black)] bg-[var(--neo-yellow)] md:min-h-[70vh] flex flex-col justify-center">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="inline-block bg-[var(--neo-black)] text-[var(--neo-white)] px-4 py-2 font-bold uppercase tracking-widest mb-8 neo-shadow shadow-[6px_6px_0px_var(--neo-blue)] -rotate-2">
+      <Navigation />
+
+      {/* ═══════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pt-36 pb-20 px-6 scene-3d">
+        <div className="max-w-6xl mx-auto text-center preserve-3d">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-8">
+            <Layers size={14} />
             AI Operational Services
           </div>
 
-          <h1 className="text-[var(--text-6xl)] md:text-[var(--text-8xl)] lg:text-9xl font-black uppercase tracking-tighter mb-8 leading-[0.9] text-[var(--neo-black)]">
-            <GlitchText text="SILICON" intensity="low" triggerOnHover />
-            <br />
-            <span className="text-stroke-3 text-[var(--neo-white)]">WORKFORCE</span>
+          <h1 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
+            <span className="block">Depth</span>
+            <span className="gold-gradient">Engineered</span>
           </h1>
 
-          <p className="text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-bold max-w-3xl mx-auto bg-[var(--neo-white)] p-6 border-4 border-[var(--neo-black)] shadow-[8px_8px_0px_var(--neo-red)] rotate-1">
-            Agents that sell, create, and operate 24/7. Hardcore automation built for heavy impact.
+          <p className="text-lg md:text-xl text-bl-text-muted max-w-2xl mx-auto mb-12 leading-relaxed">
+            Four tiers of spatial web presence. Each dimension deeper than the last.
+            From ignition to full commerce — pick your depth.
           </p>
 
-          <div className="mt-16 flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
-            {['24/7 Operations', 'Local-First', 'Massive Cost Advantage', 'Ship Fast'].map((feature, idx) => (
-              <span key={idx} className="bg-[var(--neo-black)] text-[var(--neo-white)] px-4 py-2 font-bold uppercase border-2 border-[var(--neo-black)] hover:bg-[var(--neo-white)] hover:text-[var(--neo-black)] transition-colors duration-300 ease-out cursor-crosshair">
+          {/* Feature badges */}
+          <div className="flex flex-wrap justify-center gap-3 mb-16">
+            {["24/7 Operations", "Local-First", "Massive Cost Advantage", "Ship Fast"].map((feature) => (
+              <span
+                key={feature}
+                className="px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-text-muted text-xs font-medium uppercase tracking-wider"
+              >
                 {feature}
               </span>
             ))}
@@ -114,107 +134,153 @@ export default function ServicesContent() {
         </div>
       </section>
 
-      {/* ━━━ Services Grid ━━━ */}
-      <section className="py-24 px-4 bg-[var(--neo-white)]">
-        <div className="max-w-7xl mx-auto">
-
-          <div className="mb-16 border-l-8 border-[var(--neo-black)] pl-6">
-            <h2 className="text-[var(--text-5xl)] md:text-[var(--text-6xl)] font-black uppercase tracking-tighter">
-              The <span className="bg-[var(--neo-black)] text-[var(--neo-white)] px-4">Arsenal</span>
+      {/* ═══════════════════════════════════════
+         SERVICES GRID — 2×2 Tilt Cards
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+              The <span className="gold-gradient">Arsenal</span>
             </h2>
+            <p className="text-bl-text-muted max-w-xl mx-auto">
+              Four tiers, one philosophy: depth over surface.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {agenticServices.map((service, idx) => (
-              <div
-                key={service.tier}
-                className={`border-4 border-[var(--neo-black)] p-6 md:p-10 flex flex-col justify-between group transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${idx % 2 === 0 ? 'bg-[var(--neo-blue)] text-[var(--neo-white)] hover:-rotate-1' : 'bg-[var(--neo-red)] text-[var(--neo-white)] hover:rotate-1'
-                  } shadow-[12px_12px_0px_var(--neo-black)]`}
-              >
-                <div>
-                  <div className="flex justify-between items-start mb-6">
-                    <h3 className="text-[var(--text-3xl)] md:text-[var(--text-4xl)] font-black uppercase">{service.title}</h3>
-                    {service.featured && (
-                      <span className="bg-[var(--neo-yellow)] text-[var(--neo-black)] px-3 py-1 font-bold uppercase text-xs border-2 border-[var(--neo-black)]">
-                        Flagship
-                      </span>
-                    )}
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 scene-3d-near">
+            {tiers.map((tier) => (
+              <div key={tier.tier} className="tilt-card group">
+                <div className={`spatial-panel p-8 md:p-10 h-full flex flex-col rim-light relative overflow-hidden ${tier.featured ? 'spatial-panel-gold' : ''}`}>
+                  {/* Background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${tier.gradient} pointer-events-none`} />
+
+                  {/* Featured badge */}
+                  {tier.featured && (
+                    <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-bl-gold/20 border border-bl-gold/30 text-bl-gold text-[10px] font-bold uppercase tracking-widest">
+                      Best Value
+                    </div>
+                  )}
+
+                  {/* Icon */}
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
+                    style={{ background: `${tier.color}15`, borderColor: `${tier.color}30`, borderWidth: 1 }}
+                  >
+                    <tier.icon size={28} style={{ color: tier.color }} />
                   </div>
 
-                  <div className={`inline-block border-2 ${idx % 2 === 0 ? 'border-[var(--neo-white)] bg-[var(--neo-black)]' : 'border-[var(--neo-black)] bg-[var(--neo-white)] text-[var(--neo-black)]'} font-bold px-4 py-2 mb-6 uppercase`}>
-                    {service.price} <span className="opacity-70 text-sm">/ {service.pricingModel}</span>
+                  {/* Title & Price */}
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase mb-1 font-display">{tier.title}</h3>
+                  <div className="flex items-baseline gap-2 mb-4">
+                    <span className="text-4xl font-black gold-gradient">{tier.price}</span>
+                    <span className="text-xs text-bl-text-muted font-mono">{tier.pricingModel}</span>
                   </div>
 
-                  <p className="text-[var(--text-lg)] md:text-[var(--text-xl)] font-bold mb-8 leading-tight">
-                    {service.description}
+                  <p className="text-bl-text-muted text-sm leading-relaxed mb-8 flex-1">
+                    {tier.description}
                   </p>
 
-                  <ul className="mb-8 space-y-3">
-                    {service.features.map(f => (
-                      <li key={f} className="flex items-center gap-3 font-bold border-b border-current pb-2">
-                        <Check size={20} className="shrink-0" aria-hidden="true" />
+                  {/* Features */}
+                  <ul className="space-y-3 mb-8">
+                    {tier.features.map((f) => (
+                      <li key={f} className="flex items-center gap-3 text-sm text-bl-text/80">
+                        <Check size={16} className="shrink-0" style={{ color: tier.color }} />
                         <span>{f}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
 
-                <Link
-                  href="/contact"
-                  aria-label={`Buy ${service.title}`}
-                  className={`block w-full text-center py-4 font-black uppercase tracking-widest border-4 border-[var(--neo-black)] transition-colors duration-300 ${idx % 2 === 0 ? 'bg-[var(--neo-white)] text-[var(--neo-black)] hover:bg-[var(--neo-yellow)]' : 'bg-[var(--neo-black)] text-[var(--neo-white)] hover:bg-[var(--neo-blue)]'
-                    }`}
-                >
-                  Deploy Sequence
-                </Link>
+                  {/* CTA */}
+                  <Link
+                    href={tier.href}
+                    className="group/btn inline-flex items-center justify-center gap-2 w-full py-4 rounded-full bg-bl-gold/10 border border-bl-gold/30 text-bl-gold text-sm font-bold uppercase tracking-wider hover:bg-bl-gold hover:text-bl-deep transition-all duration-300"
+                  >
+                    {tier.cta}
+                    <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* ━━━ Sprint Methodology ━━━ */}
-      <section className="py-24 px-4 bg-[var(--neo-black)] text-[var(--neo-white)] border-t-8 border-[var(--neo-white)]">
-        <div className="max-w-7xl mx-auto">
-
+      {/* ═══════════════════════════════════════
+         SPRINT METHODOLOGY
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-24 px-6">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[var(--text-5xl)] md:text-[var(--text-6xl)] font-black uppercase tracking-tighter text-[var(--neo-yellow)]">
-              SPRINT <span className="text-[var(--neo-white)]">PROTOCOL</span>
+            <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Move3d size={14} />
+              Sprint Protocol
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+              How We <span className="gold-gradient">Deliver</span>
             </h2>
-            <p className="text-[var(--text-2xl)] font-bold mt-6 max-w-2xl mx-auto">No hourly billing. No scope creep. Brutal efficiency.</p>
+            <p className="text-bl-text-muted max-w-xl mx-auto">
+              No hourly billing. No scope creep. Brutal efficiency in three dimensions.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 scene-3d-near">
             {[
-              { no: "01", title: "Audit & Align", time: "2-4 Weeks", price: "R8,000" },
-              { no: "02", title: "Implement", time: "6 Weeks", price: "From R35,000" },
-              { no: "03", title: "Retainer", time: "Ongoing", price: "From R15,000/mo" },
+              { no: "01", title: "Audit & Align", time: "2-4 Weeks", price: "R8,000", desc: "Deep-dive analysis of your digital presence and AI-ready roadmap." },
+              { no: "02", title: "Implement", time: "6 Weeks", price: "From R35,000", desc: "Rapid deployment of your chosen solution. Fixed scope, fixed cost." },
+              { no: "03", title: "Retainer", time: "Ongoing", price: "From R15,000/mo", desc: "Continuous optimisation, tuning, and new feature rollouts." },
             ].map((sprint, idx) => (
-              <div key={idx} className="border-4 border-[var(--neo-white)] bg-[var(--neo-black)] p-8 relative hover:-translate-y-2 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] cursor-pointer group">
-                <div aria-hidden="true" className="absolute -top-6 -right-6 w-16 h-16 bg-[var(--neo-red)] text-[var(--neo-white)] font-black text-3xl flex items-center justify-center border-4 border-[var(--neo-white)] rotate-12 group-hover:rotate-[24deg] transition-transform duration-300">
-                  {sprint.no}
+              <div key={idx} className="tilt-card group">
+                <div className="spatial-panel p-8 h-full flex flex-col rim-light relative">
+                  <div className="absolute -top-3 -right-3 w-14 h-14 rounded-2xl bg-bl-gold/15 border border-bl-gold/30 flex items-center justify-center text-bl-gold font-black text-xl rotate-12 group-hover:rotate-[24deg] transition-transform duration-500">
+                    {sprint.no}
+                  </div>
+
+                  <h3 className="text-2xl font-bold uppercase mb-4 font-display text-bl-cyan">{sprint.title}</h3>
+                  <div className="font-mono text-sm text-bl-text-muted mb-2">{sprint.time}</div>
+                  <p className="text-bl-text-muted text-sm leading-relaxed mb-6 flex-1">{sprint.desc}</p>
+                  <div className="inline-flex items-center px-4 py-2 rounded-full bg-bl-gold/10 border border-bl-gold/20 text-bl-gold text-xs font-bold uppercase">
+                    {sprint.price}
+                  </div>
                 </div>
-                <h3 className="text-[var(--text-3xl)] font-black uppercase mb-4 text-[var(--neo-green)]">{sprint.title}</h3>
-                <div className="font-mono text-[var(--text-xl)] mb-4 opacity-80">{sprint.time}</div>
-                <div className="inline-block bg-[var(--neo-white)] text-[var(--neo-black)] px-4 py-2 font-bold uppercase">{sprint.price}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ━━━ Footer CTA ━━━ */}
-      <section className="py-32 px-4 bg-[var(--neo-red)] text-[var(--neo-white)] border-t-8 border-[var(--neo-black)]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-[var(--text-6xl)] font-black uppercase tracking-tighter mb-8 leading-none">
-            Ready To <br /> <span className="bg-[var(--neo-black)] px-4 border-4 border-[var(--neo-white)] inline-block -rotate-2 mt-2">Scale</span>?
-          </h2>
-          <Link href="/contact" aria-label="Book a Strategy Call" className="inline-block bg-[var(--neo-white)] text-[var(--neo-black)] text-[var(--text-2xl)] font-black uppercase px-12 py-6 border-4 border-[var(--neo-black)] shadow-[12px_12px_0px_var(--neo-black)] hover:translate-x-2 hover:translate-y-2 hover:shadow-[0px_0px_0px_var(--neo-black)] transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] active:scale-95">
-            Book Strategy Call
-          </Link>
+      {/* ═══════════════════════════════════════
+         CTA SECTION
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-32 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="spatial-panel p-10 md:p-16 text-center rim-light spatial-panel-gold relative overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-bl-gold/8 blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-bl-cyan/5 blur-[100px] pointer-events-none" />
+
+            <div className="relative">
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 gold-glow">
+                Ready to <br />
+                <span className="gold-gradient">Scale</span>?
+              </h2>
+
+              <p className="text-bl-text-muted text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+                Book a free strategy session. We&apos;ll define your first sprint and show you exactly what you get.
+              </p>
+
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-10 py-5 bg-bl-gold text-bl-deep font-bold uppercase tracking-wider rounded-full transition-all hover:bg-bl-amber hover:shadow-[0_0_60px_rgba(181,154,95,0.3)] text-lg"
+              >
+                Book Strategy Call
+                <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

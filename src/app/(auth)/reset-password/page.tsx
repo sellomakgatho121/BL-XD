@@ -2,154 +2,65 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
-import { supabase } from "@/lib/supabase/client";
-import GlitchText from "@/components/GlitchText";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Mail, ArrowLeft, Sparkles } from "lucide-react";
 
 export default function ResetPasswordPage() {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const { error: authError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/login`,
-      });
-
-      if (authError) {
-        setError(authError.message);
-        return;
-      }
-
-      setSuccess(true);
-    } catch {
-      setError("An unexpected error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [sent, setSent] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] flex items-center justify-center p-4">
-      <div
-        className="fixed inset-0 opacity-10"
-        style={{
-          backgroundImage: "linear-gradient(#1A1A1A 1px, transparent 1px), linear-gradient(90deg, #1A1A1A 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
+    <div className="min-h-screen bg-bl-deep flex items-center justify-center relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute bottom-1/3 left-1/4 w-72 h-72 bg-bl-slate/10 rounded-full blur-[100px]" />
+        <div className="iso-grid absolute inset-0 opacity-[0.02]" />
+      </div>
 
-      <div
-        className="relative z-10 w-full max-w-md"
-      >
+      <div className="spatial-panel relative z-10 w-full max-w-md mx-4 p-8 md:p-10 rounded-3xl border border-white/10">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black tracking-tighter mb-2">
-            <GlitchText text="RESET PASSWORD" intensity="medium" triggerOnHover />
-          </h1>
-          <p className="text-[var(--spectral-dim)] font-mono text-sm">
-            {success
-              ? "Check your email for reset instructions"
-              : "Enter your email to receive a reset link"}
+          <div className="w-14 h-14 bg-bl-gold rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Sparkles size={24} className="text-bl-deep" />
+          </div>
+          <h1 className="text-xl font-bold text-bl-ice">Reset Password</h1>
+          <p className="text-sm text-bl-ice/40 mt-1">
+            {sent ? "Check your email for reset instructions" : "Enter your email to receive reset instructions"}
           </p>
         </div>
 
-        <div className="border border-[var(--border)] bg-[var(--card)] p-8">
-          {success ? (
-            <div
-              className="text-center py-8"
-            >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 rounded-full bg-[var(--signal-lime)]/20 flex items-center justify-center">
-                  <CheckCircle className="w-8 h-8 text-[var(--signal-lime)]" />
-                </div>
+        {!sent ? (
+          <form
+            onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+            className="space-y-5"
+          >
+            <div>
+              <label className="block text-[10px] tracking-widest uppercase text-bl-ice/30 mb-1.5">Email</label>
+              <div className="relative">
+                <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-bl-ice/20" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@company.com"
+                  className="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-bl-ice placeholder:text-bl-ice/20 focus:outline-none focus:border-bl-gold/50 transition-all"
+                  required
+                />
               </div>
-              <h3 className="text-xl font-bold mb-2">Reset Link Sent</h3>
-              <p className="text-[var(--spectral-dim)] text-sm mb-6">
-                We&apos;ve sent a password reset link to{" "}
-                <span className="text-[var(--spectral-white)] font-mono">{email}</span>
-              </p>
-              <p className="text-xs text-[var(--spectral-muted)] mb-6">
-                Didn&apos;t receive it? Check your spam folder or try again.
-              </p>
-              <Button
-                onClick={() => setSuccess(false)}
-                className="w-full bg-[var(--border)] text-[var(--spectral-white)] hover:bg-[var(--border)]/80 font-mono uppercase rounded-none h-12"
-              >
-                TRY AGAIN
-              </Button>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-xs font-mono uppercase text-[var(--spectral-muted)]">
-                  Email
-                </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--spectral-muted)]" />
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-[var(--onyx)] border-[var(--border)] rounded-none"
-                    placeholder="you@company.com"
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-
-              {error && (
-                <div
-                  className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3"
-                >
-                  <AlertCircle className="w-4 h-4" />
-                  {error}
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 font-mono uppercase rounded-none h-12"
-              >
-                {isLoading ? (
-                  "SENDING..."
-                ) : (
-                  <>
-                    SEND RESET LINK
-                    <ArrowLeft className="ml-2 w-4 h-4 rotate-180" />
-                  </>
-                )}
-              </Button>
-            </form>
-          )}
-
-          <div className="mt-6 text-center">
-            <Link
-              href="/login"
-              className="text-sm text-[var(--spectral-dim)] hover:text-[var(--spectral-white)] transition-colors inline-flex items-center gap-1"
-            >
-              <ArrowLeft className="w-3 h-3" />
-              Back to login
-            </Link>
+            <button type="submit" className="w-full py-3 bg-bl-gold text-bl-deep text-sm font-semibold rounded-xl hover:shadow-[0_0_25px_rgba(181,154,95,0.3)] transition-all duration-300">
+              Send Reset Link
+            </button>
+          </form>
+        ) : (
+          <div className="text-center py-4">
+            <p className="text-sm text-bl-ice/60">If an account exists with that email, you will receive reset instructions shortly.</p>
           </div>
-        </div>
+        )}
 
-        <p className="text-center mt-8 text-xs font-mono text-[var(--spectral-muted)] uppercase tracking-widest">
-          <Link href="/" className="hover:text-[var(--spectral-white)] transition-colors">
+        <div className="mt-6 text-center space-y-2">
+          <Link href="/login" className="block text-xs text-bl-gold hover:underline">Back to Sign In</Link>
+          <Link href="/" className="block text-[10px] text-bl-ice/20 hover:text-bl-gold transition-colors tracking-wider uppercase">
             ← Back to Website
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

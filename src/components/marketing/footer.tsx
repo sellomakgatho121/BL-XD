@@ -1,75 +1,105 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Linkedin, Instagram } from "lucide-react";
-import NewsletterForm from "@/components/NewsletterForm";
+import { Github, Linkedin, Instagram, Send, ArrowUpRight } from "lucide-react";
+
+const footerLinks = {
+  Services: [
+    { href: "/services/spark", label: "Spark" },
+    { href: "/services/growth", label: "Growth" },
+    { href: "/services/shop", label: "Shop" },
+    { href: "/contact", label: "Diagnostic" },
+  ],
+  Company: [
+    { href: "/portfolio", label: "Portfolio" },
+    { href: "/process", label: "Process" },
+    { href: "/blog", label: "Blog" },
+    { href: "/contact", label: "Contact" },
+  ],
+  Legal: [
+    { href: "/privacy", label: "Privacy" },
+    { href: "/terms", label: "Terms" },
+    { href: "/cookies", label: "Cookies" },
+  ],
+};
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-[var(--border)] bg-[var(--onyx)] pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="relative z-10 border-t border-white/5 bg-gradient-to-b from-bl-deep to-black pt-20 pb-8">
+      {/* Ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-bl-gold/30 to-transparent" />
+
+      <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[var(--signal-lime)] flex items-center justify-center">
-                <span className="text-[var(--onyx)] font-bold text-lg">B</span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 bg-bl-gold rounded-sm flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+                <span className="text-bl-deep font-bold text-lg">B</span>
               </div>
-              <span className="font-mono text-sm tracking-wider uppercase hidden sm:block">Blacklight</span>
+              <div>
+                <span className="font-mono text-xs tracking-[0.2em] uppercase text-bl-ice block">Blacklight</span>
+                <span className="text-[10px] text-bl-ice/30 tracking-wider">Web Designs</span>
+              </div>
             </Link>
-            <p className="text-sm text-[var(--spectral-dim)] leading-relaxed">
-              Agentic web systems for the next generation of South African entrepreneurs.
+            <p className="text-sm text-bl-ice/50 leading-relaxed max-w-xs">
+              Depth-engineered web systems for the next generation of South African entrepreneurs and global disruptors.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors"><Linkedin size={20} /></a>
-              <a href="#" className="text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors"><Github size={20} /></a>
+            <div className="flex gap-3">
+              {[Github, Linkedin, Instagram].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-bl-ice/40 hover:text-bl-gold hover:border-bl-gold/30 hover:shadow-[0_0_15px_rgba(181,154,95,0.2)] transition-all duration-300"
+                >
+                  <Icon size={14} />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Services Column */}
-          <div>
-            <h4 className="font-mono text-sm font-bold uppercase tracking-wider mb-6 text-[var(--spectral-white)]">Services</h4>
-            <ul className="space-y-3">
-              <li><Link href="/services" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">All Services</Link></li>
-              <li><Link href="/pricing" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">Pricing</Link></li>
-              <li><Link href="/services/whatsapp-ai" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">WhatsApp AI</Link></li>
-              <li><Link href="/services/geo-landing" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">Discovery Node</Link></li>
-              <li><Link href="/services/orchestrator" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">The Orchestrator</Link></li>
-            </ul>
-          </div>
-
-          {/* Company Column */}
-          <div>
-            <h4 className="font-mono text-sm font-bold uppercase tracking-wider mb-6 text-[var(--spectral-white)]">Company</h4>
-            <ul className="space-y-3">
-              <li><Link href="/portfolio" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">Portfolio</Link></li>
-              <li><Link href="/about" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">About Us</Link></li>
-              <li><Link href="/blog" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">Blog</Link></li>
-              <li><Link href="/contact" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">Contact</Link></li>
-              <li><Link href="/portal" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors">Client Portal</Link></li>
-            </ul>
-          </div>
-
-          {/* Newsletter Column */}
-          <div>
-            <h4 className="font-mono text-sm font-bold uppercase tracking-wider mb-6 text-[var(--spectral-white)]">Stay Synchronised</h4>
-            <p className="text-sm text-[var(--spectral-dim)] mb-6">
-              Join our signal network for updates on AI trends and digital strategy.
-            </p>
-            <NewsletterForm />
-          </div>
+          {/* Link Columns */}
+          {Object.entries(footerLinks).map(([title, links]) => (
+            <div key={title}>
+              <h4 className="text-xs font-semibold tracking-widest uppercase text-bl-gold mb-6">
+                {title}
+              </h4>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-bl-ice/40 hover:text-bl-ice transition-colors flex items-center gap-1 group"
+                    >
+                      {link.label}
+                      <ArrowUpRight
+                        size={10}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="pt-8 border-t border-[var(--border)] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-[var(--spectral-dim)]">
-            &copy; {currentYear} Blacklight Web Designs. Built in South Africa.
+        {/* Bottom Bar */}
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-[10px] tracking-widest text-bl-ice/20 uppercase">
+            &copy; {currentYear} Blacklight Web Designs. All rights reserved.
           </p>
-          <div className="flex gap-8 text-xs text-[var(--spectral-dim)]">
-            <Link href="/privacy" className="hover:text-[var(--spectral-white)] transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-[var(--spectral-white)] transition-colors">Terms of Service</Link>
+          <p className="text-[10px] tracking-widest text-bl-ice/20 uppercase flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-bl-gold animate-pulse" />
+            Depth Engineered
+            <span className="w-1.5 h-1.5 rounded-full bg-bl-gold animate-pulse" />
+          </p>
+          <div className="flex items-center gap-4 text-[10px] text-bl-ice/20">
+            <span>ENC SESSION</span>
+            <span className="w-px h-3 bg-white/10" />
+            <span>SCALES WITHIN</span>
           </div>
         </div>
       </div>

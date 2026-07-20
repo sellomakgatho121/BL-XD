@@ -1,45 +1,17 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-// Create a dummy client for build time when env vars aren't available
-const createDummyClient = () => {
-  return {
-    auth: {
-      getUser: async () => ({ data: { user: null }, error: null }),
-      signInWithPassword: async () => ({ data: null, error: { message: 'Not configured' } }),
-      signUp: async () => ({ data: null, error: { message: 'Not configured' } }),
-      signOut: async () => {},
-    },
-    from: () => ({
-      select: () => ({
-        eq: () => ({
-          single: async () => ({ data: null, error: null }),
-        }),
-      }),
-    }),
-  } as unknown as ReturnType<typeof createClient>;
+// Stub — supabase replaced by in-memory store + optional Neon
+export const supabase = {
+  auth: {
+    signUp: async () => ({ data: null, error: new Error("Supabase removed — use /api/auth") }),
+    signIn: async () => ({ data: null, error: new Error("Supabase removed — use NextAuth") }),
+    signOut: async () => {},
+    getSession: async () => ({ data: { session: null } }),
+    onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+  },
+  from: () => ({
+    select: () => ({ order: () => ({ data: [], error: null }), eq: () => ({ single: () => ({ data: null, error: null }), data: [], error: null }), data: [], error: null }),
+    insert: () => ({ select: () => ({ single: () => ({ data: null, error: null }) }), data: null, error: null }),
+    update: () => ({ eq: () => ({ select: () => ({ single: () => ({ data: null, error: null }) }), data: null, error: null }) }),
+    delete: () => ({ eq: () => ({ data: null, error: null }) }),
+  }),
+  channel: () => ({ on: () => ({ subscribe: () => {} }), unsubscribe: () => {} }),
 };
-
-export const supabase = (!supabaseUrl || !supabaseAnonKey) 
-  ? createDummyClient()
-  : createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-      },
-    });
-
-export type UserRole = 'client' | 'admin' | 'superadmin';
-
-export interface Profile {
-  id: string;
-  email: string;
-  full_name: string | null;
-  company_name: string | null;
-  role: UserRole;
-  avatar_url: string | null;
-  created_at: string;
-  updated_at: string;
-}

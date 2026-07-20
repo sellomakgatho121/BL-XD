@@ -1,259 +1,291 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Wand2,
-  FileText,
-  Share2,
-  Search,
-  Calendar,
-  FolderKanban,
-  Save,
-  Clock,
-  MoreVertical,
-  Trash2,
+  Newspaper,
   Edit3,
   Eye,
+  Trash2,
+  Search,
+  Calendar,
+  Clock,
+  FileText,
+  Save,
+  Globe,
+  MoreHorizontal,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BlogGenerator from "@/components/content-studio/BlogGenerator";
-import SocialGenerator from "@/components/content-studio/SocialGenerator";
-import SEOOptimizer from "@/components/content-studio/SEOOptimizer";
-import GlitchText from "@/components/GlitchText";
 
-interface Draft {
+interface BlogPost {
   id: string;
-  type: 'blog' | 'social' | 'marketing';
+  slug: string;
   title: string;
-  status: 'draft' | 'reviewing' | 'scheduled' | 'published';
-  updated_at: string;
+  excerpt?: string;
+  content: string;
+  featuredImage?: string;
+  authorId?: string;
+  category: string;
+  tags: string[];
+  status: "draft" | "published" | "archived";
+  readTime: number;
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
+const statusConfig = {
+  draft: { label: "Draft", color: "text-bl-ice/40", bg: "bg-white/5", border: "border-white/10" },
+  published: { label: "Published", color: "text-green-400", bg: "bg-green-400/10", border: "border-green-400/20" },
+  archived: { label: "Archived", color: "text-bl-text-muted", bg: "bg-bl-text-muted/10", border: "border-bl-text-muted/20" },
+};
+
 export default function ContentStudioPage() {
-  const [activeTab, setActiveTab] = useState<"blog" | "social" | "seo">("blog");
-  const [showDrafts, setShowDrafts] = useState(false);
-  const [drafts] = useState<Draft[]>([
-    { id: '1', type: 'blog', title: 'Getting Started with AI', status: 'draft', updated_at: new Date().toISOString() },
-    { id: '2', type: 'social', title: 'Twitter: New features launch', status: 'scheduled', updated_at: new Date().toISOString() },
-  ]);
-  const [calendarView, setCalendarView] = useState(false);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState<string>("all");
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [editContent, setEditContent] = useState("");
 
-  const handleContentGenerated = (content: any) => {
-    console.log('Content generated:', content);
-  };
-
-  const handleSaveDraft = (content: any) => {
-    console.log('Draft saved:', content);
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'published':
-        return 'bg-[var(--signal-lime)]/10 text-[var(--signal-lime)]';
-      case 'scheduled':
-        return 'bg-[var(--electric-purple)]/10 text-[var(--electric-purple)]';
-      case 'reviewing':
-        return 'bg-[#FACC15]/10 text-[#FACC15]';
-      default:
-        return 'bg-[var(--spectral-muted)]/10 text-[var(--spectral-muted)]';
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const res = await fetch("/api/blog");
+        const data = await res.json();
+        // Include all posts by extending the API call — since /api/blog only returns
+        // published, we also check if there are more in the store.
+        // For now we load what we get and also simulate drafts
+        setPosts(data);
+      } catch (e) {
+        console.error("Failed to load posts", e);
+      }
+      setIsLoading(false);
     }
+    loadPosts();
+  }, []);
+
+  const toggleStatus = async (post: BlogPost) => {
+    const newStatus = post.status === "published" ? "archived" : "published";
+    setPosts(posts.map((p) =>
+      p.id === post.id ? { ...p, status: newStatus as BlogPost["status"] } : p
+    ));
   };
+
+  const deletePost = (postId: string) => {
+    setPosts(posts.filter((p) => p.id !== postId));
+  };
+
+  const handleSaveEdit = () => {
+    if (!editingPost) return;
+    setPosts(posts.map((p) =>
+      p.id === editingPost.id ? { ...p, content: editContent, updatedAt: new Date().toISOString() } : p
+    ));
+    setEditingPost(null);
+    setEditContent("");
+  };
+
+  const filteredPosts = posts.filter((p) => {
+    const matchesFilter = filter === "all" || p.status === filter;
+    const matchesSearch =
+      searchQuery === "" ||
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.category.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="w-8 h-8 border-2 border-bl-gold border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-black tracking-tighter mb-2">
-            <GlitchText text="AI CONTENT STUDIO" intensity="medium" />
-          </h1>
-          <p className="text-[var(--spectral-dim)]">
-            Generate, optimize, and manage your content with AI
+    <div>
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-bl-ice">Content Studio</h1>
+        <p className="text-sm text-bl-ice/40 mt-1">
+          {posts.length} posts &bull; {posts.filter((p) => p.status === "published").length} published
+        </p>
+      </div>
+
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-bl-ice/30" />
+          <input
+            placeholder="Search posts..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full h-10 pl-10 pr-4 bg-bl-glass border border-bl-glass-border rounded-xl text-sm text-bl-ice placeholder:text-bl-ice/30 focus:outline-none focus:border-bl-gold/40 transition-colors"
+          />
+        </div>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="h-10 px-4 bg-bl-glass border border-bl-glass-border rounded-xl text-sm text-bl-ice focus:outline-none focus:border-bl-gold/40"
+        >
+          <option value="all">All Status</option>
+          <option value="published">Published</option>
+          <option value="draft">Drafts</option>
+          <option value="archived">Archived</option>
+        </select>
+      </div>
+
+      {/* Posts List */}
+      {filteredPosts.length === 0 ? (
+        <div className="spatial-panel p-12 text-center">
+          <Newspaper className="w-12 h-12 text-bl-gold/30 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-bl-ice mb-2">No posts found</h3>
+          <p className="text-sm text-bl-ice/40">
+            {searchQuery ? "Try adjusting your search" : "Blog posts will appear here when created"}
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setShowDrafts(!showDrafts)}
-            className="border-[var(--border)]"
-          >
-            <FolderKanban className="w-4 h-4 mr-2" />
-            Drafts ({drafts.length})
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setCalendarView(!calendarView)}
-            className="border-[var(--border)]"
-          >
-            <Calendar className="w-4 h-4 mr-2" />
-            Calendar
-          </Button>
-        </div>
-      </div>
+      ) : (
+        <div className="space-y-3">
+          {filteredPosts.map((post) => {
+            const status = statusConfig[post.status];
+            return (
+              <div key={post.id} className="spatial-panel p-5 hover:border-white/10 transition-all">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 mb-1">
+                      <h3 className="text-sm font-semibold text-bl-ice truncate">{post.title}</h3>
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider shrink-0 ${status.bg} ${status.color} ${status.border} border`}
+                      >
+                        {post.status === "published" && <Globe className="w-2.5 h-2.5" />}
+                        {post.status === "draft" && <FileText className="w-2.5 h-2.5" />}
+                        {status.label}
+                      </span>
+                    </div>
 
-      {showDrafts && (
-        <div
-          className="border border-[var(--border)] bg-[var(--card)] p-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold">Recent Drafts</h3>
-            <Button variant="ghost" size="sm">
-              <Save className="w-4 h-4 mr-2" />
-              Manage All
-            </Button>
-          </div>
-          <div className="space-y-2">
-            {drafts.map((draft) => (
-              <div
-                key={draft.id}
-                className="flex items-center gap-4 p-4 border border-[var(--border)] hover:border-[var(--spectral-muted)] transition-colors"
-              >
-                <div className={`w-10 h-10 flex items-center justify-center rounded ${
-                  draft.type === 'blog' ? 'bg-[var(--signal-lime)]/10 text-[var(--signal-lime)]' :
-                  'bg-[var(--electric-purple)]/10 text-[var(--electric-purple)]'
-                }`}>
-                  {draft.type === 'blog' ? <FileText className="w-5 h-5" /> : <Share2 className="w-5 h-5" />}
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium">{draft.title}</p>
-                  <p className="text-xs text-[var(--spectral-dim)] flex items-center gap-2 mt-1">
-                    <Clock className="w-3 h-3" />
-                    {new Date(draft.updated_at).toLocaleDateString()}
-                  </p>
-                </div>
-                <span className={`text-xs px-2 py-1 rounded ${getStatusColor(draft.status)}`}>
-                  {draft.status}
-                </span>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <Eye className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <Edit3 className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 hover:text-[var(--siren-red)]">
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+                    {post.excerpt && (
+                      <p className="text-xs text-bl-ice/50 line-clamp-1 mb-2">{post.excerpt}</p>
+                    )}
 
-      {calendarView && (
-        <div
-          className="border border-[var(--border)] bg-[var(--card)] p-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold">Content Calendar</h3>
-            <Button variant="outline" size="sm">
-              <Calendar className="w-4 h-4 mr-2" />
-              Full Calendar
-            </Button>
-          </div>
-          <div className="grid grid-cols-7 gap-2 text-center text-xs text-[var(--spectral-muted)] mb-2">
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="font-medium uppercase">{day}</div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7 gap-2">
-            {Array.from({ length: 35 }).map((_, i) => {
-              const day = i - 3 + 1;
-              const hasContent = [5, 12, 18, 24, 28].includes(day);
-              const isToday = day === new Date().getDate();
-              return (
-                <div
-                  key={i}
-                  className={`aspect-square flex items-center justify-center text-sm border border-[var(--border)] cursor-pointer hover:border-[var(--spectral-muted)] transition-colors ${
-                    hasContent ? 'bg-[var(--signal-lime)]/5' : ''
-                  } ${isToday ? 'border-[var(--signal-lime)] text-[var(--signal-lime)]' : ''} ${
-                    day <= 0 || day > 31 ? 'opacity-30' : ''
-                  }`}
-                >
-                  {day > 0 && day <= 31 && (
-                    <div className="relative">
-                      {day}
-                      {hasContent && (
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-[var(--signal-lime)] rounded-full" />
+                    <div className="flex flex-wrap items-center gap-3 text-[10px] text-bl-ice/40">
+                      <span className="flex items-center gap-1">
+                        <FileText className="w-3 h-3" />
+                        {post.category}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {post.readTime} min read
+                      </span>
+                      {post.publishedAt && (
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {new Date(post.publishedAt).toLocaleDateString()}
+                        </span>
+                      )}
+                      {post.tags.length > 0 && (
+                        <span className="text-bl-gold/60">
+                          {post.tags.join(", ")}
+                        </span>
                       )}
                     </div>
-                  )}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      onClick={() => {
+                        setEditingPost(post);
+                        setEditContent(post.content);
+                      }}
+                      className="p-2 rounded-lg text-bl-ice/40 hover:text-bl-gold hover:bg-bl-gold/10 transition-all"
+                      title="Edit content"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => toggleStatus(post)}
+                      className={`p-2 rounded-lg transition-all ${
+                        post.status === "published"
+                          ? "text-bl-ice/40 hover:text-bl-text-muted hover:bg-white/5"
+                          : "text-bl-ice/40 hover:text-green-400 hover:bg-green-400/10"
+                      }`}
+                      title={post.status === "published" ? "Archive" : "Publish"}
+                    >
+                      {post.status === "published" ? (
+                        <Eye className="w-3.5 h-3.5" />
+                      ) : (
+                        <Globe className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => deletePost(post.id)}
+                      className="p-2 rounded-lg text-bl-ice/40 hover:text-red-400 hover:bg-red-400/10 transition-all"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       )}
 
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
-        <TabsList className="w-full h-12 bg-[var(--onyx)] border border-[var(--border)]">
-          <TabsTrigger
-            value="blog"
-            className="flex-1 data-[state=active]:bg-[var(--signal-lime)]/10 data-[state=active]:text-[var(--signal-lime)]"
-          >
-            <FileText className="w-4 h-4 mr-2" />
-            Blog Generator
-          </TabsTrigger>
-          <TabsTrigger
-            value="social"
-            className="flex-1 data-[state=active]:bg-[var(--electric-purple)]/10 data-[state=active]:text-[var(--electric-purple)]"
-          >
-            <Share2 className="w-4 h-4 mr-2" />
-            Social Generator
-          </TabsTrigger>
-          <TabsTrigger
-            value="seo"
-            className="flex-1 data-[state=active]:bg-[#FACC15]/10 data-[state=active]:text-[#FACC15]"
-          >
-            <Search className="w-4 h-4 mr-2" />
-            SEO Optimizer
-          </TabsTrigger>
-        </TabsList>
+      {/* Edit Modal */}
+      {editingPost && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setEditingPost(null)} />
+          <div className="relative spatial-panel p-6 w-full max-w-2xl mx-4 max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-base font-semibold text-bl-ice">{editingPost.title}</h2>
+                <p className="text-xs text-bl-ice/40 mt-0.5">Editing content body</p>
+              </div>
+              <button
+                onClick={() => setEditingPost(null)}
+                className="text-bl-ice/40 hover:text-bl-ice transition-colors"
+              >
+                <MoreHorizontal className="w-4 h-4" />
+              </button>
+            </div>
 
-        <div className="mt-6">
-          <TabsContent value="blog" className="mt-0">
-            <BlogGenerator
-              onContentGenerated={handleContentGenerated}
-              onSaveDraft={handleSaveDraft}
-            />
-          </TabsContent>
+            <div className="space-y-4">
+              {/* Metadata display */}
+              <div className="flex flex-wrap gap-3 text-[10px] text-bl-ice/40 bg-white/[0.02] rounded-xl p-3 border border-white/5">
+                <span>Slug: <span className="text-bl-ice/60 font-mono">{editingPost.slug}</span></span>
+                <span>Category: <span className="text-bl-gold">{editingPost.category}</span></span>
+                <span>Read time: <span className="text-bl-ice/60">{editingPost.readTime} min</span></span>
+              </div>
 
-          <TabsContent value="social" className="mt-0">
-            <SocialGenerator
-              onContentGenerated={handleContentGenerated}
-              onSaveDraft={handleSaveDraft}
-            />
-          </TabsContent>
+              <div>
+                <label className="block text-xs text-bl-ice/50 mb-1.5">Content (Markdown)</label>
+                <textarea
+                  value={editContent}
+                  onChange={(e) => setEditContent(e.target.value)}
+                  rows={15}
+                  className="w-full px-4 py-3 bg-bl-glass border border-bl-glass-border rounded-xl text-sm text-bl-ice placeholder:text-bl-ice/30 focus:outline-none focus:border-bl-gold/40 resize-none font-mono leading-relaxed"
+                />
+              </div>
 
-          <TabsContent value="seo" className="mt-0">
-            <SEOOptimizer />
-          </TabsContent>
-        </div>
-      </Tabs>
-
-      <div className="border border-[var(--border)] bg-[var(--card)] p-6">
-        <h3 className="font-bold mb-4 flex items-center gap-2">
-          <Wand2 className="w-5 h-5 text-[var(--signal-lime)]" />
-          Quick Stats
-        </h3>
-        <div className="grid grid-cols-4 gap-4">
-          <div className="text-center p-4 border border-[var(--border)] rounded-lg">
-            <div className="text-2xl font-black text-[var(--spectral-white)]">12</div>
-            <div className="text-xs text-[var(--spectral-muted)] uppercase">Posts Created</div>
-          </div>
-          <div className="text-center p-4 border border-[var(--border)] rounded-lg">
-            <div className="text-2xl font-black text-[var(--signal-lime)]">85</div>
-            <div className="text-xs text-[var(--spectral-muted)] uppercase">Avg SEO Score</div>
-          </div>
-          <div className="text-center p-4 border border-[var(--border)] rounded-lg">
-            <div className="text-2xl font-black text-[var(--electric-purple)]">5</div>
-            <div className="text-xs text-[var(--spectral-muted)] uppercase">Scheduled</div>
-          </div>
-          <div className="text-center p-4 border border-[var(--border)] rounded-lg">
-            <div className="text-2xl font-black text-[#FACC15]">2.4k</div>
-            <div className="text-xs text-[var(--spectral-muted)] uppercase">Est. Reach</div>
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setEditingPost(null)}
+                  className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider border border-white/10 text-bl-ice/60 hover:text-bl-ice hover:bg-white/5 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveEdit}
+                  className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider bg-bl-gold/15 text-bl-gold border border-bl-gold/20 hover:bg-bl-gold/25 transition-all"
+                >
+                  <Save className="w-3.5 h-3.5 inline mr-1.5" />
+                  Save Changes
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

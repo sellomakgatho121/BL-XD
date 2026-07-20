@@ -1,238 +1,139 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import {
-  Users,
-  FolderKanban,
-  MessageSquare,
-  TrendingUp,
-  DollarSign,
-  ArrowUpRight,
-  ArrowDownRight,
-  Activity,
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-} from "lucide-react";
-import { supabase, type Profile } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { Users, FileText, Receipt, TrendingUp, Activity, Bell } from "lucide-react";
 
-interface Stats {
-  totalClients: number;
-  activeProjects: number;
-  monthlyRevenue: number;
-  pendingMessages: number;
+interface StatCard {
+  label: string;
+  value: string;
+  change: string;
+  icon: any;
+  color: string;
 }
 
-const recentActivity = [
-  { action: "New project created", client: "TechFlow SA", time: "2 hours ago", type: "project" },
-  { action: "Payment received", client: "Kinetic Coffee", time: "4 hours ago", type: "payment" },
-  { action: "Message received", client: "Sarah Chen", time: "6 hours ago", type: "message" },
-  { action: "Project completed", client: "Urban Edge", time: "1 day ago", type: "completed" },
-];
-
-export default function AdminDashboardPage() {
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [stats, setStats] = useState<Stats>({
-    totalClients: 0,
-    activeProjects: 0,
-    monthlyRevenue: 0,
-    pendingMessages: 0,
-  });
-  const [isLoading, setIsLoading] = useState(true);
+export default function AdminDashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [stats, setStats] = useState<StatCard[]>([
+    { label: "Total Leads", value: "0", change: "+0 this week", icon: Users, color: "#B59A5F" },
+    { label: "Active Projects", value: "0", change: "0 in review", icon: FileText, color: "#00CCFF" },
+    { label: "Invoices", value: "0", change: "0 overdue", icon: Receipt, color: "#FF003C" },
+    { label: "Conversion Rate", value: "0%", change: "0% this month", icon: TrendingUp, color: "#D7FF00" },
+  ]);
+  const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
-    async function loadData() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (user) {
-        const { data: profileData } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-
-        setProfile(profileData);
-
-        // Fetch stats (mock for now)
-        const { count: clientCount } = await supabase
-          .from("profiles")
-          .select("*", { count: "exact" })
-          .eq("role", "client");
-
-        setStats({
-          totalClients: clientCount || 0,
-          activeProjects: 12,
-          monthlyRevenue: 48500,
-          pendingMessages: 3,
-        });
-      }
-
-      setIsLoading(false);
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/admin");
     }
+  }, [status, router]);
 
-    loadData();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [leadsRes, notifsRes] = await Promise.all([
+          fetch("/api/contact"),
+          fetch("/api/notifications"),
+        ]);
+        const leads = await leadsRes.json();
+        const notifs = await notifsRes.json();
+        setNotifications(notifs.slice(0, 5));
+
+        setStats([
+          { label: "Total Leads", value: String(leads.length), change: `${leads.filter((l: any) => l.status === "new").length} new`, icon: Users, color: "#B59A5F" },
+          { label: "Active Projects", value: "3", change: "1 in review", icon: FileText, color: "#00CCFF" },
+          { label: "Invoices", value: "5", change: "0 overdue", icon: Receipt, color: "#FF003C" },
+          { label: "Conversion Rate", value: "28%", change: "+5% this month", icon: TrendingUp, color: "#D7FF00" },
+        ]);
+      } catch {}
+    }
+    fetchData();
   }, []);
 
-  if (isLoading) {
+  if (status === "loading") {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-pulse text-[var(--signal-lime)] font-mono">LOADING...</div>
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="w-8 h-8 border-2 border-bl-gold border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* Welcome */}
-      <div>
-        <h1 className="text-3xl font-black tracking-tighter mb-2">
-          Admin Dashboard
+    <div>
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-bl-ice">
+          Welcome back{session?.user?.name ? `, ${session.user.name}` : ""}
         </h1>
-        <p className="text-[var(--spectral-dim)]">
-          Welcome back, {profile?.full_name || "Admin"}. Here&apos;s what&apos;s happening.
-        </p>
+        <p className="text-sm text-bl-ice/40 mt-1">Here&apos;s your agency overview</p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          {
-            label: "Total Clients",
-            value: stats.totalClients.toString(),
-            change: "+12%",
-            trend: "up",
-            icon: Users,
-          },
-          {
-            label: "Active Projects",
-            value: stats.activeProjects.toString(),
-            change: "+5%",
-            trend: "up",
-            icon: FolderKanban,
-          },
-          {
-            label: "Monthly Revenue",
-            value: `R${stats.monthlyRevenue.toLocaleString()}`,
-            change: "+18%",
-            trend: "up",
-            icon: DollarSign,
-          },
-          {
-            label: "Pending Messages",
-            value: stats.pendingMessages.toString(),
-            change: "-2",
-            trend: "down",
-            icon: MessageSquare,
-          },
-        ].map((stat, i) => (
-          <div
-            key={stat.label}
-            className="border border-[var(--border)] bg-[var(--card)] p-6"
-          >
-            <div className="flex items-start justify-between mb-4">
-              <stat.icon className="w-5 h-5 text-[var(--signal-lime)]" />
-              <div className={`flex items-center gap-1 text-xs ${stat.trend === "up" ? "text-[var(--signal-lime)]" : "text-[var(--siren-red)]"}`}>
-                {stat.trend === "up" ? (
-                  <ArrowUpRight className="w-3 h-3" />
-                ) : (
-                  <ArrowDownRight className="w-3 h-3" />
-                )}
-                {stat.change}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {stats.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <div
+              key={stat.label}
+              className="spatial-panel p-5 rounded-2xl border border-white/5 hover:border-white/10 transition-all"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ backgroundColor: `${stat.color}15`, color: stat.color }}
+                >
+                  <Icon size={18} />
+                </div>
+                <Activity size={14} className="text-bl-ice/20" />
               </div>
+              <div className="text-2xl font-bold text-bl-ice">{stat.value}</div>
+              <div className="text-xs text-bl-ice/40 mt-1">{stat.label}</div>
+              <div className="text-[10px] text-bl-ice/30 mt-1">{stat.change}</div>
             </div>
-            <div className="text-3xl font-black">{stat.value}</div>
-            <div className="text-sm text-[var(--spectral-muted)]">{stat.label}</div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Recent Activity */}
-        <div
-          className="border border-[var(--border)] bg-[var(--card)]"
-        >
-          <div className="p-6 border-b border-[var(--border)] flex items-center justify-between">
-            <h2 className="text-lg font-bold">Recent Activity</h2>
-            <Activity className="w-5 h-5 text-[var(--spectral-muted)]" />
-          </div>
-          <div className="divide-y divide-[var(--border)]">
-            {recentActivity.map((activity, i) => (
-              <div key={i} className="p-4 flex items-center gap-4 hover:bg-[var(--onyx)] transition-colors">
-                <div className={`w-8 h-8 flex items-center justify-center ${
-                  activity.type === "project" ? "bg-[var(--electric-purple)]/10" :
-                  activity.type === "payment" ? "bg-[var(--signal-lime)]/10" :
-                  activity.type === "completed" ? "bg-[var(--success)]/10" :
-                  "bg-[var(--spectral-muted)]/10"
-                }`}>
-                  {activity.type === "project" ? <FolderKanban className="w-4 h-4 text-[var(--electric-purple)]" /> :
-                   activity.type === "payment" ? <DollarSign className="w-4 h-4 text-[var(--signal-lime)]" /> :
-                   activity.type === "completed" ? <CheckCircle2 className="w-4 h-4 text-[var(--success)]" /> :
-                   <MessageSquare className="w-4 h-4 text-[var(--spectral-muted)]" />}
+      {/* Recent Activity & Notifications */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Recent Leads */}
+        <div className="spatial-panel p-6 rounded-2xl border border-white/5">
+          <h2 className="text-sm font-semibold text-bl-ice uppercase tracking-wider mb-4">Recent Leads</h2>
+          <div className="space-y-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                <div className="w-8 h-8 rounded-full bg-bl-gold/10 flex items-center justify-center">
+                  <Users size={14} className="text-bl-gold" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">{activity.action}</p>
-                  <p className="text-xs text-[var(--spectral-muted)]">{activity.client}</p>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs text-bl-ice font-medium">New Lead #{i + 1}</div>
+                  <div className="text-[10px] text-bl-ice/40 truncate">Contact form submission pending review</div>
                 </div>
-                <span className="text-xs text-[var(--spectral-muted)] font-mono">{activity.time}</span>
+                <span className="text-[10px] text-bl-gold/60">New</span>
               </div>
             ))}
           </div>
-          <div className="p-4 border-t border-[var(--border)]">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-full text-[var(--spectral-muted)] hover:text-[var(--spectral-white)]"
-            >
-              View All Activity
-            </Button>
-          </div>
         </div>
 
-        {/* Quick Actions */}
-        <div
-          className="border border-[var(--border)] bg-[var(--card)]"
-        >
-          <div className="p-6 border-b border-[var(--border)]">
-            <h2 className="text-lg font-bold">Quick Actions</h2>
-          </div>
-          <div className="p-6 grid sm:grid-cols-2 gap-4">
-            <Button
-              className="h-auto py-6 bg-[var(--signal-lime)]/10 text-[var(--signal-lime)] hover:bg-[var(--signal-lime)]/20 border border-[var(--signal-lime)]/50 rounded-none flex flex-col items-center gap-2"
-              asChild
-            >
-              <Link href="/admin/clients/new">
-                <Users className="w-6 h-6" />
-                <span className="font-mono text-xs uppercase">New Client</span>
-              </Link>
-            </Button>
-            <Button
-              className="h-auto py-6 bg-[var(--electric-purple)]/10 text-[var(--electric-purple)] hover:bg-[var(--electric-purple)]/20 border border-[var(--electric-purple)]/50 rounded-none flex flex-col items-center gap-2"
-              asChild
-            >
-              <Link href="/admin/projects/new">
-                <FolderKanban className="w-6 h-6" />
-                <span className="font-mono text-xs uppercase">New Project</span>
-              </Link>
-            </Button>
-            <Button
-              className="h-auto py-6 bg-[var(--spectral-white)]/10 text-[var(--spectral-white)] hover:bg-[var(--spectral-white)]/20 border border-[var(--spectral-white)]/50 rounded-none flex flex-col items-center gap-2"
-              asChild
-            >
-              <Link href="/admin/invoices">
-                <DollarSign className="w-6 h-6" />
-                <span className="font-mono text-xs uppercase">Create Invoice</span>
-              </Link>
-            </Button>
-            <Button
-              className="h-auto py-6 bg-[var(--siren-red)]/10 text-[var(--siren-red)] hover:bg-[var(--siren-red)]/20 border border-[var(--siren-red)]/50 rounded-none flex flex-col items-center gap-2"
-            >
-              <AlertCircle className="w-6 h-6" />
-              <span className="font-mono text-xs uppercase">View Alerts</span>
-            </Button>
+        {/* Notifications */}
+        <div className="spatial-panel p-6 rounded-2xl border border-white/5">
+          <h2 className="text-sm font-semibold text-bl-ice uppercase tracking-wider mb-4">Notifications</h2>
+          <div className="space-y-3">
+            {notifications.length === 0 ? (
+              <div className="text-xs text-bl-ice/30 text-center py-8">No notifications yet</div>
+            ) : (
+              notifications.map((n: any) => (
+                <div key={n.id} className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                  <Bell size={14} className="text-bl-gold mt-0.5" />
+                  <div>
+                    <div className="text-xs text-bl-ice">{n.title}</div>
+                    <div className="text-[10px] text-bl-ice/40">{n.message}</div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

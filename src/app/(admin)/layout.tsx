@@ -1,174 +1,130 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard,
-  Users,
-  FolderKanban,
-  MessageSquare,
-  Settings,
-  Shield,
-  LogOut,
-  Bell,
-  Menu,
-  X,
-  ChevronRight,
+  LayoutDashboard, Users, FileText, Receipt, UserPlus, Settings,
+  LogOut, Menu, X, Bell, PanelRightClose, Palette, Newspaper,
 } from "lucide-react";
-import { supabase, type Profile, type UserRole } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { NotificationCenter } from "@/components/ui/notification-center";
+import { SessionProvider } from "next-auth/react";
+import { useState } from "react";
 
-const sidebarItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/admin/admin/dashboard" },
-  { icon: Users, label: "Clients", href: "/admin/clients" },
-  { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
-  { icon: MessageSquare, label: "Messages", href: "/admin/messages" },
-  { icon: Users, label: "Leads", href: "/admin/admin/leads" },
-  { icon: Shield, label: "Team", href: "/admin/team" },
-  { icon: Settings, label: "Settings", href: "/admin/settings" },
+const sidebarLinks = [
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/leads", label: "Leads", icon: Users },
+  { href: "/admin/projects", label: "Projects", icon: FileText },
+  { href: "/admin/invoices", label: "Invoices", icon: Receipt },
+  { href: "/admin/team", label: "Team", icon: UserPlus },
+  { href: "/admin/content-studio", label: "Content", icon: Newspaper },
+  { href: "/admin/social", label: "Social", icon: Palette },
 ];
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-
-  useEffect(() => {
-    async function loadProfile() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        router.push("/login");
-        return;
-      }
-
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-
-      if (!profile || (profile.role !== "admin" && profile.role !== "superadmin")) {
-        router.push("/portal/dashboard");
-        return;
-      }
-
-      setProfile(profile);
-      setIsLoading(false);
-    }
-
-    loadProfile();
-  }, [router]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[var(--onyx)] flex items-center justify-center">
-        <div className="animate-pulse text-[var(--signal-lime)] font-mono">LOADING...</div>
-      </div>
-    );
-  }
+function AdminSidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => void }) {
+  const pathname = usePathname();
 
   return (
-    <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] flex">
-      {/* Mobile Sidebar Overlay */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
+    <aside
+      className={`fixed left-0 top-0 h-full z-40 bg-bl-deep/95 backdrop-blur-2xl border-r border-white/5 transition-all duration-300 flex flex-col ${
+        collapsed ? "w-16" : "w-60"
+      }`}
+    >
+      {/* Logo */}
+      <div className="flex items-center justify-between p-4 border-b border-white/5">
+        {!collapsed && (
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-bl-gold rounded flex items-center justify-center">
+              <span className="text-bl-deep font-bold text-xs">B</span>
+            </div>
+            <span className="text-xs font-mono tracking-wider text-bl-ice">Admin</span>
+          </Link>
+        )}
+        <button onClick={onToggle} className="text-bl-ice/40 hover:text-bl-gold transition-colors">
+          <PanelRightClose size={16} />
+        </button>
+      </div>
+
+      {/* Nav Links */}
+      <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+        {sidebarLinks.map((link) => {
+          const isActive = pathname === link.href || 
+            (link.href !== "/admin" && pathname.startsWith(link.href));
+          const Icon = link.icon;
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs transition-all ${
+                isActive
+                  ? "bg-bl-gold/15 text-bl-gold border border-bl-gold/20"
+                  : "text-bl-ice/40 hover:text-bl-ice hover:bg-white/5"
+              }`}
+              title={collapsed ? link.label : undefined}
+            >
+              <Icon size={16} className="shrink-0" />
+              {!collapsed && <span className="tracking-wider uppercase">{link.label}</span>}
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* Bottom */}
+      <div className="p-3 border-t border-white/5">
+        <button
+          onClick={() => signOut()}
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs text-red-400/60 hover:text-red-400 hover:bg-red-400/5 transition-all w-full"
+        >
+          <LogOut size={16} />
+          {!collapsed && <span className="tracking-wider uppercase">Sign Out</span>}
+        </button>
+      </div>
+    </aside>
+  );
+}
+
+function AdminLayoutInner({ children }: { children: React.ReactNode }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-bl-deep">
+      {/* Mobile sidebar toggle */}
+      <button
+        onClick={() => setMobileOpen(!mobileOpen)}
+        className="fixed top-4 left-4 z-50 md:hidden p-2 bg-bl-deep/80 backdrop-blur-xl rounded-xl border border-white/10 text-bl-ice"
+      >
+        {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+      </button>
+
+      {/* Mobile sidebar */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <div className="absolute left-0 top-0 h-full w-60 bg-bl-deep border-r border-white/5 p-4">
+            <AdminSidebar collapsed={false} onToggle={() => setMobileOpen(false)} />
+          </div>
+        </div>
       )}
 
-      {/* Sidebar */}
-      <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-72 bg-[var(--card)] border-r border-[var(--border)] transform transition-transform duration-200 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-          }`}
-      >
-        <div className="p-6 border-b border-[var(--border)]">
-          <Link href="/admin/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[var(--siren-red)] flex items-center justify-center">
-              <Shield className="w-4 h-4 text-[var(--onyx)]" />
-            </div>
-            <div>
-              <span className="font-mono text-sm tracking-wider uppercase block">Admin</span>
-              <span className="text-xs text-[var(--spectral-muted)]">Blacklight Control</span>
-            </div>
-          </Link>
-        </div>
-
-        <nav className="p-4 space-y-1">
-          {sidebarItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--spectral-dim)] hover:text-[var(--spectral-white)] hover:bg-[var(--onyx)] transition-colors rounded-none border border-transparent hover:border-[var(--border)] group"
-            >
-              <item.icon className="w-4 h-4 group-hover:text-[var(--signal-lime)]" />
-              {item.label}
-              <ChevronRight className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100" />
-            </Link>
-          ))}
-        </nav>
-
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[var(--border)]">
-          <div className="flex items-center gap-4">
-            <NotificationCenter userId={profile?.id || ""} />
-            <div className="text-right">
-              <p className="text-sm font-medium">{profile?.full_name}</p>
-              <p className="text-xs text-[var(--spectral-muted)]">{profile?.role}</p>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSignOut}
-              className="border-[var(--border)] rounded-none"
-            >
-              <LogOut className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </aside>
+      {/* Desktop sidebar */}
+      <div className="hidden md:block">
+        <AdminSidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
+      </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Header */}
-        <header className="h-16 border-b border-[var(--border)] bg-[var(--card)] flex items-center justify-between px-4 lg:px-8">
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="lg:hidden p-2 border border-[var(--border)]"
-          >
-            {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-
-          <div className="flex items-center gap-4 ml-auto">
-            <button className="relative p-2 text-[var(--spectral-dim)] hover:text-[var(--spectral-white)] transition-colors">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-[var(--siren-red)] rounded-full" />
-            </button>
-          </div>
-        </header>
-
-        {/* Page Content */}
-        <main className="flex-1 overflow-auto p-4 lg:p-8">
-          <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-            {children}
-          </div>
-        </main>
-      </div>
+      <main className={`transition-all duration-300 ${sidebarCollapsed ? "md:ml-16" : "md:ml-60"}`}>
+        <div className="p-6 md:p-10 max-w-7xl mx-auto">
+          {children}
+        </div>
+      </main>
     </div>
+  );
+}
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SessionProvider>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </SessionProvider>
   );
 }

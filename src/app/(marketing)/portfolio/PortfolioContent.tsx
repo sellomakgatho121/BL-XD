@@ -1,13 +1,10 @@
 "use client";
 
-import { ExternalLink, TrendingUp, Gauge, Eye, ArrowRight, Filter } from "lucide-react";
-import Link from "next/link";
-import GrainOverlay from "@/components/blacklight/grain-overlay";
-import Scanlines from "@/components/blacklight/scanlines";
-import GlitchText from "@/components/GlitchText";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { ExternalLink, TrendingUp, Gauge, Eye, ArrowRight, Filter, Layers, Move3d, Sparkles } from "lucide-react";
+import Link from "next/link";
+import Navigation from "@/components/marketing/navigation";
+import Footer from "@/components/marketing/footer";
 
 const portfolioItems = [
   {
@@ -81,115 +78,181 @@ export default function PortfolioContent() {
     activeFilter === "All" ? portfolioItems : portfolioItems.filter((item) => item.industry === activeFilter);
 
   return (
-    <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] relative">
-      <GrainOverlay opacity={0.03} />
-      <Scanlines />
+    <div className="min-h-screen bg-bl-deep text-bl-text overflow-x-hidden">
+      {/* Isometric grid overlay */}
+      <div className="fixed inset-0 iso-grid pointer-events-none z-0" />
 
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--onyx)]/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[var(--signal-lime)] flex items-center justify-center">
-                <span className="text-[var(--onyx)] font-bold text-lg">B</span>
-              </div>
-              <span className="font-mono text-sm tracking-wider uppercase hidden sm:block">Blacklight</span>
-            </Link>
-            <div className="flex items-center gap-8">
-              <Link href="/services" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors uppercase tracking-wider">Services</Link>
-              <Link href="/contact" className="text-sm text-[var(--spectral-dim)] hover:text-[var(--signal-lime)] transition-colors uppercase tracking-wider">Contact</Link>
-            </div>
+      {/* Ambient glow */}
+      <div className="fixed top-1/3 right-[8%] w-80 h-80 rounded-full bg-bl-gold/5 blur-[100px] pointer-events-none z-0" />
+      <div className="fixed bottom-1/4 left-[5%] w-56 h-56 rounded-full bg-bl-cyan/5 blur-[80px] pointer-events-none z-0" />
+
+      <Navigation />
+
+      {/* ═══════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pt-36 pb-16 px-6 scene-3d">
+        <div className="max-w-6xl mx-auto text-center preserve-3d">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-8">
+            <Move3d size={14} />
+            Case Studies
           </div>
+
+          <h1 className="text-[clamp(2.5rem,10vw,7rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
+            <span className="block">The</span>
+            <span className="gold-gradient">Gallery</span>
+          </h1>
+
+          <p className="text-lg md:text-xl text-bl-text-muted max-w-2xl mx-auto leading-relaxed">
+            Technical proof of our obsession with performance, design, and conversion.
+            Each project is a dimension deeper than the last.
+          </p>
         </div>
-      </nav>
+      </section>
 
-      <section className="relative pt-32 pb-20 lg:pt-48">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6">
-              <GlitchText text="PORTFOLIO" intensity="medium" triggerOnHover />
-            </h1>
-            <p className="text-xl text-[var(--spectral-dim)] max-w-2xl mx-auto">
-              Technical proof of our obsession with performance, design, and conversion.
-            </p>
-          </div>
-
-          {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            <Filter className="w-5 h-5 text-[var(--spectral-muted)] mr-2" />
+      {/* ═══════════════════════════════════════
+         FILTERS
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pb-8 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-wrap justify-center items-center gap-2">
+            <Filter size={14} className="text-bl-text-muted mr-1 shrink-0" />
             {filters.map((filter) => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-4 py-2 text-sm font-mono uppercase tracking-wider transition-colors ${
+                className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-300 ${
                   activeFilter === filter
-                    ? "bg-[var(--signal-lime)] text-[var(--onyx)]"
-                    : "border border-[var(--border)] text-[var(--spectral-dim)] hover:text-[var(--signal-lime)]"
+                    ? "bg-bl-gold text-bl-deep shadow-[0_0_20px_rgba(181,154,95,0.3)]"
+                    : "bg-bl-glass border border-bl-glass-border text-bl-text-muted hover:text-bl-gold hover:border-bl-gold/30"
                 }`}
               >
                 {filter}
               </button>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Portfolio Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredItems.map((item, i) => (
-              <div
-                key={item.id}
-                className="group border border-[var(--border)] bg-[var(--card)] overflow-hidden hover:border-[var(--signal-lime)]/50 transition-colors"
-              >
-                {/* Image Placeholder */}
-                <div className="aspect-video bg-[var(--onyx-lighter)] relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-[var(--spectral-muted)] font-mono text-sm">{item.title}</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--card)] to-transparent" />
-                  
-                  {/* Metrics Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-end">
-                    <div className="flex gap-4">
-                      <div className="text-center">
-                        <div className="flex items-center gap-1 text-[var(--signal-lime)] text-xs font-mono">
-                          <Gauge className="w-3 h-3" />
-                          {item.metrics.lighthouse}
-                        </div>
-                        <span className="text-[10px] text-[var(--spectral-muted)] uppercase">Lighthouse</span>
+      {/* ═══════════════════════════════════════
+         PORTFOLIO GRID — 3D Tilt Cards
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-12 pb-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          {filteredItems.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 scene-3d-near">
+              {filteredItems.map((item) => (
+                <div key={item.id} className="tilt-card group">
+                  <div className="spatial-panel overflow-hidden h-full flex flex-col rim-light">
+                    {/* Image Area */}
+                    <div className="relative aspect-video bg-bl-surface/80 overflow-hidden">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-bl-text-muted/40 text-xs font-mono">{item.title}</span>
                       </div>
-                      <div className="text-center">
-                        <div className="flex items-center gap-1 text-[var(--signal-lime)] text-xs font-mono">
-                          <TrendingUp className="w-3 h-3" />
-                          {item.metrics.tti}
+                      <div className="absolute inset-0 bg-gradient-to-t from-bl-deep/80 via-transparent to-transparent" />
+
+                      {/* Metrics Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-end">
+                        <div className="flex gap-4">
+                          <div className="text-center">
+                            <div className="flex items-center gap-1 text-bl-gold text-xs font-mono">
+                              <Gauge className="w-3 h-3" />
+                              {item.metrics.lighthouse}
+                            </div>
+                            <span className="text-[10px] text-bl-text-muted uppercase tracking-wider">Lighthouse</span>
+                          </div>
+                          <div className="text-center">
+                            <div className="flex items-center gap-1 text-bl-cyan text-xs font-mono">
+                              <TrendingUp className="w-3 h-3" />
+                              {item.metrics.tti}
+                            </div>
+                            <span className="text-[10px] text-bl-text-muted uppercase tracking-wider">TTI</span>
+                          </div>
                         </div>
-                        <span className="text-[10px] text-[var(--spectral-muted)] uppercase">TTI</span>
+                        <span className="px-2 py-1 rounded-full bg-bl-gold/15 border border-bl-gold/25 text-bl-gold text-[10px] font-bold uppercase">
+                          {item.tier}
+                        </span>
                       </div>
                     </div>
-                    <Badge className="bg-[var(--signal-lime)]/10 text-[var(--signal-lime)] border-none text-xs">
-                      {item.tier}
-                    </Badge>
+
+                    {/* Content */}
+                    <div className="p-6 flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-[10px] text-bl-text-muted font-mono uppercase tracking-wider">{item.industry}</span>
+                      </div>
+
+                      <h3 className="text-lg font-bold mb-2 font-display group-hover:text-bl-gold transition-colors">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-sm text-bl-text-muted mb-4 flex-1 leading-relaxed">
+                        {item.description}
+                      </p>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {item.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[10px] px-2 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-text-muted uppercase tracking-wider"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* CTA */}
+                      <div className="flex items-center gap-2 text-bl-gold text-xs font-bold uppercase tracking-wider group/link hover:gap-3 transition-all">
+                        <span>View Case Study</span>
+                        <ExternalLink className="w-3 h-3 transition-transform group-hover/link:translate-x-0.5" />
+                      </div>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <div className="spatial-panel p-10 inline-block rim-light">
+                <p className="text-bl-text-muted">No projects match this filter.</p>
+                <button
+                  onClick={() => setActiveFilter("All")}
+                  className="mt-4 px-6 py-3 rounded-full bg-bl-gold/10 border border-bl-gold/30 text-bl-gold text-sm font-bold uppercase tracking-wider hover:bg-bl-gold/20 transition-all"
+                >
+                  View All
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
 
-                <div className="p-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs text-[var(--spectral-muted)] font-mono uppercase">{item.industry}</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--signal-lime)] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[var(--spectral-dim)] mb-4">{item.description}</p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {item.tags.map((tag) => (
-                      <span key={tag} className="text-xs px-2 py-1 bg-[var(--onyx)] text-[var(--spectral-dim)]">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+      {/* ═══════════════════════════════════════
+         MAESTRO METRICS
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Sparkles size={14} />
+              Maestro Metrics
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+              Performance Is Our <span className="gold-gradient">Baseline</span>
+            </h2>
+          </div>
 
-                  <div className="flex items-center gap-2 text-[var(--signal-lime)] text-sm font-mono group-hover:gap-3 transition-all">
-                    <span>View Case Study</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </div>
+          <div className="grid md:grid-cols-3 gap-6 scene-3d-near">
+            {[
+              { value: "98", label: "Avg Lighthouse", sub: "vs 72 industry average" },
+              { value: "0.6s", label: "Avg Time to Interactive", sub: "vs 3.2s industry average" },
+              { value: "100", label: "Accessibility Score", sub: "WCAG AAA compliant" },
+            ].map((metric, i) => (
+              <div key={i} className="tilt-card">
+                <div className="spatial-panel p-8 text-center rim-light">
+                  <div className="text-5xl md:text-6xl font-black gold-gradient mb-2">{metric.value}</div>
+                  <div className="text-xs font-mono text-bl-text-muted uppercase tracking-wider mb-2">{metric.label}</div>
+                  <div className="text-[10px] text-bl-text-muted/60">{metric.sub}</div>
                 </div>
               </div>
             ))}
@@ -197,59 +260,35 @@ export default function PortfolioContent() {
         </div>
       </section>
 
-      {/* Maestro Metrics Section */}
-      <section className="py-20 border-y border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-sm font-mono uppercase tracking-widest text-[var(--signal-lime)] mb-4">
-              Maestro Metrics
-            </h2>
-            <p className="text-3xl font-bold">Performance is our baseline</p>
-          </div>
+      {/* ═══════════════════════════════════════
+         CTA SECTION
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-32 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="spatial-panel p-10 md:p-16 text-center rim-light spatial-panel-gold relative overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-bl-gold/8 blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-bl-cyan/5 blur-[100px] pointer-events-none" />
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div
-              className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
-            >
-              <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">98</div>
-              <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Avg Lighthouse</div>
-              <div className="text-xs text-[var(--spectral-dim)] mt-2">vs 72 industry average</div>
-            </div>
-            <div
-              className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
-            >
-              <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">0.6s</div>
-              <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Avg Time to Interactive</div>
-              <div className="text-xs text-[var(--spectral-dim)] mt-2">vs 3.2s industry average</div>
-            </div>
-            <div
-              className="border border-[var(--border)] bg-[var(--card)] p-8 text-center"
-            >
-              <div className="text-6xl font-black text-[var(--signal-lime)] mb-2">100</div>
-              <div className="text-sm font-mono text-[var(--spectral-muted)] uppercase tracking-wider">Accessibility Score</div>
-              <div className="text-xs text-[var(--spectral-dim)] mt-2">WCAG AAA compliant</div>
+            <div className="relative">
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 gold-glow">
+                Want to be our <span className="gold-gradient">next</span> case study?
+              </h2>
+              <p className="text-bl-text-muted text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+                Let&apos;s build something that breaks the surface.
+              </p>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-10 py-5 bg-bl-gold text-bl-deep font-bold uppercase tracking-wider rounded-full transition-all hover:bg-bl-amber hover:shadow-[0_0_60px_rgba(181,154,95,0.3)] text-lg"
+              >
+                Start Your Project
+                <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-32">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div>
-            <h2 className="text-4xl font-black tracking-tighter mb-6">
-              Want to be our <span className="text-[var(--signal-lime)]">next</span> case study?
-            </h2>
-            <Button
-              size="lg"
-              className="bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 font-mono uppercase tracking-wider rounded-none text-lg px-8 py-6 group"
-            >
-              Start Your Project
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </div>
-        </div>
-      </section>
+      <Footer />
     </div>
   );
 }

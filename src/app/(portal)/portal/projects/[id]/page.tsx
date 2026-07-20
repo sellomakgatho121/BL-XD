@@ -2,275 +2,66 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
-import {
-  ArrowLeft,
-  Calendar,
-  User,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  MessageSquare,
-  Paperclip,
-} from "lucide-react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { FileUpload, ProjectFile } from "@/components/ui/file-upload";
-import { createNotification } from "@/lib/notifications";
-import { FilePreview } from "@/components/annotations/FilePreview";
+import { ArrowLeft, FileText, Clock } from "lucide-react";
 
-interface Project {
-  id: string;
-  name: string;
-  description: string;
-  status: "planning" | "in_progress" | "review" | "completed" | "on_hold";
-  client_id: string;
-  client: {
-    id: string;
-    full_name: string;
-    email: string;
-    company_name: string;
-  };
-  phases: Array<{
-    id: string;
-    name: string;
-    status: string;
-    due_date: string;
-  }>;
-  files: Array<{
-    id: string;
-    name: string;
-    type: string;
-    size: number;
-    url: string;
-    created_at: string;
-  }>;
-  messages: Array<{
-    id: string;
-    content: string;
-    sender_id: string;
-    created_at: string;
-  }>;
-  created_at: string;
-  updated_at: string;
-}
-
-const statusConfig = {
-  planning: { label: "Planning", color: "text-[var(--signal-lime)]", icon: Clock },
-  in_progress: { label: "In Progress", color: "text-[var(--electric-purple)]", icon: AlertCircle },
-  review: { label: "Review", color: "text-[var(--spectral-white)]", icon: MessageSquare },
-  completed: { label: "Completed", color: "text-[var(--success)]", icon: CheckCircle2 },
-  on_hold: { label: "On Hold", color: "text-[var(--siren-red)]", icon: AlertCircle },
+const statusConfig: Record<string, { color: string; label: string }> = {
+  planning: { color: "#B59A5F", label: "Planning" },
+  in_progress: { color: "#00CCFF", label: "In Progress" },
+  review: { color: "#D7FF00", label: "Review" },
+  completed: { color: "#00FF88", label: "Completed" },
 };
 
-export default function ProjectDetailPage() {
+export default function ProjectDetail() {
   const params = useParams();
-  const projectId = params.id as string;
-
-  const [project, setProject] = useState<Project | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [previewFile, setPreviewFile] = useState<ProjectFile | null>(null);
+  const [project, setProject] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadProject() {
-      try {
-        const response = await fetch(`/api/projects/${projectId}`);
+    fetch("/api/projects")
+      .then((r) => r.json())
+      .then((projects) => {
+        const found = projects.find((p: any) => p.id === params.id);
+        setProject(found || null);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [params.id]);
 
-        if (!response.ok) {
-          throw new Error("Project not found");
-        }
+  if (loading) return <div className="flex justify-center pt-20"><div className="w-8 h-8 border-2 border-bl-gold border-t-transparent rounded-full animate-spin" /></div>;
+  if (!project) return <div className="text-center pt-20 text-bl-ice/40">Project not found</div>;
 
-        const data = await response.json();
-        setProject(data.project);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load project");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (projectId) {
-      loadProject();
-    }
-  }, [projectId]);
-
-  const handleFilesChange = async (newFiles: Project["files"]) => {
-    if (!project) return;
-
-    // Update local state
-    setProject({ ...project, files: newFiles });
-
-    // Notify admin about new files
-    try {
-      const { data: adminProfile } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("role", "admin")
-        .limit(1)
-        .single();
-
-      if (adminProfile) {
-        await createNotification(
-          adminProfile.id,
-          "project_update",
-          "New Files Uploaded",
-          `${newFiles.length} file(s) uploaded to project "${project.name}"`,
-          { project_id: project.id, file_count: newFiles.length }
-        );
-      }
-    } catch (error) {
-      console.error("Failed to send notification:", error);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-pulse text-[var(--signal-lime)] font-mono">LOADING...</div>
-      </div>
-    );
-  }
-
-  if (error || !project) {
-    return (
-      <div className="text-center py-12">
-        <h2 className="text-2xl font-bold mb-4">Project Not Found</h2>
-        <p className="text-[var(--spectral-dim)] mb-6">{error}</p>
-        <Link href="/portal/dashboard">
-          <Button className="bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 rounded-none">
-            Back to Dashboard
-          </Button>
-        </Link>
-      </div>
-    );
-  }
-
-  const status = statusConfig[project.status];
-  const StatusIcon = status.icon;
+  const cfg = statusConfig[project.status] || { color: "#666", label: project.status };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/portal/dashboard"
-            className="flex items-center gap-2 text-sm text-[var(--spectral-muted)] hover:text-[var(--spectral-white)] transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Dashboard
-          </Link>
-        </div>
-
-        <div className={`flex items-center gap-2 ${status.color}`}>
-          <StatusIcon className="w-4 h-4" />
-          <span className="text-sm font-mono uppercase">{status.label}</span>
-        </div>
-      </div>
-
-      {/* Project Info */}
-      <div className="border border-[var(--border)] bg-[var(--card)] p-6">
-        <h1 className="text-3xl font-black tracking-tighter mb-4">{project.name}</h1>
-        <p className="text-[var(--spectral-dim)] mb-6">{project.description}</p>
-
-        <div className="grid md:grid-cols-3 gap-6">
+    <div>
+      <Link href="/portal/projects" className="inline-flex items-center gap-2 text-sm text-bl-ice/40 hover:text-bl-gold mb-6 transition-colors">
+        <ArrowLeft size={14} /> Back to Projects
+      </Link>
+      <div className="spatial-panel p-8 rounded-3xl border border-white/10">
+        <div className="flex items-start justify-between mb-6">
           <div>
-            <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Client</h3>
-            <div className="flex items-center gap-2">
-              <User className="w-4 h-4 text-[var(--spectral-muted)]" />
-              <div>
-                <p className="font-medium">{project.client.full_name}</p>
-                <p className="text-sm text-[var(--spectral-dim)]">{project.client.company_name}</p>
-              </div>
+            <h1 className="text-2xl font-bold text-bl-ice">{project.name}</h1>
+            {project.description && <p className="text-sm text-bl-ice/40 mt-2">{project.description}</p>}
+          </div>
+          <span className="text-xs px-3 py-1 rounded-full border" style={{ borderColor: `${cfg.color}30`, color: cfg.color, backgroundColor: `${cfg.color}10` }}>{cfg.label}</span>
+        </div>
+        {project.progress > 0 && (
+          <div className="mb-6">
+            <div className="flex justify-between text-xs text-bl-ice/40 mb-2">
+              <span>Progress</span>
+              <span>{project.progress}%</span>
+            </div>
+            <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full rounded-full transition-all" style={{ width: `${project.progress}%`, backgroundColor: cfg.color }} />
             </div>
           </div>
-
-          <div>
-            <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Timeline</h3>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Calendar className="w-4 h-4 text-[var(--spectral-muted)]" />
-                Created: {new Date(project.created_at).toLocaleDateString()}
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Clock className="w-4 h-4 text-[var(--spectral-muted)]" />
-                Updated: {new Date(project.updated_at).toLocaleDateString()}
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-mono uppercase text-[var(--spectral-muted)] mb-2">Quick Stats</h3>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Paperclip className="w-4 h-4 text-[var(--spectral-muted)]" />
-                {project.files.length} Files
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <MessageSquare className="w-4 h-4 text-[var(--spectral-muted)]" />
-                {project.messages.length} Messages
-              </div>
-            </div>
-          </div>
+        )}
+        <div className="flex gap-6 text-xs text-bl-ice/30">
+          {project.startDate && <span className="flex items-center gap-1"><Clock size={12} /> Started: {project.startDate}</span>}
+          {project.dueDate && <span className="flex items-center gap-1"><Clock size={12} /> Due: {project.dueDate}</span>}
         </div>
       </div>
-
-      {/* Project Phases */}
-      {project.phases.length > 0 && (
-        <div className="border border-[var(--border)] bg-[var(--card)] p-6">
-          <h2 className="text-xl font-bold mb-4">Project Phases</h2>
-          <div className="space-y-3">
-            {project.phases.map((phase, index) => (
-              <div
-                key={phase.id}
-                className="flex items-center justify-between p-3 bg-[var(--onyx)] rounded-none animate-in fade-in slide-in-from-left-4 duration-400 fill-mode-both"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-[var(--signal-lime)]/10 text-[var(--signal-lime)] rounded-full flex items-center justify-center text-sm font-mono">
-                    {index + 1}
-                  </div>
-                  <div>
-                    <h3 className="font-medium">{phase.name}</h3>
-                    <p className="text-sm text-[var(--spectral-dim)]">
-                      Due: {new Date(phase.due_date).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div className={`px-3 py-1 text-xs font-mono uppercase rounded-full ${phase.status === "completed"
-                    ? "bg-[var(--success)]/10 text-[var(--success)]"
-                    : phase.status === "in_progress"
-                      ? "bg-[var(--electric-purple)]/10 text-[var(--electric-purple)]"
-                      : "bg-[var(--spectral-muted)]/10 text-[var(--spectral-muted)]"
-                  }`}>
-                  {phase.status.replace("_", " ")}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Files Section */}
-      <div className="border border-[var(--border)] bg-[var(--card)] p-6">
-        <h2 className="text-xl font-bold mb-4">Project Files</h2>
-        <FileUpload
-          projectId={project.id}
-          files={project.files}
-          onFilesChange={handleFilesChange}
-          onPreviewFile={setPreviewFile}
-        />
-      </div>
-
-      {previewFile && (
-        <FilePreview
-          file={previewFile}
-          projectId={project.id}
-          onClose={() => setPreviewFile(null)}
-        />
-      )}
     </div>
   );
 }

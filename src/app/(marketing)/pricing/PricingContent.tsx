@@ -1,61 +1,79 @@
 "use client";
 
-import { Target, Zap, Clock, ArrowRight } from "lucide-react";
+import { Target, Zap, Clock, ArrowRight, Layers, Move3d, Check, Sparkles } from "lucide-react";
 import Link from "next/link";
-import GlitchText from "@/components/GlitchText";
+import Navigation from "@/components/marketing/navigation";
+import Footer from "@/components/marketing/footer";
 
 const tiers = [
   {
-    tier: "discovery",
-    title: "Discovery Node",
-    price: "R4,500",
+    tier: "spark",
+    title: "Spark",
+    price: "R3,500",
     pricingModel: "Fixed / One-time",
-    description: "The essential AI-ready presence. Be found by agents, not just search engines.",
+    description: "The essential AI-ready presence. High-impact landing page with spatial layout.",
     features: [
-      "AI-Optimized Landing Page",
+      "AI-Optimised Landing Page",
       "AgentCard Schema Markup",
       "GEO (Generative Engine Opt)",
       "Mobile PWA Foundation",
-      "Hosting Setup Included"
+      "48-Hour Delivery",
     ],
-    cta: "Launch Node",
-    href: "/contact?package=discovery",
-    featured: false
+    cta: "Ignite Spark",
+    href: "/services/spark",
+    featured: false,
   },
   {
-    tier: "merchant",
-    title: "Chat Merchant",
-    price: "R12,000",
-    pricingModel: "Setup + R250/mo",
-    description: "Turn WhatsApp into your primary sales channel. Automated, instant, and local.",
+    tier: "growth",
+    title: "Growth",
+    price: "R8,500",
+    pricingModel: "Fixed / One-time",
+    description: "Professional multi-page business presence with custom design system and spatial UX.",
     features: [
-      "WhatsApp Business API",
-      "AI Sales Agent (24/7)",
-      "Product Catalog Sync",
-      "Zapper/SnapScan Payments",
-      "Local Language Support"
+      "Multi-Page Spatial Website",
+      "Custom Design System",
+      "SEO Architecture",
+      "Blog Content Engine",
+      "Performance Audit",
     ],
-    cta: "Start Selling",
-    href: "/contact?package=merchant",
-    featured: true
+    cta: "Accelerate Growth",
+    href: "/services/growth",
+    featured: true,
   },
   {
-    tier: "orchestrator",
-    title: "The Orchestrator",
-    price: "Custom",
-    pricingModel: "Monthly Retainer",
-    description: "Full silicon workforce. Multi-agent systems managing sales, content, and support.",
+    tier: "shop",
+    title: "Shop",
+    price: "R18,500",
+    pricingModel: "Fixed / One-time",
+    description: "Full e-commerce platform with product management, payments, and inventory.",
     features: [
-      "Multi-Agent Architecture",
-      "Video Content Engine",
-      "CRM & Analytics Integration",
-      "Weekly Strategy Sprints",
-      "Auditability-as-a-Service"
+      "Full E-Commerce Platform",
+      "Payment Gateway Integration",
+      "Product Catalogue CMS",
+      "Order Management System",
+      "Analytics Dashboard",
     ],
-    cta: "Deploy Workforce",
-    href: "/contact?package=orchestrator",
-    featured: false
-  }
+    cta: "Open Shop",
+    href: "/services/shop",
+    featured: false,
+  },
+  {
+    tier: "diagnostic",
+    title: "Diagnostic",
+    price: "R1,500",
+    pricingModel: "Fixed / One-time",
+    description: "Deep performance audit — Lighthouse analysis, UX review, and actionable roadmap.",
+    features: [
+      "Full Lighthouse Audit",
+      "UX Heuristics Evaluation",
+      "SEO Gap Analysis",
+      "Competitor Benchmark",
+      "Prioritised Roadmap",
+    ],
+    cta: "Book Audit",
+    href: "/contact",
+    featured: false,
+  },
 ];
 
 const sprints = [
@@ -64,143 +82,146 @@ const sprints = [
     duration: "2-4 Weeks",
     price: "R8,000",
     description: "Deep-dive analysis of your digital presence and AI-ready roadmap.",
-    icon: Target
+    icon: Target,
   },
   {
     name: "Implementation Sprint",
     duration: "6 Weeks",
     price: "From R35,000",
-    description: "Rapid deployment of your chosen agentic solution. Fixed scope, fixed cost.",
-    icon: Zap
+    description: "Rapid deployment of your chosen solution. Fixed scope, fixed cost.",
+    icon: Zap,
   },
   {
     name: "Silicon Retainer",
     duration: "Ongoing",
     price: "From R15,000/mo",
-    description: "Continuous optimization, agent tuning, and new feature rollouts.",
-    icon: Clock
-  }
+    description: "Continuous optimisation, agent tuning, and new feature rollouts.",
+    icon: Clock,
+  },
 ];
 
 export default function PricingContent() {
   return (
-    <div className="min-h-screen bg-[var(--neo-white)] text-[var(--neo-black)] font-space-grotesk overflow-x-hidden selection:bg-[var(--neo-yellow)] selection:text-[var(--neo-black)]">
+    <div className="min-h-screen bg-bl-deep text-bl-text overflow-x-hidden">
+      {/* Isometric grid overlay */}
+      <div className="fixed inset-0 iso-grid pointer-events-none z-0" />
 
-      {/* ━━━ Header Navigation ━━━ */}
-      <nav aria-label="Main Navigation" className="fixed top-0 left-0 right-0 z-50 border-b-4 border-[var(--neo-black)] bg-[var(--neo-white)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[70px] flex items-center justify-between">
-          <Link href="/" aria-label="Homepage" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[var(--neo-red)] flex items-center justify-center border-2 border-[var(--neo-black)] group-hover:bg-[var(--neo-blue)] transition-colors duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]">
-              <span className="font-black text-xl text-[var(--neo-black)] group-hover:text-[var(--neo-white)] transition-colors">B</span>
-            </div>
-            <span className="font-black text-xl tracking-tighter uppercase">Blacklight</span>
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/services" className="font-bold uppercase tracking-widest hover:bg-[var(--neo-black)] hover:text-[var(--neo-white)] px-3 py-1 border-2 border-transparent hover:border-[var(--neo-black)] transition-colors duration-300 active:scale-95">Services</Link>
-            <Link href="/contact" className="font-bold uppercase tracking-widest hover:bg-[var(--neo-black)] hover:text-[var(--neo-white)] px-3 py-1 border-2 border-transparent hover:border-[var(--neo-black)] transition-colors duration-300 active:scale-95">Contact</Link>
-          </div>
-        </div>
-      </nav>
+      {/* Ambient glow */}
+      <div className="fixed top-1/4 right-[12%] w-96 h-96 rounded-full bg-bl-gold/5 blur-[120px] pointer-events-none z-0" />
+      <div className="fixed bottom-1/3 left-[8%] w-72 h-72 rounded-full bg-bl-cyan/4 blur-[80px] pointer-events-none z-0" />
 
-      {/* ━━━ Hero Section ━━━ */}
-      <section className="pt-32 pb-16 px-4 md:min-h-[50vh] flex flex-col justify-center bg-[var(--neo-blue)] text-[var(--neo-white)] border-b-8 border-[var(--neo-black)]">
-        <div className="max-w-7xl mx-auto w-full text-center">
+      <Navigation />
 
-          <div className="inline-block bg-[var(--neo-yellow)] text-[var(--neo-black)] px-6 py-2 font-black uppercase text-[var(--text-xl)] md:text-[var(--text-2xl)] border-4 border-[var(--neo-black)] shadow-[8px_8px_0px_var(--neo-red)] rotate-2 mb-12">
+      {/* ═══════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pt-36 pb-16 px-6 scene-3d">
+        <div className="max-w-6xl mx-auto text-center preserve-3d">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-8">
+            <Layers size={14} />
             Transparent Pricing
           </div>
 
-          <h1 className="text-[var(--text-6xl)] md:text-[var(--text-8xl)] lg:text-[10rem] font-black uppercase tracking-tighter mb-8 leading-[0.8] drop-shadow-[6px_6px_0px_var(--neo-black)]">
-            <GlitchText text="VALUE" intensity="low" /> <br />
-            <span className="text-[var(--neo-yellow)]">{'>'}</span> HOURS
+          <h1 className="text-[clamp(2.5rem,10vw,7rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
+            <span className="block">Value</span>
+            <span className="gold-gradient">{">"} Hours</span>
           </h1>
 
-          <p className="text-[var(--text-xl)] md:text-[var(--text-3xl)] font-bold max-w-3xl mx-auto p-6 bg-[var(--neo-white)] text-[var(--neo-black)] border-4 border-[var(--neo-black)] -rotate-1 shadow-[8px_8px_0px_var(--neo-green)] leading-tight">
-            We don't sell hours. We sell outcomes. Fixed-price sprints, clear deliverables, and AI agents that work for you 24/7.
+          <p className="text-lg md:text-xl text-bl-text-muted max-w-3xl mx-auto leading-relaxed">
+            We don&apos;t sell hours. We sell outcomes. Fixed-price sprints, clear deliverables,
+            and AI agents that work for you 24/7.
           </p>
         </div>
       </section>
 
-      {/* ━━━ Pricing Tiers ━━━ */}
-      <section className="py-24 px-4 bg-[var(--neo-white)]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 gap-y-12">
-            {tiers.map((tier, i) => (
-              <div
-                key={tier.tier}
-                className={`relative border-8 border-[var(--neo-black)] flex flex-col justify-between group
-                  ${tier.featured ? 'bg-[var(--neo-yellow)] shadow-[15px_15px_0px_var(--neo-black)] -translate-y-4' : 'bg-[var(--neo-white)] shadow-[10px_10px_0px_var(--neo-black)] hover:-translate-y-2'} transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] p-6 md:p-8
-                `}
-              >
-                {tier.featured && (
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[var(--neo-black)] text-[var(--neo-white)] font-black uppercase px-6 py-2 border-4 border-[var(--neo-black)] whitespace-nowrap">
-                    Most Popular
+      {/* ═══════════════════════════════════════
+         PRICING TIERS — 4 Columns
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 scene-3d-near">
+            {tiers.map((tier) => (
+              <div key={tier.tier} className="tilt-card group">
+                <div className={`spatial-panel p-6 md:p-8 h-full flex flex-col rim-light relative ${tier.featured ? 'spatial-panel-gold' : ''}`}>
+                  {/* Featured badge */}
+                  {tier.featured && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-bl-gold text-bl-deep text-[10px] font-bold uppercase tracking-widest whitespace-nowrap shadow-[0_0_20px_rgba(181,154,95,0.3)]">
+                      Best Value
+                    </div>
+                  )}
+
+                  <div className={`${tier.featured ? 'mt-4' : ''}`}>
+                    <h3 className="text-xl md:text-2xl font-bold uppercase mb-1 font-display">{tier.title}</h3>
+
+                    <div className="flex flex-col mb-6 p-4 rounded-2xl bg-bl-glass border border-bl-glass-border">
+                      <span className="text-3xl md:text-4xl font-black gold-gradient">{tier.price}</span>
+                      <span className="text-[10px] text-bl-text-muted font-mono mt-1 uppercase tracking-wider">{tier.pricingModel}</span>
+                    </div>
+
+                    <p className="text-sm text-bl-text-muted mb-6 leading-relaxed min-h-[60px]">
+                      {tier.description}
+                    </p>
+
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {tier.features.map((f) => (
+                        <li key={f} className="flex items-start gap-2 text-sm text-bl-text/80">
+                          <Check size={14} className="shrink-0 mt-0.5 text-bl-gold" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                )}
 
-                <div>
-                  <h3 className="text-[var(--text-3xl)] md:text-[var(--text-4xl)] font-black uppercase mb-4 mt-4">{tier.title}</h3>
-                  <div className="flex flex-col mb-8 p-4 bg-[var(--neo-black)] text-[var(--neo-white)] border-2 border-[var(--neo-black)]">
-                    <span className="text-[var(--text-4xl)] font-black text-[var(--neo-green)]">{tier.price}</span>
-                    <span className="text-sm font-mono mt-1 opacity-80 uppercase">{tier.pricingModel}</span>
-                  </div>
-
-                  <p className="text-[var(--text-xl)] font-bold mb-8 opacity-90 leading-tight min-h-[80px]">
-                    {tier.description}
-                  </p>
-
-                  <ul className="mb-8 space-y-4 font-bold border-l-4 border-[var(--neo-black)] pl-4">
-                    {tier.features.map(f => (
-                      <li key={f} className="flex items-start gap-2">
-                        <span aria-hidden="true" className="text-[var(--neo-red)] text-xl leading-none">{'>>'}</span>
-                        <span className="leading-tight">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <Link
+                    href={tier.href}
+                    className="block w-full text-center py-3 rounded-full bg-bl-gold/10 border border-bl-gold/30 text-bl-gold text-xs font-bold uppercase tracking-wider hover:bg-bl-gold hover:text-bl-deep transition-all duration-300"
+                  >
+                    {tier.cta}
+                  </Link>
                 </div>
-
-                <Link
-                  href={tier.href}
-                  aria-label={`${tier.cta} for ${tier.title}`}
-                  className="block w-full text-center bg-[var(--neo-black)] text-[var(--neo-white)] font-black text-[var(--text-xl)] uppercase py-4 border-4 border-transparent hover:bg-transparent hover:text-[var(--neo-black)] hover:border-[var(--neo-black)] transition-colors duration-300 active:scale-95 touch-manipulation"
-                >
-                  {tier.cta}
-                </Link>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ━━━ Sprint Model ━━━ */}
-      <section className="py-24 px-4 bg-[var(--neo-black)] text-[var(--neo-white)] border-y-8 border-[var(--neo-black)] relative overflow-hidden">
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="mb-16 border-l-8 border-[var(--neo-yellow)] pl-6 max-w-2xl">
-            <h2 className="text-[var(--text-5xl)] md:text-[var(--text-7xl)] font-black uppercase tracking-tighter text-[var(--neo-yellow)] mb-6">The Sprint Model</h2>
-            <p className="text-[var(--text-2xl)] font-bold opacity-90">Traditional development drags on for months. We work in intense, focused sprints to ship value fast.</p>
+      {/* ═══════════════════════════════════════
+         SPRINT MODEL
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Move3d size={14} />
+              How We Deliver
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+              The <span className="gold-gradient">Sprint Model</span>
+            </h2>
+            <p className="text-bl-text-muted max-w-xl mx-auto">
+              Traditional development drags on for months. We work in intense, focused sprints.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 scene-3d-near">
             {sprints.map((sprint, i) => (
-              <div
-                key={sprint.name}
-                className="bg-[var(--neo-white)] text-[var(--neo-black)] p-8 border-4 border-[var(--neo-white)] relative hover:bg-[var(--neo-red)] transition-colors duration-500 ease-out group cursor-crosshair"
-              >
-                <div aria-hidden="true" className="w-16 h-16 bg-[var(--neo-black)] text-[var(--neo-white)] flex items-center justify-center mb-8 rotate-3 group-hover:rotate-12 transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] shadow-[4px_4px_0px_var(--neo-yellow)] group-hover:shadow-[8px_8px_0px_var(--neo-black)]">
-                  <sprint.icon size={32} />
-                </div>
+              <div key={sprint.name} className="tilt-card">
+                <div className="spatial-panel p-8 h-full flex flex-col rim-light relative">
+                  <div className="w-14 h-14 rounded-2xl bg-bl-cyan/10 border border-bl-cyan/20 flex items-center justify-center mb-6">
+                    <sprint.icon size={28} className="text-bl-cyan" />
+                  </div>
 
-                <h3 className="text-[var(--text-3xl)] font-black uppercase mb-4 pr-12 group-hover:text-[var(--neo-white)] transition-colors">{sprint.name}</h3>
+                  <h3 className="text-2xl font-bold uppercase mb-4 font-display">{sprint.name}</h3>
 
-                <div className="inline-block bg-[var(--neo-black)] text-[var(--neo-yellow)] font-mono font-bold px-3 py-1 mb-6 border-2 border-[var(--neo-black)]">
-                  {sprint.duration}
-                </div>
+                  <div className="inline-flex items-center px-3 py-1 rounded-full bg-bl-gold/10 border border-bl-gold/20 text-bl-gold text-[10px] font-bold font-mono mb-4 uppercase tracking-wider">
+                    {sprint.duration}
+                  </div>
 
-                <p className="text-[var(--text-lg)] font-bold mb-8 min-h-[80px] group-hover:text-[var(--neo-white)] transition-colors">{sprint.description}</p>
+                  <p className="text-sm text-bl-text-muted mb-6 flex-1 leading-relaxed">{sprint.description}</p>
 
-                <div className="border-t-4 border-[var(--neo-black)] pt-4 text-[var(--text-3xl)] font-black text-[var(--neo-blue)] group-hover:text-[var(--neo-black)] transition-colors">
-                  {sprint.price}
+                  <div className="border-t border-bl-glass-border pt-4 text-2xl font-black gold-gradient">
+                    {sprint.price}
+                  </div>
                 </div>
               </div>
             ))}
@@ -208,26 +229,35 @@ export default function PricingContent() {
         </div>
       </section>
 
-      {/* ━━━ CTA ━━━ */}
-      <section className="py-32 px-4 bg-[var(--neo-green)] text-[var(--neo-black)] text-center border-t-8 border-[var(--neo-black)]">
+      {/* ═══════════════════════════════════════
+         CTA
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 py-32 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-[var(--text-6xl)] md:text-[var(--text-8xl)] font-black uppercase tracking-tighter mb-8 leading-none">
-            Ready to <span className="bg-[var(--neo-black)] text-[var(--neo-white)] px-4">Start</span>?
-          </h2>
-          <p className="text-[var(--text-2xl)] font-bold mb-12 max-w-2xl mx-auto bg-[var(--neo-white)] p-4 border-4 border-[var(--neo-black)] shadow-[6px_6px_0px_var(--neo-red)] -rotate-1">
-            Book a free strategy session. We'll define your first sprint and show you exactly what you get.
-          </p>
-          <Link
-            href="/contact"
-            aria-label="Book a free Strategy Session"
-            className="inline-flex items-center gap-4 bg-[var(--neo-black)] text-[var(--neo-white)] text-[var(--text-2xl)] md:text-[var(--text-4xl)] font-black uppercase px-8 py-6 border-4 border-[var(--neo-black)] hover:bg-[var(--neo-yellow)] hover:text-[var(--neo-black)] transition-colors duration-300 group shadow-[10px_10px_0px_var(--neo-blue)] active:translate-y-2 active:translate-x-2 active:shadow-none touch-manipulation"
-          >
-            <span>Book Strategy Session</span>
-            <ArrowRight aria-hidden="true" size={40} className="group-hover:translate-x-2 transition-transform duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]" />
-          </Link>
+          <div className="spatial-panel p-10 md:p-16 text-center rim-light spatial-panel-gold relative overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-bl-gold/8 blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-bl-cyan/5 blur-[100px] pointer-events-none" />
+
+            <div className="relative">
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 gold-glow">
+                Ready to <span className="gold-gradient">Start</span>?
+              </h2>
+              <p className="text-bl-text-muted text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+                Book a free strategy session. We&apos;ll define your first sprint and show you exactly what you get.
+              </p>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-10 py-5 bg-bl-gold text-bl-deep font-bold uppercase tracking-wider rounded-full transition-all hover:bg-bl-amber hover:shadow-[0_0_60px_rgba(181,154,95,0.3)] text-lg"
+              >
+                Book Strategy Session
+                <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
+      <Footer />
     </div>
   );
 }

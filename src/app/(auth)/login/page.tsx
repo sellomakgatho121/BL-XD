@@ -1,144 +1,134 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Lock, Mail, ArrowRight, AlertCircle } from "lucide-react";
-import { supabase } from "@/lib/supabase/client";
-import GlitchText from "@/components/GlitchText";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { signIn } from "next-auth/react";
+import { useState, FormEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Eye, EyeOff, LogIn, Sparkles } from "lucide-react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/admin";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setIsLoading(true);
     setError("");
+    setLoading(true);
 
     try {
-      const { data, error: authError } = await supabase.auth.signInWithPassword({
+      const result = await signIn("credentials", {
         email,
         password,
+        redirect: false,
       });
 
-      if (authError) {
-        setError(authError.message);
-        return;
-      }
-
-      if (data.user) {
-        router.push("/portal/dashboard");
-        router.refresh();
+      if (result?.error) {
+        setError("Invalid email or password");
+      } else {
+        router.push(callbackUrl);
       }
     } catch {
-      setError("An unexpected error occurred. Please try again.");
+      setError("Something went wrong. Try again.");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--onyx)] text-[var(--spectral-white)] flex items-center justify-center p-4">
-      <div
-        className="fixed inset-0 opacity-10"
-        style={{
-          backgroundImage: "linear-gradient(#1A1A1A 1px, transparent 1px), linear-gradient(90deg, #1A1A1A 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
+    <div className="min-h-screen bg-bl-deep flex items-center justify-center relative overflow-hidden">
+      {/* Ambient Background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-bl-gold/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-bl-slate/10 rounded-full blur-[120px]" />
+        {/* Iso Grid */}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(60deg, rgba(181,154,95,0.3) 1px, transparent 1px),
+              linear-gradient(-60deg, rgba(181,154,95,0.3) 1px, transparent 1px)`,
+            backgroundSize: "60px 60px",
+          }}
+        />
+      </div>
 
-      <div className="relative z-10 w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Login Card */}
+      <div className="spatial-panel relative z-10 w-full max-w-md mx-4 p-8 md:p-10 rounded-3xl border border-white/10">
+        {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black tracking-tighter mb-2">
-            <GlitchText text="PORTAL ACCESS" intensity="medium" triggerOnHover />
-          </h1>
-          <p className="text-[var(--spectral-dim)] font-mono text-sm">
-            Sign in to access your client dashboard
-          </p>
-        </div>
-
-        <div className="border border-[var(--border)] bg-[var(--card)] p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs font-mono uppercase text-[var(--spectral-muted)]">
-                Email
-              </Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--spectral-muted)]" />
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 bg-[var(--onyx)] border-[var(--border)] rounded-none"
-                  placeholder="you@company.com"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-xs font-mono uppercase text-[var(--spectral-muted)]">
-                Password
-              </Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--spectral-muted)]" />
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 bg-[var(--onyx)] border-[var(--border)] rounded-none"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-            </div>
-
-            {error && (
-              <div className="flex items-center gap-2 text-sm text-[var(--siren-red)] border border-[var(--siren-red)]/50 bg-[var(--siren-red)]/10 px-4 py-3 animate-in fade-in slide-in-from-top-2 duration-300">
-                <AlertCircle className="w-4 h-4" />
-                {error}
-              </div>
-            )}
-
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-[var(--signal-lime)] text-[var(--onyx)] hover:bg-[var(--signal-lime)]/90 font-mono uppercase rounded-none h-12"
-            >
-              {isLoading ? (
-                "AUTHENTICATING..."
-              ) : (
-                <>
-                  SIGN IN
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </>
-              )}
-            </Button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-[var(--spectral-dim)]">
-              Don&apos;t have an account?{" "}
-              <Link href="/register" className="text-[var(--signal-lime)] hover:underline">
-                Register
-              </Link>
-            </p>
+          <div className="w-14 h-14 bg-bl-gold rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Sparkles size={24} className="text-bl-deep" />
           </div>
+          <h1 className="text-2xl font-bold text-bl-ice">Admin Login</h1>
+          <p className="text-sm text-bl-ice/40 mt-2">Blacklight Web Designs</p>
         </div>
 
-        <p className="text-center mt-8 text-xs font-mono text-[var(--spectral-muted)] uppercase tracking-widest">
-          <Link href="/" className="hover:text-[var(--spectral-white)] transition-colors">
-            ← Back to Website
-          </Link>
+        {/* Error */}
+        {error && (
+          <div className="mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">
+            {error}
+          </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-xs tracking-wider uppercase text-bl-ice/40 mb-2">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@blacklight.co.za"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-bl-ice placeholder:text-bl-ice/20 focus:outline-none focus:border-bl-gold/50 focus:shadow-[0_0_15px_rgba(181,154,95,0.1)] transition-all"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs tracking-wider uppercase text-bl-ice/40 mb-2">Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full px-4 py-3 pr-12 bg-white/5 border border-white/10 rounded-xl text-sm text-bl-ice placeholder:text-bl-ice/20 focus:outline-none focus:border-bl-gold/50 focus:shadow-[0_0_15px_rgba(181,154,95,0.1)] transition-all"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-bl-ice/30 hover:text-bl-gold transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 bg-bl-gold text-bl-deep text-sm font-semibold rounded-xl flex items-center justify-center gap-2 hover:shadow-[0_0_25px_rgba(181,154,95,0.3)] transition-all duration-300 disabled:opacity-50"
+          >
+            {loading ? (
+              <span className="w-4 h-4 border-2 border-bl-deep border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <>
+                <LogIn size={16} />
+                Sign In
+              </>
+            )}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <p className="text-[10px] text-center text-bl-ice/20 mt-8 tracking-wider uppercase">
+          Depth Engineered Security
         </p>
       </div>
     </div>
