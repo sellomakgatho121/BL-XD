@@ -1,11 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Scissors, Building2, HeartPulse, BookOpen, TrendingUp } from "lucide-react";
+import { ArrowRight, Scissors, Sparkles, Building2, HeartPulse, BookOpen, TrendingUp } from "lucide-react";
 import ScrollReveal from "@/components/scroll-reveal";
 import { useCallback, useRef } from "react";
 
 const showcases = [
+  {
+    title: "Siyas Beauty Parlour",
+    description: "Boutique beauty parlour with a WhatsApp-powered booking agent and deposit-backed appointment flow",
+    icon: Sparkles,
+    gradient: "from-bl-amber/20 via-bl-amber/5 to-transparent",
+    border: "border-bl-amber/20",
+    href: "/portfolio/siyas-beauty-parlour",
+  },
   {
     title: "Skuif-Cut Grootman",
     description: "Full-service barbershop booking platform with SMS appointment reminders and online scheduling",

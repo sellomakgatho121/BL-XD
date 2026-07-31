@@ -47,7 +47,8 @@ Private design agency website (blacklightwebdesigns.co.za) built with Next.js 15
 
 ```bash
 npm run dev       # Dev server at localhost:3000
-npm run build     # Production build
+npm run build     # Production build (Turbopack — CI/Vercel)
+npm run build:local # Local build on Android/Termux (webpack — WASM Turbopack unsupported)
 npm run start     # Production server
 npm run lint      # ESLint (Next.js + TS config)
 npm test          # Vitest

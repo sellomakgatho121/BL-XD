@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Scissors,
+  Sparkles,
   Building2,
   HeartPulse,
   BookOpen,
@@ -25,6 +26,16 @@ const projects = [
     icon: Scissors,
     color: "#CCFF00",
     tech: ["Next.js", "TypeScript", "LibSQL", "Twilio", "Drizzle"],
+  },
+  {
+    slug: "siyas-beauty-parlour",
+    title: "Siyas Beauty Parlour",
+    subtitle: "Beauty Salon Booking Platform",
+    description:
+      "A boutique beauty parlour website with a WhatsApp-powered booking agent — clients browse services, reserve appointments through Meta Cloud API automation, and secure bookings with deposit tracking.",
+    icon: Sparkles,
+    color: "#FF66CC",
+    tech: ["HTML", "CSS", "JavaScript", "WhatsApp Cloud API", "Gemini AI"],
   },
   {
     slug: "otto-construction",

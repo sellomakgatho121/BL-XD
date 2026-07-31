@@ -13,6 +13,11 @@ export default async function PortfolioSlugPage({ params }: PortfolioPageProps) 
       description: "A full-service barbershop booking platform built for Skuif-Cut Grootman, featuring online appointment scheduling, SMS reminders via Twilio integration, and a modern digital presence. The platform streamlines client bookings, reduces no-shows with automated notifications, and showcases the barbershop's brand identity through a clean, mobile-first design.",
       tech: ["Next.js", "TypeScript", "LibSQL", "Drizzle ORM", "Twilio", "TailwindCSS"],
     },
+    "siyas-beauty-parlour": {
+      title: "Siyas Beauty Parlour",
+      description: "A boutique beauty parlour website for Siyas Beauty Parlour, featuring a full service menu (hair, nails, makeup, lashes, massage) with transparent pricing and a WhatsApp-powered booking agent. Built on Meta's WhatsApp Cloud API with a Gemini-driven conversation flow, clients can reserve appointments, confirm availability, and complete deposit-backed bookings entirely through chat — with a verification pipeline that tracks deposits and reminds clients before their appointment.",
+      tech: ["HTML", "CSS", "JavaScript", "Meta Cloud API", "Gemini AI", "Cloudflare Tunnel"],
+    },
     "otto-construction": {
       title: "OTTO Construction Works",
       description: "A professional construction company website for OTTO Construction Works (est. 2026), a registered South African firm led by Lee Roy Jacobs and Stacey Lee Jacobs. The site showcases their full range of services including bricklaying, plaster work, tiling, electrical services, cleaning, and passive fire protection — with a clean, trust-focused design and prominent quote request features.",
