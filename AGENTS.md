@@ -1,81 +1,70 @@
-# PROJECT KNOWLEDGE BASE
+# Blacklight Web Designs — Agent Briefing
 
-**Generated:** 2026-02-09
-**Stack:** Next.js 15 (App Router), React 19, Supabase, Tailwind CSS v4, Shadcn UI
+> Use this file to orient yourself in the BL-XD codebase. Sections are ordered by context priority — scan top-to-bottom as needed.
 
-## OVERVIEW
-Private web application built with Next.js 15 and Supabase. Features a custom deployment pipeline and extensive documentation. Uses React 19 Server Components and Tailwind v4 for styling.
+## Overview
 
-## STRUCTURE
-```
-.
-├── src/
-│   ├── app/          # App Router: routes, layouts, pages
-│   ├── components/   # UI Library (shadcn/ui) & business components
-│   └── lib/          # Utilities, Supabase client, shared logic
-├── docs/             # "Blacklight Web Designs" documentation
-├── scripts/          # Custom deployment & git automation scripts
-├── supabase/         # Database migrations & config
-└── public/           # Static assets
-```
+Private design agency website (blacklightwebdesigns.co.za) built with Next.js 15 + React 19. Features 3D visuals (Three.js), Supabase authentication, an admin dashboard, client portal, AI-powered content studio, and custom deployment pipeline.
 
-## WHERE TO LOOK
-| Task | Location | Notes |
-|------|----------|-------|
-| **Routes/Pages** | `src/app` | Next.js App Router structure |
-| **UI Components** | `src/components` | Shadcn UI + custom components |
-| **Database/Auth** | `src/lib/supabase`, `supabase/` | Supabase client & migrations |
-| **Deployment** | `scripts/` | Custom bash scripts for CI/CD |
-| **Docs/Specs** | `docs/Blacklight Web Designs` | Business logic & requirements |
+## Key Files
 
-## CONVENTIONS
-- **Framework**: Next.js 15 with React 19 (Server Components by default).
-- **Styling**: Tailwind CSS v4.
-- **State**: React Hook Form + Zod for validation.
-- **Database**: Supabase with SSR support.
+| Priority | File | Purpose |
+|----------|------|---------|
+| P0 | `src/app/(marketing)/page.tsx` | Homepage — main entry point |
+| P0 | `src/lib/db/store.ts` | Data store (in-memory + Neon Postgres fallback) |
+| P0 | `src/middleware.ts` | Auth routing / route protection |
+| P1 | `src/lib/auth/config.ts` | Auth.js v5 configuration |
+| P1 | `src/lib/supabase/client.ts` | Supabase SSR client |
+| P1 | `src/components/marketing/navigation.tsx` | Site navigation |
+| P1 | `src/app/(admin)/admin/page.tsx` | Admin dashboard |
+| P2 | `src/lib/ai/gemini.ts` | Gemini AI integration |
+| P2 | `src/components/lab/` | 3D experimental scenes |
+| P2 | `src/components/showcases/` | Interactive showcase components |
 
-## COMMANDS
+## Stack
+
+- **Framework**: Next.js 15 (App Router), React 19, TypeScript
+- **Styling**: Tailwind CSS v4, Shadcn UI (Radix primitives)
+- **Animation**: Framer Motion 12, GSAP 3.14, Lenis, react-three-fiber
+- **3D**: Three.js 0.183, Drei, Postprocessing, Custom Shader Material
+- **Auth**: Auth.js v5 (NextAuth) with Supabase SSR
+- **Database**: In-memory store (default) or Neon Postgres via DATABASE_URL
+- **AI**: Google Gemini AI, OpenAI
+- **Email**: Resend, EmailJS
+- **Deploy**: Vercel (auto-deploy from main), custom scripts/ directory
+- **Validation**: Zod 4 + React Hook Form
+- **Agent**: `.agent/` with 22 agents, 30+ skills, 11 workflows
+
+## Patterns
+
+- **Server Components by default** — `"use client"` only for interactivity/hooks/browser APIs
+- **Shadcn fork pattern** — copy to `src/components/ui/`, customize there
+- **Route groups** — `(marketing)`, `(admin)`, `(auth)`, `(portal)` with nested layouts
+- **Data store** — in-memory Map patterns, swap to Neon by setting `DATABASE_URL`
+- **Tailwind v4** — uses `@import "tailwindcss"`, `@theme` directives, not v3 `@tailwind`
+
+## Commands
+
 ```bash
-# Development
-npm run dev          # Start dev server
-npm run build        # Build for production
-npm run start        # Start production server
-
-# Code Quality
-npm run lint         # Run ESLint
-
-# Deployment (Custom)
-npm run deploy       # Trigger auto-commit & deploy
-npm run deploy:retry # Retry failed deployment
+npm run dev       # Dev server at localhost:3000
+npm run build     # Production build
+npm run start     # Production server
+npm run lint      # ESLint (Next.js + TS config)
+npm test          # Vitest
+npm run deploy    # Auto-commit + push to Vercel
 ```
 
-## NOTES
-- **React 19**: Uses latest React features (Actions, etc.).
-- **Tailwind v4**: New engine, check `postcss` config if needed.
-- **Deployment**: seemingly handled by custom scripts rather than standard Vercel git integration alone (or wraps it).
+## Common Pitfalls
 
----
+- **React 19 + Next.js 15**: Some libraries have peer dep warnings — check compatibility before upgrades
+- **Tailwind v4 syntax**: Different from v3 — `@import "tailwindcss"` not `@tailwind base/components/utilities`
+- **Three.js on mobile**: WebGL crashes on low-end devices — wrap 3D in error boundaries, check `useReducedMotion`
+- **In-memory store**: Resets on server restart — set `DATABASE_URL` for persistence
+- **Shadcn UI**: Components forked to `src/components/ui/` won't auto-update with `npx shadcn@latest`
+- **legacy-peer-deps=true**: `.npmrc` uses this — be aware when adding new dependencies
 
-## src/components
+## Agent Configuration
 
-**OVERVIEW**
-Shadcn UI primitives and Blacklight business components for the application.
+`.agent/` directory contains 22 agents, 30+ skills, and 11 workflows. Skills are namespaced under `.agent/skills/` and available as `aas:name` or via the agent workflow system. Key workflows: `plan`, `create`, `debug`, `deploy`, `enhance`, `preview`, `test`.
 
-**WHERE TO LOOK**
-| Task | Location | Notes |
-|------|----------|-------|
-| **UI Primitives** | `src/components/ui/` | Shadcn UI: button, card, dialog, form, input, etc. |
-| **Business Components** | `src/components/blacklight/` | Domain-specific: service-card, metric-card, quantum-field |
-| **Marketing Components** | `src/components/marketing/` | Navigation and marketing-specific UI |
-| **Shared Business Logic** | `src/components/*.tsx` | ClientGuide, GlitchText, MysteryReveal, NewsletterForm |
-
-**CONVENTIONS**
-- **Shadcn UI**: Copy-on-write pattern—fork into `src/components/ui/`, customize per project needs.
-- **Tailwind v4**: Use `@theme` directives; prefer utility classes over component variants.
-- **Naming**: `ui/` for primitives, `blacklight/` for business-specific reusable components.
-- **Client vs Server**: Default to Server Components; add `"use client"` only for interactivity.
-
-**ANTI-PATTERNS**
-- ✗ Don't modify Shadcn UI directly in `node_modules`—always fork to `src/components/ui/`.
-- ✗ Avoid mixing UI primitives with business logic in the same component.
-- ✗ Don't add `"use client"` directive unnecessarily—let React 19 Server Components handle static content.
+Memory persistence via `memory_agent.py` (Mem0) and `memory_mcp.py` (FastMCP server).

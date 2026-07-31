@@ -1,0 +1,40 @@
+{
+  "UserPromptSubmit": [
+    {
+      "matcher": "(.)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bash /data/data/com.termux/files/home/.openclaude/scripts/load-memory.sh",
+          "timeout": 5,
+          "async": true
+        }
+      ]
+    }
+  ],
+  "PostToolUse": [
+    {
+      "matcher": "(Edit|Write)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bash /data/data/com.termux/files/home/.openclaude/scripts/log-decision.sh \"BL-XD\"",
+          "timeout": 3,
+          "async": true
+        }
+      ]
+    }
+  ],
+  "SessionEnd": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bash /data/data/com.termux/files/home/.openclaude/scripts/memory-bridge.sh auto-collect",
+          "timeout": 5,
+          "async": true
+        }
+      ]
+    }
+  ]
+}

@@ -8,6 +8,17 @@ set -e
 echo "🤖 Auto-commit script running..."
 echo ""
 
+# Run test suite before committing
+echo "🧪 Running test suite..."
+if npm test 2>/dev/null; then
+    echo "✅ All tests passed!"
+else
+    echo "❌ Tests failed. Aborting commit."
+    echo "💡 Fix the failing tests before deploying."
+    exit 1
+fi
+echo ""
+
 # Check if we're in a git repository
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
     echo "❌ Not a Git repository. Exiting."
