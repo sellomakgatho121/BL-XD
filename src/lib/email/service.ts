@@ -19,7 +19,7 @@ export async function sendEmail({ to, subject, html }: SendEmailParams) {
     const resend = new Resend(apiKey);
 
     const { data, error } = await resend.emails.send({
-      from: "Blacklight Web Designs <noreply@blacklight-web-designs.vercel.app>",
+      from: process.env.FROM_EMAIL || "Blacklight Web Designs <noreply@blacklightwebdesigns.com>",
       to,
       subject,
       html,
