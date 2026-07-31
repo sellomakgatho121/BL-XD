@@ -1,48 +1,44 @@
 import { notFound } from "next/navigation";
 
 interface PortfolioPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default async function PortfolioSlugPage({ params }: PortfolioPageProps) {
+  const { slug } = await params;
   // Static portfolio items for demo
   const items: Record<string, { title: string; description: string; tech: string[] }> = {
-    "nexus-ai-platform": {
-      title: "Nexus AI Platform",
-      description: "An intelligent business process automation platform built with Next.js, integrating real-time data processing, AI-driven analytics, and a sophisticated multi-tenant architecture.",
-      tech: ["Next.js", "Python", "TensorFlow", "PostgreSQL", "Redis", "Docker"],
+    "skuif-cut-grootman": {
+      title: "Skuif-Cut Grootman",
+      description: "A full-service barbershop booking platform built for Skuif-Cut Grootman, featuring online appointment scheduling, SMS reminders via Twilio integration, and a modern digital presence. The platform streamlines client bookings, reduces no-shows with automated notifications, and showcases the barbershop's brand identity through a clean, mobile-first design.",
+      tech: ["Next.js", "TypeScript", "LibSQL", "Drizzle ORM", "Twilio", "TailwindCSS"],
     },
-    "quantum-commerce": {
-      title: "Quantum Commerce Engine",
-      description: "A high-performance e-commerce solution with real-time inventory management, AI-powered recommendations, and a seamless checkout experience handling 10,000+ concurrent users.",
-      tech: ["Next.js", "Node.js", "GraphQL", "Redis", "AWS", "Stripe"],
+    "otto-construction": {
+      title: "OTTO Construction Works",
+      description: "A professional construction company website for OTTO Construction Works (est. 2026), a registered South African firm led by Lee Roy Jacobs and Stacey Lee Jacobs. The site showcases their full range of services including bricklaying, plaster work, tiling, electrical services, cleaning, and passive fire protection — with a clean, trust-focused design and prominent quote request features.",
+      tech: ["HTML", "CSS", "JavaScript"],
     },
-    "sentinel-analytics": {
-      title: "Sentinel Analytics",
-      description: "Enterprise security analytics dashboard processing millions of events per second with real-time threat detection, custom alerting, and interactive data visualization.",
-      tech: ["React", "Python", "Apache Kafka", "Elasticsearch", "D3.js", "Docker"],
+    "jmg-healthcare": {
+      title: "JMG Healthcare Services",
+      description: "A healthcare services platform for JMG Healthcare Services, a South African provider co-founded by J. George and J. Jacobs. The site connects qualified registered healthcare professionals with patients and facilities nationwide — offering professional nursing, elderly care, disability support, palliative care, medical staffing, and 24/7 medical transportation across the country.",
+      tech: ["HTML", "CSS", "JavaScript"],
     },
-    "aura-design-system": {
-      title: "Aura Design System",
-      description: "A comprehensive design system powering consistent user experiences across 12 products, featuring 200+ components, automated accessibility testing, and intelligent theme generation.",
-      tech: ["React", "TypeScript", "Storybook", "Figma API", "Chromatic", "AWS"],
+    "ascension-codex": {
+      title: "Ascension Codex",
+      description: "An AI-powered knowledge platform featuring multi-model LLM orchestration with Anthropic and Google Gemini integration. Built with a full-stack architecture including Radix UI components, Three.js 3D visualisations, and real-time collaboration. The platform leverages Drizzle ORM with Neon Postgres for scalable data persistence and includes comprehensive audit tooling.",
+      tech: ["Next.js", "TypeScript", "Express", "Three.js", "Gemini AI", "Anthropic", "Drizzle ORM", "Neon Postgres"],
     },
-    "pulse-engagement": {
-      title: "Pulse Engagement Platform",
-      description: "Real-time user engagement analytics with behavioral tracking, cohort analysis, and automated campaign optimization powered by machine learning algorithms.",
-      tech: ["Next.js", "Python", "ClickHouse", "RabbitMQ", "Kubernetes", "MLflow"],
-    },
-    "terra-logistics": {
-      title: "Terra Logistics OS",
-      description: "Complete logistics management operating system with route optimization, fleet tracking, real-time delivery updates, and predictive maintenance scheduling.",
-      tech: ["React Native", "Go", "PostgreSQL", "MongoDB", "Redis", "Google Maps"],
+    "fx-analyzer": {
+      title: "FX Analyzer Pro",
+      description: "An institutional-grade algorithmic FX trading terminal powered by Google Gemini AI with a Mixture of Experts architecture. Four specialised LLM agents (Technical, Fundamental, Sentiment, Risk) analyse forex markets in real-time, debate their findings via the MM-DREX architecture, and deliver high-conviction trading signals directly to MetaTrader 5 through a ZeroMQ bridge.",
+      tech: ["Next.js 16", "TypeScript", "Python", "Gemini AI", "ZeroMQ", "Socket.IO", "TailwindCSS 4", "Three.js", "MetaTrader 5"],
     },
   };
 
-  const item = items[params.slug];
+  const item = items[slug];
   if (!item) notFound();
 
-  return <ClientPortfolioDetail slug={params.slug} item={item} />;
+  return <ClientPortfolioDetail slug={slug} item={item} />;
 }
 
 function ClientPortfolioDetail({ slug, item }: { slug: string; item: { title: string; description: string; tech: string[] } }) {

@@ -36,9 +36,9 @@ export default function InvoiceDetail() {
             <p className="text-sm text-bl-ice/40 mt-1">Issued: {invoice.issueDate}</p>
           </div>
           <span className="text-xs px-3 py-1 rounded-full border capitalize" style={{
-            borderColor: invoice.status === "paid" ? "#00FF8830" : invoice.status === "overdue" ? "#FF003C30" : "#B59A5F30",
-            color: invoice.status === "paid" ? "#00FF88" : invoice.status === "overdue" ? "#FF003C" : "#B59A5F",
-            backgroundColor: `${invoice.status === "paid" ? "#00FF88" : invoice.status === "overdue" ? "#FF003C" : "#B59A5F"}10`,
+            borderColor: invoice.status === "paid" ? "#00FF8830" : invoice.status === "overdue" ? "#FF006E30" : "#CCFF0030",
+            color: invoice.status === "paid" ? "#00FF88" : invoice.status === "overdue" ? "#FF006E" : "#CCFF00",
+            backgroundColor: `${invoice.status === "paid" ? "#00FF88" : invoice.status === "overdue" ? "#FF006E" : "#CCFF00"}10`,
           }}>{invoice.status}</span>
         </div>
         <div className="flex justify-between items-center p-4 bg-white/[0.02] rounded-xl">

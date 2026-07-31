@@ -218,10 +218,10 @@ export default function ProjectsPage() {
                         width: `${project.progress}%`,
                         background:
                           project.status === "completed"
-                            ? "linear-gradient(90deg, #B59A5F, #E8A838)"
+                            ? "linear-gradient(90deg, #CCFF00, #FF006E)"
                             : project.status === "cancelled"
                             ? "#6B7280"
-                            : "linear-gradient(90deg, #B59A5F, #5BC0BE)",
+                            : "linear-gradient(90deg, #CCFF00, #00F0FF)",
                       }}
                     />
                   </div>

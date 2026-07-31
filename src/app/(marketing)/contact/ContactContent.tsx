@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { ArrowRight, Mail, MapPin, Phone, Github, Linkedin, Instagram, Send, CheckCircle, Loader2, Layers } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Phone, Github, Linkedin, Instagram, Send, CheckCircle, Loader2, Layers, Sparkles, Radio } from "lucide-react";
 import Link from "next/link";
 import Navigation from "@/components/marketing/navigation";
 import Footer from "@/components/marketing/footer";
@@ -71,52 +71,85 @@ export default function ContactContent() {
   };
 
   return (
-    <div className="min-h-screen bg-bl-deep text-bl-text overflow-x-hidden">
+    <div className="min-h-screen bg-bl-deep text-bl-text">
       {/* Isometric grid overlay */}
       <div className="fixed inset-0 iso-grid pointer-events-none z-0" />
 
       {/* Ambient glow */}
-      <div className="fixed top-1/3 right-[12%] w-80 h-80 rounded-full bg-bl-gold/5 blur-[100px] pointer-events-none z-0" />
+      <div className="fixed top-1/4 right-[10%] w-96 h-96 rounded-full bg-bl-gold/5 blur-[120px] pointer-events-none z-0" />
       <div className="fixed bottom-1/4 left-[8%] w-64 h-64 rounded-full bg-bl-cyan/4 blur-[80px] pointer-events-none z-0" />
 
       <Navigation />
 
       {/* ═══════════════════════════════════════
-         HERO SECTION
+         HERO — THE SIGNAL
          ═══════════════════════════════════════ */}
       <section className="relative z-10 pt-36 pb-16 px-6 scene-3d">
         <div className="max-w-6xl mx-auto preserve-3d">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-8">
-            <Layers size={14} />
-            Connect
+            <Radio size={14} />
+            Operations Center
           </div>
 
-          <h1 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
-            <span className="block">Initiate</span>
-            <span className="gold-gradient">Sequence</span>
+          <h1 className="text-[clamp(2.5rem,10vw,7rem)] font-black leading-[0.85] tracking-tighter uppercase mb-6 gold-glow">
+            <span className="block">Signal</span>
+            <span className="gold-gradient">Received</span>
           </h1>
 
           <p className="text-lg md:text-xl text-bl-text-muted max-w-2xl leading-relaxed">
-            Skip the small talk. Tell us what you need and we&apos;ll build you a digital anomaly.
+            Skip the small talk. Transmit your project specs and we&apos;ll
+            decode your vision within 24 hours.
           </p>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════
-         FORM + INFO — 2 Column Layout
+         COMMS STATS — Metrics Section (like portfolio)
+         ═══════════════════════════════════════ */}
+      <section className="relative z-10 pb-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bl-glass border border-bl-glass-border text-bl-gold text-xs font-semibold uppercase tracking-widest mb-4">
+              <Sparkles size={14} />
+              Comm Specs
+            </span>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 scene-3d-near">
+            {[
+              { value: "24h", label: "Avg Response Time" },
+              { value: "47+", label: "Projects Delivered" },
+              { value: "98%", label: "Client Satisfaction" },
+              { value: "6d", label: "Avg Turnaround" },
+            ].map((stat) => (
+              <div key={stat.label} className="spatial-panel p-6 text-center rim-light">
+                <div className="text-4xl font-black gold-gradient mb-1">{stat.value}</div>
+                <div className="text-[10px] text-bl-text-muted uppercase tracking-widest font-semibold">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+         FORM + INFO — 2 Column Split
          ═══════════════════════════════════════ */}
       <section className="relative z-10 pb-32 px-6">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-12 items-start">
-          {/* ─── FORM — 3/5 width ─── */}
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-8 items-start">
+          {/* ─── FORM — 3/5 ─── */}
           <div className="lg:col-span-3">
             {submitted ? (
               <div className="spatial-panel p-10 md:p-12 text-center rim-light spatial-panel-gold">
                 <div className="w-20 h-20 rounded-full bg-bl-gold/10 border border-bl-gold/30 flex items-center justify-center mx-auto mb-6">
                   <CheckCircle size={40} className="text-bl-gold" />
                 </div>
-                <h2 className="text-3xl font-bold uppercase mb-4 font-display gold-gradient">Message Received</h2>
+                <h2 className="text-3xl font-bold uppercase mb-4 font-display gold-gradient">
+                  Transmission Received
+                </h2>
                 <p className="text-bl-text-muted max-w-md mx-auto mb-8 leading-relaxed">
-                  Your transmission has been received. We&apos;ll review and get back to you within 24 hours.
+                  Your signal has been decoded. Our team will review and
+                  respond within 24 hours.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
@@ -260,7 +293,7 @@ export default function ContactContent() {
                     ) : (
                       <>
                         <Send size={18} />
-                        Transmit
+                        Transmit Signal
                         <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                       </>
                     )}
@@ -270,7 +303,7 @@ export default function ContactContent() {
             )}
           </div>
 
-          {/* ─── INFO PANELS — 2/5 width ─── */}
+          {/* ─── INFO PANELS — 2/5 ─── */}
           <div className="lg:col-span-2 flex flex-col gap-6">
             {/* Email */}
             <div className="spatial-panel p-6 md:p-8 rim-light group hover:spatial-panel-gold transition-all duration-300">

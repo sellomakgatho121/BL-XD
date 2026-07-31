@@ -50,7 +50,7 @@ const agenticConfig: Record<AgenticTier, { icon: LucideIcon; color: string; acce
   },
   video: {
     icon: Video,
-    color: "#FF003C",
+    color: "#FF006E",
     accent: "rgba(255, 0, 60, 0.1)",
     glow: "rgba(255, 0, 60, 0.4)",
     label: "Silicon Creative",

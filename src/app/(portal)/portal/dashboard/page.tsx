@@ -26,7 +26,7 @@ export default function PortalDashboard() {
 
       <div className="grid md:grid-cols-3 gap-4 mb-8">
         {[
-          { label: "Active Projects", value: "2", icon: FileText, color: "#B59A5F" },
+          { label: "Active Projects", value: "2", icon: FileText, color: "#CCFF00" },
           { label: "Open Invoices", value: "1", icon: Receipt, color: "#00CCFF" },
           { label: "Recent Activity", value: "3 updates", icon: Activity, color: "#D7FF00" },
         ].map((stat) => {

@@ -11,7 +11,7 @@ const icons: Record<string, any> = {
 };
 
 const iconColors: Record<string, string> = {
-  message: "#B59A5F",
+  message: "#CCFF00",
   project_update: "#00CCFF",
   lead: "#D7FF00",
   system: "#00FF88",

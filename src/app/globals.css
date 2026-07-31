@@ -2,27 +2,36 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* ═══════════════════════════════════════════
+   CUSTOM FONT FACE — Monoscale Geometric
+   ═══════════════════════════════════════════ */
+@font-face {
+  font-family: "Monoscale";
+  src: local("Space Grotesk"), local("sans-serif");
+  font-display: swap;
+}
+
 :root {
   /* ═══════════════════════════════════════════
      MIDNIGHT LUXURY PALETTE (design-it palette #7)
      Premium dark mode — gold accents, deep blacks
      ═══════════════════════════════════════════ */
-  --bl-deep: #0A0A0A;
-  --bl-surface: #1C1C1C;
-  --bl-lighter: #2A2A2A;
-  --bl-text: #F5F5F0;
-  --bl-text-muted: #9A9A95;
-  --bl-gold: #B59A5F;
-  --bl-gold-dim: #8A7A4E;
-  --bl-cyan: #5BC0BE;
-  --bl-amber: #E8A838;
+  --bl-deep: #08080F;
+  --bl-surface: #12121F;
+  --bl-lighter: #1E1E35;
+  --bl-text: #F0F0FF;
+  --bl-text-muted: #8888B0;
+  --bl-gold: #CCFF00;
+  --bl-gold-dim: #99CC00;
+  --bl-cyan: #00F0FF;
+  --bl-amber: #FF006E;
   --bl-glass: rgba(255, 255, 255, 0.06);
   --bl-glass-border: rgba(255, 255, 255, 0.10);
   --bl-glass-hover: rgba(255, 255, 255, 0.10);
   --bl-glass-strong: rgba(255, 255, 255, 0.12);
 
   /* Typography */
-  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-display: var(--font-orbitron), var(--font-space-grotesk), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
   --font-body: var(--font-inter), system-ui, sans-serif;
 
@@ -59,6 +68,12 @@
   --muted-foreground: var(--bl-text-muted);
   --accent: var(--bl-cyan);
   --accent-foreground: var(--bl-deep);
+  --bl-electric: #CCFF00;
+  --bl-electric-dim: rgba(204, 255, 0, 0.1);
+  --bl-siren: #FF006E;
+  --bl-neon-blue: #3A5AFF;
+  --bl-neon-purple: #8B5CF6;
+
   --destructive: #8B3A3A;
   --destructive-foreground: var(--bl-text);
   --border: var(--bl-glass-border);
@@ -359,4 +374,137 @@ html.lenis, html.lenis body {
 }
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
+}
+
+/* ═══════════════════════════════════════════
+   REDESIGN ANIMATIONS
+   ═══════════════════════════════════════════ */
+
+/* Orbital rotation for 3D hero elements */
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(var(--orbit-radius, 60px)) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(var(--orbit-radius, 60px)) rotate(-360deg); }
+}
+
+/* Shimmer text gradient sweep */
+@keyframes text-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Reveal animation for staggered entries */
+@keyframes reveal-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-scale {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Noise texture overlay flicker */
+@keyframes noise {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 10%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 10%); }
+  80% { transform: translate(-15%, 0); }
+  90% { transform: translate(10%, 5%); }
+}
+
+/* Rotating ring */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse ring expansion */
+@keyframes ring-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(181, 154, 95, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(181, 154, 95, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(181, 154, 95, 0); }
+}
+
+/* Glass morphism utility refinements */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-panel-gold {
+  background: rgba(181, 154, 95, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(181, 154, 95, 0.15);
+}
+
+/* Text balance utility */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Gradient text utilities */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #CCFF00 0%, #00F0FF 50%, #CCFF00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-electric {
+  background: linear-gradient(135deg, #CCFF00 0%, #FF006E 50%, #CCFF00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-siren {
+  background: linear-gradient(135deg, #FF006E 0%, #3A5AFF 50%, #FF006E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Noise overlay */
+.noise-overlay::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Section dividers */
+.section-divider {
+  position: relative;
+}
+
+.section-divider::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(181, 154, 95, 0.3), transparent);
 }

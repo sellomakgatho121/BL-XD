@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Receipt, Download } from "lucide-react";
 
 const statusColors: Record<string, string> = {
-  draft: "#666", sent: "#B59A5F", paid: "#00FF88", overdue: "#FF003C", cancelled: "#333",
+  draft: "#666", sent: "#CCFF00", paid: "#00FF88", overdue: "#FF006E", cancelled: "#333",
 };
 
 export default function PortalInvoices() {

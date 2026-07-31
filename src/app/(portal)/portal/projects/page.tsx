@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FileText, Clock, CheckCircle } from "lucide-react";
 
 const statusConfig: Record<string, { color: string; label: string }> = {
-  planning: { color: "#B59A5F", label: "Planning" },
+  planning: { color: "#CCFF00", label: "Planning" },
   in_progress: { color: "#00CCFF", label: "In Progress" },
   review: { color: "#D7FF00", label: "Review" },
   completed: { color: "#00FF88", label: "Completed" },

@@ -60,7 +60,7 @@ const tiers = [
       "Analytics dashboard",
     ],
     icon: ShoppingBag,
-    color: "#FF003C",
+    color: "#FF006E",
     gradient: "from-red-500/10 to-transparent",
     cta: "Open Shop",
     href: "/services/shop",

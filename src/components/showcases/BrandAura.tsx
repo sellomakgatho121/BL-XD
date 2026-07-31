@@ -8,7 +8,7 @@ const VIBES = ["Minimal", "Bold", "Trust", "Luxury"];
 
 const PALETTES: Record<string, string[]> = {
   "Tech-Minimal": ["#111111", "#A3E635", "#FFFFFF"],
-  "Tech-Bold": ["#000000", "#FF003C", "#3B82F6"],
+  "Tech-Bold": ["#000000", "#FF006E", "#3B82F6"],
   "Tech-Trust": ["#0F172A", "#38BDF8", "#94A3B8"],
   "Tech-Luxury": ["#0C0C0C", "#D4AF37", "#262626"],
   "Finance-Minimal": ["#ffffff", "#1e293b", "#64748b"],

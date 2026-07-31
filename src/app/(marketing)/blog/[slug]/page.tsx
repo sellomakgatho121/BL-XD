@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, Tag, User } from "lucide-react";
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -12,12 +13,12 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     fetch("/api/blog")
       .then((r) => r.json())
       .then((posts) => {
-        const found = posts.find((p: any) => p.slug === params.slug);
+        const found = posts.find((p: any) => p.slug === slug);
         setPost(found || null);
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [params.slug]);
+  }, [slug]);
 
   if (loading) {
     return (

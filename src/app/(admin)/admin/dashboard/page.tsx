@@ -17,10 +17,10 @@ export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [stats, setStats] = useState<StatCard[]>([
-    { label: "Total Leads", value: "0", change: "+0 this week", icon: Users, color: "#B59A5F" },
+    { label: "Total Leads", value: "0", change: "+0 this week", icon: Users, color: "#CCFF00" },
     { label: "Active Projects", value: "0", change: "0 in review", icon: FileText, color: "#00CCFF" },
-    { label: "Invoices", value: "0", change: "0 overdue", icon: Receipt, color: "#FF003C" },
-    { label: "Conversion Rate", value: "0%", change: "0% this month", icon: TrendingUp, color: "#D7FF00" },
+    { label: "Invoices", value: "0", change: "0 overdue", icon: Receipt, color: "#FF006E" },
+    { label: "Conversion Rate", value: "0%", change: "0% this month", icon: TrendingUp, color: "#00F0FF" },
   ]);
   const [notifications, setNotifications] = useState<any[]>([]);
 
@@ -42,10 +42,10 @@ export default function AdminDashboard() {
         setNotifications(notifs.slice(0, 5));
 
         setStats([
-          { label: "Total Leads", value: String(leads.length), change: `${leads.filter((l: any) => l.status === "new").length} new`, icon: Users, color: "#B59A5F" },
+          { label: "Total Leads", value: String(leads.length), change: `${leads.filter((l: any) => l.status === "new").length} new`, icon: Users, color: "#CCFF00" },
           { label: "Active Projects", value: "3", change: "1 in review", icon: FileText, color: "#00CCFF" },
-          { label: "Invoices", value: "5", change: "0 overdue", icon: Receipt, color: "#FF003C" },
-          { label: "Conversion Rate", value: "28%", change: "+5% this month", icon: TrendingUp, color: "#D7FF00" },
+          { label: "Invoices", value: "5", change: "0 overdue", icon: Receipt, color: "#FF006E" },
+          { label: "Conversion Rate", value: "28%", change: "+5% this month", icon: TrendingUp, color: "#00F0FF" },
         ]);
       } catch {}
     }
