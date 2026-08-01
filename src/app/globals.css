@@ -74,6 +74,19 @@
   --bl-neon-blue: #3A5AFF;
   --bl-neon-purple: #8B5CF6;
 
+  /* ═══════════════════════════════════════════
+     SPECTRAL THEME (content-studio / showcases)
+  */
+  --signal-lime: #C8F135;
+  --siren-red: #FF2E3E;
+  --onyx: #0A0A0F;
+  --spectral-white: #F5F5FF;
+  --spectral-black: #050508;
+  --spectral-muted: #9A9AB5;
+  --spectral-dim: #6B6B8A;
+  --neo-white: #F5F5FA;
+  --neo-black: #08080C;
+
   --destructive: #8B3A3A;
   --destructive-foreground: var(--bl-text);
   --border: var(--bl-glass-border);

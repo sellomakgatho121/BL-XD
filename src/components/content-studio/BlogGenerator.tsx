@@ -102,7 +102,6 @@ export default function BlogGenerator() {
       timestamp: new Date().toISOString(),
       topic,
       tone,
-      category,
       targetAudience,
       keywords,
       ...result,

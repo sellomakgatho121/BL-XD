@@ -13,7 +13,11 @@ import {
   Save,
   Globe,
   MoreHorizontal,
+  Sparkles,
 } from "lucide-react";
+import SEOOptimizer from "@/components/content-studio/SEOOptimizer";
+import BlogGenerator from "@/components/content-studio/BlogGenerator";
+import SocialGenerator from "@/components/content-studio/SocialGenerator";
 
 interface BlogPost {
   id: string;
@@ -45,6 +49,7 @@ export default function ContentStudioPage() {
   const [filter, setFilter] = useState<string>("all");
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [editContent, setEditContent] = useState("");
+  const [activeTab, setActiveTab] = useState<"posts" | "generators">("generators");
 
   useEffect(() => {
     async function loadPosts() {
@@ -111,6 +116,46 @@ export default function ContentStudioPage() {
         </p>
       </div>
 
+      {/* Tabs */}
+      <div className="flex gap-2 mb-6">
+        <button
+          onClick={() => setActiveTab("generators")}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+            activeTab === "generators"
+              ? "bg-bl-gold/15 text-bl-gold border border-bl-gold/20"
+              : "border border-white/10 text-bl-ice/60 hover:text-bl-ice hover:bg-white/5"
+          }`}
+        >
+          <Sparkles className="w-3.5 h-3.5 inline mr-1.5" />
+          Generators
+        </button>
+        <button
+          onClick={() => setActiveTab("posts")}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+            activeTab === "posts"
+              ? "bg-bl-gold/15 text-bl-gold border border-bl-gold/20"
+              : "border border-white/10 text-bl-ice/60 hover:text-bl-ice hover:bg-white/5"
+          }`}
+        >
+          <Newspaper className="w-3.5 h-3.5 inline mr-1.5" />
+          Posts
+        </button>
+      </div>
+
+      {activeTab === "generators" && (
+        <div className="space-y-8">
+          <BlogGenerator />
+          <div className="border-t border-white/10 pt-8">
+            <SocialGenerator />
+          </div>
+          <div className="border-t border-white/10 pt-8">
+            <SEOOptimizer />
+          </div>
+        </div>
+      )}
+
+      {activeTab === "posts" && (
+        <>
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <div className="relative flex-1">
@@ -285,6 +330,8 @@ export default function ContentStudioPage() {
             </div>
           </div>
         </div>
+      )}
+        </>
       )}
     </div>
   );
